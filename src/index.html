@@ -1,0 +1,460 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Enzo Web Editor</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Control your Meris Enro efefct pedal directly from your web browser." />
+    <meta name="author" content="François Georgy" />
+    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/f0483cf390.css" rel="stylesheet" />
+    <script src="bundle.js"></script>
+</head>
+<body>
+    <div id="main">
+
+        <div id="title">
+            <h1 id="neon">Enzo</h1>
+            <div id="patch">Patch: <span id="patch-dec"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span><span id="patch-number">&nbsp;</span><span id="patch-inc"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></span><span id="patch-name"></span></div>
+            <div class="menu">
+                <a id="menu-favorites" href="#"><i class="fa fa-heart-o" aria-hidden="true" title="favorites"></i> Favorites</a>
+                <span><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> Init</a></span>
+                <span><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> Randomize</a></span>
+                <span><a id="menu-sync" href="#" title="Sync with the connected Bass Station 2"><i class="fa fa-refresh" aria-hidden="true"></i> Sync</a></span> <!--&#8651;-->
+                <span><a id="menu-load-patch" href="#" title="Load a patch from a .syx file"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Load patch</a></span>
+                <!--<span><a id="menu-save-patch" href="#" title="Save the current patch to a .syx file"><i class="fa fa-save" aria-hidden="true"></i> Save patch</a></span>-->
+                <span><a id="menu-get-url" href="#" title="Save the current patch to a .syx file"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Get URL</a></span>
+                <span><a id="menu-print-patch" href="#" title="display the current patch for printing"><i class="fa fa-print" aria-hidden="true"></i> Patch sheet</a></span>
+                <span><a id="menu-midi" href="#"><i class="fa fa-exchange" aria-hidden="true"></i> Midi</a></span>
+                <span><a id="menu-settings" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></span>    <!--&#x2699;-->
+                <span><a id="menu-help" href="#">Help</a></span>
+                <span><a id="menu-about" href="#">About</a></span>      <!--&#x3f;-->
+            </div>
+        </div>
+
+        <!--
+            EXPRESSION PEDAL
+        -->
+
+        <!--
+            ENVELOPE TYPE
+        -->
+        <div id="env-type">
+            <div class="header">
+                <div>envelope type</div>
+            </div>
+            <div class="controls">
+                <div id="cc-09">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            BYPASS
+        -->
+        <div id="bypass">
+            <div class="header">
+                <div>bypass</div>
+            </div>
+            <div class="controls">
+                <div id="cc-14">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            TEMPO
+        -->
+        <div id="tempo">
+            <div class="header">
+                <div>tap tempo</div>
+            </div>
+            <div class="controls">
+                <div id="cc-28">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            PITCH
+        -->
+        <div id="pitch">
+            <div class="header">
+                <div>pitch</div>
+            </div>
+            <div class="controls">
+                <div id="cc-16">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            PORTAMENTO
+        -->
+        <div id="portamento">
+            <div class="header">
+                <div>portamento</div>
+            </div>
+            <div class="controls">
+                <div id="cc-22">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            FILTER
+        -->
+        <div id="filter">
+            <div class="header">
+                <div>filter</div>
+            </div>
+            <div class="controls">
+                <div id="cc-17">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            FILTER TYPE
+        -->
+        <div id="filter-type">
+            <div class="header">
+                <div>filter type</div>
+            </div>
+            <div class="controls">
+                <div id="cc-23">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            MIX
+        -->
+        <div id="mix">
+            <div class="header">
+                <div>mix</div>
+            </div>
+            <div class="controls">
+                <div id="cc-18">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            DELAY LEVEL
+        -->
+        <div id="delay-level">
+            <div class="header">
+                <div>delay level</div>
+            </div>
+            <div class="controls">
+                <div id="cc-24">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            SUSTAIN
+        -->
+        <div id="sustain">
+            <div class="header">
+                <div>sustain</div>
+            </div>
+            <div class="controls">
+                <div id="cc-19">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            RING MODULATION
+        -->
+        <div id="ring-mod">
+            <div class="header">
+                <div>ring mod</div>
+            </div>
+            <div class="controls">
+                <div id="cc-25">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            FILTER ENVELOPE
+        -->
+        <div id="filter-env">
+            <div class="header">
+                <div>filter env</div>
+            </div>
+            <div class="controls">
+                <div id="cc-20">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            FILTER BANDWITDH
+        -->
+        <div id="filter-bandwidth">
+            <div class="header">
+                <div>filter bandwidth</div>
+            </div>
+            <div class="controls">
+                <div id="cc-26">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            MODULATION
+        -->
+        <div id="modulation">
+            <div class="header">
+                <div>modulation</div>
+            </div>
+            <div class="controls">
+                <div id="cc-21">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            DELAY FEEDBACK
+        -->
+        <div id="delay-feedback">
+            <div class="header">
+                <div>delay-feedback</div>
+            </div>
+            <div class="controls">
+                <div id="cc-27">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            MAX DELAY FEEDBACK
+        -->
+        <div id="max-delay-feedback">
+            <div class="header">
+                <div>max delay feedback</div>
+            </div>
+            <div class="controls">
+            </div>
+        </div>
+
+        <!--
+            TAP
+        -->
+<!--
+        <div id="tap">
+            <div class="header">
+                <div>tap</div>
+            </div>
+            <div class="controls">
+                <div id="cc-2">
+                </div>
+            </div>
+        </div>
+-->
+
+        <!--
+            SYNTH MODE
+        -->
+        <div id="synth-mode">
+            <div class="header">
+                <div>synth mode</div>
+            </div>
+            <div class="controls">
+                <div id="cc-29">
+                </div>
+            </div>
+        </div>
+
+        <!--
+            SYNTH WAVESHAPE
+        -->
+        <div id="waveshape">
+            <div class="header">
+                <div>waveshape</div>
+            </div>
+            <div class="controls">
+                <div id="cc-30">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="status-bar">
+<!--
+            <div style="float:right">
+                MIDI:
+                <span id="midi-in-led">in</span>
+                <span id="midi-out-led">out</span>
+            </div>
+-->
+            <div id="status">
+            </div>
+        </div>
+    </div>
+
+    <div id="load-patch-dialog" class="dialog lity-hide">
+        <h2>Load patch from file</h2>
+        <div id="import-dialog-instructions">
+            Select a file containing a Bass Station 2 patch (.syx file):
+        </div>
+        <div style="margin:10px 0;">
+            <input type="file" id="patch-file" placeholder="patch file" />
+        </div>
+        <div id="load-patch-error" style="margin:10px 0;color:red">
+        </div>
+    </div>
+
+    <div id="credits-dialog" class="dialog lity-hide">
+        <a href="https://github.com/francoisgeorgy/BS2-Web">
+            <img style="position: absolute; top: 0; right: 0; border: 0;"
+                 src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
+                 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        <div class="enzo-gold" style="font-size:2rem;font-weight:bold">
+            Enzo Web Interface <span class="version">2.0.0</span>
+        </div>
+        <p>Enzo Web Interface is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/BS2-Web/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <h1 style="margin-top:20px">Credits</h1>
+        <p>This application uses the following Open Source components:</p>
+        <ul>
+            <li><a href="https://github.com/cotejp/webmidi" target="_blank">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
+            <li><a href="https://github.com/danigb/tonal" target="_blank">Tonal</a>: a functional music theory library for Javascript.</li>
+            <li><a href="https://github.com/francoisgeorgy/svg-knob">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
+            <li><a href="https://github.com/francoisgeorgy/svg-envelope">svg-envelope</a>: a flexible and customizable ADSR-like envelope.</li>
+            <li><a href="https://github.com/francoisgeorgy/svg-slider">svg-slider</a>: a flexible and customizable slider for your web applications.</li>
+            <li><a href="http://sorgalla.com/lity/">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
+            <li><a href="https://github.com/js-cookie/js-cookie" target="_blank">JS-Cookie</a>: a simple, lightweight JavaScript API for handling browser cookies.</li>
+            <li><a href="https://jquery.com/" target="_blank">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
+            <li><a href="http://momentjs.com/" target="_blank">Moment.js</a>: parse, validate, manipulate, and display dates and times in JavaScript.</li>
+            <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
+            <li><a href="http://fontawesome.io/" target="_blank">Font Awesome</a>: the iconic font and CSS toolkit.</li>
+            <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank">Roboto font</a> by Google.</li>
+            <li><a href="https://www.keshikan.net/fonts-e.html" target="_blank">7 segments "DSEG" font</a> by keshikan.</li>
+        </ul>
+        <p class="trademarks">
+            <em>Novation</em> is a registered trade mark of Focusrite Audio Engineering Limited.<br />
+            <em>Bass Station II</em> is a trade mark of Focusrite Audio Engineering Limited.
+        </p>
+    </div>
+
+    <div id="help-dialog" class="dialog lity-hide">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Allow the browser to access your MIDI devices</li>
+            <li>If it's not already done, connect your Enzo to your computer.</li>
+            <li>When the Enzo is connected the logo will glow.</li>
+            <li>Move a knob or a slider on your Enzo, the corresponding on-screen control must move accordingly.</li>
+        </ol>
+        <h4>Knobs and sliders:</h4>
+        <ul>
+            <li>To move the knobs or sliders, use the mouse.</li>
+            <li>Click and drag over the knob/slider. You can also use the mousewheel.</li>
+        </ul>
+        <h4>MIDI settings:</h4>
+        <ul>
+            <li>Use the Settings menu to set the MIDI channel if needed.</li>
+        </ul>
+        <h4>Keyboard shortcuts:</h4>
+        <ul>
+            <li>ESC key to close any open dialog.</li>
+            <li>SPACE bar to start/stop playing.</li>
+            <li>A-G keys to play the corresponding note.<br />
+            Shift for sharp, Alt for flat.</li>
+            <li>S key to STOP any playing.</li>
+        </ul>
+        <div class="dialog-info">
+            <span style="float:right">ESC to close</span>
+        </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
+        <defs>
+            <linearGradient id="grad" gradientTransform="rotate(65)">
+                <stop offset="0%" stop-color="#555" />
+                <stop offset="95%" stop-color="#222" />
+            </linearGradient>
+            <!--<g id="knob">-->
+                <!--<circle fill="url(#grad)" class="path" cx="50" cy="50" r="40"/>-->
+                <!--<text class="value" text-anchor="middle" x="50" y="58"></text>-->
+            <!--</g>-->
+        </defs>
+    </svg>
+
+    <div id="settings-panel" class="panel" style="display:none">
+        <h2><span style="float:right" class="close-settings-panel">&#x2715;</span>Settings</h2>
+        <div id="settings-dialog-instructions">
+        </div>
+        <div>
+            <h3>MIDI channel</h3>
+            Use MIDI channel <select id="midi-channel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="all">All</option>
+        </select> to communicate with the Enzo.
+        </div>
+        <div>
+            <h3>Display</h3>
+            <input type="checkbox" name="fade-unused" value="1"> Fade unused controls
+            <div style="margin-top: 0.5rem;font-size: 0.8rem">
+                When checked, the controls that haven't changed from an init patch will be faded.
+            </div>
+        </div>
+        <div>
+            <h3>Randomizer</h3>
+            <p>Randomize the following groups of parameters:</p>
+            <div id="randomizer-settings">
+            </div>
+            <a href="#" id="randomizer-select-all">select all</a>
+            <a href="#" id="randomizer-select-none">select none</a>
+        </div>
+        <div id="settings-dialog-error" style="color:red ">
+        </div>
+        <div class="dialog-info">
+            <span style="float:right">ESC to close</span>
+            All changes are immediately saved and applied.
+        </div>
+    </div>
+
+    <div id="favorites-panel" class="panel" style="display:none">
+        <div id="favorites-header">
+            <h2><span style="float:right" class="close-favorites-panel">&#x2715;</span>Favorites</h2>
+        </div>
+        <div id="favorites-add">
+            <h3>Add the current patch to your favorites</h3>
+            Name:<br />
+            <input type="text" name="patch-name" id="add-favorite-patch-name" placeholder="" ><br />
+            Description:<br />
+            <textarea name="patch-description" id="add-favorite-patch-description" ></textarea><br />
+            <button type="button" id="add-favorite-bt" style="float:right">Add to favorites</button>
+            <div style="clear:both"></div>
+        </div>
+        <div id="favorites-load">
+            <h3>Load a patch from your favorites</h3>
+            <div id="favorites-list"></div>
+        </div>
+        <div id="favorites-footer" class="dialog-info">
+            <span style="float:right">ESC to close</span>
+        </div>
+    </div>
+</body>
+</html>
