@@ -1,3 +1,4 @@
+import DEVICE from "./enzo/enzo.js";
 import Knob from "svg-knob";
 // import * as Utils from "./lib/utils.js";
 import * as WebMidi from "webmidi";
@@ -6,7 +7,7 @@ import "./css/lity.min.css";
 import "./css/main.css";
 import {detect} from "detect-browser";
 
-const TRACE = false;    // when true, will log more details in the console
+const TRACE = true;    // when true, will log more details in the console
 
 const browser = detect();
 
@@ -122,15 +123,15 @@ function getCurrentPatchAsLink() {
 let patch_number = -1;
 let patch_name = null;
 
-function displayPatchName() {
-    //TODO: get value from BS2
-    $("#patch-name").text(patch_name);
-}
-
-function displayPatchNumber() {
-    //TODO: get value from BS2
-    $("#patch-number").html(patch_number);
-}
+// function displayPatchName() {
+//     //TODO: get value from BS2
+//     $("#patch-name").text(patch_name);
+// }
+//
+// function displayPatchNumber() {
+//     //TODO: get value from BS2
+//     $("#patch-number").html(patch_number);
+// }
 
 function sendPatchNumber() {
     if (midi_output) {
@@ -166,11 +167,25 @@ function handleCC(e) {
 
     let msg = e.data;   // Uint8Array
     let cc = msg[1];
-    let value = -1;
+    // let value = -1;
 
     if (TRACE) console.log("receive CC", cc, msg[2]);
 
     logIncomingMidiMessage("CC", cc, msg[2]);
+
+    if (DEVICE.control[cc]) {
+        // if (DEVICE.control[cc].lsb === -1) {
+            let v = msg[2];
+            dispatch("cc", cc, v);
+        // } else {
+        //     cc_expected = DEVICE.control[cc].lsb;
+        //     cc_msb = cc;
+        //     value_msb = msg[2];
+        // }
+    } else {
+        console.warn(`unsupported CC: ${cc}`)
+    }
+
 }
 
 /**
@@ -184,7 +199,6 @@ function handleCC(e) {
  */
 function dispatch(control_type, control_number, value) {
 
-/*
     if (TRACE) console.log("dispatch", control_type, control_number, value, "#" + control_type + "-" + control_number);
 
     control_type = control_type.toLowerCase();
@@ -199,7 +213,6 @@ function dispatch(control_type, control_number, value) {
     updateLinkedUIElements(/!*false*!/);   //TODO: pass the current CC number and in updateCustoms() only update controls linked to this CC number
 
     return control;
-*/
 }
 
 /**
@@ -209,6 +222,50 @@ function dispatch(control_type, control_number, value) {
  * @param value
  */
 function updateControl(control_type, control_number, value) {
+
+    if (TRACE) console.log(`updateControl(${control_type}, ${control_number}, ${value})`);
+
+    let id = control_type + "-" + control_number;
+    if (knobs.hasOwnProperty(id)) {
+        knobs[id].value = value;
+    } else {
+        // if (TRACE) console.log(`check #${id}`);
+
+        let c = $(`#${id}`);
+
+        c.val(value).trigger("blur");
+
+/*
+        if (c.length) {
+            if (c.is(".svg-slider,.svg-slider-env")) {
+                updateSVGSlider(id, value);
+            } else if (c.is(".slider")) {
+                updateSlider(id, value);
+            } else if (c.is(".btc")) {
+                updateToggleSwitch(id, value);
+            } else {
+                c.val(value).trigger("blur");
+            }
+
+        } else {
+            c = $(`#${id}-${value}`);
+            if (c.length) {
+                if (TRACE) console.log(c);
+                if (c.is(".bt")) {
+                    updateOptionSwitch(id + "-" + value, value);
+                } else {
+                    c.val(value).trigger("blur");
+                }
+            } else {
+                console.warn(`no control for ${id}-${value}`);
+            }
+        }
+*/
+
+    }
+        // let c = $(`#combo-${id}`);  //TODO: try to do it only if fade_unused has changed
+        // if (TRACE) console.log(`reset opacity for #combo-${id}`);
+
 }
 
 //==================================================================================================================
@@ -285,8 +342,10 @@ function updateControls() {
 function setupKnobs() {
 
     function _setupKnob(id, c, v) {
-/*
+
         let elem = document.getElementById(id);
+
+        if (TRACE) console.log(`_setupKnob ${id}`, elem);
 
         if (elem === null) return;
 
@@ -361,34 +420,21 @@ function setupKnobs() {
         knobs[id].disableDebug();
 
         elem.addEventListener("change", function(event) {
-            // if (TRACE) console.log(event);
-            handleUIChange(c.cc_type, c.cc_number /!*i*!/, event.detail);
+            handleUIChange(c.cc_type, c.cc_number, event.detail);
         });
-*/
+
     }
 
-    function _setup(controls) {
-/*
+    for (let i=0; i < DEVICE.control.length; i++) {
 
-        for (let i=0; i < controls.length; i++) {
+        const c = DEVICE.control[i];
+        if (typeof c === "undefined") continue;
 
-            let c = controls[i];
-            if (typeof c === "undefined") continue;
+        // if (TRACE) console.log(`${c.cc_type}-${c.cc_number} (${i})`);
 
-            if (TRACE) console.log(`${c.cc_type}-${c.cc_number} (${i})`);
-
-            let id = `${c.cc_type}-${c.cc_number}`;
-            _setupKnob(id, c, DEVICE.getControlValue(controls[i]));
-        }
-*/
+        const id = `${c.cc_type}-${c.cc_number}`;
+        _setupKnob(id, c, DEVICE.getControlValue(DEVICE.control[i]));
     }
-
-    // console.groupCollapsed("setupKnobs");
-    //
-    // _setup(DEVICE.control);
-    // _setup(DEVICE.nrpn);
-    //
-    // console.groupEnd();
 
 } // setupKnobs
 
@@ -470,7 +516,6 @@ function updateUI(force = false) {
  */
 function setupUI() {
 
-/*
     console.groupCollapsed("setupUI");
 
     $("span.version").text(VERSION);
@@ -488,7 +533,6 @@ function setupUI() {
     setupMenu();
 
     console.groupEnd();
-*/
 }
 
 //==================================================================================================================
@@ -962,9 +1006,9 @@ $(function () {
             let input = WebMidi.getInputByName(DEVICE.name_device_in);
             if (input) {
                 connectInput(input);
-                setStatus(`${DEVICE.name_device_in} connected on MIDI channel ${midi_channel}.`);
+                setStatus(`${DEVICE.name_device_in} MIDI device connected on MIDI channel ${midi_channel}.`);
             } else {
-                setStatusError(`${DEVICE.name_device_in} not found. Please connect your Bass Station 2 or check the MIDI channel.`);
+                setStatusError(`${DEVICE.name_device_in} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
                 setMidiInStatus(false);
             }
 
@@ -972,7 +1016,7 @@ $(function () {
             if (output) {
                 connectOutput(output);
             } else {
-                setStatusError(`${DEVICE.name_device_out} not found. Please connect your Bass Station 2 or check the MIDI channel.`);
+                setStatusError(`${DEVICE.name_device_out} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
                 // setMidiOutStatus(false);
             }
 
