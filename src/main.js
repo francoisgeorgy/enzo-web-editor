@@ -35,9 +35,9 @@ if (browser) {
  */
 function setMidiInStatus(status) {
     if (status) {
-        $("#neon").addClass("glow");
+        $(".neon").addClass("glow");
     } else {
-        $("#neon").removeClass("glow");
+        $(".neon").removeClass("glow");
     }
 }
 
@@ -73,14 +73,16 @@ let midi_out_messages = 0;
  */
 function logIncomingMidiMessage(type, control, value) {
     if (midi_window) {
+        const ctrl = parseInt(control);
+        const v = parseInt(value);
         midi_in_messages++;
         // log at max 1000 messages:
         if (midi_in_messages > 1000) $("#midi-messages-in div:last-child", midi_window.document).remove();
         let s = type + " " +
-            control.toString(10).padStart(3, "0") + " " +
-            value.toString(10).padStart(3, "0") + " (" +
-            control.toString(16).padStart(2, "0") + " " +
-            value.toString(16).padStart(2, "0") + ")";
+            ctrl.toString(10).padStart(3, "0") + " " +
+            v.toString(10).padStart(3, "0") + " (" +
+            ctrl.toString(16).padStart(2, "0") + " " +
+            v.toString(16).padStart(2, "0") + ")";
         $("#midi-messages-in", midi_window.document).prepend(`<div>${s.toUpperCase()}</div>`);
     }
 }
@@ -93,14 +95,25 @@ function logIncomingMidiMessage(type, control, value) {
  */
 function logOutgoingMidiMessage(type, control, value) {
     if (midi_window) {
+        const ctrl = parseInt(control);
+        const v = parseInt(value);
         midi_out_messages++;
         // log at max 1000 messages:
         if (midi_out_messages > 1000) $("#midi-messages-out div:last-child", midi_window.document).remove();
-        let s = type + " " +
-            control.toString(10).padStart(3, "0") + " " +
-            value.toString(10).padStart(3, "0") + " (" +
-            control.toString(16).padStart(2, "0") + " " +
-            value.toString(16).padStart(2, "0") + ")";
+        let s = '';
+        if (type === 'CC') {
+            s = type + " " +
+                ctrl.toString(10).padStart(3, "0") + " " +
+                v.toString(10).padStart(3, "0") + " (" +
+                ctrl.toString(16).padStart(2, "0") + " " +
+                v.toString(16).padStart(2, "0") + ")";
+        } else if (type === 'PC') {
+            s = type + " " +
+                ctrl.toString(10).padStart(3, "0") + " " +
+                ctrl.toString(16).padStart(2, "0");
+        } else {
+            s = 'unknown message'
+        }
         $("#midi-messages-out", midi_window.document).prepend(`<div>${s.toUpperCase()}</div>`);
     }
 }
@@ -134,11 +147,12 @@ let patch_name = null;
 //     $("#patch-number").html(patch_number);
 // }
 
-function sendPatchNumber() {
+function sendPC(patch_number) {
     if (midi_output) {
         if (TRACE) console.log(`send program change ${patch_number}`);
         midi_output.sendProgramChange(patch_number, midi_channel);
     }
+    logOutgoingMidiMessage("PC", patch_number);
 }
 
 /**
@@ -156,7 +170,7 @@ function handlePC(e) {
     //TODO: update value in BS2 object
 
     patch_number = e.value;
-    displayPatchNumber();
+    // displayPatchNumber();
     requestSysExDump();
 }
 
@@ -287,7 +301,7 @@ function sendCC(control) {
         } else {
             if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${midi_channel})`);
         }
-        logOutgoingMidiMessage("cc", a[i][0], a[i][1]);
+        logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
     }
 }
 
@@ -319,6 +333,25 @@ function updateDevice(control_type, control_number, value_float) {
     sendCC(DEVICE.setControlValue(control_type, control_number, value));
 }
 
+
+function patchInc() {
+    // if (TRACE) console.log("patchInc");
+    // patch_number = (patch_number + 1) % 128;
+    // displayPatchNumber();
+    // sendPC();
+    // requestSysExDump();
+}
+
+function patchDec() {
+    // if (TRACE) console.log("patchDec");
+    // if (patch_number === -1) patch_number = 1;
+    // patch_number--;
+    // if (patch_number < 0) patch_number = 127;
+    // displayPatchNumber();
+    // sendPC();
+    // requestSysExDump();
+}
+
 /**
  * Handles a change made by the user in the UI.
  */
@@ -330,7 +363,11 @@ function handleUserAction(control_type, control_number, value) {
     //     console.log(`${control_type}-${control_number}: ${value}`);
     // }
 
-    updateDevice(control_type, control_number, value);
+    if (control_type === 'pc') {
+        sendPC(control_number);
+    } else {
+        updateDevice(control_type, control_number, value);
+    }
 
     // if (control_type === "cc") {
     //     if (["102", "103", "104", "105"].includes(control_number)) {
@@ -362,7 +399,16 @@ function init(sendUpdate = true) {
  *
  */
 function randomize() {
-    console.log("TODO: randomize()");
+    console.group("randomize");
+    // if (settings.randomize.length < 1) {
+    //     alert("Nothing to randomize.\nUse the \"Settings\" menu to configure the randomizer.");
+    // } else {
+        DEVICE.randomize(settings.randomize);
+        updateUI();
+        updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
+    // }
+    console.groupEnd();
+    return false;   // disable the normal href behavior
 }
 
 //==================================================================================================================
@@ -371,7 +417,13 @@ function randomize() {
  * Set value of the controls (input and select) from the BS2 values
  */
 function updateControls() {
-    console.log("TODO: updateControls()");
+    console.log("updateControls()");
+
+    for (let i=0; i < DEVICE.control.length; i++) {
+        if (typeof DEVICE.control[i] === "undefined") continue;
+        updateControl(DEVICE.control[i].cc_type, i, DEVICE.getControlValue(DEVICE.control[i]));
+    }
+
 } // updateControls()
 
 /**
@@ -466,6 +518,22 @@ function setupResets() {
 */
 }
 
+function setupPresetSelectors() {
+
+    console.log("setupPresetSelectors()");
+
+    $("div.preset-id").click(function() {
+        if (TRACE) console.log(`click on ${this.id}`);
+        if (!this.classList.contains("on")) {   // if not already on...
+            $(this).siblings(".preset-id").removeClass("on");
+            this.classList.add("on");
+            // handleUserAction(...c.split("-"), v);
+            handleUserAction(...this.id.split("-"));
+        }
+    });
+
+}
+
 /**
  *
  */
@@ -482,6 +550,23 @@ function setupSwitches() {
             // handleUserAction(...c.split("-"), v);
             handleUserAction(...this.id.split("-"));
         }
+    });
+
+    // stompswitches:
+    $(".sw").click(function() {
+        if (TRACE) console.log(`click on ${this.id}`, this.classList);
+
+        // this.classList.remove("sw-on");
+        this.classList.add("sw-off");
+
+        // if (this.classList.contains("sw-off")) {
+        $(this).siblings(".sw").removeClass("sw-off");
+        //     $(this).siblings(".sw").addClass("sw-on");
+            // this.classList.remove("sw-off");
+            // handleUserAction(...c.split("-"), v);
+        handleUserAction(...this.id.split("-"));
+        // }
+        // if (TRACE) console.log(`click end`, this.classList);
     });
 
 }
@@ -526,6 +611,7 @@ function setupUI() {
 
     setupKnobs();
     setupResets();
+    setupPresetSelectors();
     setupSwitches();
     setupMenu();
 
@@ -705,24 +791,6 @@ function openMidiWindow() {
     return false;   // disable the normal href behavior
 }
 
-function patchInc() {
-    // if (TRACE) console.log("patchInc");
-    // patch_number = (patch_number + 1) % 128;
-    // displayPatchNumber();
-    // sendPatchNumber();
-    // requestSysExDump();
-}
-
-function patchDec() {
-    // if (TRACE) console.log("patchDec");
-    // if (patch_number === -1) patch_number = 1;
-    // patch_number--;
-    // if (patch_number < 0) patch_number = 127;
-    // displayPatchNumber();
-    // sendPatchNumber();
-    // requestSysExDump();
-}
-
 /**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
  */
@@ -743,7 +811,7 @@ function setupMenu() {
     console.log("setupMenu()");
 
     // $("#menu-favorites").click(openFavoritesPanel);
-    // $("#menu-randomize").click(randomize);
+    $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     // $("#menu-load-patch").click(loadPatchFromFile);
     // $("#menu-save-patch").click(savePatchToFile);

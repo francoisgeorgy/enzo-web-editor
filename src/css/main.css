@@ -6,7 +6,7 @@
 */
 
 :root {
-    --controls-row-start: 3;
+    --controls-row-start: 4;
     --controls-col-start: 1;
 
     --inset-width: 1px;
@@ -214,6 +214,11 @@ div.controls {
     justify-content: center;
 }
 
+.stompswitch {
+    font-size: 5rem;
+    color: var(--knob-track-init);
+}
+
 #title {
     grid-column: 1 / span 6;
     grid-row: 1;
@@ -222,7 +227,7 @@ div.controls {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
     /*padding: 0 !important;*/
-    padding: 0 4px !important;
+    padding: 4px 4px 0 4px !important;
     display: flex;
     /*justify-content: space-between;*/
     align-items: flex-end;
@@ -244,10 +249,23 @@ div.controls {
     text-shadow: 0 0 12px #e7ff00;
 }
 
+#title {
+    /*border-bottom: 1px solid #666;*/
+}
+
+#title > div.neon,
 #title > div.menu {
     flex-grow: 2;
-    text-align: right;
     margin-bottom: 0.25rem;
+    align-self: start!important;
+}
+
+#title > div.menu {
+    text-align: right;
+}
+
+#title > div.neon {
+    font-size: 2rem;
 }
 
 /*
@@ -290,11 +308,24 @@ div#patch > span {
     color: var(--menu-text-hover);
 }
 
-#presets {
+
+
+
+#messages {
     grid-row: 2;
     grid-column: 1 / span 6;
+    background: transparent none !important;
+    color: yellow;
+    font-size: 1.25rem;
+    align-self: center!important;
+    text-align: center;
 }
 
+
+#presets {
+    grid-row: 3;
+    grid-column: 1 / span 6;
+}
 
 .preset-selection {
     display: flex;
@@ -305,21 +336,27 @@ div#patch > span {
     color: #fff;
     font-size: 3em;
     text-align: center;
-    background-color: #3E3E46;
+    /*background-color: #3E3E46;*/
+    border: 1px solid #333;
     margin: 0 5px;
     cursor: pointer;
 }
 
 .preset:hover {
-    background-color: #BA7B0B;
+    /*background-color: #BA7B0B;*/
+    border: 1px solid var(--value);
 }
 
 .preset-sel {
 }
 
 .preset.on {
-    background-color: var(--value);
-    color: #000;
+    /*background-color: var(--value);*/
+    /*color: #000;*/
+    background-color: transparent;
+    color: var(--value);
+    text-shadow: 0 0 8px lightyellow;
+    border: 1px solid var(--value);
 }
 
 
@@ -504,6 +541,17 @@ div.btc.on {
     border: 1px solid var(--value);
 }
 
+
+.sw-off {
+    display: none;
+}
+
+.sw-on {
+    /*display: inherit;*/
+    text-shadow: 0 0 8px lightyellow;
+    color: var(--value);
+    /*border: 1px solid var(--value);*/
+}
 
 .dialog {
     overflow:auto;

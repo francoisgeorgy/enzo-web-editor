@@ -9,30 +9,34 @@
     <meta name="author" content="François Georgy" />
     <link rel="icon" href="favicon.png" sizes="32x32">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/f0483cf390.css" rel="stylesheet" />
+    <!--<link href="https://use.fontawesome.com/f0483cf390.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="bundle.js"></script>
 </head>
 <body>
     <div id="main">
 
         <div id="title">
-            <h1 id="neon">Enzo</h1>
+            <div class="neon">Enzo</div>
             <div class="menu">
-                <a id="menu-favorites" href="#"><i class="fa fa-heart-o" aria-hidden="true" title="favorites"></i> Favorites</a>
+                <a id="menu-favorites" href="#"><i class="far fa-heart" aria-hidden="true" title="favorites"></i> Favorites</a>
                 <span><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> Init</a></span>
                 <span><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> Randomize</a></span>
-                <span><a id="menu-sync" href="#" title="Sync with the connected Bass Station 2"><i class="fa fa-refresh" aria-hidden="true"></i> Sync</a></span> <!--&#8651;-->
-                <span><a id="menu-load-patch" href="#" title="Load a patch from a .syx file"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Load patch</a></span>
+                <span><a id="menu-sync" href="#" title="Sync with the connected Bass Station 2"><i class="fas fa-sync-alt"></i> Sync</a></span> <!--&#8651;-->
+                <span><a id="menu-load-patch" href="#" title="Load a patch from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> Load patch</a></span>
                 <!--<span><a id="menu-save-patch" href="#" title="Save the current patch to a .syx file"><i class="fa fa-save" aria-hidden="true"></i> Save patch</a></span>-->
-                <span><a id="menu-get-url" href="#" title="Save the current patch to a .syx file"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Get URL</a></span>
-                <span><a id="menu-print-patch" href="#" title="display the current patch for printing"><i class="fa fa-print" aria-hidden="true"></i> Patch sheet</a></span>
-                <span><a id="menu-midi" href="#"><i class="fa fa-exchange" aria-hidden="true"></i> Midi</a></span>
-                <span><a id="menu-settings" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></span>    <!--&#x2699;-->
-                <span><a id="menu-help" href="#">Help</a></span>
-                <span><a id="menu-about" href="#">About</a></span>      <!--&#x3f;-->
+                <span><a id="menu-get-url" href="#" title="Save the current patch to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> Get URL</a></span>
+                <span><a id="menu-print-patch" href="#" title="display the current patch for printing"><i class="fas fa-print" aria-hidden="true"></i> Patch sheet</a></span>
+                <span><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> Midi</a></span>
+                <span><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a></span>    <!--&#x2699;-->
+                <span><a id="menu-help" href="#"><i class="fas fa-question"></i> Help</a></span>
+                <span><a id="menu-about" href="#"><i class="fas fa-info"></i> About</a></span>      <!--&#x3f;-->
             </div>
         </div>
 
+        <div id="messages">
+            Messages for the user...
+        </div>
 
         <!--
             PRESET CHANGE AND QUICK ACCESS
@@ -42,24 +46,24 @@
                 <div>presets</div>
             </div>
             <div class="preset-selection">
-                <div id="preset-down" class="preset preset-sel">-</div>
-                <div id="preset-up" class="preset preset-sel">+</div>
-                <div id="preset-1" class="preset preset-id on">1</div>
-                <div id="preset-2" class="preset preset-id">2</div>
-                <div id="preset-3" class="preset preset-id">3</div>
-                <div id="preset-4" class="preset preset-id">4</div>
-                <div id="preset-5" class="preset preset-id">5</div>
-                <div id="preset-6" class="preset preset-id">6</div>
-                <div id="preset-7" class="preset preset-id">7</div>
-                <div id="preset-8" class="preset preset-id">8</div>
-                <div id="preset-9" class="preset preset-id">9</div>
-                <div id="preset-10" class="preset preset-id">10</div>
-                <div id="preset-11" class="preset preset-id">11</div>
-                <div id="preset-12" class="preset preset-id">12</div>
-                <div id="preset-13" class="preset preset-id">13</div>
-                <div id="preset-14" class="preset preset-id">14</div>
-                <div id="preset-15" class="preset preset-id">15</div>
-                <div id="preset-16" class="preset preset-id">16</div>
+                <div id="pc-down" class="preset preset-sel">-</div>
+                <div id="pc-up" class="preset preset-sel">+</div>
+                <div id="pc-1" class="preset preset-id on">1</div>
+                <div id="pc-2" class="preset preset-id">2</div>
+                <div id="pc-3" class="preset preset-id">3</div>
+                <div id="pc-4" class="preset preset-id">4</div>
+                <div id="pc-5" class="preset preset-id">5</div>
+                <div id="pc-6" class="preset preset-id">6</div>
+                <div id="pc-7" class="preset preset-id">7</div>
+                <div id="pc-8" class="preset preset-id">8</div>
+                <div id="pc-9" class="preset preset-id">9</div>
+                <div id="pc-10" class="preset preset-id">10</div>
+                <div id="pc-11" class="preset preset-id">11</div>
+                <div id="pc-12" class="preset preset-id">12</div>
+                <div id="pc-13" class="preset preset-id">13</div>
+                <div id="pc-14" class="preset preset-id">14</div>
+                <div id="pc-15" class="preset preset-id">15</div>
+                <div id="pc-16" class="preset preset-id">16</div>
             </div>
         </div>
 
@@ -74,21 +78,9 @@
             <div class="header">
                 <div>envelope type</div>
             </div>
-            <div id="cc-09-options">
-                <div id="cc-09-0" class="bt">triggered</div>
-                <div id="cc-09-64" class="bt">follower</div>
-            </div>
-        </div>
-
-        <!--
-            BYPASS
-        -->
-        <div id="bypass">
-            <div class="header">
-                <div>bypass</div>
-            </div>
-            <div class="controls">
-                <svg class="knob" id="cc-14"></svg>
+            <div id="cc-9-options">
+                <div id="cc-9-0" class="bt">triggered</div>
+                <div id="cc-9-64" class="bt">follower</div>
             </div>
         </div>
 
@@ -244,7 +236,10 @@
                 <div>tap</div>
             </div>
             <div class="controls">
-                <svg class="knob" id="cc-28"></svg>
+                <div class="stompswitch">
+                    <div id="cc-28-127" class="sw"><i class="far fa-circle" aria-hidden="true" title="click to switch on"></i></div>
+                    <div id="cc-28-0" class="sw sw-on sw-off"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
+                </div>
             </div>
         </div>
 
@@ -304,6 +299,20 @@
             </div>
         </div>
 
+        <!--
+            BYPASS
+        -->
+        <div id="bypass">
+            <div class="header">
+                <div>bypass</div>
+            </div>
+            <div class="controls">
+                <div class="stompswitch">
+                    <div id="cc-14-127" class="sw"><i class="far fa-circle" aria-hidden="true" title="click to switch on"></i></div>
+                    <div id="cc-14-0" class="sw sw-off sw-on"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
+                </div>
+            </div>
+        </div>
 
         <div id="status-bar">
 <!--

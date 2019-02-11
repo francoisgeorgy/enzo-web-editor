@@ -28,7 +28,7 @@ export const control = new Array(127);
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -36,7 +36,7 @@ function defineControls() {
     };
     control[control_id.envelope_type] = { // 9,
         name: "Env type",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -44,7 +44,7 @@ function defineControls() {
     };
     control[control_id.bypass] = { // 14,
         name: "Bypass",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -52,7 +52,7 @@ function defineControls() {
     };
     control[control_id.tempo] = { // 15,
         name: "tempo",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -109,7 +109,7 @@ function defineControls() {
     };
     control[control_id.filter_type] = { // 23,
         name: "filter type",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -153,7 +153,7 @@ function defineControls() {
     };
     control[control_id.synth_mode] = { // 29,
         name: "synth mode",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
@@ -161,7 +161,7 @@ function defineControls() {
     };
     control[control_id.synth_waveshape] = { // 30
         name: "waveshape",
-        human: mapper._100,
+        // human: mapper._100,
         sysex: {
             offset: 22,
             mask: [0x03, 0x7E]
