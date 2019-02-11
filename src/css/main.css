@@ -196,29 +196,6 @@ body {
     margin-top: -1px;
 }
 
-.control-row {
-    display: grid !important;
-    grid-column-gap: 1.5vw;
-    grid-row-gap: 0.5vh;
-    justify-content: start;
-    grid-template-rows: 2.5vh auto;
-    padding-left: 6px;
-    padding-right: 6px;
-}
-.control-row.add-row {
-    grid-template-rows: 2.5vh auto 2.5vh auto;
-}
-
-div.controls {
-    display: flex;
-    justify-content: center;
-}
-
-.stompswitch {
-    font-size: 5rem;
-    color: var(--knob-track-init);
-}
-
 #title {
     grid-column: 1 / span 6;
     grid-row: 1;
@@ -249,10 +226,6 @@ div.controls {
     text-shadow: 0 0 12px #e7ff00;
 }
 
-#title {
-    /*border-bottom: 1px solid #666;*/
-}
-
 #title > div.neon,
 #title > div.menu {
     flex-grow: 2;
@@ -266,6 +239,29 @@ div.controls {
 
 #title > div.neon {
     font-size: 2rem;
+}
+
+.control-row {
+    display: grid !important;
+    grid-column-gap: 1.5vw;
+    grid-row-gap: 0.5vh;
+    justify-content: start;
+    grid-template-rows: 2.5vh auto;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.control-row.add-row {
+    grid-template-rows: 2.5vh auto 2.5vh auto;
+}
+
+div.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.stompswitch {
+    font-size: 5rem;
+    color: var(--knob-track-init);
 }
 
 /*
@@ -309,55 +305,66 @@ div#patch > span {
 }
 
 
-
+#tools {
+    grid-row: 2;
+    grid-column: 1;
+    color: var(--header-text);
+}
 
 #messages {
     grid-row: 2;
-    grid-column: 1 / span 6;
+    grid-column: 2 / span 4;
+    align-self: stretch!important;
     background: transparent none !important;
+    border: 2px solid #333;
     color: yellow;
     font-size: 1.25rem;
-    align-self: center!important;
+    /*align-self: center!important;*/
     text-align: center;
 }
 
+#options {
+    grid-row: 2;
+    grid-column: 6;
+    color: var(--header-text);
+}
 
 #presets {
     grid-row: 3;
     grid-column: 1 / span 6;
 }
 
-.preset-selection {
-    display: flex;
-}
+    .preset-selection {
+        display: flex;
+    }
 
-.preset {
-    width: calc(100% / 18 - 10px);
-    color: #fff;
-    font-size: 3em;
-    text-align: center;
-    /*background-color: #3E3E46;*/
-    border: 1px solid #333;
-    margin: 0 5px;
-    cursor: pointer;
-}
+    .preset {
+        width: calc(100% / 18 - 10px);
+        color: #fff;
+        font-size: 3em;
+        text-align: center;
+        /*background-color: #3E3E46;*/
+        border: 1px solid #333;
+        margin: 0 5px;
+        cursor: pointer;
+    }
 
-.preset:hover {
-    /*background-color: #BA7B0B;*/
-    border: 1px solid var(--value);
-}
+    .preset:hover {
+        /*background-color: #BA7B0B;*/
+        border: 1px solid var(--value);
+    }
 
-.preset-sel {
-}
+    .preset-sel {
+    }
 
-.preset.on {
-    /*background-color: var(--value);*/
-    /*color: #000;*/
-    background-color: transparent;
-    color: var(--value);
-    text-shadow: 0 0 8px lightyellow;
-    border: 1px solid var(--value);
-}
+    .preset.on {
+        /*background-color: var(--value);*/
+        /*color: #000;*/
+        background-color: transparent;
+        color: var(--value);
+        text-shadow: 0 0 8px lightyellow;
+        border: 1px solid var(--value);
+    }
 
 
 #pitch {

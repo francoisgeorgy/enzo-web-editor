@@ -134,25 +134,40 @@ function getCurrentPatchAsLink() {
 //==================================================================================================================
 // Midi messages handling
 
-let patch_number = -1;
-let patch_name = null;
+let preset_number = 0;
 
-// function displayPatchName() {
-//     //TODO: get value from DEVICE
-//     $("#patch-name").text(patch_name);
-// }
-//
-// function displayPatchNumber() {
-//     //TODO: get value from DEVICE
-//     $("#patch-number").html(patch_number);
-// }
+function displayPreset() {
+    $(".preset-id").removeClass("on");
+    $(`#pc-${preset_number}`).addClass("on");
+}
 
-function sendPC(patch_number) {
+function presetInc() {
+    if (TRACE) console.log("presetInc");
+    // preset_number = (preset_number % 16) + 1;
+    // displayPatchNumber();
+    sendPC((preset_number % 16) + 1);
+    displayPreset();
+    // requestSysExDump();
+}
+
+function presetDec() {
+    if (TRACE) console.log("presetDec");
+    // if (preset_number === -1) preset_number = 1;
+    preset_number--;
+    if (preset_number < 1) preset_number = 16;
+    // displayPatchNumber();
+    sendPC(preset_number);
+    displayPreset();
+    // requestSysExDump();
+}
+
+function sendPC(pc) {
+    preset_number = pc;
     if (midi_output) {
-        if (TRACE) console.log(`send program change ${patch_number}`);
-        midi_output.sendProgramChange(patch_number, midi_channel);
+        if (TRACE) console.log(`send program change ${preset_number}`);
+        midi_output.sendProgramChange(preset_number, midi_channel);
     }
-    logOutgoingMidiMessage("PC", patch_number);
+    logOutgoingMidiMessage("PC", preset_number);
 }
 
 /**
@@ -169,9 +184,9 @@ function handlePC(e) {
 
     //TODO: update value in DEVICE
 
-    patch_number = e.value;
+    preset_number = e.value;
     // displayPatchNumber();
-    requestSysExDump();
+    // requestSysExDump();
 }
 
 /**
@@ -349,25 +364,6 @@ function updateDevice(control_type, control_number, value_float) {
     sendCC(DEVICE.setControlValue(control_type, control_number, value));
 }
 
-
-function patchInc() {
-    // if (TRACE) console.log("patchInc");
-    // patch_number = (patch_number + 1) % 128;
-    // displayPatchNumber();
-    // sendPC();
-    // requestSysExDump();
-}
-
-function patchDec() {
-    // if (TRACE) console.log("patchDec");
-    // if (patch_number === -1) patch_number = 1;
-    // patch_number--;
-    // if (patch_number < 0) patch_number = 127;
-    // displayPatchNumber();
-    // sendPC();
-    // requestSysExDump();
-}
-
 /**
  * Handles a change made by the user in the UI.
  */
@@ -500,6 +496,28 @@ function setupKnobs() {
 function setupPresetSelectors() {
 
     console.log("setupPresetSelectors()");
+
+    $("div#pc-down").click(function() {
+        if (TRACE) console.log(`click on ${this.id}`);
+        // if (!this.classList.contains("on")) {   // if not already on...
+        //     $(this).siblings(".preset-id").removeClass("on");
+        //     this.classList.add("on");
+        //     // handleUserAction(...c.split("-"), v);
+        //     handleUserAction(...this.id.split("-"));
+        // }
+        presetDec();
+    });
+
+    $("div#pc-up").click(function() {
+        if (TRACE) console.log(`click on ${this.id}`);
+        // if (!this.classList.contains("on")) {   // if not already on...
+        //     $(this).siblings(".preset-id").removeClass("on");
+        //     this.classList.add("on");
+        //     // handleUserAction(...c.split("-"), v);
+        //     handleUserAction(...this.id.split("-"));
+        // }
+        presetInc();
+    });
 
     $("div.preset-id").click(function() {
         if (TRACE) console.log(`click on ${this.id}`);
@@ -821,7 +839,7 @@ function setupMenu() {
 // Settings
 
 var settings = {
-    midi_channel: 1,
+    midi_channel: "all",
     randomize: [],
     fade_unused: false
 };
@@ -919,13 +937,18 @@ function connectOutput(output) {
  * @param info
  */
 function deviceConnect(info) {
+
     console.log("deviceConnect", info);
+    // console.log("deviceConnect device names", DEVICE.name_device_in, DEVICE.name_device_out);
+
     // console.log("deviceConnect port type ***", typeof info.port);
     // console.log("deviceConnect port object ***", info.port);
+
     if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
-        console.log("ignore deviceConnect");
+        console.log("ignore deviceConnect", info.port.name, DEVICE.name_device_in, DEVICE.name_device_out);
         return;
     }
+
     if (info.port.type === "input") {
     // if (info.hasOwnProperty("input") && info.input && (info.port.name === DEVICE.name_device_in)) {
         if (!midi_input) {
@@ -976,7 +999,7 @@ const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-stri
 
 var midi_input = null;
 var midi_output = null;
-var midi_channel = 1;
+var midi_channel = "all";
 
 var knobs = {};         // svg-knob
 
@@ -1030,7 +1053,7 @@ $(function () {
             let input = WebMidi.getInputByName(DEVICE.name_device_in);
             if (input) {
                 connectInput(input);
-                setStatus(`${DEVICE.name_device_in} MIDI device connected on MIDI channel ${midi_channel}.`);
+                setStatus(`${DEVICE.name_device_in} MIDI device found on MIDI channel ${midi_channel}.`);
             } else {
                 setStatusError(`${DEVICE.name_device_in} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
                 setMidiInStatus(false);

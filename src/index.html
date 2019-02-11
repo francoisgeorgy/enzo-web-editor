@@ -34,8 +34,52 @@
             </div>
         </div>
 
+        <div id="tools">
+            Fade (quick, slow)
+        </div>
+
         <div id="messages">
             Messages for the user...
+        </div>
+
+        <div id="options">
+            <div>
+                MIDI device:
+                <select>
+                    <option value="device-name1">device name</option>
+                    <option value="device-name2">device name</option>
+                </select>
+            </div>
+            <div>
+                MIDI channel:
+                <select>
+                    <option value="all">all</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+            <div>
+                Display:
+                <select>
+                    <option value="S">small</option>
+                    <option value="M">regular</option>
+                    <option value="L">large</option>
+                </select>
+            </div>
         </div>
 
         <!--
@@ -48,7 +92,7 @@
             <div class="preset-selection">
                 <div id="pc-down" class="preset preset-sel">-</div>
                 <div id="pc-up" class="preset preset-sel">+</div>
-                <div id="pc-1" class="preset preset-id on">1</div>
+                <div id="pc-1" class="preset preset-id">1</div>
                 <div id="pc-2" class="preset preset-id">2</div>
                 <div id="pc-3" class="preset preset-id">3</div>
                 <div id="pc-4" class="preset preset-id">4</div>
@@ -280,9 +324,9 @@
             </div>
             <div id="cc-29-options" class="grid-2x2">
                 <div id="cc-29-0" class="bt">DRY</div>
-                <div id="cc-29-32" class="bt">MONO</div>
-                <div id="cc-29-64" class="bt">ARP</div>
-                <div id="cc-29-96" class="bt">POLY</div>
+                <div id="cc-29-63" class="bt">MONO</div>
+                <div id="cc-29-95" class="bt">ARP</div>
+                <div id="cc-29-127" class="bt">POLY</div>
             </div>
         </div>
 

@@ -33,11 +33,11 @@ const _4_steps = function (v) {
     if (v < 32) {
         return 0;
     } else if (v < 64) {
-        return 32;
+        return 63;
     } else if (v < 96) {
-        return 64;
+        return 95;
     } else {
-        return 96;
+        return 127;
     }
 };
 

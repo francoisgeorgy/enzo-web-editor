@@ -173,8 +173,10 @@ const getMidiMessagesForCC = function (ctrl) {
 
 export default {
     name: "Enzo",
-    name_device_in: "Launch Control 2",
-    name_device_out: "Launch Control 2",
+    // name_device_in: "Launch Control 2",
+    // name_device_out: "Launch Control 2",
+    name_device_in: "mi.1 Bluetooth",
+    name_device_out: "mi.1 Bluetooth",
     // meta,
     control_id,
     control,
