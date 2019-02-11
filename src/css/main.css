@@ -1,7 +1,9 @@
+/*
 @font-face{
     font-family: sevensegments;
     src: url("DSEG7Classic-BoldItalic.woff") format("woff");
 }
+*/
 
 :root {
     --controls-row-start: 3;
@@ -67,7 +69,7 @@
     --side-panel-color: #ddd;
     --side-panel-border: #222;
 
-    --enzo-gold: #006ab7; /* #009AD7; */  /* 006ab7 */
+    --enzo-gold: #006ab7; /* gold; */ /* #009AD7; */  /* 006ab7 */
 }
 
 .enzo-gold {
@@ -236,6 +238,7 @@ div.controls {
     margin-bottom: 0.25rem;
 }
 
+/*
 div#patch {
     margin-left: 5rem;
     margin-bottom: 0.25rem;
@@ -250,7 +253,7 @@ div#patch > span {
 #patch-number {
     font-family: sevensegments;
     color: var(--value);
-    /*text-shadow: 0 0 8px lightyellow;*/
+    !*text-shadow: 0 0 8px lightyellow;*!
 }
 
 #patch-dec,
@@ -259,6 +262,7 @@ div#patch > span {
     cursor: pointer;
     padding: 0 0.3rem;
 }
+*/
 
 .menu span {
     margin-left: 0.8vw;
@@ -278,6 +282,30 @@ div#patch > span {
     grid-row: 2;
     grid-column: 1 / span 6;
 }
+
+
+.preset-selection {
+    display: flex;
+}
+
+.preset {
+    width: calc(100% / 18 - 10px);
+    color: #fff;
+    font-size: 3em;
+    text-align: center;
+    background-color: #3E3E46;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.preset:hover {
+    background-color: #BA7B0B;
+}
+
+.preset-sel {
+
+}
+
 
 #env-type {
     grid-row: calc(var(--controls-row-start) + 3);
