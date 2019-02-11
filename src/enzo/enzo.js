@@ -55,6 +55,25 @@ const setControlValue = function () {
     return c;
 };
 
+/**
+ * Only for CC, not for NRPN
+ *
+ * Returns an array of "midi messages" to send to update control to value
+ * @param ctrl
+ */
+const getMidiMessagesForCC = function (ctrl) {
+    // console.log("BS2.getMidiMessagesForControl", control_number, value);
+    if (ctrl.cc_type !== "cc") return [];
+    let CC = [];
+    let value = getControlValue(ctrl);
+    // if (ctrl.lsb < 0) {
+        CC.push([ctrl.cc_number, value]);
+    // } else {
+    //     CC.push([ctrl.cc_number, value >>> 1]);          // we discard the lsb
+    //     CC.push([ctrl.lsb, value % 2 === 0 ? 0 : 64]);   // that we put in the second CC message
+    // }
+    return CC;
+};
 
 export default {
     name: "Enzo",
@@ -92,5 +111,5 @@ export default {
     // getSysEx: sysex.getDump,     // export all values as a SysEx dump
     // validate: sysex.validate,   // validate a SysEx dump
     // doubleByteValue,
-    // getMidiMessagesForNormalCC
+    getMidiMessagesForCC
 };

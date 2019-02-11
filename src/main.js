@@ -6,6 +6,7 @@ import * as WebMidi from "webmidi";
 import "./css/lity.min.css";
 import "./css/main.css";
 import {detect} from "detect-browser";
+import {KNOB_CONF} from "./conf";
 
 const TRACE = true;    // when true, will log more details in the console
 
@@ -275,13 +276,26 @@ function updateControl(control_type, control_number, value) {
  * Send a control value to the connected device.
  * @param control
  */
-function sendSingleValue(control) {
+function sendCC(control) {
+
+    let a = DEVICE.getMidiMessagesForCC(control);
+
+    for (let i=0; i<a.length; i++) {
+        if (midi_output) {
+            if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${midi_channel}`);
+            midi_output.sendControlChange(a[i][0], a[i][1], midi_channel);
+        } else {
+            if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${midi_channel})`);
+        }
+        logOutgoingMidiMessage("cc", a[i][0], a[i][1]);
+    }
 }
 
 /**
  * Send all values to the connected device
  */
 function updateConnectedDevice(onlyChanged = false) {
+    console.log("TODO: updateConnectedDevice()");
 }
 
 //==================================================================================================================
@@ -297,12 +311,36 @@ function updateConnectedDevice(onlyChanged = false) {
  * @param value_float
  */
 function updateDevice(control_type, control_number, value_float) {
+
+    let value = Math.round(value_float);
+
+    if (TRACE) console.log("updateDevice", control_type, control_number, value_float, value);
+
+    sendCC(DEVICE.setControlValue(control_type, control_number, value));
 }
 
 /**
- * Handles (reacts to) a change made by the user in the UI.
+ * Handles a change made by the user in the UI.
  */
-function handleUIChange(control_type, control_number, value) {
+function handleUserAction(control_type, control_number, value) {
+
+    if (TRACE) console.log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
+
+    // if (control_type==='cc' && (control_number===28 || control_number===71)) {
+    //     console.log(`${control_type}-${control_number}: ${value}`);
+    // }
+
+    updateDevice(control_type, control_number, value);
+
+    // if (control_type === "cc") {
+    //     if (["102", "103", "104", "105"].includes(control_number)) {
+    //         envelopes["mod-envelope"].envelope = DEVICE.getADSREnv("mod");
+    //     } else if (["90", "91", "92", "93"].includes(control_number)) {
+    //         if (TRACE) console.log("redraw amp env", envelopes);
+    //         envelopes["amp-envelope"].envelope = DEVICE.getADSREnv("amp");
+    //     }
+    // }
+
 }
 
 //==================================================================================================================
@@ -311,7 +349,6 @@ function handleUIChange(control_type, control_number, value) {
  *
  */
 function init(sendUpdate = true) {
-/*
     if (TRACE) console.log(`init(${sendUpdate})`);
     DEVICE.init();
     updateUI(true);
@@ -319,13 +356,13 @@ function init(sendUpdate = true) {
     if (sendUpdate) updateConnectedDevice();
     if (TRACE) console.log(`init done`);
     return false;   // disable the normal href behavior
-*/
 }
 
 /**
  *
  */
 function randomize() {
+    console.log("TODO: randomize()");
 }
 
 //==================================================================================================================
@@ -334,6 +371,7 @@ function randomize() {
  * Set value of the controls (input and select) from the BS2 values
  */
 function updateControls() {
+    console.log("TODO: updateControls()");
 } // updateControls()
 
 /**
@@ -341,99 +379,50 @@ function updateControls() {
  */
 function setupKnobs() {
 
-    function _setupKnob(id, c, v) {
-
-        let elem = document.getElementById(id);
-
-        if (TRACE) console.log(`_setupKnob ${id}`, elem);
-
-        if (elem === null) return;
-
-        if (!elem.classList.contains("knob")) return;
-
-        if (TRACE) console.log(`configure #${id}: range=${c.cc_range}, init-value=${v}`);
-
-        knobs[id] = new Knob(elem, {
-            // with_label: false,
-            label: false,
-            value_min: Math.min(...c.cc_range),
-            value_max: Math.max(...c.cc_range),
-            value_resolution: 1,
-            default_value: v,
-            center_zero: Math.min(...c.range) < 0,
-            center_value: c.hasOwnProperty("cc_center") ? c.cc_center : c.init_value,
-            format: v => c.human(v),
-            snap_to_steps: false,
-            mouse_wheel_acceleration: 1,
-            // background disk:
-            bg_radius: 32,
-            bg_border_width: 2,
-            // track background:
-            track_bg_radius: 40,
-            track_bg_width: 8,
-            // track:
-            track_radius: 40,
-            track_width: 8,
-            // cursor
-            cursor_radius: 20,
-            cursor_length: 10,
-            cursor_width: 4,
-            // appearance:
-            palette: "dark",
-            bg:  true,
-            track_bg: true,
-            track: true,
-            cursor: true,
-            linecap: "round",
-            value_text: true,
-            value_position: 58,    // empirical value: HALF_HEIGHT + config.font_size / 3
-            font_family: "sans-serif",
-            font_size: 25,
-            font_weight: "bold",
-            markers: false,
-            class_bg: "knob-bg",
-            class_track_bg : "knob-track-bg",
-            class_track : "knob-track",
-            class_value : "knob-value",
-            class_cursor : "knob-cursor",
-            class_markers: "knob-markers",
-            // bg_color: "#333",
-            // bg_border_color: "#888",
-            // track_bg_color: "#555",
-            track_color_init: "#999",
-            track_color: "#bbb",
-            cursor_color_init: "#bbb",
-            cursor_color: "#ddd",
-            markers_color: "#3680A4",
-            font_color: "#FFEA00"
-            // bg_color: "#333",
-            // bg_border_color: "#888",
-            // track_bg_color: "#555",
-            // track_color_init: "#999",
-            // track_color: "#bbb",
-            // cursor_color_init: "#999",
-            // cursor_color: "#bbb",
-            // markers_color: "#3680A4",
-            // font_color: "#FFEA00"
-        });
-
-        knobs[id].disableDebug();
-
-        elem.addEventListener("change", function(event) {
-            handleUIChange(c.cc_type, c.cc_number, event.detail);
-        });
-
-    }
+    console.log("setupKnobs()");
 
     for (let i=0; i < DEVICE.control.length; i++) {
 
         const c = DEVICE.control[i];
-        if (typeof c === "undefined") continue;
-
-        // if (TRACE) console.log(`${c.cc_type}-${c.cc_number} (${i})`);
+        if (typeof c === "undefined") {
+            console.log("device undefined", i);
+            continue;
+        }
 
         const id = `${c.cc_type}-${c.cc_number}`;
-        _setupKnob(id, c, DEVICE.getControlValue(DEVICE.control[i]));
+        const v = DEVICE.getControlValue(DEVICE.control[i]);
+
+        let elem = document.getElementById(id);
+        if (elem === null) {
+            console.warn(`setupKnobs: element not found for id ${id}`);
+            continue;
+        }
+        if (!elem.classList.contains("knob")) return;
+
+        if (TRACE) console.log(`configure #${id}: range=${c.cc_range}, init-value=${v}`);
+
+        // knobs[id] = new Knob(elem, Object.assign({}, KNOB_CONF, {
+        //     value_min: Math.min(...c.cc_range),
+        //     value_max: Math.max(...c.cc_range),
+        //     default_value: v,
+        //     center_zero: Math.min(...c.range) < 0,
+        //     center_value: c.hasOwnProperty("cc_center") ? c.cc_center : c.init_value,
+        //     format: v => c.human(v)
+        // }));
+        knobs[id] = new Knob(elem, KNOB_CONF);
+        knobs[id].config = {
+            value_min: Math.min(...c.cc_range),
+            value_max: Math.max(...c.cc_range),
+            default_value: v,
+            center_zero: Math.min(...c.range) < 0,
+            center_value: c.hasOwnProperty("cc_center") ? c.cc_center : c.init_value,
+            format: v => c.human(v)
+        };
+        knobs[id].disableDebug();
+
+        elem.addEventListener("change", function(event) {
+            handleUserAction(c.cc_type, c.cc_number, event.detail);
+        });
     }
 
 } // setupKnobs
@@ -442,6 +431,9 @@ function setupKnobs() {
  * Add double-click handlers on .knob-label elements. A double-click will reset the linked knob.
  */
 function setupResets() {
+
+    console.log("TODO: setupResets()");
+
 /*
     $(".knob-label:not(.no-reset)")
         .attr("alt", "Double-click to reset")
@@ -478,14 +470,21 @@ function setupResets() {
  *
  */
 function setupSwitches() {
+
+    console.log("setupSwitches()");
+
+    // "radio button"-like behavior:
+    $("div.bt").click(function() {
+        if (TRACE) console.log(`click on ${this.id}`);
+        if (!this.classList.contains("on")) {   // if not already on...
+            $(this).siblings(".bt").removeClass("on");
+            this.classList.add("on");
+            // handleUserAction(...c.split("-"), v);
+            handleUserAction(...this.id.split("-"));
+        }
+    });
+
 }
-
-/**
- *
- */
-function setupSelects() {
-} // setupSelects
-
 
 /**
  * Update the "custom" or "linked" UI elements, like the ADSR curves
@@ -509,7 +508,6 @@ function updateUI(force = false) {
     if (TRACE) console.log("updateUI done");
 }
 
-
 /**
  * Initial setup of the UI.
  * Does a DEVICE.init() too, but only the virtual DEVICE; does not send any CC to the connected device.
@@ -529,7 +527,6 @@ function setupUI() {
     setupKnobs();
     setupResets();
     setupSwitches();
-    setupSelects();
     setupMenu();
 
     console.groupEnd();
@@ -743,57 +740,51 @@ function keyUp(code, alt, shift) {
  */
 function setupMenu() {
 
-/*
-    $("#menu-favorites").click(openFavoritesPanel);
-    $("#menu-randomize").click(randomize);
+    console.log("setupMenu()");
+
+    // $("#menu-favorites").click(openFavoritesPanel);
+    // $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    $("#menu-load-patch").click(loadPatchFromFile);
-    $("#menu-save-patch").click(savePatchToFile);
-    $("#menu-get-url").click(reloadWithPatchUrl);
-    $("#menu-print-patch").click(printPatch);
-    $("#menu-sync").click(syncUIwithBS2);
+    // $("#menu-load-patch").click(loadPatchFromFile);
+    // $("#menu-save-patch").click(savePatchToFile);
+    // $("#menu-get-url").click(reloadWithPatchUrl);
+    // $("#menu-print-patch").click(printPatch);
+    // $("#menu-sync").click(syncUIwithBS2);
     $("#menu-midi").click(openMidiWindow);
-    $("#menu-settings").click(openSettingsPanel);
-    $("#menu-help").click(openHelpDialog);
-    $("#menu-about").click(openCreditsDialog);
-
-    $("#played-note").click(playLastNote);
-
-    // in load-patch-dialog:
-    $("#patch-file").change(readFile);
-
-    // in settings dialog:
-    $("#midi-channel").change(setMidiChannel);
-    $(".close-settings-panel").click(closeSettingsPanel);
-
-    // in favorites dialog:
-    $("#add-favorite-bt").click(function(){
-        addToFavorites();
-        // closeFavoritesDialog();
-    });
-    $(".close-favorites-panel").click(closeFavoritesPanel);
-
-    // patch number:
-    $("#patch-dec").click(patchDec);
-    $("#patch-inc").click(patchInc);
-
-    setupKeyboard();
-
-    // close all opened panel on outside click:
-    $(document).mousedown(function(e) {
-        $(".panel").each(function() {
-            let element = $(this);
-            if (element.is(":visible")) {
-                // if the target of the click isn"t the container nor a descendant of the container
-                if (!element.is(e.target)) {
-                    if (element.has(e.target).length === 0) {
-                        element.hide("slide", {direction: "left"}, 500);
-                    }
-                }
-            }
-        });
-    });
-*/
+    // $("#menu-settings").click(openSettingsPanel);
+    // $("#menu-help").click(openHelpDialog);
+    // $("#menu-about").click(openCreditsDialog);
+    //
+    // // in load-patch-dialog:
+    // $("#patch-file").change(readFile);
+    //
+    // // in settings dialog:
+    // $("#midi-channel").change(setMidiChannel);
+    // $(".close-settings-panel").click(closeSettingsPanel);
+    //
+    // // in favorites dialog:
+    // $("#add-favorite-bt").click(function(){
+    //     addToFavorites();
+    //     // closeFavoritesDialog();
+    // });
+    // $(".close-favorites-panel").click(closeFavoritesPanel);
+    //
+    // setupKeyboard();
+    //
+    // // close all opened panel on outside click:
+    // $(document).mousedown(function(e) {
+    //     $(".panel").each(function() {
+    //         let element = $(this);
+    //         if (element.is(":visible")) {
+    //             // if the target of the click isn"t the container nor a descendant of the container
+    //             if (!element.is(e.target)) {
+    //                 if (element.has(e.target).length === 0) {
+    //                     element.hide("slide", {direction: "left"}, 500);
+    //                 }
+    //             }
+    //         }
+    //     });
+    // });
 
 }
 
@@ -807,15 +798,19 @@ var settings = {
 };
 
 function loadSettings() {
+    console.log("TODO: loadSettings()");
 }
 
 function saveSettings() {
+    console.log("TODO: saveSettings()");
 }
 
 function setupSettings() {
+    console.log("TODO: setupSettings()");
 }
 
 function displayRandomizerSettings() {
+    console.log("TODO: displayRandomizerSettings()");
 }
 
 

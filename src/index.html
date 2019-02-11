@@ -44,7 +44,7 @@
             <div class="preset-selection">
                 <div id="preset-down" class="preset preset-sel">-</div>
                 <div id="preset-up" class="preset preset-sel">+</div>
-                <div id="preset-1" class="preset preset-id">1</div>
+                <div id="preset-1" class="preset preset-id on">1</div>
                 <div id="preset-2" class="preset preset-id">2</div>
                 <div id="preset-3" class="preset preset-id">3</div>
                 <div id="preset-4" class="preset preset-id">4</div>
@@ -74,8 +74,9 @@
             <div class="header">
                 <div>envelope type</div>
             </div>
-            <div class="controls">
-                <svg class="knob" id="cc-09"></svg>
+            <div id="cc-09-options">
+                <div id="cc-09-0" class="bt">triggered</div>
+                <div id="cc-09-64" class="bt">follower</div>
             </div>
         </div>
 
@@ -88,18 +89,6 @@
             </div>
             <div class="controls">
                 <svg class="knob" id="cc-14"></svg>
-            </div>
-        </div>
-
-        <!--
-            TEMPO
-        -->
-        <div id="tempo">
-            <div class="header">
-                <div>tap tempo</div>
-            </div>
-            <div class="controls">
-                <svg class="knob" id="cc-28"></svg>
             </div>
         </div>
 
@@ -248,8 +237,21 @@
         </div>
 
         <!--
+            TEMPO
+        -->
+        <div id="tempo">
+            <div class="header">
+                <div>tap</div>
+            </div>
+            <div class="controls">
+                <svg class="knob" id="cc-28"></svg>
+            </div>
+        </div>
+
+        <!--
             MAX DELAY FEEDBACK
         -->
+<!--
         <div id="max-delay-feedback">
             <div class="header">
                 <div>max delay feedback</div>
@@ -257,6 +259,7 @@
             <div class="controls">
             </div>
         </div>
+-->
 
         <!--
             TAP
@@ -280,8 +283,11 @@
             <div class="header">
                 <div>synth mode</div>
             </div>
-            <div class="controls">
-                <svg class="knob" id="cc-29"></svg>
+            <div id="cc-29-options" class="grid-2x2">
+                <div id="cc-29-0" class="bt">DRY</div>
+                <div id="cc-29-63" class="bt">MONO</div>
+                <div id="cc-29-95" class="bt">ARP</div>
+                <div id="cc-29-129" class="bt">POLY</div>
             </div>
         </div>
 
@@ -292,8 +298,9 @@
             <div class="header">
                 <div>waveshape</div>
             </div>
-            <div class="controls">
-                <svg class="knob" id="cc-30"></svg>
+            <div id="cc-30-options">
+                <div id="cc-30-0" class="bt">SAWTOOTH</div>
+                <div id="cc-30-127" class="bt">SQUARE</div>
             </div>
         </div>
 

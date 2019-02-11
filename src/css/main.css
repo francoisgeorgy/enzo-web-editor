@@ -91,21 +91,24 @@ body {
     padding: 0 0 0 0;
     /*background: var(--body-bg-from); !* linear-gradient(to bottom, #202023, #3E3E46); *!*/
     background-color: var(--enzo-gold);
-    font-family: 'Roboto Condensed', sans-serif;
+    /*font-family: 'Roboto Condensed', sans-serif;*/
+    font-family: 'Helvetica', sans-serif;
     font-weight: 400;
 }
 
 .header {
     margin: 3px 0 6px 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
 }
 
 .header > div {
-    font-family: "Roboto Condensed", sans-serif;
+    /*font-family: "Roboto Condensed", sans-serif;*/
     color: var(--header-text);
     padding: 0 3px;
-    font-size: 1.0rem;
-    letter-spacing: 1px;
-    font-weight: 500;
+    /*font-size: 1.0rem;*/
+    /*letter-spacing: 1px;*/
+    /*font-weight: 500;*/
 }
 
 .colored-header {
@@ -115,7 +118,7 @@ body {
 
 .colored-header > div {
     font-size: 1.0rem;
-    font-family: "Roboto Condensed", sans-serif;
+    /*font-family: "Roboto Condensed", sans-serif;*/
 }
 
 .colored-header div:nth-child(1) {
@@ -147,6 +150,14 @@ body {
     border-right: none !important;
 }
 
+.grid-2x2 {
+    display: grid;
+    /*grid-column-gap: 0.5vh;*/
+    /*grid-row-gap: 0.5vh;*/
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+}
+
 #main {
     margin: 0;
     padding: 0;
@@ -176,7 +187,7 @@ body {
 }
 
 #main select {
-    font-family: 'Roboto Condensed', sans-serif;
+    /*font-family: 'Roboto Condensed', sans-serif;*/
     font-size: 1rem;
     color: var(--value);
     background-color: var(--default-bg-to);
@@ -200,6 +211,7 @@ body {
 
 div.controls {
     display: flex;
+    justify-content: center;
 }
 
 #title {
@@ -219,7 +231,7 @@ div.controls {
 }
 
 #title h1 {
-    font-family: 'Roboto', sans-serif;
+    /*font-family: 'Roboto', sans-serif;*/
     font-weight: 300;
     font-size: 1.6rem;
     color: var(--title-text);
@@ -303,24 +315,13 @@ div#patch > span {
 }
 
 .preset-sel {
-
 }
 
-
-#env-type {
-    grid-row: calc(var(--controls-row-start) + 3);
-    grid-column: calc(var(--controls-col-start) + 2);
+.preset.on {
+    background-color: var(--value);
+    color: #000;
 }
 
-#bypass {
-    grid-row: calc(var(--controls-row-start) + 3);
-    grid-column: calc(var(--controls-col-start) + 4);
-}
-
-#tempo {
-    grid-row: calc(var(--controls-row-start) + 3);
-    grid-column: calc(var(--controls-col-start) + 0);
-}
 
 #pitch {
     grid-row: calc(var(--controls-row-start) + 0);
@@ -382,8 +383,20 @@ div#patch > span {
     grid-column: calc(var(--controls-col-start) + 5);
 }
 
+#tempo {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+/*
 #max-delay-feedback {
     grid-row: calc(var(--controls-row-start) + 3);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+*/
+
+#env-type {
+    grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 1);
 }
 
@@ -392,10 +405,16 @@ div#patch > span {
     grid-column: calc(var(--controls-col-start) + 2) / span 2;
 }
 
-#waveshape {
-    grid-row: calc(var(--controls-row-start) + 3);
+#bypass {
+    grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 5);
 }
+
+#waveshape {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
 
 #status-bar {
     grid-row: calc(var(--controls-row-start) + 4);
@@ -406,7 +425,7 @@ div#patch > span {
     border-color: transparent !important;
     padding: 0 0 0 6px !important;
 
-    font-family: 'Roboto Condensed', sans-serif;
+    /*font-family: 'Roboto Condensed', sans-serif;*/
     font-weight: 300;
     color: var(--status-color);
 }
@@ -419,7 +438,7 @@ div#patch > span {
         background-color: #ee2222;
         color: #000;
         padding: 3px;
-        font-family: 'Roboto', sans-serif;
+        /*font-family: 'Roboto', sans-serif;*/
         font-weight: 400;
         text-align: center;
     }
@@ -430,7 +449,7 @@ div#patch > span {
 }
 
 .knob {
-    height: 8vh;
+    height: 16vh;
     margin: 0;
 }
 
@@ -456,7 +475,7 @@ div#patch > span {
 }
 
 .knob-value {
-    font-family: "Roboto Condensed", sans-serif;
+    /*font-family: "Roboto Condensed", sans-serif;*/
     font-size: 125%;
     font-weight: 300;
     stroke: none;
@@ -470,16 +489,19 @@ div#patch > span {
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
     padding: 0 0.2rem 0 0;
-    margin: 0;
+    margin: 5px;
     color: var(--bt-text);
-    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2rem;
     cursor: pointer;
+    text-align: center;
+    border: 1px solid #333;
 }
 
 div.bt.on,
 div.btc.on {
     color: var(--value);
     text-shadow: 0 0 8px lightyellow;
+    border: 1px solid var(--value);
 }
 
 
@@ -580,7 +602,7 @@ select option {
     margin: 0.5vh 0 1vh 0;
     padding: 6px 4px;
     border: none;
-    font-family: "Roboto Condensed", sans-serif;
+    /*font-family: "Roboto Condensed", sans-serif;*/
     font-size: 1rem;
 }
 
@@ -592,7 +614,7 @@ select option {
     margin: 0 0 1vh 0;
     max-height: 50vh;   /* unperfect but simple solution to the problem of the div overflowing its parent despite the overflow-y directive.
     /*flex-grow: 2;*/
-    font-family: "Roboto Condensed", sans-serif;
+    /*font-family: "Roboto Condensed", sans-serif;*/
     font-size: 1rem;
 }
 

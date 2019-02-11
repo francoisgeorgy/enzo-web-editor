@@ -35,10 +35,10 @@ module.exports = {
         // }),
         new CopyWebpackPlugin([
             { from: "./src/index.html" },
-            // { from: "./src/midi.html" },
+            { from: "./src/midi.html" },
             { from: "./src/print.html" },
             // { from: "./src/templates/patch-sheet-template.html", to: "templates"},
-            // { from: "./src/css/midi.css", to: "css" },
+            { from: "./src/css/midi.css", to: "css" },
             { from: "./src/favicon.png" }
             // { from: "./src/css/patch.css", to: "css" },
             // { from: "./src/css/print.css", to: "css" },

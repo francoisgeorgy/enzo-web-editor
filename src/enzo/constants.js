@@ -1,10 +1,8 @@
 
 
-export const OSC_RANGES = {
-    63: "16'",
-    64: "8'",
-    65: "4'",
-    66: "2'"
+export const ENV_TYPE = {
+    0: "trigerred env.",
+    64: "env. follower"
 };
 
 export const OSC_WAVE_FORMS = [
