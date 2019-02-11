@@ -138,12 +138,12 @@ let patch_number = -1;
 let patch_name = null;
 
 // function displayPatchName() {
-//     //TODO: get value from BS2
+//     //TODO: get value from DEVICE
 //     $("#patch-name").text(patch_name);
 // }
 //
 // function displayPatchNumber() {
-//     //TODO: get value from BS2
+//     //TODO: get value from DEVICE
 //     $("#patch-number").html(patch_number);
 // }
 
@@ -167,7 +167,7 @@ function handlePC(e) {
 
     logIncomingMidiMessage("PC", 0, e.value);
 
-    //TODO: update value in BS2 object
+    //TODO: update value in DEVICE
 
     patch_number = e.value;
     // displayPatchNumber();
@@ -232,6 +232,24 @@ function dispatch(control_type, control_number, value) {
 
 /**
  *
+ * @param id
+ * @param value
+ */
+function updateOptionSwitch(id, value) {
+    // "radio button"-like behavior
+    if (TRACE) console.log(`updateOptionSwitch(${id}, ${value})`);
+    let e = $("#" + id);
+    if (TRACE) console.log(e);
+    if (!e.is(".on")) {   // if not already on...
+        e.siblings(".bt").removeClass("on");
+        e.addClass("on");
+        // handleUIChange(...c.split("-"), v);
+        // handleUIChange(...this.id.split("-"));
+    }
+}
+
+/**
+ *
  * @param control_type
  * @param control_number
  * @param value
@@ -240,18 +258,18 @@ function updateControl(control_type, control_number, value) {
 
     if (TRACE) console.log(`updateControl(${control_type}, ${control_number}, ${value})`);
 
-    let id = control_type + "-" + control_number;
+    const id = control_type + "-" + control_number;
     if (knobs.hasOwnProperty(id)) {
         knobs[id].value = value;
     } else {
         // if (TRACE) console.log(`check #${id}`);
 
         let c = $(`#${id}`);
+        // c.val(value).trigger("blur");
 
-        c.val(value).trigger("blur");
-
-/*
         if (c.length) {
+            console.warn("updateControl: unsupported control: ", control_type, control_number, value);
+/*
             if (c.is(".svg-slider,.svg-slider-env")) {
                 updateSVGSlider(id, value);
             } else if (c.is(".slider")) {
@@ -261,25 +279,23 @@ function updateControl(control_type, control_number, value) {
             } else {
                 c.val(value).trigger("blur");
             }
-
+*/
         } else {
             c = $(`#${id}-${value}`);
             if (c.length) {
-                if (TRACE) console.log(c);
+                if (TRACE) console.log("updateControl:", c);
                 if (c.is(".bt")) {
                     updateOptionSwitch(id + "-" + value, value);
                 } else {
-                    c.val(value).trigger("blur");
+                    console.warn("updateControl: unsupported control: ", control_type, control_number, value);
+                    // c.val(value).trigger("blur");
                 }
             } else {
                 console.warn(`no control for ${id}-${value}`);
             }
         }
-*/
 
     }
-        // let c = $(`#combo-${id}`);  //TODO: try to do it only if fade_unused has changed
-        // if (TRACE) console.log(`reset opacity for #combo-${id}`);
 
 }
 
@@ -386,12 +402,13 @@ function handleUserAction(control_type, control_number, value) {
  *
  */
 function init(sendUpdate = true) {
-    if (TRACE) console.log(`init(${sendUpdate})`);
+    if (TRACE) console.group(`init(${sendUpdate})`);
     DEVICE.init();
     updateUI(true);
     // setStatus(`init done`);
     if (sendUpdate) updateConnectedDevice();
     if (TRACE) console.log(`init done`);
+    if (TRACE) console.groupEnd();
     return false;   // disable the normal href behavior
 }
 
@@ -399,7 +416,7 @@ function init(sendUpdate = true) {
  *
  */
 function randomize() {
-    console.group("randomize");
+    if (TRACE) console.group("randomize");
     // if (settings.randomize.length < 1) {
     //     alert("Nothing to randomize.\nUse the \"Settings\" menu to configure the randomizer.");
     // } else {
@@ -407,14 +424,14 @@ function randomize() {
         updateUI();
         updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
     // }
-    console.groupEnd();
+    if (TRACE) console.groupEnd();
     return false;   // disable the normal href behavior
 }
 
 //==================================================================================================================
 
 /**
- * Set value of the controls (input and select) from the BS2 values
+ * Set value of the controls (input and select) from the DEVICE values
  */
 function updateControls() {
     console.log("updateControls()");
@@ -479,44 +496,6 @@ function setupKnobs() {
 
 } // setupKnobs
 
-/**
- * Add double-click handlers on .knob-label elements. A double-click will reset the linked knob.
- */
-function setupResets() {
-
-    console.log("TODO: setupResets()");
-
-/*
-    $(".knob-label:not(.no-reset)")
-        .attr("alt", "Double-click to reset")
-        .attr("title", "Double-click to reset")
-        .dblclick(function() {
-            let knob = $(this).siblings(".knob");
-            if (knob.length < 1) {
-                if (TRACE) console.log("setupResets: no sibbling knob found");
-                return;
-            }
-            if (TRACE) console.log("setupResets knob", knob);
-            let [control_type, control_number] = knob[0].id.split("-");
-            if (TRACE) console.log(`setupResets ${control_type} ${control_number}`);
-            let c;
-            if (control_type === "cc") {
-                c = DEVICE.control[control_number];
-            } else if (control_type === "nrpn") {
-                c = DEVICE.nrpn[control_number];
-            } else {
-                // ERROR
-                console.error(`setupResets invalid control id: ${control_type} ${control_number}`);
-                return;
-            }
-            c.raw_value = c.init_value;
-            updateControl(control_type, control_number, c.init_value);
-
-            updateDevice(control_type, control_number, c.init_value);
-
-        });
-*/
-}
 
 function setupPresetSelectors() {
 
@@ -610,7 +589,6 @@ function setupUI() {
     loadSettings();
 
     setupKnobs();
-    setupResets();
     setupPresetSelectors();
     setupSwitches();
     setupMenu();
@@ -626,16 +604,6 @@ let default_favorite_name = "";
 function getFavorites() {
 }
 
-/**
- *
- * @param index
- */
-function deleteFavorite(index) {
-}
-
-/**
- *
- */
 function refreshFavoritesList() {
 }
 
@@ -646,19 +614,12 @@ function addToFavorites() {
     return false;   // disable the normal href behavior
 }
 
-/**
- *
- */
 function openFavoritesPanel() {
     return false;   // disable the normal href behavior
 }
 
-/**
- *
- */
 function closeFavoritesPanel() {
 }
-
 
 function reloadWithPatchUrl() {
     return false;   // disable the normal href behavior
@@ -767,8 +728,8 @@ function printPatch() {
 /**
  * header"s "sync" button handler
  */
-function syncUIwithBS2() {
-    // ask the BS2 to send us its current patch:
+function syncUIwithDEVICE() {
+    // ask the DEVICE to send us its current patch:
     // requestSysExDump();
     return false;   // disable the normal href behavior
 }
@@ -817,7 +778,7 @@ function setupMenu() {
     // $("#menu-save-patch").click(savePatchToFile);
     // $("#menu-get-url").click(reloadWithPatchUrl);
     // $("#menu-print-patch").click(printPatch);
-    // $("#menu-sync").click(syncUIwithBS2);
+    // $("#menu-sync").click(syncUIwithDEVICE);
     $("#menu-midi").click(openMidiWindow);
     // $("#menu-settings").click(openSettingsPanel);
     // $("#menu-help").click(openHelpDialog);
@@ -861,7 +822,7 @@ function setupMenu() {
 
 var settings = {
     midi_channel: 1,
-    randomize: ["lfo1", "lfo2", "osc1", "osc2", "sub", "mixer", "filter", "mod_env", "amp_env", "effects", "arp"],
+    randomize: [],
     fade_unused: false
 };
 
@@ -886,7 +847,7 @@ function displayRandomizerSettings() {
 // SysEx
 
 /**
- * Send a sysex to the BS2 asking for it to send back a sysex dump of its current patch.
+ * Send a sysex to the DEVICE asking for it to send back a sysex dump of its current patch.
  * F0 00 20 29 00 33 00 40  F7
  */
 function requestSysExDump() {
@@ -919,7 +880,7 @@ function connectInput(input) {
     if (TRACE) console.log(`midi_input assigned to "${midi_input.name}"`);
     // }
     midi_input
-        .on("programchange", midi_channel, function(e) {        // sent by the BS2 when changing patch
+        .on("programchange", midi_channel, function(e) {        // sent by the DEVICE when changing patch
             handlePC(e);
         })
         .on("controlchange", midi_channel, function(e) {
@@ -927,11 +888,11 @@ function connectInput(input) {
         })
         .on("sysex", midi_channel, function(e) {
             console.log("sysex handler");
-            if (TRACE) console.log("update BS2 with sysex");
+            if (TRACE) console.log("update DEVICE with sysex");
             // if (DEVICE.setValuesFromSysEx(e.data)) {
             //     updateUI();
             //     // setStatus("UI updated from SysEx.");
-            //     if (TRACE) console.log("BS2 updated with sysex");
+            //     if (TRACE) console.log("DEVICE updated with sysex");
             // } else {
             //     setStatusError("Unable to update from SysEx data.")
             // }
@@ -978,7 +939,7 @@ function deviceConnect(info) {
         if (!midi_output) {
             connectOutput(info.port);
             //TODO: we should ask the user
-            // ask the BS2 to send us its current patch:
+            // ask the DEVICE to send us its current patch:
             requestSysExDump();
         } else {
             console.log("deviceConnect: output already connected");
@@ -1097,7 +1058,7 @@ $(function () {
                 }
             } else {
                 //TODO: we should ask the user
-                // ask the BS2 to send us its current patch:
+                // ask the DEVICE to send us its current patch:
                 requestSysExDump();
             }
 */

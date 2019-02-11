@@ -28,8 +28,13 @@ const setControlValue = function () {
     let c;
     if (arguments.length === 2) {
         let value = arguments[1];
+        const v = typeof value === "number" ? value : parseInt(value);
         c = arguments[0];
-        c.raw_value = typeof value === "number" ? value : parseInt(value);
+        if (c.hasOwnProperty("map_raw")) {
+            c.raw_value = c.map_raw(v);
+        } else {
+            c.raw_value = v;
+        }
     } else if (arguments.length === 3) {
         let ca; // controls array
         if (arguments[0] === "cc") {                // [0] is control type
@@ -40,10 +45,15 @@ const setControlValue = function () {
             console.error("setControlValue: invalid control_type", arguments);
             return null;
         }
-        if (ca[arguments[1]]) {                     // [0] is control number
+        if (ca[arguments[1]]) {                     // [1] is control number
+            let value = arguments[2];               // [2] is control value
+            const v = typeof value === "number" ? value : parseInt(value);
             c = ca[arguments[1]];
-            let value = arguments[2];               // [0] is control value
-            c.raw_value = typeof value === "number" ? value : parseInt(value);
+            if (c.hasOwnProperty("map_raw")) {
+                c.raw_value = c.map_raw(v);
+            } else {
+                c.raw_value = v;
+            }
         } else {
             console.error("setControlValue: unknown number", arguments);
             return null;
@@ -91,6 +101,9 @@ const randomize = function(groups) {
                 let min = Math.min(...c.cc_range);
                 v = Math.round(Math.random() * (Math.max(...c.cc_range) - min)) + min;  //TODO: step
                 // console.log(`randomize #${c.cc_type}-${c.cc_number}=${v} with min=${min} c.max_raw=${Math.max(...c.cc_range)}, v=${v}`);
+            }
+            if (c.hasOwnProperty("map_raw")) {
+                v = c.map_raw(v);
             }
         }
         c.raw_value = v;
@@ -165,24 +178,7 @@ export default {
     // meta,
     control_id,
     control,
-    // nrpn,
-    // control_groups,
     // SUB_WAVE_FORMS : consts.SUB_WAVE_FORMS,
-    // SUB_OCTAVE : consts.SUB_OCTAVE,
-    // OSC_RANGES : consts.OSC_RANGES,
-    // OSC_WAVE_FORMS : consts.OSC_WAVE_FORMS,
-    // COARSE_VALUES: consts.COARSE_VALUES,
-    // LFO_WAVE_FORMS : consts.LFO_WAVE_FORMS,
-    // LFO_SPEED_SYNC : consts.LFO_SPEED_SYNC,
-    // LFO_SYNC : consts.LFO_SYNC,
-    // FILTER_SHAPES : consts.FILTER_SHAPES,
-    // FILTER_SLOPE : consts.FILTER_SLOPE,
-    // FILTER_TYPE : consts.FILTER_TYPE,
-    // ENV_TRIGGERING : consts.ENV_TRIGGERING,
-    // ARP_NOTES_MODE : consts.ARP_NOTES_MODE,
-    // ARP_OCTAVES : consts.ARP_OCTAVES,
-    // ARP_SEQUENCES: consts.ARP_SEQUENCES,
-    // TUNING_TABLE: consts.TUNING_TABLE,
     init,
     randomize,
     getControl,
@@ -193,6 +189,5 @@ export default {
     // setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     // getSysEx: sysex.getDump,     // export all values as a SysEx dump
     // validate: sysex.validate,   // validate a SysEx dump
-    // doubleByteValue,
     getMidiMessagesForCC
 };
