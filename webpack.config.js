@@ -1,8 +1,18 @@
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 // var WebpackAutoInject = require('webpack-auto-inject-version');
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+    // entry: {
+    //     'bundle.min.css': [
+    //         "./src/css/main.css",
+    //         "./src/css/patch.css"
+    //     ],
+    //     'bundle.js': [
+    //         "./src/main.js"
+    //     ]
+    // },
     entry: {
         bundle: "./src/main.js",
         // print_bundle: "./src/print.js"
@@ -19,6 +29,17 @@ module.exports = {
         },{
              test: /\.css$/,
              use: ["style-loader", "css-loader"]
+            // use: [
+            //     {
+            //         loader: MiniCssExtractPlugin.loader,
+            //         options: {
+            //             // you can specify a publicPath here
+            //             // by default it use publicPath in webpackOptions.output
+            //             publicPath: '../'
+            //         }
+            //     },
+            //     "css-loader"
+            // ]
         }]
     },
     plugins: [
@@ -28,6 +49,12 @@ module.exports = {
             "window.jQuery": "jquery",
             "window.$": "jquery"
         }),
+        // new MiniCssExtractPlugin({
+        //     // Options similar to the same options in webpackOptions.output
+        //     // both options are optional
+        //     filename: "[name].css",
+        //     chunkFilename: "[id].css"
+        // }),
         // new WebpackAutoInject({
         //     components: {
         //         AutoIncreaseVersion: false
