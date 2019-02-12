@@ -3,6 +3,7 @@ import Knob from "svg-knob";
 // import * as Utils from "./lib/utils.js";
 import * as WebMidi from "webmidi";
 // CSS order is important
+import * as lity from "lity";
 import "./css/lity.min.css";
 import "./css/main.css";
 import {detect} from "detect-browser";
@@ -666,8 +667,8 @@ var lightbox = null;    // lity dialog
  */
 function loadPatchFromFile() {
     // $("#load-patch-error").empty();
-    // $("#patch-file").val("");
-    // lightbox = lity("#load-patch-dialog");
+    $("#patch-file").val("");
+    lightbox = lity("#load-patch-dialog");
     return false;   // disable the normal href behavior
 }
 
@@ -682,7 +683,6 @@ function savePatchToFile() {
  * Handler for the #patch-file file input element in #load-patch
  */
 function readFile() {
-/*
 
     const SYSEX_END = 0xF7;
 
@@ -699,7 +699,7 @@ function readFile() {
                 if (view[i] === SYSEX_END) break;
             }
             if (DEVICE.setValuesFromSysEx(data)) {
-                if (TRACE) console.log("file read OK", DEVICE.meta.patch_name["value"]);
+                if (TRACE) console.log("file read OK");
                 if (lightbox) lightbox.close();
 
                 updateUI();
@@ -712,7 +712,6 @@ function readFile() {
         };
         reader.readAsArrayBuffer(f);
     }
-*/
 }
 
 /**
@@ -792,7 +791,7 @@ function setupMenu() {
     // $("#menu-favorites").click(openFavoritesPanel);
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    // $("#menu-load-patch").click(loadPatchFromFile);
+    $("#menu-load-patch").click(loadPatchFromFile);
     // $("#menu-save-patch").click(savePatchToFile);
     // $("#menu-get-url").click(reloadWithPatchUrl);
     // $("#menu-print-patch").click(printPatch);
@@ -801,10 +800,10 @@ function setupMenu() {
     // $("#menu-settings").click(openSettingsPanel);
     // $("#menu-help").click(openHelpDialog);
     // $("#menu-about").click(openCreditsDialog);
-    //
-    // // in load-patch-dialog:
-    // $("#patch-file").change(readFile);
-    //
+
+    // in load-patch-dialog:
+    $("#patch-file").change(readFile);
+
     // // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
     // $(".close-settings-panel").click(closeSettingsPanel);
@@ -907,13 +906,13 @@ function connectInput(input) {
         .on("sysex", midi_channel, function(e) {
             console.log("sysex handler");
             if (TRACE) console.log("update DEVICE with sysex");
-            // if (DEVICE.setValuesFromSysEx(e.data)) {
-            //     updateUI();
-            //     // setStatus("UI updated from SysEx.");
-            //     if (TRACE) console.log("DEVICE updated with sysex");
-            // } else {
-            //     setStatusError("Unable to update from SysEx data.")
-            // }
+            if (DEVICE.setValuesFromSysEx(e.data)) {
+                updateUI();
+                // setStatus("UI updated from SysEx.");
+                if (TRACE) console.log("DEVICE updated with sysex");
+            } else {
+                setStatusError("Unable to update from SysEx data.")
+            }
         });
     console.log(`midi_input listening on channel ${midi_channel}`);
     setMidiInStatus(true);

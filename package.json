@@ -23,6 +23,7 @@
   "dependencies": {
     "detect-browser": "^4.1.0",
     "jquery-ui": "^1.12.1",
+    "lity": "^2.3.1",
     "svg-knob": "^1.7.0",
     "webmidi": "^2.3.2",
     "webpack-jquery-ui": "^2.0.1"

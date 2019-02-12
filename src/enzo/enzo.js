@@ -1,4 +1,6 @@
 import {control_id, control} from "./cc.js";
+import meta from "./meta.js";
+import sysex from "./sysex.js";
 
 /**
  *
@@ -177,7 +179,7 @@ export default {
     // name_device_out: "Launch Control 2",
     name_device_in: "mi.1 Bluetooth",
     name_device_out: "mi.1 Bluetooth",
-    // meta,
+    meta,
     control_id,
     control,
     // SUB_WAVE_FORMS : consts.SUB_WAVE_FORMS,
@@ -188,8 +190,8 @@ export default {
     setControlValue,
     // getAllValues,
     // setAllValues,
-    // setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
-    // getSysEx: sysex.getDump,     // export all values as a SysEx dump
-    // validate: sysex.validate,   // validate a SysEx dump
+    setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
+    getSysEx: sysex.getDump,     // export all values as a SysEx dump
+    validate: sysex.validate,   // validate a SysEx dump
     getMidiMessagesForCC
 };

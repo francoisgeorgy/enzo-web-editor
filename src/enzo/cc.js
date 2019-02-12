@@ -1,5 +1,5 @@
-import * as consts from './constants.js';
-import mapper from './mappers.js';
+// import * as consts from './constants.js';
+// import mapper from './mappers.js';
 
 export const control_id = {
     exp_pedal: 4,
@@ -41,145 +41,148 @@ const _4_steps = function (v) {
     }
 };
 
+const _filter_type = function (v) {
+    return v;
+};
+
 function defineControls() {
-    control[control_id.exp_pedal] = { // 4,
-        name: "Exp pedal",
-        sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
-        }
-    };
-    control[control_id.envelope_type] = { // 9,
-        name: "Env type",
-        map_raw: _2_steps,
-        sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
-        }
-    };
-    control[control_id.bypass] = { // 14,
-        name: "Bypass",
-        map_raw: _2_steps,
-        sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
-        }
-    };
-    control[control_id.tempo] = { // 15,
-        name: "tempo",
-        sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
-        }
-    };
+    // control[control_id.exp_pedal] = { // 4,
+    //     name: "Exp pedal",
+    //     sysex: {
+    //         offset: 22,
+    //         mask: [0x7F]
+    //     }
+    // };
+    // control[control_id.tempo] = { // 15,
+    //     name: "tempo",
+    //     sysex: {
+    //         offset: 22,
+    //         mask: [0x7F]
+    //     }
+    // };
     control[control_id.pitch] = { // 16,
         name: "pitch",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 9,
+            mask: [0x7F]
         }
     };
     control[control_id.filter] = { // 17,
         name: "filter",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 10,
+            mask: [0x7F]
         }
     };
     control[control_id.mix] = { // 18,
         name: "mix",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 11,
+            mask: [0x7F]
         }
     };
     control[control_id.sustain] = { // 19,
         name: "sustain",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 12,
+            mask: [0x7F]
         }
     };
     control[control_id.filter_envelope] = { // 20,
         name: "filter env",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 13,
+            mask: [0x7F]
         }
     };
     control[control_id.modulation] = { // 21,
         name: "modulation",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 14,
+            mask: [0x7F]
         }
     };
     control[control_id.portamento] = { // 22,
         name: "portamento",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 15,
+            mask: [0x7F]
         }
     };
     control[control_id.filter_type] = { // 23,
         name: "filter type",
-        // human: mapper._100,
+        human: _filter_type,
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 16,
+            mask: [0x7F]
         }
     };
     control[control_id.delay_level] = { // 24,
         name: "delay level",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 17,
+            mask: [0x7F]
         }
     };
     control[control_id.ring_modulation] = { //  25,
         name: "ring mod",
         sysex: {
-            offset: 22,
-            mask:
-                [0x03, 0x7E]
+            offset: 18,
+            mask: [0x7F]
         }
     };
     control[control_id.filter_bandwidth] = { // 26,
         name: "filter bandwidth",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 19,
+            mask: [0x7F]
         }
     };
     control[control_id.delay_feedback] = { // 27,
         name: "delay feedback",
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 20,
+            mask: [0x7F]
         }
     };
-    control[control_id.tap] = { // 28,
-        name: "tap",
+    control[control_id.bypass] = { // 14,
+        name: "bypass",
+        map_raw: _2_steps,
+        sysex: {
+            offset: 21,
+            mask: [0x7F]
+        }
+    };
+    control[control_id.envelope_type] = { // 9,
+        name: "env type",
+        map_raw: _2_steps,
         sysex: {
             offset: 22,
-            mask: [0x03, 0x7E]
+            mask: [0x7F]
         }
     };
     control[control_id.synth_mode] = { // 29,
         name: "synth mode",
         map_raw: _4_steps,
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 23,
+            mask: [0x7F]
         }
     };
     control[control_id.synth_waveshape] = { // 30
         name: "waveshape",
         map_raw: _2_steps,
         sysex: {
-            offset: 22,
-            mask: [0x03, 0x7E]
+            offset: 24,
+            mask: [0x7F]
         }
+    };
+    control[control_id.tap] = { // 28,
+        name: "tap" //,
+        // sysex: {
+        //     offset: 22,
+        //     mask: [0x7F]
+        // }
     };
 
 // add the missing default properties

@@ -3457,6 +3457,11 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
+lity@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/lity/-/lity-2.3.1.tgz#dd9a8498eac133a645fc3169689c9bbaccd31074"
+  integrity sha512-1zkU2grtI9jvxS/efNsdXxD4Uqno2OBpQiYCgGnaxHZpMXYcBoQ0eRpUqt0zbBzGlFyH4gSuJLPfStJgfC6fvw==
+
 loader-runner@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.4.0.tgz#ed47066bfe534d7e84c4c7b9998c2a75607d9357"
