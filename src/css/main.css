@@ -520,9 +520,9 @@ select option {
     margin-right: 10px;
 }
 
-#midi-channel {
-    font-size: 1rem;
-}
+/*#midi-channel {*/
+    /*font-size: 1rem;*/
+/*}*/
 
 #randomizer-settings td {
     padding-right: 20px;

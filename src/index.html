@@ -34,7 +34,12 @@
         </div>
 
         <div id="tools">
-            Fade (quick, slow)
+            <div>
+                Fast fade
+            </div>
+            <div>
+                Slow fade
+            </div>
         </div>
 
         <div id="messages">
@@ -43,15 +48,18 @@
 
         <div id="options">
             <div>
-                MIDI device:
-                <select>
-                    <option value="device-name1">device name</option>
-                    <option value="device-name2">device name</option>
+                MIDI input device:
+                <select id="midi-input-device">
+                </select>
+            </div>
+            <div>
+                MIDI output device:
+                <select id="midi-output-device">
                 </select>
             </div>
             <div>
                 MIDI channel:
-                <select>
+                <select id="midi-channel">
                     <option value="all">all</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -267,8 +275,10 @@
             </div>
             <div class="controls">
                 <div class="stompswitch">
-                    <div id="cc-28-127" class="sw"><i class="far fa-circle" aria-hidden="true" title="click to switch on"></i></div>
-                    <div id="cc-28-0" class="sw sw-on sw-off"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
+                    <div id="cc-28-127" class="swm">
+                        <i id="cc-28-127-off" class="far fa-circle" aria-hidden="true" title="click to switch on"></i>
+                        <i id="cc-28-127-on" class="sw-off sw-on fas fa-circle" aria-hidden="true" title="click to switch off"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -461,6 +471,7 @@
         <h2><span style="float:right" class="close-settings-panel">&#x2715;</span>Settings</h2>
         <div id="settings-dialog-instructions">
         </div>
+<!--
         <div>
             <h3>MIDI channel</h3>
             Use MIDI channel <select id="midi-channel">
@@ -483,6 +494,7 @@
             <option value="all">All</option>
         </select> to communicate with the Enzo.
         </div>
+-->
         <div>
             <h3>Display</h3>
             <input type="checkbox" name="fade-unused" value="1"> Fade unused controls

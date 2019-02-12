@@ -13,6 +13,13 @@ import {detect} from "detect-browser";
 import {KNOB_CONF} from "./conf";
 
 const TRACE = true;    // when true, will log more details in the console
+const VERSION = "[AIV]{version}[/AIV]";
+const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
+
+let midi_input = null;
+let midi_output = null;
+let midi_channel = "all";
+let knobs = {};         // svg-knob
 
 const browser = detect();
 
@@ -570,12 +577,44 @@ function setupSwitches() {
         // if (TRACE) console.log(`click end`, this.classList);
     });
 
+    // momentary stompswitches:
+    $(".swm").mousedown(function() {
+        // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
+        const i = this.id;
+        $(`#${i}-off`).addClass("sw-off");
+        $(`#${i}-on`).removeClass("sw-off");    //.addClass("sw-on");
+        handleUserAction(...this.id.split("-"));
+    });
+
+    $(".swm").mouseup(function() {
+        // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
+        const i = this.id;
+        $(`#${i}-off`).removeClass("sw-off");
+        $(`#${i}-on`).addClass("sw-off");
+    });
+
 }
 
 function setupSelects() {
-    $("#layout-size").change(function() {
-        setLayoutSize(this.value);
-    });
+    $("#layout-size").change((event) => setLayoutSize(event.target.value));
+    $("#midi-channel").change((event) => setMidiChannel(event.target.value));
+    $("#midi-input-device").change((event) => setInputDevice(event.target.value));
+    $("#midi-output-device").change((event) => setOutputDevice(event.target.value));
+}
+
+function updateSelectDeviceList() {
+    $("#midi-input-device").empty().append($("<option>").val("").text("- select -"));
+    $("#midi-input-device").append(
+        WebMidi.inputs.map((port, index) => {
+            return $("<option>").val(port.id).text(`${port.name}`);
+        })
+    );
+    $("#midi-output-device").empty().append($("<option>").val("").text("- select -"));
+    $("#midi-output-device").append(
+        WebMidi.outputs.map((port, index) => {
+            return $("<option>").val(port.id).text(`${port.name}`);
+        })
+    );
 }
 
 /**
@@ -764,10 +803,11 @@ function syncUIwithDEVICE() {
 /**
  * header"s "midi channel" select handler
  */
-function setMidiChannel() {
+function setMidiChannel(channel) {
+    console.log("setMidiChannel", channel);
     disconnectInput();
-    midi_channel = this.value;
-    connectInput();
+    midi_channel = channel;
+    connectInput(midi_input);
 }
 
 /**
@@ -893,6 +933,7 @@ function requestSysExDump() {
 // WebMidi events handling
 
 function disconnectInput() {
+    if (TRACE) console.log("disconnectInput()");
     if (midi_input) {
         midi_input.removeListener();    // remove all listeners for all channels
         console.log("midi_input not listening");
@@ -904,7 +945,11 @@ function disconnectInput() {
  * @param input
  */
 function connectInput(input) {
+
+    if (TRACE) console.log("connectInput()");
+
     if (!input) return;
+
     if (TRACE) console.log(`connect input to channel ${midi_channel}`);
     // if (input) {
     midi_input = input;
@@ -929,9 +974,9 @@ function connectInput(input) {
                 setStatusError("Unable to update from SysEx data.")
             }
         });
-    console.log(`midi_input listening on channel ${midi_channel}`);
+    console.log(`${midi_input.name} listening on channel ${midi_channel}`);
     setMidiInStatus(true);
-    setStatus(`${DEVICE.name_device_in} connected on MIDI channel ${midi_channel}.`);
+    setStatus(`${midi_input.name} connected on MIDI channel ${midi_channel}.`);
 }
 
 /**
@@ -946,6 +991,34 @@ function connectOutput(output) {
     // setMidiOutStatus(true);
 }
 
+
+function setInputDevice(id) {
+    console.log("setInputDevice", id);
+
+    disconnectInput();
+
+    let input = WebMidi.getInputById(id);
+    if (input) {
+        connectInput(input);
+        setStatus(`${input.name} MIDI device found on MIDI channel ${midi_channel}.`);
+    } else {
+        setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
+        setMidiInStatus(false);
+    }
+}
+
+function setOutputDevice(id) {
+    console.log("setOutputDevice", id);
+    let output = WebMidi.getOutputById(id);
+    if (output) {
+        connectOutput(output);
+    } else {
+        setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
+        // setMidiOutStatus(false);
+    }
+}
+
+
 /**
  *
  * @param info
@@ -958,11 +1031,14 @@ function deviceConnect(info) {
     // console.log("deviceConnect port type ***", typeof info.port);
     // console.log("deviceConnect port object ***", info.port);
 
+    updateSelectDeviceList();
+
     if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
-        console.log("ignore deviceConnect", info.port.name, DEVICE.name_device_in, DEVICE.name_device_out);
+        // console.log("ignore deviceConnect", info.port.name, DEVICE.name_device_in, DEVICE.name_device_out);
         return;
     }
 
+/*
     if (info.port.type === "input") {
     // if (info.hasOwnProperty("input") && info.input && (info.port.name === DEVICE.name_device_in)) {
         if (!midi_input) {
@@ -982,6 +1058,8 @@ function deviceConnect(info) {
             console.log("deviceConnect: output already connected");
         }
     }
+*/
+
 }
 
 /**
@@ -990,6 +1068,10 @@ function deviceConnect(info) {
  */
 function deviceDisconnect(info) {
     console.log("deviceDisconnect", info);
+
+    updateSelectDeviceList();
+
+/*
     if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
         console.log(`disconnect event ignored for device ${info.port.name}`);
         return;
@@ -1003,19 +1085,12 @@ function deviceDisconnect(info) {
         midi_output = null;
         // setMidiOutStatus(false);
     }
+*/
+
 }
 
 //==================================================================================================================
 // Main
-
-const VERSION = "[AIV]{version}[/AIV]";
-const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
-
-var midi_input = null;
-var midi_output = null;
-var midi_channel = "all";
-
-var knobs = {};         // svg-knob
 
 /**
  *
@@ -1064,6 +1139,7 @@ $(function () {
             WebMidi.addListener("connected", e => deviceConnect(e));
             WebMidi.addListener("disconnected", e => deviceDisconnect(e));
 
+/*
             let input = WebMidi.getInputByName(DEVICE.name_device_in);
             if (input) {
                 connectInput(input);
@@ -1080,6 +1156,7 @@ $(function () {
                 setStatusError(`${DEVICE.name_device_out} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
                 // setMidiOutStatus(false);
             }
+*/
 
 /*
             let s = Utils.getParameterByName("sysex");
