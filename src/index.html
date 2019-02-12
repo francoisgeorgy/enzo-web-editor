@@ -9,12 +9,11 @@
     <meta name="author" content="François Georgy" />
     <link rel="icon" href="favicon.png" sizes="32x32">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
-    <!--<link href="https://use.fontawesome.com/f0483cf390.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="bundle.js"></script>
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="layout-L">
 
         <div id="title">
             <div class="neon">Enzo</div>
@@ -74,10 +73,10 @@
             </div>
             <div>
                 Display:
-                <select>
-                    <option value="S">small</option>
-                    <option value="M">regular</option>
-                    <option value="L">large</option>
+                <select id="layout-size">
+                    <option value="layout-S">small</option>
+                    <option value="layout-M">regular</option>
+                    <option value="layout-L" selected>large</option>
                 </select>
             </div>
         </div>
@@ -310,8 +309,8 @@
                 <div>envelope type</div>
             </div>
             <div id="cc-9-options">
-                <div id="cc-9-0" class="bt">triggered</div>
-                <div id="cc-9-127" class="bt">follower</div>
+                <div id="cc-9-0" class="bt">TRIGGERED</div>
+                <div id="cc-9-127" class="bt">FOLLOWER</div>
             </div>
         </div>
 

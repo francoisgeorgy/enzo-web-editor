@@ -569,6 +569,12 @@ function setupSwitches() {
 
 }
 
+function setupSelects() {
+    $("#layout-size").change(function() {
+        setLayoutSize(this.value);
+    });
+}
+
 /**
  * Update the "custom" or "linked" UI elements, like the ADSR curves
  */
@@ -611,6 +617,7 @@ function setupUI() {
     setupPresetSelectors();
     setupSwitches();
     setupMenu();
+    setupSelects();
 
     console.groupEnd();
 }
@@ -767,6 +774,11 @@ function setMidiChannel() {
 function openMidiWindow() {
     midi_window = window.open("midi.html", "_midi", "location=no,height=480,width=350,scrollbars=yes,status=no");
     return false;   // disable the normal href behavior
+}
+
+function setLayoutSize(size) {
+    console.log(`setLayoutSize(${size})`);
+    $("#main").removeClass("layout-S layout-M layout-L").addClass(size);
 }
 
 /**
