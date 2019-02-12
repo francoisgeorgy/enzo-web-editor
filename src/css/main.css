@@ -138,7 +138,7 @@ html {
 #main {
     background-color: var(--enzo-gold);
     margin: 0 auto;
-    padding: 0 0.5vh;
+    padding: 0.5vh;
     justify-content: stretch;
     align-content: stretch;
     align-items: start;
@@ -253,6 +253,7 @@ div.controls {
 
     .preset-selection {
         display: flex;
+        margin: 5px 0 10px 0;
     }
 
     .preset {
@@ -284,6 +285,7 @@ div.controls {
         border: 1px solid var(--value);
     }
 
+/*
 #status-bar {
     align-self: center !important;
 
@@ -291,7 +293,6 @@ div.controls {
     border-color: transparent !important;
     padding: 0 0 0 6px !important;
 
-    /*font-family: 'Roboto Condensed', sans-serif;*/
     font-weight: 300;
     color: var(--status-color);
 }
@@ -304,10 +305,10 @@ div.controls {
         background-color: #ee2222;
         color: #000;
         padding: 3px;
-        /*font-family: 'Roboto', sans-serif;*/
         font-weight: 400;
         text-align: center;
     }
+*/
 
 .knob-combo {
     /*line-height: 100%;*/
@@ -330,10 +331,9 @@ div.controls {
 
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
-    padding: 0 0.2rem 0 0;
+    /*padding: 0 0.2rem 0 0;*/
     margin: 5px;
     color: var(--bt-text);
-    /*font-size: 2rem;*/
     cursor: pointer;
     text-align: center;
     border: 1px solid #333;
@@ -345,7 +345,6 @@ div.btc.on {
     text-shadow: 0 0 8px lightyellow;
     border: 1px solid var(--value);
 }
-
 
 .sw-off {
     display: none;

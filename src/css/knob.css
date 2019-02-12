@@ -11,7 +11,6 @@
 }
 
 .knob-value {
-    font-size: 125%;
     font-weight: 300;
     stroke: none;
     fill: var(--knob-value);

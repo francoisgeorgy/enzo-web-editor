@@ -41,6 +41,22 @@ const _4_steps = function (v) {
     }
 };
 
+const _pitch = function (v) {
+    if (v === 0) {
+        return "-2 oct";
+    } else if (v < 12) {
+        return "-1 oct";
+    } else if (v < 96) {
+        return v;
+    } else if (v < 116) {
+        return v;
+    } else if (v < 127) {
+        return "+1 oct";
+    } else {
+        return "+2 oct";
+    }
+};
+
 const _filter_type = function (v) {
     return v;
 };
@@ -53,15 +69,14 @@ function defineControls() {
     //         mask: [0x7F]
     //     }
     // };
-    // control[control_id.tempo] = { // 15,
-    //     name: "tempo",
-    //     sysex: {
-    //         offset: 22,
-    //         mask: [0x7F]
-    //     }
-    // };
+    control[control_id.tempo] = { // 15,
+        name: "tempo"
+    };
     control[control_id.pitch] = { // 16,
         name: "pitch",
+        init_value: 63,
+        cc_center: [63, 64],
+        human: _pitch,
         sysex: {
             offset: 9,
             mask: [0x7F]
@@ -69,6 +84,7 @@ function defineControls() {
     };
     control[control_id.filter] = { // 17,
         name: "filter",
+        init_value: 127,
         sysex: {
             offset: 10,
             mask: [0x7F]

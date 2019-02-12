@@ -11,7 +11,7 @@
 
 .layout-L {
     width: calc(100vw - 1vh);
-    height: calc(100vh - 0.5vh);
+    /*height: calc(100vh - 0.5vh);*/
 }
 
 #main.layout-S {
@@ -31,6 +31,53 @@
     font-size: 1rem;
 }
 
+.layout-S .preset {
+    padding: 10px 0;
+    font-size: 1rem;
+}
+.layout-M .preset {
+    padding: 1vh 0;
+    font-size: 1.75rem;
+}
+.layout-L .preset {
+    padding: 1.5vh 0;
+    font-size: 2.5rem;
+}
+
+.layout-S #options {
+    font-size: 1rem;
+}
+.layout-M #options {
+    font-size: 1.5rem;
+}
+.layout-L #options {
+    font-size: 2rem;
+}
+
+
+.layout-S .header {
+    font-size: 1rem;
+}
+.layout-M .header {
+    font-size: 1.5rem;
+}
+.layout-L .header {
+    font-size: 1.75rem;
+}
+
+.layout-S .bt {
+    padding: 0 2px 0 0;
+    font-size: 1rem;
+}
+.layout-M .bt {
+    padding: 3px 0;
+    font-size: 1.75rem;
+}
+.layout-L .bt {
+    padding: 5px 0;
+    font-size: 2.5rem;
+}
+
 .layout-S .stompswitch {
     font-size: 3rem;
 }
@@ -40,6 +87,7 @@
 .layout-L .stompswitch {
     font-size: 5rem;
 }
+
 .layout-S .knob {
     height: 8vh;
     margin: 0;
@@ -51,4 +99,14 @@
 .layout-L .knob {
     height: 16vh;
     margin: 0;
+}
+
+.layout-S .knob-value {
+    font-size: 125%;
+}
+.layout-M .knob-value {
+    font-size: 125%;
+}
+.layout-L .knob-value {
+    font-size: 125%;
 }

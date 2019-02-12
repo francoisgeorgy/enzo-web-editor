@@ -89,31 +89,24 @@
     grid-column: calc(var(--controls-col-start) + 5);
 }
 
-#tempo {
+#tap {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 0);
 }
 
-/*
-#max-delay-feedback {
-    grid-row: calc(var(--controls-row-start) + 3);
+#tempo {
+    grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 1);
 }
-*/
 
 #env-type {
     grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 2);
 }
 
 #synth-mode {
     grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 2) / span 2;
-}
-
-#bypass {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 5);
+    grid-column: calc(var(--controls-col-start) + 3);
 }
 
 #waveshape {
@@ -121,8 +114,15 @@
     grid-column: calc(var(--controls-col-start) + 4);
 }
 
+#bypass {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
 
+
+/*
 #status-bar {
     grid-row: calc(var(--controls-row-start) + 4);
     grid-column: calc(var(--controls-col-start) + 0) / span 6;
 }
+*/
