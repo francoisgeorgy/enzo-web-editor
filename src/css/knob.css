@@ -1,0 +1,18 @@
+
+/* knob.js classes: */
+
+.knob-bg {
+    fill: url("#grad");
+    stroke: var(--knob-back-border);
+}
+
+.knob-track-bg {
+    stroke: var(--knob-back-track-color);
+}
+
+.knob-value {
+    font-size: 125%;
+    font-weight: 300;
+    stroke: none;
+    fill: var(--knob-value);
+}

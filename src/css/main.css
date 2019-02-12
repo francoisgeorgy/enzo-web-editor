@@ -95,6 +95,7 @@ body {
     /*font-family: 'Helvetica', sans-serif;*/
     font-weight: 400;
 
+    /*FIXME: vertical scrollbar appears in the browser */
     height: 100%;   /* to have the background gradient fill all the body */
     background: linear-gradient(to bottom, #3d3e3d 0%, #000 100%) no-repeat fixed;
     /*background: linear-gradient(to bottom, #000 0%,#3d3e3d 100%);*/
@@ -137,9 +138,6 @@ html {
 #main {
     background-color: var(--enzo-gold);
     margin: 0 auto;
-    /*display: grid;*/
-    /*grid-column-gap: 0.5vh;*/
-    /*grid-row-gap: 0.5vh;*/
     padding: 0 0.5vh;
     justify-content: stretch;
     align-content: stretch;
@@ -149,36 +147,6 @@ html {
     /*width: calc(100vw - 1vh);*/
     /*height: calc(100vh - 0.5vh);*/
 }
-
-/*
-.layout-S {
-    width: calc(50vw - 1vh);
-}
-
-.layout-M {
-    width: calc(70vw - 1vh);
-}
-
-.layout-L {
-    width: calc(100vw - 1vh);
-    height: calc(100vh - 0.5vh);
-}
-
-#main.layout-S {
-    font-size: 1rem;
-    margin-top: 20vh;
-}
-
-#main.layout-M {
-    font-size: 1rem;
-    margin-top: 10vh;
-}
-
-#main.layout-L {
-    font-size: 1rem;
-}
-*/
-
 
 /*http://codeblock.at/base64-noise-generator/ #101010 #606060 10% */
 
@@ -201,8 +169,6 @@ html {
 }
 
 #title {
-    /*grid-column: 1 / span 6;*/
-    /*grid-row: 1;*/
     background: transparent !important;
     border-top-color: transparent !important;
     border-left-color: transparent !important;
@@ -236,28 +202,13 @@ html {
     align-self: start!important;
 }
 
-#title > div.menu {
-    text-align: right;
-}
-
 #title > div.neon {
     /*font-size: 2rem;*/
 }
 
-/*
-.control-row {
-    display: grid !important;
-    grid-column-gap: 1.5vw;
-    grid-row-gap: 0.5vh;
-    justify-content: start;
-    grid-template-rows: 2.5vh auto;
-    padding-left: 6px;
-    padding-right: 6px;
+#title > div.menu {
+    text-align: right;
 }
-.control-row.add-row {
-    grid-template-rows: 2.5vh auto 2.5vh auto;
-}
-*/
 
 div.controls {
     display: flex;
@@ -268,44 +219,6 @@ div.controls {
     font-size: 5rem;
     color: var(--knob-track-init);
 }
-
-/*
-.layout-S .stompswitch {
-    font-size: 3rem;
-}
-.layout-M .stompswitch {
-    font-size: 4rem;
-}
-.layout-L .stompswitch {
-    font-size: 5rem;
-}
-*/
-
-/*
-div#patch {
-    margin-left: 5rem;
-    margin-bottom: 0.25rem;
-    display: table;
-}
-
-div#patch > span {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-#patch-number {
-    font-family: sevensegments;
-    color: var(--value);
-    !*text-shadow: 0 0 8px lightyellow;*!
-}
-
-#patch-dec,
-#patch-inc {
-    color: var(--menu-text);
-    cursor: pointer;
-    padding: 0 0.3rem;
-}
-*/
 
 .menu span {
     margin-left: 10px;
@@ -321,16 +234,11 @@ div#patch > span {
     color: var(--menu-text-hover);
 }
 
-
 #tools {
-    /*grid-row: 2;*/
-    /*grid-column: 1;*/
     color: var(--header-text);
 }
 
 #messages {
-    /*grid-row: 2;*/
-    /*grid-column: 2 / span 4;*/
     align-self: stretch!important;
     background: transparent none !important;
     border: 2px solid #333;
@@ -340,17 +248,8 @@ div#patch > span {
 }
 
 #options {
-    /*grid-row: 2;*/
-    /*grid-column: 6;*/
     color: var(--header-text);
 }
-
-/*
-#presets {
-    grid-row: 3;
-    grid-column: 1 / span 6;
-}
-*/
 
     .preset-selection {
         display: flex;
@@ -385,105 +284,7 @@ div#patch > span {
         border: 1px solid var(--value);
     }
 
-/*
-
-#pitch {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 0);
-}
-
-#portamento {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 1);
-}
-
-#filter {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 2);
-}
-
-#filter-type {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 3);
-}
-
-#mix {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 4);
-}
-
-#delay-level {
-    grid-row: calc(var(--controls-row-start) + 0);
-    grid-column: calc(var(--controls-col-start) + 5);
-}
-
-#sustain {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 0);
-}
-
-#ring-mod {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 1);
-}
-
-#filter-env {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 2);
-}
-
-#filter-bandwidth {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 3);
-}
-
-#modulation {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 4);
-}
-
-#delay-feedback {
-    grid-row: calc(var(--controls-row-start) + 1);
-    grid-column: calc(var(--controls-col-start) + 5);
-}
-
-#tempo {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 0);
-}
-
-!*
-#max-delay-feedback {
-    grid-row: calc(var(--controls-row-start) + 3);
-    grid-column: calc(var(--controls-col-start) + 1);
-}
-*!
-
-#env-type {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 1);
-}
-
-#synth-mode {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 2) / span 2;
-}
-
-#bypass {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 5);
-}
-
-#waveshape {
-    grid-row: calc(var(--controls-row-start) + 2);
-    grid-column: calc(var(--controls-col-start) + 4);
-}
-
-*/
-
 #status-bar {
-    /*grid-row: calc(var(--controls-row-start) + 4);*/
-    /*grid-column: calc(var(--controls-col-start) + 0) / span 6;*/
     align-self: center !important;
 
     background: transparent !important;
@@ -513,21 +314,6 @@ div#patch > span {
     text-align: center;
 }
 
-/*
-.layout-S .knob {
-    height: 8vh;
-    margin: 0;
-}
-.layout-M .knob {
-    height: 12vh;
-    margin: 0;
-}
-.layout-L .knob {
-    height: 16vh;
-    margin: 0;
-}
-*/
-
 .knob-label {
     text-align: center;
     padding: 0px 2px 0px 2px;
@@ -536,24 +322,6 @@ div#patch > span {
     /*line-height: 1.7vh;*/
     color: var(--label);
     cursor: pointer;
-}
-
-/* knob.js classes: */
-
-.knob-bg {
-    fill: url("#grad");
-    stroke: var(--knob-back-border);
-}
-
-.knob-track-bg {
-    stroke: var(--knob-back-track-color);
-}
-
-.knob-value {
-    font-size: 125%;
-    font-weight: 300;
-    stroke: none;
-    fill: var(--knob-value);
 }
 
 .no-margin {

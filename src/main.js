@@ -8,6 +8,7 @@ import "./css/lity.min.css";
 import "./css/main.css";
 import "./css/grid.css";
 import "./css/layout.css";
+import "./css/knob.css";
 import {detect} from "detect-browser";
 import {KNOB_CONF} from "./conf";
 
