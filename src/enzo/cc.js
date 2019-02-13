@@ -25,6 +25,14 @@ export const control_id = {
 
 export const control = new Array(127);
 
+const _percent = function (v) {
+    return Math.floor(v / 127 * 100 + 0.5) + '%';
+};
+
+const _off_when_zero = function (v) {
+    return v === 0 ? 'OFF' : v;
+};
+
 const _2_steps = function (v) {
     return v < 64 ? 0 : 127;
 };
@@ -41,15 +49,24 @@ const _4_steps = function (v) {
     }
 };
 
+// half steps increments
+//
+// 0, 1,
+// 12, 16, 20, 24, ... 56
+// 72, 76, ... 116,
+// 127
+//
 const _pitch = function (v) {
     if (v === 0) {
         return "-2 oct";
     } else if (v < 12) {
         return "-1 oct";
-    } else if (v < 96) {
-        return v;
+    } else if (v < 56) {
+        return Math.floor((v - 56) / 4);
+    } else if (v >= 56 && v < 72) {
+        return "0";
     } else if (v < 116) {
-        return v;
+        return Math.floor((v - 68) / 4);
     } else if (v < 127) {
         return "+1 oct";
     } else {
@@ -58,7 +75,19 @@ const _pitch = function (v) {
 };
 
 const _filter_type = function (v) {
-    return v;
+    if (v < 4) {
+        return "LP";
+    } else if (v < 33) {
+        return "BP";
+    } else if (v < 60) {
+        return "HP";
+    } else if (v < 88) {
+        return "V LP";
+    } else if (v < 116) {
+        return "V BP";
+    } else {
+        return "V HP";
+    }
 };
 
 function defineControls() {
@@ -93,6 +122,7 @@ function defineControls() {
     control[control_id.mix] = { // 18,
         name: "mix",
         init_value: 127,
+        human: _percent,
         sysex: {
             offset: 11,
             mask: [0x7F]
@@ -114,6 +144,7 @@ function defineControls() {
     };
     control[control_id.modulation] = { // 21,
         name: "modulation",
+        human: _off_when_zero,
         sysex: {
             offset: 14,
             mask: [0x7F]
@@ -164,6 +195,8 @@ function defineControls() {
     };
     control[control_id.bypass] = { // 14,
         name: "bypass",
+        no_init: true,
+        no_randomize: true,
         map_raw: _2_steps,
         sysex: {
             offset: 21,
@@ -180,6 +213,7 @@ function defineControls() {
     };
     control[control_id.synth_mode] = { // 29,
         name: "synth mode",
+        init_value: 63,
         map_raw: _4_steps,
         sysex: {
             offset: 23,
@@ -188,6 +222,7 @@ function defineControls() {
     };
     control[control_id.synth_waveshape] = { // 30
         name: "waveshape",
+        init_value: 0,
         map_raw: _2_steps,
         sysex: {
             offset: 24,
@@ -195,7 +230,9 @@ function defineControls() {
         }
     };
     control[control_id.tap] = { // 28,
-        name: "tap" //,
+        name: "tap",
+        no_init: true,
+        no_randomize: true
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]

@@ -74,6 +74,9 @@ const init = function () {
     for (let i = 0; i < control.length; i++) {
         let c = control[i];
         if (typeof c === "undefined") continue;
+        if (c.hasOwnProperty("no_init")) {
+            continue;
+        }
         c.raw_value = c.init_value;
         c.value = c.human(c.raw_value);
     }
@@ -88,6 +91,8 @@ const randomize = function() {
 
         const c = control[i];
         if (typeof c === "undefined") continue;
+
+        if (c.no_randomize) continue;
 
         let v;
         if (c.hasOwnProperty("randomize")) {
