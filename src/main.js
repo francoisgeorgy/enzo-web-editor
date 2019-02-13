@@ -843,11 +843,18 @@ function toggleBypass() {
     }
 }
 
-function animateControl() {
-    $({ n: 0 }).animate({ n: 10}, {
+function animateCC(control_number, from, to) {
+    let p = 0;
+    $({ n: from }).animate({ n: to}, {
         duration: 2000,
         step: function(now) {
-            console.log(now);
+            // console.log(now);
+            const i = Math.round(now);
+            if (p !== i) {
+                p = i;
+                console.log(p);
+                dispatch("cc", control_number, Math.round(now))
+            }
         }
     });
 }
@@ -903,28 +910,46 @@ function keyDown(code, alt, shift) {
         return;
     }
 
-    if ((code >= 65) && (code <= 70)) {   // A..F
-        preset_number = code - 65 + 10 + 1;
-        displayPreset();
-        return;
-    }
+    // if ((code >= 65) && (code <= 70)) {   // A..F
+    //     preset_number = code - 65 + 10 + 1;
+    //     displayPreset();
+    //     return;
+    // }
 
     switch (code) {
-        case 27:                // ESC
-            animateControl();
+        // case 35:                // End
+        //     animateControl();
+        //     break;
+        case 45:                // Insert
+            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 127);
+            break;
+        case 46:                // Delete
+            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 0);
+            break;
+        case 35:                // Home
+            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 0);
+            break;
+        case 36:                // End
+            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 127);
+            break;
+        case 33:                // Page Up      max mix
+            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 127);
+            break;
+        case 34:                // Page Down    min mix
+            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 0);
+            break;
+        case 83:                // S            max sustain
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 127);
             break;
         case 32:                // SPACE
             toggleBypass();
             break;
-        // case 65:                // A
         // case 66:                // B
         // case 67:                // C
         // case 68:                // D
         // case 69:                // E
         // case 70:                // F
         // case 71:                // G
-        //     break;
-        // case 83:                // S Stop
         //     break;
         case 82:                // R Randomize
             randomize();
@@ -944,20 +969,18 @@ function keyDown(code, alt, shift) {
             break;
         case 80:                // P Poly
             break;
-        case 82:                // R ARP
+        case 65:                // A ARP
             break;
-        case 89:                // Y Dry
+        case 68:                // D Dry
             break;
         case 73:                // I Init
             init();
             break;
-        case 33:                // Page Up
         case 38:                // Up arrow
         case 39:                // Right arrow
         case 107:               // num keypad "+"
             presetInc();
             break;
-        case 34:                // Page Down
         case 40:                // Down arrow
         case 37:                // Left arrow
         case 109:               // num keypad "-"
