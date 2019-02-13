@@ -452,6 +452,17 @@ function randomize() {
     return false;   // disable the normal href behavior
 }
 
+function tapDown(id) {
+    $(`#${id}-off`).addClass("sw-off");
+    $(`#${id}-on`).removeClass("sw-off");
+    handleUserAction(...id.split("-"));
+}
+
+function tapRelease(id) {
+    $(`#${id}-off`).removeClass("sw-off");
+    $(`#${id}-on`).addClass("sw-off");
+}
+
 //==================================================================================================================
 
 /**
@@ -579,36 +590,30 @@ function setupSwitches() {
 
     // stompswitches:
     $(".sw").click(function() {
-        if (TRACE) console.log(`click on ${this.id}`, this.classList);
-
-        // this.classList.remove("sw-on");
+        // if (TRACE) console.log(`click on ${this.id}`, this.classList);
         this.classList.add("sw-off");
-
-        // if (this.classList.contains("sw-off")) {
         $(this).siblings(".sw").removeClass("sw-off");
-        //     $(this).siblings(".sw").addClass("sw-on");
-            // this.classList.remove("sw-off");
-            // handleUserAction(...c.split("-"), v);
         handleUserAction(...this.id.split("-"));
-        // }
-        // if (TRACE) console.log(`click end`, this.classList);
     });
 
     // momentary stompswitches:
-    $(".swm").mousedown(function() {
-        // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
-        const i = this.id;
-        $(`#${i}-off`).addClass("sw-off");
-        $(`#${i}-on`).removeClass("sw-off");    //.addClass("sw-on");
-        handleUserAction(...this.id.split("-"));
-    });
+    // $(".swm").mousedown(function() {
+    //     // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
+    //     const i = this.id;
+    //     $(`#${i}-off`).addClass("sw-off");
+    //     $(`#${i}-on`).removeClass("sw-off");
+    //     handleUserAction(...this.id.split("-"));
+    // });
 
-    $(".swm").mouseup(function() {
-        // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
-        const i = this.id;
-        $(`#${i}-off`).removeClass("sw-off");
-        $(`#${i}-on`).addClass("sw-off");
-    });
+    $(".swm").mousedown(function() { tapDown(this.id) });
+    $(".swm").mouseup(function() { tapRelease(this.id) });
+
+    // $(".swm").mouseup(function() {
+    //     // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
+    //     const i = this.id;
+    //     $(`#${i}-off`).removeClass("sw-off");
+    //     $(`#${i}-on`).addClass("sw-off");
+    // });
 
 }
 
@@ -939,7 +944,11 @@ function keyDown(code, alt, shift) {
             animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 0);
             break;
         case 83:                // S            max sustain
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 127);
+            const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
+            animateCC(DEVICE.control_id.sustain, v, v > 64 ? 0 : 127);
+            break;
+        case 84:                // T            tap
+            tapDown("cc-28-127");
             break;
         case 32:                // SPACE
             toggleBypass();
@@ -994,6 +1003,9 @@ function keyUp(code, alt, shift) {
         case 27:                // close all opened panel with ESC key:
             closeFavoritesPanel();
             closeSettingsPanel();
+            break;
+        case 84:                // T            tap
+            tapRelease("cc-28-127");
             break;
     }
 }
