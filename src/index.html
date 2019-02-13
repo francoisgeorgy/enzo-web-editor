@@ -13,52 +13,69 @@
     <script src="bundle.js"></script>
 </head>
 <body>
-    <div id="main" class="layout-M">
+    <div id="main" class="zoom-1">
+
+<!--
+        <div id="panel">
+            side panel
+        </div>
+-->
 
         <div id="title">
             <div class="neon">Enzo</div>
             <div class="menu">
-                <a id="menu-favorites" href="#"><i class="far fa-heart" aria-hidden="true" title="favorites"></i> Favorites</a>
-                <span><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> Init</a></span>
-                <span><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> Randomize</a></span>
-                <span><a id="menu-sync" href="#" title="Sync with the connected Enzo"><i class="fas fa-sync-alt"></i> Sync</a></span> <!--&#8651;-->
-                <span><a id="menu-load-patch" href="#" title="Load a patch from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> Load patch</a></span>
-                <!--<span><a id="menu-save-patch" href="#" title="Save the current patch to a .syx file"><i class="fa fa-save" aria-hidden="true"></i> Save patch</a></span>-->
-                <span><a id="menu-get-url" href="#" title="Save the current patch to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> Get URL</a></span>
-                <span><a id="menu-print-patch" href="#" title="display the current patch for printing"><i class="fas fa-print" aria-hidden="true"></i> Patch sheet</a></span>
-                <span><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> Midi</a></span>
-                <span><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a></span>    <!--&#x2699;-->
-                <span><a id="menu-help" href="#"><i class="fas fa-question"></i> Help</a></span>
-                <span><a id="menu-about" href="#"><i class="fas fa-info"></i> About</a></span>      <!--&#x3f;-->
+                <a id="menu-favorites" href="#"><i class="far fa-heart" aria-hidden="true" title="favorites"></i> <span class="menu-text">Favorites</span></a>
+                <span class="menu-entry"><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</a></span>
+                <span class="menu-entry"><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</a></span>
+                <!--<span><a id="menu-sync" href="#" title="Sync with the connected Enzo"><i class="fas fa-sync-alt"></i> <span class="menu-text">Sync</a></span> &lt;!&ndash;&#8651;&ndash;&gt;-->
+                <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</a></span>
+                <!--<span><a id="menu-save-preset" href="#" title="Save the current preset to a .syx file"><i class="fa fa-save" aria-hidden="true"></i> <span class="menu-text">Save preset</a></span>-->
+                <span class="menu-entry"><a id="menu-get-url" href="#" title="Save the current preset to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">Get URL</a></span>
+                <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</a></span>
+                <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</a></span>
+                <span class="menu-entry"><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Settings</a></span>    <!--&#x2699;-->
+                <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</a></span>
+                <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</a></span>      <!--&#x3f;-->
+                <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
+                <span class="menu-entry"><a id="menu-zoom-in" href="#"><i class="fas fa-search-plus"></i></a></span>
             </div>
         </div>
 
         <div id="tools">
             <div>
-                Fast fade
+                <i class="fas fa-volume-mute"></i> Fast fade
             </div>
             <div>
-                Slow fade
+                <i class="fas fa-volume-mute"></i> Slow fade
             </div>
         </div>
 
         <div id="messages">
             Messages for the user...
+            <div>
+                name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset
+            </div>
         </div>
 
         <div id="options">
             <div>
-                MIDI input device:
+                <div style="float: right">disconnected</div>
+                <div>MIDI</div>
+            </div>
+            <div>
+                input:
                 <select id="midi-input-device">
+                    <option>- select -</option>
                 </select>
             </div>
             <div>
-                MIDI output device:
+                output:
                 <select id="midi-output-device">
+                    <option>- select -</option>
                 </select>
             </div>
             <div>
-                MIDI channel:
+                channel:
                 <select id="midi-channel">
                     <option value="all">all</option>
                     <option value="1">1</option>
@@ -79,14 +96,16 @@
                     <option value="16">16</option>
                 </select>
             </div>
+<!--
             <div>
                 Display:
-                <select id="layout-size">
-                    <option value="layout-S">small</option>
-                    <option value="layout-M" selected>regular</option>
-                    <option value="layout-L">large</option>
+                <select id="zoom-0ize">
+                    <option value="zoom-0">small</option>
+                    <option value="zoom-1" selected>regular</option>
+                    <option value="zoom-2">large</option>
                 </select>
             </div>
+-->
         </div>
 
         <!--
@@ -301,7 +320,7 @@
         -->
         <div id="tempo">
             <div class="header">
-                <div>tap</div>
+                <div>tempo</div>
             </div>
             <div class="controls">
                 <svg class="knob" id="cc-15"></svg>
@@ -377,15 +396,15 @@
         <!--</div>-->
     </div>
 
-    <div id="load-patch-dialog" class="dialog lity-hide">
-        <h2>Load patch from file</h2>
+    <div id="load-preset-dialog" class="dialog lity-hide">
+        <h2>Load preset from file</h2>
         <div id="import-dialog-instructions">
             Select a file containing an Enzo preset (.syx file):
         </div>
         <div style="margin:10px 0;">
-            <input type="file" id="patch-file" placeholder="patch file" />
+            <input type="file" id="preset-file" placeholder="preset file" />
         </div>
-        <div id="load-patch-error" style="margin:10px 0;color:red">
+        <div id="load-preset-error" style="margin:10px 0;color:red">
         </div>
     </div>
 
@@ -496,7 +515,7 @@
             <h3>Display</h3>
             <input type="checkbox" name="fade-unused" value="1"> Fade unused controls
             <div style="margin-top: 0.5rem;font-size: 0.8rem">
-                When checked, the controls that haven't changed from an init patch will be faded.
+                When checked, the controls that haven't changed from an init preset will be faded.
             </div>
         </div>
         <div>
@@ -520,16 +539,16 @@
             <h2><span style="float:right" class="close-favorites-panel">&#x2715;</span>Favorites</h2>
         </div>
         <div id="favorites-add">
-            <h3>Add the current patch to your favorites</h3>
+            <h3>Add the current preset to your favorites</h3>
             Name:<br />
-            <input type="text" name="patch-name" id="add-favorite-patch-name" placeholder="" ><br />
+            <input type="text" name="preset-name" id="add-favorite-preset-name" placeholder="" ><br />
             Description:<br />
-            <textarea name="patch-description" id="add-favorite-patch-description" ></textarea><br />
+            <textarea name="preset-description" id="add-favorite-preset-description" ></textarea><br />
             <button type="button" id="add-favorite-bt" style="float:right">Add to favorites</button>
             <div style="clear:both"></div>
         </div>
         <div id="favorites-load">
-            <h3>Load a patch from your favorites</h3>
+            <h3>Load a preset from your favorites</h3>
             <div id="favorites-list"></div>
         </div>
         <div id="favorites-footer" class="dialog-info">

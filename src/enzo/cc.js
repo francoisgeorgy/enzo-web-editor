@@ -92,6 +92,7 @@ function defineControls() {
     };
     control[control_id.mix] = { // 18,
         name: "mix",
+        init_value: 127,
         sysex: {
             offset: 11,
             mask: [0x7F]

@@ -20,6 +20,7 @@ let midi_input = null;
 let midi_output = null;
 let midi_channel = "all";
 let knobs = {};         // svg-knob
+let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 
 const browser = detect();
 
@@ -63,6 +64,23 @@ function setStatus(msg) {
 
 function setStatusError(msg) {
     $("#status").addClass("error").text(msg);
+}
+
+function applyZoom() {
+    console.log("applyZoom", zoom_level);
+    $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(`zoom-${zoom_level}`)
+}
+
+function zoomIn() {
+    if (zoom_level === 2) return;
+    zoom_level++;
+    applyZoom();
+}
+
+function zoomOut() {
+    if (zoom_level === 0) return;
+    zoom_level--;
+    applyZoom();
 }
 
 //
@@ -132,11 +150,11 @@ function logOutgoingMidiMessage(type, control, value) {
 //==================================================================================================================
 
 /**
- * Get a link for the current patch
+ * Get a link for the current preset
  *
  */
 /*
-function getCurrentPatchAsLink() {
+function getCurrentPresetAsLink() {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + Utils.toHexString(DEVICE.getSysEx());
 }
@@ -155,7 +173,7 @@ function displayPreset() {
 function presetInc() {
     if (TRACE) console.log("presetInc");
     // preset_number = (preset_number % 16) + 1;
-    // displayPatchNumber();
+    // displayPresetNumber();
     sendPC((preset_number % 16) + 1);
     displayPreset();
     // requestSysExDump();
@@ -166,7 +184,7 @@ function presetDec() {
     // if (preset_number === -1) preset_number = 1;
     preset_number--;
     if (preset_number < 1) preset_number = 16;
-    // displayPatchNumber();
+    // displayPresetNumber();
     sendPC(preset_number);
     displayPreset();
     // requestSysExDump();
@@ -196,7 +214,7 @@ function handlePC(e) {
     //TODO: update value in DEVICE
 
     preset_number = e.value;
-    // displayPatchNumber();
+    // displayPresetNumber();
     // requestSysExDump();
 }
 
@@ -249,9 +267,6 @@ function dispatch(control_type, control_number, value) {
     let control = DEVICE.setControlValue(control_type, control_number, value);  // return a handle on the device control; may be useful later
 
     updateControl(control_type, control_number, value);
-
-    // update the customs UI elements. Any input|select element has already been updated by the above instruction.
-    updateLinkedUIElements(/!*false*!/);   //TODO: pass the current CC number and in updateCustoms() only update controls linked to this CC number
 
     return control;
 }
@@ -596,7 +611,7 @@ function setupSwitches() {
 }
 
 function setupSelects() {
-    $("#layout-size").change((event) => setLayoutSize(event.target.value));
+    $("#zoom-0ize").change((event) => setLayoutSize(event.target.value));
     $("#midi-channel").change((event) => setMidiChannel(event.target.value));
     $("#midi-input-device").change((event) => setInputDevice(event.target.value));
     $("#midi-output-device").change((event) => setOutputDevice(event.target.value));
@@ -618,24 +633,10 @@ function updateSelectDeviceList() {
 }
 
 /**
- * Update the "custom" or "linked" UI elements, like the ADSR curves
- */
-function updateLinkedUIElements() {
-}
-
-/**
- * Update the patch number and patch name displayed in the header.
- */
-function updateMeta(force = false) {
-}
-
-/**
  * Update the UI from the DEVICE controls values.
  */
-function updateUI(force = false) {
+function updateUI() {
     updateControls();
-    updateLinkedUIElements();
-    updateMeta(force);
     if (TRACE) console.log("updateUI done");
 }
 
@@ -689,7 +690,7 @@ function openFavoritesPanel() {
 function closeFavoritesPanel() {
 }
 
-function reloadWithPatchUrl() {
+function reloadWithPresetUrl() {
     return false;   // disable the normal href behavior
 }
 
@@ -707,29 +708,29 @@ function closeSettingsPanel() {
 }
 
 //==================================================================================================================
-// Patch file handling
+// Preset file handling
 
 var lightbox = null;    // lity dialog
 
 /**
  *
  */
-function loadPatchFromFile() {
-    // $("#load-patch-error").empty();
-    $("#patch-file").val("");
-    lightbox = lity("#load-patch-dialog");
+function loadPresetFromFile() {
+    // $("#load-preset-error").empty();
+    $("#preset-file").val("");
+    lightbox = lity("#load-preset-dialog");
     return false;   // disable the normal href behavior
 }
 
 /**
  *
  */
-function savePatchToFile() {
+function savePresetToFile() {
     return false;   // disable the normal href behavior
 }
 
 /**
- * Handler for the #patch-file file input element in #load-patch
+ * Handler for the #preset-file file input element in #load-preset
  */
 function readFile() {
 
@@ -756,7 +757,7 @@ function readFile() {
 
             } else {
                 console.log("unable to set value from file");
-                $("#load-patch-error").show().text("The file is invalid.");
+                $("#load-preset-error").show().text("The file is invalid.");
             }
         };
         reader.readAsArrayBuffer(f);
@@ -784,8 +785,8 @@ function openCreditsDialog() {
 //==================================================================================================================
 // UI main commands (buttons in header)
 
-function printPatch() {
-    if (TRACE) console.log("printPatch");
+function printPreset() {
+    if (TRACE) console.log("printPreset");
     let url = "print.html?" + URL_PARAM_SYSEX + "=" + encodeURIComponent(LZString.compressToBase64(Utils.toHexString(DEVICE.getSysEx())));
     window.open(url, "_blank", "width=800,height=600,location,resizable,scrollbars,status");
     return false;   // disable the normal href behavior
@@ -795,7 +796,7 @@ function printPatch() {
  * header"s "sync" button handler
  */
 function syncUIwithDEVICE() {
-    // ask the DEVICE to send us its current patch:
+    // ask the DEVICE to send us its current preset:
     // requestSysExDump();
     return false;   // disable the normal href behavior
 }
@@ -821,7 +822,7 @@ function openMidiWindow() {
 
 function setLayoutSize(size) {
     console.log(`setLayoutSize(${size})`);
-    $("#main").removeClass("layout-S layout-M layout-L").addClass(size);
+    $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(size);
 }
 
 /**
@@ -846,18 +847,21 @@ function setupMenu() {
     // $("#menu-favorites").click(openFavoritesPanel);
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    $("#menu-load-patch").click(loadPatchFromFile);
-    // $("#menu-save-patch").click(savePatchToFile);
-    // $("#menu-get-url").click(reloadWithPatchUrl);
-    // $("#menu-print-patch").click(printPatch);
+    $("#menu-load-preset").click(loadPresetFromFile);
+    // $("#menu-save-preset").click(savePresetToFile);
+    // $("#menu-get-url").click(reloadWithPresetUrl);
+    // $("#menu-print-preset").click(printPreset);
     // $("#menu-sync").click(syncUIwithDEVICE);
     $("#menu-midi").click(openMidiWindow);
     // $("#menu-settings").click(openSettingsPanel);
     // $("#menu-help").click(openHelpDialog);
     // $("#menu-about").click(openCreditsDialog);
 
-    // in load-patch-dialog:
-    $("#patch-file").change(readFile);
+    // in load-preset-dialog:
+    $("#preset-file").change(readFile);
+
+    $("#menu-zoom-in").click(zoomIn);
+    $("#menu-zoom-out").click(zoomOut);
 
     // // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
@@ -919,7 +923,7 @@ function displayRandomizerSettings() {
 // SysEx
 
 /**
- * Send a sysex to the DEVICE asking for it to send back a sysex dump of its current patch.
+ * Send a sysex to the DEVICE asking for it to send back a sysex dump of its current preset.
  * F0 00 20 29 00 33 00 40  F7
  */
 function requestSysExDump() {
@@ -957,7 +961,7 @@ function connectInput(input) {
     if (TRACE) console.log(`midi_input assigned to "${midi_input.name}"`);
     // }
     midi_input
-        .on("programchange", midi_channel, function(e) {        // sent by the DEVICE when changing patch
+        .on("programchange", midi_channel, function(e) {        // sent by the DEVICE when changing preset
             handlePC(e);
         })
         .on("controlchange", midi_channel, function(e) {
@@ -1052,7 +1056,7 @@ function deviceConnect(info) {
         if (!midi_output) {
             connectOutput(info.port);
             //TODO: we should ask the user
-            // ask the DEVICE to send us its current patch:
+            // ask the DEVICE to send us its current preset:
             requestSysExDump();
         } else {
             console.log("deviceConnect: output already connected");
@@ -1172,7 +1176,7 @@ $(function () {
                 }
             } else {
                 //TODO: we should ask the user
-                // ask the DEVICE to send us its current patch:
+                // ask the DEVICE to send us its current preset:
                 requestSysExDump();
             }
 */
