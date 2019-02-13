@@ -10,6 +10,8 @@ import "./css/grid.css";
 import "./css/layout.css";
 import "./css/knob.css";
 import {detect} from "detect-browser";
+import { fromEvent } from 'rxjs'
+import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operators';
 import {KNOB_CONF} from "./conf";
 
 const TRACE = true;    // when true, will log more details in the console
@@ -662,6 +664,8 @@ function setupUI() {
     setupMenu();
     setupSelects();
 
+    setupKeyboard();
+
     console.groupEnd();
 }
 
@@ -825,16 +829,150 @@ function setLayoutSize(size) {
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(size);
 }
 
+
+function toggleBypass() {
+    const c = DEVICE.control[DEVICE.control_id.bypass];
+    const v = DEVICE.getControlValue(c) === 0 ? 127 : 0;
+    updateDevice(c.cc_type, c.cc_number, v);
+    if (v === 0) {
+        $("#cc-14-0").addClass("sw-off");
+        $("#cc-14-127").removeClass("sw-off");
+    } else {
+        $("#cc-14-127").addClass("sw-off");
+        $("#cc-14-0").removeClass("sw-off");
+    }
+}
+
+function animateControl() {
+    $({ n: 0 }).animate({ n: 10}, {
+        duration: 2000,
+        step: function(now) {
+            console.log(now);
+        }
+    });
+}
+
 /**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
  */
 function setupKeyboard() {
+
+    let keyDowns = fromEvent(document, "keydown");
+    let keyUps = fromEvent(document, "keyup");
+
+    let keyPresses = keyDowns.pipe(
+        merge(keyUps),
+        groupBy(e => e.keyCode),
+        map(group => group.pipe(distinctUntilChanged(null, e => e.type))),
+        mergeAll()
+    );
+
+    // var keyPresses = keyDowns
+    //     .merge(keyUps)
+    //     .groupBy(e => e.keyCode)
+    //     .map(group => group.distinctUntilChanged(null, e => e.type))
+    //     .mergeAll()
+
+    keyPresses.subscribe(function(e) {
+        //console.log(e.type, e.key || e.which, e.keyIdentifier);
+        // if (TRACE) console.log(e.keyCode, e.type, e.altKey, e.shiftKey, e);
+        if (e.type === "keydown") {
+            keyDown(e.keyCode, e.altKey, e.shiftKey);
+        } else if (e.type === "keyup") {
+            keyUp(e.keyCode, e.altKey, e.shiftKey);
+        }
+    });
+
+    if (TRACE) console.log("keyboard set up");
+
 }
 
 function keyDown(code, alt, shift) {
+
+    console.log(code);
+
+    if (code === 48) {   // 0
+        preset_number = 10;
+        displayPreset();
+        return;
+    }
+
+    if ((code >= 49) && (code <= 57)) {   // 1..9
+        preset_number = code - 48;
+        displayPreset();
+        return;
+    }
+
+    if ((code >= 65) && (code <= 70)) {   // A..F
+        preset_number = code - 65 + 10 + 1;
+        displayPreset();
+        return;
+    }
+
+    switch (code) {
+        case 27:                // ESC
+            animateControl();
+            break;
+        case 32:                // SPACE
+            toggleBypass();
+            break;
+        // case 65:                // A
+        // case 66:                // B
+        // case 67:                // C
+        // case 68:                // D
+        // case 69:                // E
+        // case 70:                // F
+        // case 71:                // G
+        //     break;
+        // case 83:                // S Stop
+        //     break;
+        case 82:                // R Randomize
+            randomize();
+            break;
+        // case 79:                // O Arpeggiator
+        //     toggleLatch();
+        //     break;
+        // case 76:                // L Latch
+        //     toggleLatch();
+        //     break;
+        case 27:                // ESC Panic
+        // case 80:                // P Panic
+        //     stopNote(last_note);
+        //     // panic();
+        //     break;
+        case 77:                // M Mono
+            break;
+        case 80:                // P Poly
+            break;
+        case 82:                // R ARP
+            break;
+        case 89:                // Y Dry
+            break;
+        case 73:                // I Init
+            init();
+            break;
+        case 33:                // Page Up
+        case 38:                // Up arrow
+        case 39:                // Right arrow
+        case 107:               // num keypad "+"
+            presetInc();
+            break;
+        case 34:                // Page Down
+        case 40:                // Down arrow
+        case 37:                // Left arrow
+        case 109:               // num keypad "-"
+            presetDec();
+            break;
+    }
 }
 
 function keyUp(code, alt, shift) {
+    switch (code) {
+        case 27:                // close all opened panel with ESC key:
+            closeFavoritesPanel();
+            closeSettingsPanel();
+            break;
+    }
 }
 
 /**
@@ -874,7 +1012,7 @@ function setupMenu() {
     // });
     // $(".close-favorites-panel").click(closeFavoritesPanel);
     //
-    // setupKeyboard();
+
     //
     // // close all opened panel on outside click:
     // $(document).mousedown(function(e) {
