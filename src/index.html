@@ -7,7 +7,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="description" content="Control your Meris Enro efefct pedal directly from your web browser." />
     <meta name="author" content="François Georgy" />
-    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="bundle.js"></script>
@@ -43,23 +45,22 @@
 
         <div id="tools">
             <div>
-                <i class="fas fa-volume-mute"></i> Fast fade
+                <!--<i class="fas fa-volume-mute"></i> Fast fade-->
             </div>
             <div>
-                <i class="fas fa-volume-mute"></i> Slow fade
+                <!--<i class="fas fa-volume-mute"></i> Slow fade-->
             </div>
         </div>
 
         <div id="messages">
             Messages for the user...
             <div>
-                name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset name-of-a-preset
             </div>
         </div>
 
         <div id="options">
             <div>
-                <div style="float: right">disconnected</div>
+                <div style="float:right"><i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i></div>
                 <div>MIDI</div>
             </div>
             <div>
@@ -218,7 +219,7 @@
         -->
         <div id="sustain">
             <div class="header">
-                <div style="float:right;font-size:80%;color:#999;padding-top:3px">[S]</div>
+                <!--<div style="float:right;font-size:80%;color:#999;padding-top:3px">[S]</div>-->
                 <div>sustain</div>
             </div>
             <div class="controls">
@@ -410,34 +411,28 @@
     </div>
 
     <div id="credits-dialog" class="dialog lity-hide">
-        <a href="https://github.com/francoisgeorgy/enzo-web">
+        <a href="https://github.com/francoisgeorgy/enzo-web-editor">
             <img style="position: absolute; top: 0; right: 0; border: 0;"
                  src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
                  alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
         <div class="enzo-gold" style="font-size:2rem;font-weight:bold">
             Enzo Web Interface <span class="version">2.0.0</span>
         </div>
-        <p>Enzo Web Interface is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/BS2-Web/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <p>Enzo Web Interface is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
         <h1 style="margin-top:20px">Credits</h1>
         <p>This application uses the following Open Source components:</p>
         <ul>
             <li><a href="https://github.com/cotejp/webmidi" target="_blank">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
-            <li><a href="https://github.com/danigb/tonal" target="_blank">Tonal</a>: a functional music theory library for Javascript.</li>
             <li><a href="https://github.com/francoisgeorgy/svg-knob">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
-            <li><a href="https://github.com/francoisgeorgy/svg-envelope">svg-envelope</a>: a flexible and customizable ADSR-like envelope.</li>
-            <li><a href="https://github.com/francoisgeorgy/svg-slider">svg-slider</a>: a flexible and customizable slider for your web applications.</li>
             <li><a href="http://sorgalla.com/lity/">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
             <li><a href="https://github.com/js-cookie/js-cookie" target="_blank">JS-Cookie</a>: a simple, lightweight JavaScript API for handling browser cookies.</li>
             <li><a href="https://jquery.com/" target="_blank">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
-            <li><a href="http://momentjs.com/" target="_blank">Moment.js</a>: parse, validate, manipulate, and display dates and times in JavaScript.</li>
             <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
             <li><a href="http://fontawesome.io/" target="_blank">Font Awesome</a>: the iconic font and CSS toolkit.</li>
             <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank">Roboto font</a> by Google.</li>
-            <li><a href="https://www.keshikan.net/fonts-e.html" target="_blank">7 segments "DSEG" font</a> by keshikan.</li>
         </ul>
         <p class="trademarks">
-            <em>Novation</em> is a registered trade mark of Focusrite Audio Engineering Limited.<br />
-            <em>Bass Station II</em> is a trade mark of Focusrite Audio Engineering Limited.
+            <em>Meris</em> is a trademark of MERIS, LLC.<br />
         </p>
     </div>
 
@@ -447,24 +442,18 @@
             <li>Allow the browser to access your MIDI devices</li>
             <li>If it's not already done, connect your Enzo to your computer.</li>
             <li>When the Enzo is connected the logo will glow.</li>
-            <li>Move a knob or a slider on your Enzo, the corresponding on-screen control must move accordingly.</li>
+            <li>Move a knob on your Enzo, the corresponding on-screen control must move accordingly.</li>
         </ol>
-        <h4>Knobs and sliders:</h4>
+        <h4>Knobs:</h4>
         <ul>
-            <li>To move the knobs or sliders, use the mouse.</li>
-            <li>Click and drag over the knob/slider. You can also use the mousewheel.</li>
-        </ul>
-        <h4>MIDI settings:</h4>
-        <ul>
-            <li>Use the Settings menu to set the MIDI channel if needed.</li>
+            <li>To move the knobs, use the mouse.</li>
+            <li>Click and drag over the knob. You can also use the mousewheel.</li>
         </ul>
         <h4>Keyboard shortcuts:</h4>
         <ul>
             <li>ESC key to close any open dialog.</li>
             <li>SPACE bar to start/stop playing.</li>
-            <li>A-G keys to play the corresponding note.<br />
-            Shift for sharp, Alt for flat.</li>
-            <li>S key to STOP any playing.</li>
+            <li>0..9 keys to select the presets 1..10.</li>
         </ul>
         <div class="dialog-info">
             <span style="float:right">ESC to close</span>
@@ -488,30 +477,6 @@
         <h2><span style="float:right" class="close-settings-panel">&#x2715;</span>Settings</h2>
         <div id="settings-dialog-instructions">
         </div>
-<!--
-        <div>
-            <h3>MIDI channel</h3>
-            Use MIDI channel <select id="midi-channel">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="all">All</option>
-        </select> to communicate with the Enzo.
-        </div>
--->
         <div>
             <h3>Display</h3>
             <input type="checkbox" name="fade-unused" value="1"> Fade unused controls

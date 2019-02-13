@@ -1,12 +1,12 @@
 
-.zoom-0 {width: calc(50vw - 1vh); /*height: calc(50vh - 0.5vh);*/}
+.zoom-0 {width: 650px;} /* calc(50vw - 1vh); height: calc(50vh - 0.5vh);*/
 .zoom-1 {width: 1000px;}
 /*.zoom-1 {width: calc(70vw - 1vh);}*/
 .zoom-2 {width: calc(100vw - 1vh); height: calc(100vh - (2 * 0.5vh));}
 
-#main.zoom-0 {font-size: 1rem; margin-top: 10px;}
+#main.zoom-0 {font-size: 0.85rem; margin-top: 20px;}
 #main.zoom-1 {font-size: 1rem; margin-top: 20px;}
-#main.zoom-2 {font-size: 1rem;}
+#main.zoom-2 {font-size: 1rem; border-radius: 0;}
 
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
@@ -18,25 +18,29 @@
 
 .zoom-0 .menu span.menu-text {display: none;}
 
-.zoom-0 .preset {padding: 10px 0;  font-size: 1rem;}
+.zoom-0 #main select {font-size: 0.85rem;}
+.zoom-1 #main select {font-size: 1rem;}
+.zoom-2 #main select {font-size: 1rem;}
+
+.zoom-0 .preset {padding: 5px 0;  font-size: 1rem;}
 .zoom-1 .preset {padding: 1vh 0;   font-size: 1.75rem;}
 .zoom-2 .preset {padding: 1vh 0; font-size: 2.5rem;}
 
-.zoom-0 #options {font-size: 1rem;}
+.zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}
 .zoom-2 #options {font-size: 1.5rem;}
 
-.zoom-0 .header {font-size: 1rem;}
+.zoom-0 .header {font-size: 0.85rem;}
 .zoom-1 .header {font-size: 1.25rem;}
 .zoom-2 .header {font-size: 1.5rem;}
 
-.zoom-0 .bt {padding: 0 1px 0 0; font-size: 1rem;}
+.zoom-0 .bt {padding: 0 1px 0 0; font-size: 0.85rem;}
 .zoom-1 .bt {padding: 1px 0;     font-size: 1.5rem;}
 .zoom-2 .bt {padding: 0 0;       font-size: 2rem;}
 
-.zoom-0 .stompswitch {font-size: 3rem;}
-.zoom-1 .stompswitch {font-size: 4rem;}
-.zoom-2 .stompswitch {font-size: 5rem;}
+.zoom-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
+.zoom-1 .stompswitch {font-size: 4rem; margin-top: 30px;}
+.zoom-2 .stompswitch {font-size: 5rem; margin-top: 40px;}
 
 .zoom-0 .knob {height: 8vh; margin: 0;}
 .zoom-1 .knob {width: 125px; margin: 0;}

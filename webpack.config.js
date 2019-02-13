@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-// var WebpackAutoInject = require('webpack-auto-inject-version');
+var WebpackAutoInject = require('webpack-auto-inject-version');
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
@@ -55,11 +55,11 @@ module.exports = {
         //     filename: "[name].css",
         //     chunkFilename: "[id].css"
         // }),
-        // new WebpackAutoInject({
-        //     components: {
-        //         AutoIncreaseVersion: false
-        //     }
-        // }),
+        new WebpackAutoInject({
+            components: {
+                AutoIncreaseVersion: false
+            }
+        }),
         new CopyWebpackPlugin([
             { from: "./src/index.html" },
             { from: "./src/midi.html" },

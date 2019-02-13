@@ -58,8 +58,6 @@ function decodeControls(data, controls) {
         let final_value = 0;
         final_value = controls[i].human(raw_value);
 
-        // console.log(`${i} ${controls[i].cc_type}-${controls[i].cc_number} raw_value=${raw_value} human=${final_value} (${controls[i].name})`);
-
         controls[i]["raw_value"] = raw_value;
         controls[i]["value"] = final_value;
     }

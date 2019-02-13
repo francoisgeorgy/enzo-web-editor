@@ -1,5 +1,6 @@
 import DEVICE from "./enzo/enzo.js";
 import Knob from "svg-knob";
+import store from 'storejs';
 // import * as Utils from "./lib/utils.js";
 import * as WebMidi from "webmidi";
 // CSS order is important
@@ -20,7 +21,7 @@ const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-stri
 
 let midi_input = null;
 let midi_output = null;
-let midi_channel = "all";
+// let midi_channel = "all";
 let knobs = {};         // svg-knob
 let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 
@@ -60,11 +61,12 @@ function setMidiInStatus(status) {
 // }
 
 function setStatus(msg) {
+    console.info("status:", msg);
     $("#status").removeClass("error").text(msg);
-    if (TRACE) console.log(msg);
 }
 
 function setStatusError(msg) {
+    console.warn("error:", msg);
     $("#status").addClass("error").text(msg);
 }
 
@@ -165,7 +167,49 @@ function getCurrentPresetAsLink() {
 //==================================================================================================================
 // Midi messages handling
 
+let activity_in = false;
+
+function showMidiInActivity() {
+    if (!activity_in) {
+        activity_in = true;
+        $("#midi-in-led").addClass("on");
+        let timeoutID = window.setTimeout(
+            function () {
+                $("#midi-in-led").removeClass("on");
+                activity_in = false;
+                timeoutID = null;
+            },
+            500);
+    }
+}
+
+let activity_out = false;
+
+function showMidiOutActivity() {
+    if (!activity_out) {
+        activity_out = true;
+        $("#midi-out-led").addClass("on");
+        let timeoutID = window.setTimeout(
+            function () {
+                $("#midi-out-led").removeClass("on");
+                activity_out = false;
+                timeoutID = null;
+            },
+            500);
+    }
+}
+
 let preset_number = 0;
+
+function sendPC(pc) {
+    preset_number = pc;
+    if (midi_output) {
+        if (TRACE) console.log(`send program change ${preset_number}`);
+        showMidiOutActivity();
+        midi_output.sendProgramChange(preset_number, settings.midi_channel);
+    }
+    logOutgoingMidiMessage("PC", preset_number);
+}
 
 function displayPreset() {
     $(".preset-id").removeClass("on");
@@ -192,15 +236,6 @@ function presetDec() {
     // requestSysExDump();
 }
 
-function sendPC(pc) {
-    preset_number = pc;
-    if (midi_output) {
-        if (TRACE) console.log(`send program change ${preset_number}`);
-        midi_output.sendProgramChange(preset_number, midi_channel);
-    }
-    logOutgoingMidiMessage("PC", preset_number);
-}
-
 /**
  * Handle Program Change messages
  * @param e
@@ -210,6 +245,8 @@ function handlePC(e) {
     if (TRACE) console.log("receive PC", e);
 
     if (e.type !== "programchange") return;
+
+    showMidiInActivity();
 
     logIncomingMidiMessage("PC", 0, e.value);
 
@@ -232,6 +269,8 @@ function handleCC(e) {
 
     if (TRACE) console.log("receive CC", cc, msg[2]);
 
+    showMidiInActivity();
+
     logIncomingMidiMessage("CC", cc, msg[2]);
 
     if (DEVICE.control[cc]) {
@@ -246,6 +285,8 @@ function handleCC(e) {
     } else {
         console.warn(`unsupported CC: ${cc}`)
     }
+
+    // $("#midi-in-led").removeClass("on");
 
 }
 
@@ -355,10 +396,11 @@ function sendCC(control) {
 
     for (let i=0; i<a.length; i++) {
         if (midi_output) {
-            if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${midi_channel}`);
-            midi_output.sendControlChange(a[i][0], a[i][1], midi_channel);
+            if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
+            showMidiOutActivity();
+            midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
         } else {
-            if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${midi_channel})`);
+            if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
         }
         logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
     }
@@ -369,6 +411,14 @@ function sendCC(control) {
  */
 function updateConnectedDevice(onlyChanged = false) {
     console.log("TODO: updateConnectedDevice()");
+    const c = DEVICE.control;
+    for (let i=0; i < c.length; i++) {
+        if (typeof c[i] === "undefined") continue;
+        if (!onlyChanged || c[i].randomized) {
+            sendCC(c[i]);
+            c[i].randomized = false;
+        }
+    }
 }
 
 //==================================================================================================================
@@ -422,33 +472,21 @@ function handleUserAction(control_type, control_number, value) {
 
 //==================================================================================================================
 
-/**
- *
- */
 function init(sendUpdate = true) {
-    if (TRACE) console.group(`init(${sendUpdate})`);
+    if (TRACE) console.log(`init(${sendUpdate})`);
     DEVICE.init();
     updateUI(true);
-    // setStatus(`init done`);
-    if (sendUpdate) updateConnectedDevice();
-    if (TRACE) console.log(`init done`);
-    if (TRACE) console.groupEnd();
+    if (sendUpdate) {
+        updateConnectedDevice();
+    }
     return false;   // disable the normal href behavior
 }
 
-/**
- *
- */
 function randomize() {
-    if (TRACE) console.group("randomize");
-    // if (settings.randomize.length < 1) {
-    //     alert("Nothing to randomize.\nUse the \"Settings\" menu to configure the randomizer.");
-    // } else {
-        DEVICE.randomize(settings.randomize);
-        updateUI();
-        updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
-    // }
-    if (TRACE) console.groupEnd();
+    if (TRACE) console.log("randomize");
+    DEVICE.randomize();
+    updateUI();
+    updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
     return false;   // disable the normal href behavior
 }
 
@@ -583,60 +621,55 @@ function setupSwitches() {
         if (!this.classList.contains("on")) {   // if not already on...
             $(this).siblings(".bt").removeClass("on");
             this.classList.add("on");
-            // handleUserAction(...c.split("-"), v);
             handleUserAction(...this.id.split("-"));
         }
     });
 
-    // stompswitches:
+    // toggle stompswitches:
     $(".sw").click(function() {
-        // if (TRACE) console.log(`click on ${this.id}`, this.classList);
         this.classList.add("sw-off");
         $(this).siblings(".sw").removeClass("sw-off");
         handleUserAction(...this.id.split("-"));
     });
 
     // momentary stompswitches:
-    // $(".swm").mousedown(function() {
-    //     // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
-    //     const i = this.id;
-    //     $(`#${i}-off`).addClass("sw-off");
-    //     $(`#${i}-on`).removeClass("sw-off");
-    //     handleUserAction(...this.id.split("-"));
-    // });
-
-    $(".swm").mousedown(function() { tapDown(this.id) });
-    $(".swm").mouseup(function() { tapRelease(this.id) });
-
-    // $(".swm").mouseup(function() {
-    //     // if (TRACE) console.log(`mousedown on ${this.id}`, this.classList);
-    //     const i = this.id;
-    //     $(`#${i}-off`).removeClass("sw-off");
-    //     $(`#${i}-on`).addClass("sw-off");
-    // });
+    $(".swm").mousedown(function() { tapDown(this.id) }).mouseup(function() { tapRelease(this.id) });
 
 }
 
 function setupSelects() {
     $("#zoom-0ize").change((event) => setLayoutSize(event.target.value));
     $("#midi-channel").change((event) => setMidiChannel(event.target.value));
+    $("#midi-channel").val(settings.midi_channel);
     $("#midi-input-device").change((event) => setInputDevice(event.target.value));
     $("#midi-output-device").change((event) => setOutputDevice(event.target.value));
 }
 
 function updateSelectDeviceList() {
-    $("#midi-input-device").empty().append($("<option>").val("").text("- select -"));
-    $("#midi-input-device").append(
+
+    console.log("updateSelectDeviceList");
+
+    let s = $("#midi-input-device");
+    s.empty().append($("<option>").val("").text("- select -"));
+    s.append(
         WebMidi.inputs.map((port, index) => {
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
-    $("#midi-output-device").empty().append($("<option>").val("").text("- select -"));
-    $("#midi-output-device").append(
+    if (settings.input_device_id) {
+        s.val(settings.input_device_id);
+    }
+
+    s = $("#midi-output-device");
+    s.empty().append($("<option>").val("").text("- select -"));
+    s.append(
         WebMidi.outputs.map((port, index) => {
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
+    if (settings.output_device_id) {
+        s.val(settings.output_device_id);
+    }
 }
 
 /**
@@ -659,9 +692,6 @@ function setupUI() {
 
     setMidiInStatus(false);
     // setMidiOutStatus(false);
-
-    setupSettings();    // must be done before loading the settings
-    loadSettings();
 
     setupKnobs();
     setupPresetSelectors();
@@ -816,7 +846,8 @@ function syncUIwithDEVICE() {
 function setMidiChannel(channel) {
     console.log("setMidiChannel", channel);
     disconnectInput();
-    midi_channel = channel;
+    settings.midi_channel = channel;
+    saveSettings();
     connectInput(midi_input);
 }
 
@@ -1027,8 +1058,8 @@ function setupMenu() {
     // $("#menu-sync").click(syncUIwithDEVICE);
     $("#menu-midi").click(openMidiWindow);
     // $("#menu-settings").click(openSettingsPanel);
-    // $("#menu-help").click(openHelpDialog);
-    // $("#menu-about").click(openCreditsDialog);
+    $("#menu-help").click(openHelpDialog);
+    $("#menu-about").click(openCreditsDialog);
 
     // in load-preset-dialog:
     $("#preset-file").change(readFile);
@@ -1069,41 +1100,23 @@ function setupMenu() {
 //==================================================================================================================
 // Settings
 
-var settings = {
+let settings = {
     midi_channel: "all",
-    randomize: [],
-    fade_unused: false
+    input_device_id: null,    // web midi port ID
+    output_device_id: null    // web midi port ID
 };
 
 function loadSettings() {
-    console.log("TODO: loadSettings()");
+    const s = store.get("enzo.settings");
+    if (s) settings = JSON.parse(s);
+    // settings.input_device_id = store.get("enzo.settings.input_device_id");
+    // settings.output_device_id = store.get("enzo.settings.output_device_id");
 }
 
 function saveSettings() {
-    console.log("TODO: saveSettings()");
-}
-
-function setupSettings() {
-    console.log("TODO: setupSettings()");
-}
-
-function displayRandomizerSettings() {
-    console.log("TODO: displayRandomizerSettings()");
-}
-
-
-//==================================================================================================================
-// SysEx
-
-/**
- * Send a sysex to the DEVICE asking for it to send back a sysex dump of its current preset.
- * F0 00 20 29 00 33 00 40  F7
- */
-function requestSysExDump() {
-    // if (midi_output) {
-    //     console.log("requestSysExDump()", midi_output);
-    //     midi_output.sendSysex(DEVICE.meta.signature.sysex.value, [0x00, 0x33, 0x00, 0x40]);
-    // }
+    store("enzo.settings", JSON.stringify(settings));
+    // store("enzo.settings.input_device_id", settings.input_device_id);
+    // store("enzo.settings.output_device_id", settings.output_device_id);
 }
 
 //==================================================================================================================
@@ -1127,20 +1140,20 @@ function connectInput(input) {
 
     if (!input) return;
 
-    if (TRACE) console.log(`connect input to channel ${midi_channel}`);
+    if (TRACE) console.log(`connect input to channel ${settings.midi_channel}`);
     // if (input) {
     midi_input = input;
     // setStatus(`"${midi_input.name}" input connected.`);
     if (TRACE) console.log(`midi_input assigned to "${midi_input.name}"`);
     // }
     midi_input
-        .on("programchange", midi_channel, function(e) {        // sent by the DEVICE when changing preset
+        .on("programchange", settings.midi_channel, function(e) {        // sent by the DEVICE when changing preset
             handlePC(e);
         })
-        .on("controlchange", midi_channel, function(e) {
+        .on("controlchange", settings.midi_channel, function(e) {
             handleCC(e);
         })
-        .on("sysex", midi_channel, function(e) {
+        .on("sysex", settings.midi_channel, function(e) {
             console.log("sysex handler");
             if (TRACE) console.log("update DEVICE with sysex");
             if (DEVICE.setValuesFromSysEx(e.data)) {
@@ -1151,9 +1164,9 @@ function connectInput(input) {
                 setStatusError("Unable to update from SysEx data.")
             }
         });
-    console.log(`${midi_input.name} listening on channel ${midi_channel}`);
+    console.log(`${midi_input.name} listening on channel ${settings.midi_channel}`);
     setMidiInStatus(true);
-    setStatus(`${midi_input.name} connected on MIDI channel ${midi_channel}.`);
+    setStatus(`${midi_input.name} connected on MIDI channel ${settings.midi_channel}.`);
 }
 
 /**
@@ -1170,14 +1183,21 @@ function connectOutput(output) {
 
 
 function setInputDevice(id) {
-    console.log("setInputDevice", id);
+
+    if (TRACE) console.log(`setInputDevice(${id})`);
+
+    if (!id) return;
 
     disconnectInput();
 
     let input = WebMidi.getInputById(id);
     if (input) {
+        if (TRACE) console.log(`setInputDevice(${id}) input ok`);
         connectInput(input);
-        setStatus(`${input.name} MIDI device found on MIDI channel ${midi_channel}.`);
+        // setStatus(`${input.name} MIDI device found on MIDI channel ${settings.midi_channel}.`);
+        // save in settings for autoloading at next restart:
+        settings.input_device_id = id;
+        saveSettings();
     } else {
         setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
         setMidiInStatus(false);
@@ -1185,10 +1205,15 @@ function setInputDevice(id) {
 }
 
 function setOutputDevice(id) {
-    console.log("setOutputDevice", id);
+
+    if (!id) return;
+
     let output = WebMidi.getOutputById(id);
     if (output) {
         connectOutput(output);
+        // save in settings for autoloading at next restart:
+        settings.output_device_id = id;
+        saveSettings();
     } else {
         setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
         // setMidiOutStatus(false);
@@ -1201,42 +1226,8 @@ function setOutputDevice(id) {
  * @param info
  */
 function deviceConnect(info) {
-
-    console.log("deviceConnect", info);
-    // console.log("deviceConnect device names", DEVICE.name_device_in, DEVICE.name_device_out);
-
-    // console.log("deviceConnect port type ***", typeof info.port);
-    // console.log("deviceConnect port object ***", info.port);
-
+    if (TRACE) console.log("deviceConnect", info);
     updateSelectDeviceList();
-
-    if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
-        // console.log("ignore deviceConnect", info.port.name, DEVICE.name_device_in, DEVICE.name_device_out);
-        return;
-    }
-
-/*
-    if (info.port.type === "input") {
-    // if (info.hasOwnProperty("input") && info.input && (info.port.name === DEVICE.name_device_in)) {
-        if (!midi_input) {
-            connectInput(info.port);
-        } else {
-            console.log("deviceConnect: input already connected");
-        }
-    }
-    // if (info.hasOwnProperty("output") && info.output && (info.port.name === DEVICE.name_device_out)) {
-    if (info.port.type === "output") {
-        if (!midi_output) {
-            connectOutput(info.port);
-            //TODO: we should ask the user
-            // ask the DEVICE to send us its current preset:
-            requestSysExDump();
-        } else {
-            console.log("deviceConnect: output already connected");
-        }
-    }
-*/
-
 }
 
 /**
@@ -1245,9 +1236,7 @@ function deviceConnect(info) {
  */
 function deviceDisconnect(info) {
     console.log("deviceDisconnect", info);
-
     updateSelectDeviceList();
-
 /*
     if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
         console.log(`disconnect event ignored for device ${info.port.name}`);
@@ -1263,7 +1252,6 @@ function deviceDisconnect(info) {
         // setMidiOutStatus(false);
     }
 */
-
 }
 
 //==================================================================================================================
@@ -1275,6 +1263,8 @@ function deviceDisconnect(info) {
 $(function () {
 
     console.log(`Enzo Web Interface ${VERSION}`);
+
+    loadSettings();
 
     setupUI();
 
@@ -1316,24 +1306,11 @@ $(function () {
             WebMidi.addListener("connected", e => deviceConnect(e));
             WebMidi.addListener("disconnected", e => deviceDisconnect(e));
 
-/*
-            let input = WebMidi.getInputByName(DEVICE.name_device_in);
-            if (input) {
-                connectInput(input);
-                setStatus(`${DEVICE.name_device_in} MIDI device found on MIDI channel ${midi_channel}.`);
-            } else {
-                setStatusError(`${DEVICE.name_device_in} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
-                setMidiInStatus(false);
+            if (settings) {
+                setInputDevice(settings.input_device_id);
+                setOutputDevice(settings.output_device_id);
+                updateSelectDeviceList();
             }
-
-            let output = WebMidi.getOutputByName(DEVICE.name_device_out);
-            if (output) {
-                connectOutput(output);
-            } else {
-                setStatusError(`${DEVICE.name_device_out} MIDI device not found. Please connect your ${DEVICE.name} or check the MIDI channel.`);
-                // setMidiOutStatus(false);
-            }
-*/
 
 /*
             let s = Utils.getParameterByName("sysex");

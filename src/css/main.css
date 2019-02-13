@@ -1,15 +1,7 @@
-/*
-@font-face{
-    font-family: sevensegments;
-    src: url("DSEG7Classic-BoldItalic.woff") format("woff");
-}
-*/
 
 :root {
     --controls-row-start: 4;
     --controls-col-start: 1;
-
-    --inset-width: 1px;
 
     --value: yellow;
     --knob-back-border: #999;
@@ -17,13 +9,6 @@
     --knob-track-init: #999;
     --knob-back-track-color: #303030;   /*373738*/
 
-    --lfo1: #BA7B0B;
-    --lfo2: #976308;
-    --modenv: #5A0C9E;
-
-    --lfo1-text: #ccc;
-    --lfo2-text: #bbb;
-    --modenv-text: #bbb;
     --bt-text: #ddd;
     --label: #bbb;
 
@@ -32,7 +17,6 @@
 
     --title-text: #fff;
     --header-text: #ccc;
-    --status-color: #DAC10F;
 
     --menu-icon: #ccc;
     --menu-text: #ddd;
@@ -41,29 +25,7 @@
     --default-bg-from: #454547;
     --default-bg-to: #373738;
 
-    --mod-bg-from: #454547;
-    --mod-bg-to: #373738;
-
-    --osc-bg-from: #454547;
-    --osc-bg-to: #373738;
-
-    --filter-bg-from: #454547;
-    --filter-bg-to: #373738;
-
-    --amp-bg-from: #454547;
-    --amp-bg-to: #373738;
-
-    --fx-bg-from: #454547;
-    --fx-bg-to: #373738;
-
-    --combo-label: #aaaaaa;
-    --combo-separator: #999;
-
     --select-border: #777;
-
-    --seq-bg: #5C5C66;
-    --seq-off: #929181;
-    --seq-on: #C1BFAF;
 
     --side-panel-bg: rgba(20, 20, 20, 0.95);
     --side-panel-color: #ddd;
@@ -108,9 +70,7 @@ html {
 }
 
 .header {
-    /*margin: 3px 0 6px 0;*/
     margin: 3px 0 0 0;
-    /*font-size: 1.5rem;*/
     letter-spacing: 1px;
 }
 
@@ -119,8 +79,13 @@ html {
     padding: 0 3px;
 }
 
+#midi-in-led,
+#midi-out-led {
+    color: #999;
+}
+
 .on {
-    color: var(--value);
+    color: var(--value)!important;
 }
 
 .no-left-border {
@@ -132,8 +97,6 @@ html {
 
 .grid-2x2 {
     display: grid;
-    /*grid-column-gap: 0.5vh;*/
-    /*grid-row-gap: 0.5vh;*/
     grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr;
 }
@@ -148,8 +111,6 @@ html {
     border-radius: 6px;
 }
 
-/*http://codeblock.at/base64-noise-generator/ #101010 #606060 10% */
-
 #main > div {
     align-self: stretch;
     /*background: var(--default-bg-from) linear-gradient(to bottom, var(--default-bg-from), var(--default-bg-to));*/
@@ -160,7 +121,6 @@ html {
 }
 
 #main select {
-    /*font-size: 1rem;*/
     color: var(--value);
     background-color: var(--default-bg-to);
     border-color: var(--select-border);
@@ -173,18 +133,14 @@ html {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-    /*padding: 0 !important;*/
     padding: 4px 4px 0 4px !important;
     display: flex;
-    /*justify-content: space-between;*/
     align-items: flex-end;
-    /*color: var(--title-text);*/
     color: var(--header-text);
 }
 
 #title h1 {
     font-weight: 300;
-    /*font-size: 1.6rem;*/
     color: var(--title-text);
     padding: 0;
     margin: 0;
@@ -203,7 +159,7 @@ html {
 }
 
 #title > div.neon {
-    /*font-size: 2rem;*/
+    font-family: Roboto, sans-serif;
 }
 
 #title > div.menu {
@@ -265,7 +221,6 @@ div.controls {
 }
 
 .preset:hover {
-    /*background-color: #BA7B0B;*/
     border: 1px solid var(--value);
 }
 
@@ -273,39 +228,12 @@ div.controls {
 }
 
 .preset.on {
-    /*background-color: var(--value);*/
-    /*color: #000;*/
     background-color: transparent;
     color: var(--value);
     text-shadow: 0 0 8px lightyellow;
     box-shadow: 0 0 8px var(--value);
     border: 1px solid var(--value);
 }
-
-/*
-#status-bar {
-    align-self: center !important;
-
-    background: transparent !important;
-    border-color: transparent !important;
-    padding: 0 0 0 6px !important;
-
-    font-weight: 300;
-    color: var(--status-color);
-}
-
-    #status {
-        font-size: 0.9em;
-    }
-
-    .error {
-        background-color: #ee2222;
-        color: #000;
-        padding: 3px;
-        font-weight: 400;
-        text-align: center;
-    }
-*/
 
 .knob-combo {
     /*line-height: 100%;*/
@@ -515,10 +443,6 @@ select option {
 #randomizer-select-none {
     margin-right: 10px;
 }
-
-/*#midi-channel {*/
-    /*font-size: 1rem;*/
-/*}*/
 
 #randomizer-settings td {
     padding-right: 20px;

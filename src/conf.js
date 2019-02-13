@@ -46,7 +46,7 @@ export const KNOB_CONF = {
     // bg_color: "#333",
     // bg_border_color: "#888",
     // track_bg_color: "#555",
-    track_color_init: "#999",
+    track_color_init: "#bbb",
     track_color: "#bbb",
     cursor_color_init: "#bbb",
     cursor_color: "#ddd",
