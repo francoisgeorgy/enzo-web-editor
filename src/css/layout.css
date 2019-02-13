@@ -17,13 +17,13 @@
 #main.layout-S {
     /*justify-content: center;*/
     font-size: 1rem;
-    margin-top: 20vh;
+    margin-top: 10px;
 }
 
 #main.layout-M {
     /*justify-content: center;*/
     font-size: 1rem;
-    margin-top: 10vh;
+    margin-top: 20px;
 }
 
 #main.layout-L {
