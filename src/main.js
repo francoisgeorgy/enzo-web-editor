@@ -15,7 +15,7 @@ import {detect} from "detect-browser";
 import { fromEvent } from 'rxjs'
 import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operators';
 import {KNOB_CONF} from "./conf";
-import {WAVESHAPES} from "./enzo/constants";
+import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
 
 const TRACE = false;    // when true, will log more details in the console
 const VERSION = "[AIV]{version}[/AIV]";
@@ -905,6 +905,31 @@ function selectSawtooth() {
     updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
 }
 
+function selectDry() {
+    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.dry);
+    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.dry);
+}
+
+function selectMono() {
+    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.mono);
+    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.mono);
+}
+
+function selectPoly() {
+    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.poly);
+    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.poly);
+}
+
+function selectArp() {
+    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.arp);
+    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.arp);
+}
+
+
 let animations = {};     // one entry possible per CC; entry is {timeout_handler, target_value}
 
 function _animateCC(control_number, n, callback) {
@@ -1092,12 +1117,16 @@ function keyDown(code, alt, shift) {
         //     // panic();
         //     break;
         case 77:                // M Mono
+            selectMono();
             break;
         case 80:                // P Poly
+            selectPoly();
             break;
         case 65:                // A ARP
+            selectArp();
             break;
         case 68:                // D Dry
+            selectDry();
             break;
         case 73:                // I Init
             init();
