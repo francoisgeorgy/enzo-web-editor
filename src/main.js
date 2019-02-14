@@ -1,7 +1,8 @@
 import DEVICE from "./enzo/enzo.js";
 import Knob from "svg-knob";
 import store from 'storejs';
-// import * as Utils from "./lib/utils.js";
+import * as Utils from "./lib/utils.js";
+import LZString from "lz-string";
 import * as WebMidi from "webmidi";
 // CSS order is important
 import * as lity from "lity";
@@ -16,7 +17,7 @@ import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operat
 import {KNOB_CONF} from "./conf";
 import {WAVESHAPES} from "./enzo/constants";
 
-const TRACE = true;    // when true, will log more details in the console
+const TRACE = false;    // when true, will log more details in the console
 const VERSION = "[AIV]{version}[/AIV]";
 const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
 
@@ -62,19 +63,18 @@ function setMidiInStatus(status) {
 // }
 
 function setStatus(msg) {
-    console.info("status:", msg);
+    if (TRACE) console.info("status:", msg);
     // $("#status").removeClass("error").text(msg);
     $("#info-message").text(msg);
 }
 
 function setStatusError(msg) {
-    console.warn("error:", msg);
+    if (TRACE) console.warn("error:", msg);
     // $("#status").addClass("error").text(msg);
     $("#error-message").text(msg);
 }
 
 function applyZoom() {
-    console.log("applyZoom", zoom_level);
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(`zoom-${zoom_level}`)
 }
 
@@ -525,13 +525,13 @@ function updateControls() {
  */
 function setupKnobs() {
 
-    console.log("setupKnobs()");
+    if (TRACE) console.log("setupKnobs()");
 
     for (let i=0; i < DEVICE.control.length; i++) {
 
         const c = DEVICE.control[i];
         if (typeof c === "undefined") {
-            console.log("device undefined", i);
+            if (TRACE) console.log("device undefined", i);
             continue;
         }
 
@@ -540,7 +540,7 @@ function setupKnobs() {
 
         let elem = document.getElementById(id);
         if (elem === null) {
-            console.warn(`setupKnobs: element not found for id ${id}`);
+            // console.warn(`setupKnobs: element not found for id ${id}`);
             continue;
         }
         if (!elem.classList.contains("knob")) return;
@@ -568,7 +568,7 @@ function setupKnobs() {
 
 function setupPresetSelectors() {
 
-    console.log("setupPresetSelectors()");
+    if (TRACE) console.log("setupPresetSelectors()");
 
     $("div#pc-down").click(function() {
         if (TRACE) console.log(`click on ${this.id}`);
@@ -609,7 +609,7 @@ function setupPresetSelectors() {
  */
 function setupSwitches() {
 
-    console.log("setupSwitches()");
+    if (TRACE) console.log("setupSwitches()");
 
     // "radio button"-like behavior:
     $("div.bt").click(function() {
@@ -643,7 +643,7 @@ function setupSelects() {
 
 function updateSelectDeviceList() {
 
-    console.log("updateSelectDeviceList", settings.input_device_id, settings.output_device_id);
+    if (TRACE) console.log("updateSelectDeviceList", settings.input_device_id, settings.output_device_id);
 
     let present = false;
     let s = $("#midi-input-device");
@@ -693,7 +693,7 @@ function updateUI() {
  */
 function setupUI() {
 
-    console.groupCollapsed("setupUI");
+    if (TRACE) console.groupCollapsed("setupUI");
 
     $("span.version").text(VERSION);
 
@@ -708,7 +708,7 @@ function setupUI() {
 
     setupKeyboard();
 
-    console.groupEnd();
+    if (TRACE) console.groupEnd();
 }
 
 //==================================================================================================================
@@ -853,7 +853,7 @@ function syncUIwithDEVICE() {
  * header"s "midi channel" select handler
  */
 function setMidiChannel(channel) {
-    console.log("setMidiChannel", channel);
+    if (TRACE) console.log("setMidiChannel", channel);
     disconnectInput();
     settings.midi_channel = channel;
     saveSettings();
@@ -870,13 +870,13 @@ function openMidiWindow() {
 }
 
 function setLayoutSize(size) {
-    console.log(`setLayoutSize(${size})`);
+    if (TRACE) console.log(`setLayoutSize(${size})`);
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(size);
 }
 
 
 function updateBypassSwitch(value) {
-    console.log("updateBypassSwitch", value);
+    if (TRACE) console.log("updateBypassSwitch", value);
     if (value === 0) {
         $("#cc-14-0").addClass("sw-off");
         $("#cc-14-127").removeClass("sw-off");
@@ -1137,7 +1137,7 @@ function keyUp(code, alt, shift) {
  */
 function setupMenu() {
 
-    console.log("setupMenu()");
+    if (TRACE) console.log("setupMenu()");
 
     // $("#menu-favorites").click(openFavoritesPanel);
     $("#menu-randomize").click(randomize);
@@ -1145,7 +1145,7 @@ function setupMenu() {
     $("#menu-load-preset").click(loadPresetFromFile);
     // $("#menu-save-preset").click(savePresetToFile);
     // $("#menu-get-url").click(reloadWithPresetUrl);
-    // $("#menu-print-preset").click(printPreset);
+    $("#menu-print-preset").click(printPreset);
     // $("#menu-sync").click(syncUIwithDEVICE);
     $("#menu-midi").click(openMidiWindow);
     // $("#menu-settings").click(openSettingsPanel);
@@ -1218,7 +1218,7 @@ function disconnectInput() {
     if (midi_input) {
         midi_input.removeListener();    // remove all listeners for all channels
         midi_input = null;
-        console.log("midi_input not listening");
+        if (TRACE) console.log("midi_input not listening");
     }
 }
 
@@ -1256,7 +1256,7 @@ function connectInput(input) {
                 setStatusError("Unable to update from SysEx data.")
             }
         });
-    console.log(`${midi_input.name} listening on channel ${settings.midi_channel}`);
+    if (TRACE) console.log(`${midi_input.name} listening on channel ${settings.midi_channel}`);
     setMidiInStatus(true);
     setStatus(`${midi_input.name} connected on MIDI channel ${settings.midi_channel}.`);
 }
@@ -1272,7 +1272,7 @@ function disconnectOutput() {
 function connectOutput(output) {
     if (TRACE) console.log("connect output");
     midi_output = output;
-    console.log(`midi_output assigned to "${midi_output.name}"`);
+    if (TRACE) console.log(`midi_output assigned to "${midi_output.name}"`);
     // setMidiOutStatus(true);
 }
 
@@ -1337,7 +1337,7 @@ function deviceConnect(info) {
  * @param info
  */
 function deviceDisconnect(info) {
-    console.log("deviceDisconnect", info);
+    if (TRACE) console.log("deviceDisconnect", info);
     updateSelectDeviceList();
 /*
     if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
@@ -1364,7 +1364,7 @@ function deviceDisconnect(info) {
  */
 $(function () {
 
-    console.log(`Enzo Web Interface ${VERSION}`);
+    if (TRACE) console.log(`Enzo Web Interface ${VERSION}`);
 
     loadSettings();
 
@@ -1396,7 +1396,7 @@ $(function () {
 
         } else {
 
-            console.log("webmidi ok");
+            if (TRACE) console.log("webmidi ok");
 
             setStatus("WebMidi enabled.");
 

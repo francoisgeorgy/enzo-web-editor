@@ -1,38 +1,115 @@
-@page {
-    margin: 0;
-    size: landscape;
-    /*margin: 15mm;*/
+body {
+    -webkit-print-color-adjust: exact;  /* force background graphics to be printed */
+    font-family: sans-serif;
+    font-size: 10pt;
 }
 
-body {
-    margin: 0 15mm;
-    /*margin: 0;*/
-    font-size: 8pt;
+a {
+    text-decoration: none;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+#cmds {
+    float: right;
+    text-align: right;
+}
+
+#print {
+    font-weight: bold;
+}
+
+h1, h2 {
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
 }
 
 h1 {
-    margin-top: 15mm;
-    page-break-before: always;
+    font-size: 24px;
+    margin-bottom: 12px;
 }
 
 h2 {
-    padding-bottom: 0;
-    margin-bottom: 2mm;
-    border: none;
+    font-size: 18px;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 5px;
+    margin-bottom: 9px;
+}
+
+#preset-number, #preset-name {
+    font-weight: bold;
 }
 
 .wrapper {
-    grid-gap: 2mm;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
 }
 
-.box {
-    border: 1px solid #ccc;
-    border-radius: 1mm;
-    padding: 2mm;
+table.first {
+    margin-right: 2cm;
 }
 
-a, #cmds {
-    display: none;
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    /*width: 100%;*/
 }
 
+table tr td {
+    padding: 2mm 2mm;
+}
+
+.instructions {
+    color: #555;
+    line-height: 140%;
+}
+
+@media print {
+    @page {
+        margin: 0;
+        /*size: landscape;*/
+        /*margin: 15mm;*/
+    }
+
+    body {
+        margin: 0 15mm;
+        /*margin: 0;*/
+        font-size: 8pt;
+    }
+
+    h1 {
+        margin-top: 10mm;
+        page-break-before: always;
+    }
+
+    h2 {
+        padding-bottom: 0;
+        margin-bottom: 2mm;
+        border: none;
+    }
+
+    .wrapper {
+        grid-gap: 2mm;
+        /*display: grid;*/
+        /*grid-gap: 10px;*/
+        grid-template-columns: repeat(4, 1fr);
+        /*background-color: #fff;*/
+        /*margin-bottom: 20px;*/
+    }
+
+    .box {
+        border: 1px solid #ccc;
+        border-radius: 2mm;
+        padding: 2mm;
+    }
+
+    a, #cmds {
+        display: none;
+    }
+
+
+}

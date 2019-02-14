@@ -1,98 +1,41 @@
-
-import DEVICE from "./bass-station-2/bass-station-2.js";
+import DEVICE from "./enzo/enzo.js";
 import * as Utils from "./lib/utils.js";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
-
-import "./css/patch.css";
 import LZString from "lz-string";
-
-const VERSION = "1.1.0";
-console.log(`Enzo Preset Sheet ${VERSION}`);
+import "./css/print.css";
 
 const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
 
-function renderGroup(group, changed_only) {
-    let o = "";
-    if (DEVICE.control_groups.hasOwnProperty(group)) {
-
-        console.groupCollapsed("group", group, DEVICE.control_groups[group]);
-
-        o = `<table id="${group}" class="values">\n`;
-
-        let g = DEVICE.control_groups[group];
-        for (let i=0; i < g.controls.length; i++) {
-
-            let c;
-            let t = g.controls[i].type;
-            let n = g.controls[i].number;
-            if (t === "cc") {
-                c = DEVICE.control[n];
-            } else if (t === "nrpn") {
-                c = DEVICE.nrpn[n];
-            } else {
-                console.error(`invalid control type: ${g.controls[i].type}`)
-            }
-
-            // if (typeof c === "undefined") continue;
-            // console.log(i, c);
-
-            let v;  // = c.value;
-            if (c.on_off) {
-                v = c.value == 0 ? "off" : "on";
-            } else {
-
-                v = c.human(c.raw_value);
-                console.log(`${t} ${n} raw=${c.raw_value} h=${v}`);
-            }
-
-            if (changed_only && !c.changed()) continue;
-
-            let bold = !changed_only && c.changed() ? "style=\"font-weight:bold\"" : "";
-
-            o += `<tr id="${t}-${n}" title="${c.name}"><td ${bold}>${c.name}</td><td ${bold}>${v}</td></tr>\n`;
-
-        }
-
-        o += `</table>\n`;
-
-        console.groupEnd();
-    }
-    return o;
+function renderControlName(control_number) {
+    const c = DEVICE.control[control_number];
+    return c.name;
 }
 
-function renderPatch(template, changed_only) {
+function renderControlValue(control_number) {
+    const c = DEVICE.control[control_number];
+    return c.human(c.raw_value);
+}
 
-    console.log("renderPatch");
+function renderPreset(template) {
 
-    let change_link = $("#only-changed");
-    if (changed_only) {
-        change_link.text("Show all values").click(function(){
-            window.location = window.location.href.replace(/&changedonly[^&]*/g, "") + "&changedonly=0";
-        });
-    } else {
-        change_link.text("Show only the changed values from an init patch").click(function(){
-            window.location = window.location.href.replace(/&changedonly[^&]*/g, "") + "&changedonly=1";
-        });
-    }
+    // $("#preset-number").text(DEVICE.meta.getStringValue(DEVICE.meta.preset_id.value));
 
-    $("#patch-number").text(DEVICE.meta.getStringValue(DEVICE.meta.patch_id.value));
-    $("#patch-name").text(DEVICE.meta.getStringValue(DEVICE.meta.patch_name.value));
-
-    let t = $(template).filter("#template-main").html();
-    let p = {
-        "name": "Tater",
+    const t = $(template).filter("#template-main").html();
+    const p = {
+        "n": function () {
+            return function (text) {
+                return renderControlName(text.trim().toLowerCase());
+            }
+        },
         "v": function () {
-            return function (text, render) {
-                return renderGroup(text.trim().toLowerCase(), changed_only);
+            return function (text) {
+                return renderControlValue(text.trim().toLowerCase());
             }
         }
     };
 
-    let o = Mustache.render(t, p);
-    $("body").append(o);
-
-    $("body").append(Mustache.render($(template).filter("#template-instructions").html()));
+    $("body").append(Mustache.render(t, p));
 
     $("#print").click(function(){
         window.print();
@@ -100,59 +43,40 @@ function renderPatch(template, changed_only) {
     });
 }
 
-function loadTemplate(data, changedonly) {
-
-    console.log("loadTemplate", data);
-
-    $.get("templates/patch-sheet-template.html", function(template) {
-        console.log("patch-sheet-template.html loaded");
+function loadTemplate(data) {
+    $.get("templates/preset-template.html", function(template) {
         let d = null;
         if (data) {
-
-            console.log("loadTemplate: read sysex data");
-
             for (let i=0; i<data.length; i++) {
                 if (data[i] === 240) {
-                    console.log("start sysex");
                     if (d) {
                         if (DEVICE.setValuesFromSysEx(d)) {
-                            console.log("device updated from sysex");
-                            renderPatch(template, changedonly);
+                            renderPreset(template);
                         } else {
-                            console.log("unable to update device from sysex");
+                            console.warn("unable to update device from sysex");
                         }
                     }
-                    console.log("clear d", data[i]);
                     d = [];
                 }
-                // console.log("push ", data[i]);
                 d.push(data[i]);
             }
         }
         if (d) {
-
-            console.log("loadTemplate: set values from sysex data");
-
             if (DEVICE.setValuesFromSysEx(d)) {
-                console.log("device updated from sysex");
-                renderPatch(template, changedonly);
+                renderPreset(template);
             } else {
-                console.log("unable to update device from sysex");
+                console.warn("unable to update device from sysex");
             }
         }
-        renderPatch(template, changedonly);
+        renderPreset(template);
     });
 }
 
 function loadErrorTemplate(data) {
 
-    console.log("loadErrorTemplate");
+    $.get("templates/preset-template.html", function(template) {
 
-    $.get("templates/patch-sheet-template.html", function(template) {
-
-        console.log("patch-sheet-template.html loaded");
-
-        let t = $(template).filter("#template-error").html();
+        const t = $(template).filter("#template-error").html();
 
         $("body").append(Mustache.render(t, {dump: data ? hexy(Array.from(data), {format:"twos"}) : "no data"}));
 
@@ -172,7 +96,7 @@ $(function () {
 
     let valid = false;
     let data = null;
-    let s = Utils.getParameterByName(URL_PARAM_SYSEX);
+    const s = Utils.getParameterByName(URL_PARAM_SYSEX);
     if (s) {
         try {
             data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
@@ -183,7 +107,7 @@ $(function () {
     }
 
     if (valid) {
-        loadTemplate(null, Utils.getParameterByName("changedonly") === "1");
+        loadTemplate(null);
     } else {
         loadErrorTemplate(data);
     }

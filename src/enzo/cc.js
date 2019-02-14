@@ -90,6 +90,34 @@ const _filter_type = function (v) {
     }
 };
 
+const _env_type = function (v) {
+    if (v < 64) {
+        return "TRIGGERED";
+    } else {
+        return "FOLLOWER";
+    }
+};
+
+const _synth_mode = function (v) {
+    if (v < 32) {
+        return "DRY";
+    } else if (v < 64) {
+        return "MONO";
+    } else if (v < 96) {
+        return "ARP";
+    } else {
+        return "POLY";
+    }
+};
+
+const _waveshape = function (v) {
+    if (v < 64) {
+        return "SAWTOOTH";
+    } else {
+        return "SQUARE";
+    }
+};
+
 function defineControls() {
     // control[control_id.exp_pedal] = { // 4,
     //     name: "Exp pedal",
@@ -100,6 +128,7 @@ function defineControls() {
     // };
     control[control_id.tempo] = { // 15,
         name: "tempo"
+        //TODO: tempo from sysex
     };
     control[control_id.pitch] = { // 16,
         name: "pitch",
@@ -180,7 +209,7 @@ function defineControls() {
         }
     };
     control[control_id.filter_bandwidth] = { // 26,
-        name: "filter bandwidth",
+        name: "filter Q",
         sysex: {
             offset: 19,
             mask: [0x7F]
@@ -205,6 +234,7 @@ function defineControls() {
     };
     control[control_id.envelope_type] = { // 9,
         name: "env type",
+        human: _env_type,
         map_raw: _2_steps,
         sysex: {
             offset: 22,
@@ -214,6 +244,7 @@ function defineControls() {
     control[control_id.synth_mode] = { // 29,
         name: "synth mode",
         init_value: 63,
+        human: _synth_mode,
         map_raw: _4_steps,
         sysex: {
             offset: 23,
@@ -223,6 +254,7 @@ function defineControls() {
     control[control_id.synth_waveshape] = { // 30
         name: "waveshape",
         init_value: 0,
+        human: _waveshape,
         map_raw: _2_steps,
         sysex: {
             offset: 24,
@@ -239,7 +271,7 @@ function defineControls() {
         // }
     };
 
-// add the missing default properties
+    // add the missing default properties
     control.forEach(function (obj) {
 
         obj.cc_number = control.indexOf(obj);   // is also the msb

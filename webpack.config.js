@@ -15,7 +15,7 @@ module.exports = {
     // },
     entry: {
         bundle: "./src/main.js",
-        // print_bundle: "./src/print.js"
+        print_bundle: "./src/print.js"
     },
     module: {
         rules: [{
@@ -64,7 +64,7 @@ module.exports = {
             { from: "./src/index.html" },
             { from: "./src/midi.html" },
             { from: "./src/print.html" },
-            // { from: "./src/templates/patch-sheet-template.html", to: "templates"},
+            { from: "./src/templates/preset-template.html", to: "templates"},
             { from: "./src/css/midi.css", to: "css" },
             { from: "./src/favicon-16x16.png" },
             { from: "./src/favicon-32x32.png" },

@@ -1,5 +1,6 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
+import {control_id} from "./cc";
 
 /**
  *
@@ -29,6 +30,8 @@ const validate = function (data) {
     for (let i = 0; i < data.length; i++) {
         last_byte = data[i];
     }
+
+    console.log("validate, last_byte", last_byte);
     return last_byte === SYSEX_END;
 };
 
@@ -37,8 +40,8 @@ const validate = function (data) {
  * @param data
  */
 function decodeMeta(data) {
-    // console.log("BS2.decodeSysExMeta", data);
-    meta.preset_id["value"] = data[meta.preset_id.sysex.offset];
+    console.log("decodeMeta", data, meta);
+    meta.preset_id.value = data[meta.preset_id.sysex.offset]
 }
 
 /**
@@ -48,7 +51,7 @@ function decodeMeta(data) {
  */
 function decodeControls(data, controls) {
 
-    // console.groupCollapsed("decodeSysExControls");
+    console.groupCollapsed("decodeSysExControls");
 
     for (let i = 0; i < controls.length; i++) {
 
@@ -93,7 +96,7 @@ const setDump = function (data) {
  * @returns {Uint8Array}
  */
 const getDump = function () {
-/*
+
     // MSB: most significant byte
     // LSB: least significant byte
     // msb: most significant bit
@@ -101,88 +104,37 @@ const getDump = function () {
 
     // console.group("getSysExDump", control);
 
-    let data = new Uint8Array(154); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
+    let data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
 
     data[0] = 0xF0;
     data[1] = 0x00;
     data[2] = 0x20;
-    data[3] = 0x29;
+    data[3] = 0x10;
 
-    // - byte 05 is always 0x33
-    // - bytes 30..35 are always 0x01 0x00 0x43 0x40 0x20 0x00
-    // - byte 96 is always 0x40
-    // - byte 104 is always 0x40
+    data[8] = 0x10;
 
-    // console.log("init constant sysex bytes");
-    data[5] = 0x33;
-    data[30] = 0x01;
-    data[31] = 0x00;
-    data[32] = 0x43;
-    data[33] = 0x40;
-    data[34] = 0x20;
-    data[35] = 0x00;
-    data[96] = 0x40;
-    data[104] = 0x40;
+    data[9] = control[control_id.pitch].raw_value;
+    data[10] = control[control_id.filter].raw_value;
+    data[11] = control[control_id.mix].raw_value;
+    data[12] = control[control_id.sustain].raw_value;
+    data[13] = control[control_id.filter_envelope].raw_value;
+    data[14] = control[control_id.modulation].raw_value;
+    data[15] = control[control_id.portamento].raw_value;
+    data[16] = control[control_id.filter_type].raw_value;
+    data[17] = control[control_id.delay_level].raw_value;
+    data[18] = control[control_id.ring_modulation].raw_value;
+    data[19] = control[control_id.filter_bandwidth].raw_value;
+    data[20] = control[control_id.delay_feedback].raw_value;
+    data[21] = control[control_id.bypass].raw_value;
+    data[22] = control[control_id.envelope_type].raw_value;
+    data[23] = control[control_id.synth_mode].raw_value;
+    data[24] = control[control_id.synth_waveshape].raw_value;
 
-    //TODO: factorise similar code
+    data[38] = 0xF7;   // end-of-sysex marker
 
-    // CC
-    for (let i = 0; i < control.length; i++) {
-
-        if (typeof control[i] === "undefined") continue;
-        if (!control[i].hasOwnProperty("sysex")) continue;
-        let sysex = control[i].sysex;
-        if (!sysex.hasOwnProperty("mask")) continue;
-
-        let v = control[i].raw_value;
-
-        // console.log(`SYSEX [${i}] ${v} ${v.toString(2)}`);
-
-        if (sysex.mask.length === 2) {
-
-            // the MSB always starts at the lsb (is always right aligned)
-
-            // left shift the value to apply the LSB mask
-            let r = Bits.getRightShift(sysex.mask[1]);
-            let v = control[i].raw_value << r;
-            let sysex_lsb = v & sysex.mask[1];
-
-            // how many bits has gone into the sysex_lsb?:
-            let n_bits_lsb = 7 - r;
-
-            // throw away those bits:
-            v = control[i].raw_value >>> n_bits_lsb;       // Shift to the right, discarding bits shifted off, and shifting in zeroes from the left.
-
-            // apply the MSB mask:
-            let sysex_msb = v & sysex.mask[0];
-
-            // put the values in the sysex data:
-            data[sysex.offset] |= sysex_msb;
-            data[sysex.offset + 1] |= sysex_lsb;
-
-        } else {
-            let r = Bits.getRightShift(sysex.mask[0]);
-            v = v << r;     // shifts r bits to the left, shifting in zeroes from the right.
-            data[sysex.offset] |= v;
-        }
-
-    } // CC
-
-    // Meta
-    if (meta.patch_name.value) {
-        //TODO: could probably be simplified
-        for (let i = 0; i < meta.patch_name.sysex.mask.length; i++) {
-            data[meta.patch_name.sysex.offset + i] = meta.patch_name.value.charCodeAt(i) & meta.patch_name.sysex.mask[i];
-        }
-    }
-
-    data[153] = 0xF7;   // end-of-sysex marker
-
-    console.groupEnd();
+    // console.groupEnd();
 
     return data;
-*/
-    return null;
 };
 
 export default {

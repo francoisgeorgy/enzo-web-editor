@@ -81,7 +81,7 @@ const init = function () {
         c.value = c.human(c.raw_value);
     }
 
-    meta.preset_id = null;
+    meta.preset_id.value = 0;
 };
 
 /**
@@ -114,7 +114,7 @@ const randomize = function() {
         c.randomized = true;
     }
 
-    meta.preset_id = null;
+    meta.preset_id.value = 0;
 
 };
 
