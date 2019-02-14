@@ -14,6 +14,7 @@ import {detect} from "detect-browser";
 import { fromEvent } from 'rxjs'
 import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operators';
 import {KNOB_CONF} from "./conf";
+import {WAVESHAPES} from "./enzo/constants";
 
 const TRACE = true;    // when true, will log more details in the console
 const VERSION = "[AIV]{version}[/AIV]";
@@ -881,6 +882,61 @@ function toggleBypass() {
     updateBypassSwitch(v);
 }
 
+function selectSquareware() {
+    const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
+    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
+    updateControl(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
+}
+
+function selectSawtooth() {
+    const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
+    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
+    updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
+}
+
+let animations = {};     // one entry possible per CC; entry is {timeout_handler, target_value}
+
+function _animateCC(control_number, n, callback) {
+
+    if (n === animations[control_number].to) {
+        clearTimeout(animations[control_number].handler);
+        animations[control_number] = null;
+        return;
+    }
+
+    n < animations[control_number].to ? n++ : n--;
+
+    callback(n);
+
+    animations[control_number].handler = setTimeout(() => _animateCC(control_number, n, callback), 1000/60);
+}
+
+function _stopAnimateCC(control_number) {
+    clearTimeout(animations[control_number].handler);
+    animations[control_number] = null;
+}
+
+function animateCC(control_number, from, to) {
+    if (TRACE) console.log(`animateCC(${control_number}, ${from}, ${to})`);
+    if (animations[control_number]) {
+        if (animations[control_number].to === to) {
+            _stopAnimateCC(control_number);
+        } else {
+            animations[control_number].to = to;     // change direction
+        }
+    } else {
+        animations[control_number] = {
+            handler: null,
+            to: to
+        };
+        _animateCC(control_number, from, function (v) {
+            dispatch("cc", control_number, v);
+            updateDevice("cc", control_number, v);
+        });
+    }
+}
+
+/*
 function animateCC(control_number, from, to) {
     let p = 0;
     $({ n: from }).animate({ n: to}, {
@@ -898,6 +954,7 @@ function animateCC(control_number, from, to) {
         }
     });
 }
+*/
 
 /**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
@@ -958,27 +1015,43 @@ function keyDown(code, alt, shift) {
         // case 35:                // End
         //     animateControl();
         //     break;
-        case 45:                // Insert
-            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 127);
-            break;
-        case 46:                // Delete
+        case 67:                // C
             animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 0);
             break;
-        case 35:                // Home
+        case 86:                // V
+            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 127);
+            break;
+        case 70:                // F
             animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 0);
             break;
-        case 36:                // End
+        case 71:                // G
             animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 127);
             break;
-        case 33:                // Page Up      max mix
-            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 127);
+        case 72:                // H
+            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), 0);
             break;
-        case 34:                // Page Down    min mix
+        case 74:                // J
+            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), 127);
+            break;
+        case 75:                // K    delay level
+            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), 0);
+            break;
+        case 76:                // L    delay level
+            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), 127);
+            break;
+        case 89:                // Y    min mix
             animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 0);
             break;
-        case 83:                // S            max sustain
-            const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
-            animateCC(DEVICE.control_id.sustain, v, v > 64 ? 0 : 127);
+        case 88:                // X    max mix
+            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 127);
+            break;
+        case 66:                // B    min sustain
+            // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 0);
+            break;
+        case 78:                // N    max sustain
+            // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 127);
             break;
         case 84:                // T            tap
             tapDown("cc-28-127");
@@ -1002,7 +1075,7 @@ function keyDown(code, alt, shift) {
         // case 76:                // L Latch
         //     toggleLatch();
         //     break;
-        case 27:                // ESC Panic
+        // case 27:                // ESC Panic
         // case 80:                // P Panic
         //     stopNote(last_note);
         //     // panic();
@@ -1018,7 +1091,12 @@ function keyDown(code, alt, shift) {
         case 73:                // I Init
             init();
             break;
-        case 38:                // Up arrow
+        case 81:                // Q Squarewave
+            selectSquareware();
+            break;
+        case 87:                // W Sawtooth wave
+            selectSawtooth();
+            break;
         case 39:                // Right arrow
         case 107:               // num keypad "+"
             presetInc();

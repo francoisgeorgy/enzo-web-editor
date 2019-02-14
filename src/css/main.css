@@ -17,6 +17,7 @@
 
     --title-text: #fff;
     --header-text: #ccc;
+    --header-shortcut-text: #999;
 
     --menu-icon: #ccc;
     --menu-text: #ddd;
@@ -70,13 +71,21 @@ html {
 }
 
 .header {
-    margin: 3px 0 0 0;
+    margin: 3px 3px 0 3px;
     letter-spacing: 1px;
+    color: var(--header-text);
 }
 
-.header > div {
-    color: var(--header-text);
-    padding: 0 3px;
+/*.header > div {*/
+    /*color: var(--header-text);*/
+    /*padding: 0 3px;*/
+/*}*/
+
+.header-shortcut {
+    float:right;
+    font-size:80%;
+    padding-top:3px;
+    color: var(--header-shortcut-text);
 }
 
 #midi-in-led,

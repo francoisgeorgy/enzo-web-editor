@@ -32,10 +32,10 @@
                 <!--<span><a id="menu-sync" href="#" title="Sync with the connected Enzo"><i class="fas fa-sync-alt"></i> <span class="menu-text">Sync</a></span> &lt;!&ndash;&#8651;&ndash;&gt;-->
                 <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</a></span>
                 <!--<span><a id="menu-save-preset" href="#" title="Save the current preset to a .syx file"><i class="fa fa-save" aria-hidden="true"></i> <span class="menu-text">Save preset</a></span>-->
-                <span class="menu-entry"><a id="menu-get-url" href="#" title="Save the current preset to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">Get URL</a></span>
+                <!--<span class="menu-entry"><a id="menu-get-url" href="#" title="Save the current preset to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">Get URL</a></span>-->
                 <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</a></span>
                 <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</a></span>
-                <span class="menu-entry"><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Settings</a></span>    <!--&#x2699;-->
+                <!--<span class="menu-entry"><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Settings</a></span>    &lt;!&ndash;&#x2699;&ndash;&gt;-->
                 <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</a></span>
                 <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</a></span>      <!--&#x3f;-->
                 <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
@@ -139,6 +139,7 @@
         -->
         <div id="pitch">
             <div class="header">
+                <div class="header-shortcut">[C,V]</div>
                 <div>pitch</div>
             </div>
             <div class="controls">
@@ -163,6 +164,7 @@
         -->
         <div id="filter">
             <div class="header">
+                <div class="header-shortcut">[F,G]</div>
                 <div>filter</div>
             </div>
             <div class="controls">
@@ -187,6 +189,7 @@
         -->
         <div id="mix">
             <div class="header">
+                <div class="header-shortcut">[Y,X]</div>
                 <div>mix</div>
             </div>
             <div class="controls">
@@ -199,6 +202,7 @@
         -->
         <div id="delay-level">
             <div class="header">
+                <div class="header-shortcut">[K,L]</div>
                 <div>delay level</div>
             </div>
             <div class="controls">
@@ -211,7 +215,7 @@
         -->
         <div id="sustain">
             <div class="header">
-                <!--<div style="float:right;font-size:80%;color:#999;padding-top:3px">[S]</div>-->
+                <div class="header-shortcut">[B,N]</div>
                 <div>sustain</div>
             </div>
             <div class="controls">
@@ -248,7 +252,8 @@
         -->
         <div id="filter-bandwidth">
             <div class="header">
-                <div>filter bandwidth</div>
+                <div class="header-shortcut">[H,J]</div>
+                <div>filter Q</div>
             </div>
             <div class="controls">
                 <svg class="knob" id="cc-26"></svg>
@@ -410,29 +415,34 @@
         <div class="enzo-gold" style="font-size:2rem;font-weight:bold">
             Enzo Web Interface <span class="version">2.0.0</span>
         </div>
-        <p>Enzo Web Interface is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <p>
+            <i class="fas fa-exclamation-triangle"></i>
+            Still under active development. Feel free to log bugs/issues.
+        </p>
+        <p>Enzo Web Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
         <h1 style="margin-top:20px">Credits</h1>
         <p>This application uses the following Open Source components:</p>
         <ul>
-            <li><a href="https://github.com/cotejp/webmidi" target="_blank">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
-            <li><a href="https://github.com/francoisgeorgy/svg-knob">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
-            <li><a href="http://sorgalla.com/lity/">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
-            <li><a href="https://github.com/js-cookie/js-cookie" target="_blank">JS-Cookie</a>: a simple, lightweight JavaScript API for handling browser cookies.</li>
-            <li><a href="https://jquery.com/" target="_blank">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
-            <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
-            <li><a href="http://fontawesome.io/" target="_blank">Font Awesome</a>: the iconic font and CSS toolkit.</li>
-            <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank">Roboto font</a> by Google.</li>
+            <li><a href="https://github.com/cotejp/webmidi" target="_blank" rel="noopener">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
+            <li><a href="https://github.com/francoisgeorgy/svg-knob" target="_blank" rel="noopener">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
+            <li><a href="http://sorgalla.com/lity/" target="_blank" rel="noopener">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
+            <li><a href="https://jquery.com/" target="_blank" rel="noopener">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
+            <li><a href="https://yarnpkg.com/en/package/rxjs" target="_blank" rel="noopener">RxJS</a>: reactive Extensions for modern JavaScript .</li>
+            <li><a href="https://yarnpkg.com/en/package/storejs" target="_blank" rel="noopener">storejs</a>: local storage localstorage package provides a simple API.</li>
+            <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank" rel="noopener">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
+            <li><a href="http://fontawesome.io/" target="_blank" rel="noopener">Font Awesome</a>: the iconic font and CSS toolkit.</li>
+            <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto font</a> by Google.</li>
         </ul>
         <p class="trademarks">
-            <em>Meris</em> is a trademark of MERIS, LLC.<br />
+            This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
         </p>
     </div>
 
     <div id="help-dialog" class="dialog lity-hide">
         <h2>Instructions</h2>
         <ol>
-            <li>Allow the browser to access your MIDI devices</li>
-            <li>If it's not already done, connect your Enzo to your computer.</li>
+            <li>Allow the browser to access your MIDI devices.</li>
+            <li>If it's not already done, connect your Enzo to its MIDI adapter.</li>
             <li>When the Enzo is connected the logo will glow.</li>
             <li>Move a knob on your Enzo, the corresponding on-screen control must move accordingly.</li>
         </ol>
@@ -442,11 +452,29 @@
             <li>Click and drag over the knob. You can also use the mousewheel.</li>
         </ul>
         <h4>Keyboard shortcuts:</h4>
-        <ul>
-            <li>ESC key to close any open dialog.</li>
-            <li>SPACE bar to start/stop playing.</li>
-            <li>0..9 keys to select the presets 1..10.</li>
-        </ul>
+        <div style="display:flex;flex-direction: row">
+            <ul style="margin-top: 0;">
+                <li>ESC: close dialog</li>
+                <li>SPACE BAR: Bypass on/off</li>
+                <li>0..9: presets 1..10</li>
+                <li>Up, Right, +: next preset</li>
+                <li>Down, Left, -: previous preset</li>
+                <li>T: TAP</li>
+                <li>I: Init</li>
+                <li>R: Randomize</li>
+                <li>D,A,M,P: Dry, Arp, Mono, Poly</li>
+                <li>W: Sawtooth wave</li>
+                <li>Q: Square wave</li>
+            </ul>
+            <ul style="margin-top: 0;margin-left:40px">
+                <li>C, V: animate pitch</li>
+                <li>B, N: animate sustain</li>
+                <li>F, G: animate filter</li>
+                <li>H, J: animate filter Q</li>
+                <li>Y, X: animate mix</li>
+                <li>K, L: animate delay level</li>
+            </ul>
+        </div>
         <div class="dialog-info">
             <span style="float:right">ESC to close</span>
         </div>
