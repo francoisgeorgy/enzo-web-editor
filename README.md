@@ -10,6 +10,16 @@ Control your Meris Enzo pedal with your web browser.
 Currently, only **Chrome** and **Opera** support this standard. This app will therefore _not_ work in Firefox, Safari, IE or Edge. 
 
 
+# Usage
+
+1. Open https://francoisgeorgy.github.io/enzo-web-editor 
+2. Allow the browser to access your MIDI devices.
+3. If it's not already done, connect your Enzo to its MIDI adapter.
+4. In the top-right corner of the application, select the MIDI devices and MIDI port.
+5. When the pedal is connected the "Enzo" text will glow.
+6. Move a knob on your Enzo, the corresponding on-screen control must move accordingly.
+
+
 # Limitations
 
 This application isn't able to edit the Global configuration of the Enzo.
