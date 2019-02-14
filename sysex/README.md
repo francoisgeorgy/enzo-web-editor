@@ -1,52 +1,50 @@
 # Enzo sysex format
 
-    0000000: f0 00 20 10 00 01 03 26 01 06 7b 7f 21 7b 39 00  .. ....&..{.!{9.
-    0000010: 54 7f 00 66 00 7f 00 7f 00 7f 40 7b 7f 21 7b 39  T..f......@{.!{9
-    0000020: 00 54 7f 00 66 00 f7                             .T..f..
-    
-    
-    f0              start marker
-    00 20 10        manufacturer ID
-    00 01 03 26     constant accross all presets
-    01              preset number
-    06              pitch 
-    7b              filter 
-    7f              mix
-    21              sustain 
-    7b              filter env 
-    39              modulation 
-    00              portamento
-    54              filter type 
-    7f              delay level 
-    00              ring mod
-    66              filter bw
-    00              delay feedback 
-    7f              bypass
-    00              env type
-    7f              synth mode  
-    00              waveshape 
-    7f 40 7b        ? 
-    7f 21 7b 39     ?
-    00 54 7f 00     ?
-    66 00           ?
-    f7              end marker   
+## Summary
 
- 
-pitch: offset: 9, mask: [0x7F]
-filter: offset: 10,  mask: [0x7F]
-mix: offset: 11, mask: [0x7F]
-sustain: offset: 12, mask: [0x7F]
-filter env: offset: 13, mask: [0x7F]
-modulation: offset: 14, mask: [0x7F]
-portamento: offset: 15, mask: [0x7F]
-filter type: offset: 16, mask: [0x7F]
-delay level: offset: 17, mask: [0x7F]
-ring mod: offset: 18, mask: [0x7F]
-filter bandwidth: offset: 19, mask: [0x7F]
-delay feedback: offset: 20, mask: [0x7F]
-bypass: offset: 21, mask: [0x7F]
-env type: offset: 22, mask: [0x7F]
-synth mode: offset: 23, mask: [0x7F]
-waveshape: offset: 24, mask: [0x7F]
+Ref: https://www.midi.org/specifications/item/table-1-summary-of-midi-message
+
+A MIDI System Exclusive message has the following format:
+
+`N` is the number of bytes of bytes of the messages.
+
+| Offset | Data   | BS-II | Description                            |
+| ------:| ------:| -----:|:-------------------------------------- |
+|      0 |     F0 |       | Mark the start of the SysEx message    | 
+|      1 |   _id_ |  0x00 | Manufacturer's ID                      |
+|      2 |   _id_ |  0x20 | Manufacturer's ID                      |
+|      3 |   _id_ |  0x29 | Manufacturer's ID                      |
+| 4.._N_-2 | _xx_ |       | data (N-5 bytes)                 |
+|    _N_-1 |   F7 |       | Mark the end of the SysEx message      |
+
+Note: "Japanese Group" manufacturers have only one ID byte. See [https://www.midi.org/specifications/item/manufacturer-id-numbers] for more details.
 
 
+## SysEx data sent by the Enzo
+
+- **Offset**: index from the start of the SysEx data. First byte (0xF0) has offset=0.
+- **Bytes**: number of bytes to consider for this parameter
+- **Mask**: mask to apply to the above bytes to get the bits relative to the parameter
+- **Bits**: how many bits form the value
+
+
+| Offset | Bytes | Hex mask   | Bin mask            | Bits | Description |
+| ------:| -----:| :--------- | :------------------ | ----:| ----------- |
+|      1 |     3 | `7F 7F 7F` | `01111111 01111111 01111111` | 3x 8 | Manufacturer ID |
+|      8 |     1 | `7F`       | `01111111         ` |    7 | Patch number |
+|      9 |     1 | `7F`       | `01111111`          |    7 | Pitch |
+|     10 |     1 | `7F`       | `01111111`          |    7 | Filter |
+|     11 |     1 | `7F`       | `01111111`          |    7 | Mix |
+|     12 |     1 | `7F`       | `01111111`          |    7 | Sustain |
+|     13 |     1 | `7F`       | `01111111`          |    7 | Filter envelope |
+|     14 |     1 | `7F`       | `01111111`          |    7 | Modulation |
+|     15 |     1 | `7F`       | `01111111`          |    7 | Portamento |
+|     16 |     1 | `7F`       | `01111111`          |    7 | Filter type |
+|     17 |     1 | `7F`       | `01111111`          |    7 | Delay level |
+|     18 |     1 | `7F`       | `01111111`          |    7 | Ring modulation |
+|     19 |     1 | `7F`       | `01111111`          |    7 | Filter bandwidth |
+|     20 |     1 | `7F`       | `01111111`          |    7 | Delay feedback |
+|     21 |     1 | `7F`       | `01111111`          |    7 | Bypass |
+|     22 |     1 | `7F`       | `01111111`          |    7 | Envelope type |
+|     23 |     1 | `7F`       | `01111111`          |    7 | Synth mode |
+|     24 |     1 | `7F`       | `01111111`          |    7 | Waveshape |
