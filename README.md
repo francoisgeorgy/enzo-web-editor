@@ -14,9 +14,9 @@ Currently, only **Chrome** and **Opera** support this standard. This app will th
 
 This application isn't able to edit the Global configuration of the Enzo.
 
-This application does not offer patches management either.
+This application does not offer presets management either.
 
-This application has mainly be tested with Chrome on a MacBook pro running OS X 10. Some tests have been done with success with Chrome under Linux Mint 17.1. 
+This application has mainly be tested with Chrome on a MacBook pro running OS X 10.14. Some tests have been done with success with Chrome under Linux Mint 17.1. 
 The application has not been thoroughly tested under Windows. Any Windows feedback is very welcome.
 
 Still under active development. Feel free to log bugs/issues. This is a development I'm doing during my freetime. 
@@ -26,11 +26,11 @@ Still under active development. Feel free to log bugs/issues. This is a developm
 
 You need to allow your browser to use your MIDI device:
 
-![screenshot](help-01.png "midi settings in Chrome")
+![screenshot](/images/help-01.png "midi settings in Chrome")
 
 In case you didn't allow the use of MIDI device and want to change that, you can right-click on the URL icon and change the setting:
         
-![screenshot](help-02.png "midi settings in Chrome")
+![screenshot](/images/help-02.png "midi settings in Chrome")
 
 
 # FAQ
