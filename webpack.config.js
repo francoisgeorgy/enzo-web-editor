@@ -68,7 +68,9 @@ module.exports = {
             { from: "./src/css/midi.css", to: "css" },
             { from: "./src/favicon-16x16.png" },
             { from: "./src/favicon-32x32.png" },
-            { from: "./src/favicon-96x96.png" }
+            { from: "./src/favicon-96x96.png" },
+            { from: "./src/help-01.png" },
+            { from: "./src/help-02.png" }
             // { from: "./src/css/patch.css", to: "css" },
             // { from: "./src/css/print.css", to: "css" },
         ])  //,
