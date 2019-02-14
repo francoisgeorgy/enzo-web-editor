@@ -669,9 +669,20 @@ function updateSelectDeviceList() {
 }
 
 /**
+ * Update the patch number and patch name displayed in the header.
+ */
+function updateMeta() {
+    if (DEVICE.meta.preset_id.value) {
+        preset_number = DEVICE.meta.preset_id.value;
+        displayPreset();
+    }
+}
+
+/**
  * Update the UI from the DEVICE controls values.
  */
 function updateUI() {
+    updateMeta();
     updateControls();
     if (TRACE) console.log("updateUI done");
 }

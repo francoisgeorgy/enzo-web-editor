@@ -33,6 +33,15 @@ const validate = function (data) {
 };
 
 /**
+ *
+ * @param data
+ */
+function decodeMeta(data) {
+    // console.log("BS2.decodeSysExMeta", data);
+    meta.preset_id["value"] = data[meta.preset_id.sysex.offset];
+}
+
+/**
  * Get values from sysex data and store the value in a (new) property "value" in each control.
  * @param data
  * @param controls
@@ -67,24 +76,13 @@ function decodeControls(data, controls) {
 }
 
 /**
- *
- * @param data
- */
-function decodeMeta(data) {
-    // console.log("BS2.decodeSysExMeta", data);
-    // meta.patch_id["value"] = data[meta.patch_id.sysex.offset];
-    // meta.patch_name["value"] = String.fromCharCode(...data.slice(meta.patch_name.sysex.offset, meta.patch_name.sysex.offset + meta.patch_name.sysex.mask.length));
-    // console.log(`decodeSysExMeta, id=${meta.patch_id.value}, name=${meta.patch_name.value}`);
-}
-
-/**
  * Set values from a SysEx dump
  * @param data
  * @returns {boolean}
  */
 const setDump = function (data) {
     if (!validate(data)) return false;
-    // decodeMeta(data);
+    decodeMeta(data);
     decodeControls(data, control);
     return true;
 };

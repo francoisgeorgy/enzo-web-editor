@@ -80,6 +80,8 @@ const init = function () {
         c.raw_value = c.init_value;
         c.value = c.human(c.raw_value);
     }
+
+    meta.preset_id = null;
 };
 
 /**
@@ -111,6 +113,8 @@ const randomize = function() {
         c.raw_value = v;
         c.randomized = true;
     }
+
+    meta.preset_id = null;
 
 };
 

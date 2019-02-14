@@ -19,6 +19,15 @@ export default {
             value: [0x00, 0x20, 0x10]  // Manufacturer ID
         }
     },
+    preset_id: {
+        name: "Preset Number",
+        value: "",
+        sysex: {
+            offset: 8,
+            range: [0, 127],
+            mask: [0x7F]
+        }
+    },
     getStringValue
 };
 

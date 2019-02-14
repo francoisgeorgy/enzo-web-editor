@@ -5,10 +5,10 @@
     0000020: 00 54 7f 00 66 00 f7                             .T..f..
     
     
-    f0 
-    00 20 10 
-    00 01 03 26 
-    01 
+    f0              start marker
+    00 20 10        manufacturer ID
+    00 01 03 26     constant accross all presets
+    01              preset number
     06              pitch 
     7b              filter 
     7f              mix
@@ -25,11 +25,11 @@
     00              env type
     7f              synth mode  
     00              waveshape 
-    7f 40 7b 
-    7f 21 7b 39 
-    00 54 7f 00 
-    66 00 
-    f7                             
+    7f 40 7b        ? 
+    7f 21 7b 39     ?
+    00 54 7f 00     ?
+    66 00           ?
+    f7              end marker   
 
  
 pitch: offset: 9, mask: [0x7F]
