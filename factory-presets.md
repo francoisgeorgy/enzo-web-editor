@@ -1,7 +1,7 @@
 
 ### Enzo preset #1 (Enzo_01_PolySwell.syx)
 
-|     |                   |
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | POLY              |
 | Waveshape                                 | SAWTOOTH          |
@@ -21,7 +21,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #2 (Enzo_02_PolyRing.syx)     |                   |
+### Enzo preset #2 (Enzo_02_PolyRing.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | POLY              |
 | Waveshape                                 | SAWTOOTH          |
@@ -41,7 +43,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #3 (Enzo_03_SparkArp.syx)     |                   |
+### Enzo preset #3 (Enzo_03_SparkArp.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | ARP               |
 | Waveshape                                 | SQUARE            |
@@ -61,7 +65,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #4 (Enzo_04_MonoEcho.syx)     |                   |
+### Enzo preset #4 (Enzo_04_MonoEcho.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | MONO              |
 | Waveshape                                 | SQUARE            |
@@ -81,7 +87,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #5 (Enzo_05_PolyGlide.syx)    |                   |
+### Enzo preset #5 (Enzo_05_PolyGlide.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | POLY              |
 | Waveshape                                 | SAWTOOTH          |
@@ -101,7 +109,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #6 (Enzo_06_DarkArp.syx)      |                   |
+### Enzo preset #6 (Enzo_06_DarkArp.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | ARP               |
 | Waveshape                                 | SQUARE            |
@@ -121,7 +131,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #7 (Enzo_07_MonoTyrell.syx)   |                   |
+### Enzo preset #7 (Enzo_07_MonoTyrell.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | MONO              |
 | Waveshape                                 | SAWTOOTH          |
@@ -141,7 +153,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #8 (Enzo_08_ShiftTrem.syx)    |                   |
+### Enzo preset #8 (Enzo_08_ShiftTrem.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | DRY               |
 | Waveshape                                 | SAWTOOTH          |
@@ -161,7 +175,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #9 (Enzo_09_BellLab.syx)      |                   |
+### Enzo preset #9 (Enzo_09_BellLab.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | DRY               |
 | Waveshape                                 | SAWTOOTH          |
@@ -181,7 +197,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #10 (Enzo_10_Woodwind.syx)    |                   |
+### Enzo preset #10 (Enzo_10_Woodwind.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | DRY               |
 | Waveshape                                 | SAWTOOTH          |
@@ -200,7 +218,11 @@
 | Modulation                                | 57                |
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
-| Enzo preset #11 (Enzo_11_RileyCurve.syx)  |                   |
+
+### Enzo preset #11 (Enzo_11_RileyCurve.syx)
+
+| parameter | value |
+|-------------------------------------------|-------------------|
 | Synth mode                                | ARP               |
 | Waveshape                                 | SAWTOOTH          |
 | Pitch                                     | 0                 |
@@ -219,7 +241,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #12 (Enzo_12_PondBass.syx)    |                   |
+### Enzo preset #12 (Enzo_12_PondBass.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | MONO              |
 | Waveshape                                 | SAWTOOTH          |
@@ -239,7 +263,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #13 (Enzo_13_Starland.syx)    |                   |
+### Enzo preset #13 (Enzo_13_Starland.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | POLY              |
 | Waveshape                                 | SQUARE            |
@@ -259,7 +285,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #14 (Enzo_14_FormantRing.syx) |                   |
+### Enzo preset #14 (Enzo_14_FormantRing.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | DRY               |
 | Waveshape                                 | SAWTOOTH          |
@@ -279,7 +307,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #15 (Enzo_15_LinkArp.syx)     |                   |
+### Enzo preset #15 (Enzo_15_LinkArp.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | ARP               |
 | Waveshape                                 | SQUARE            |
@@ -299,7 +329,9 @@
 | Tap                                       | 0                 |
 | Tempo                                     | 0                 |
 
-| Enzo preset #16 (Enzo_16_ExpSweep.syx)    |                   |
+### Enzo preset #16 (Enzo_16_ExpSweep.syx)
+
+| parameter | value |
 |-------------------------------------------|-------------------|
 | Synth mode                                | DRY               |
 | Waveshape                                 | SAWTOOTH          |
