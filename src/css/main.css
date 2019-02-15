@@ -3,11 +3,12 @@
     --controls-row-start: 4;
     --controls-col-start: 1;
 
-    --value: yellow;
+    --value: #f9d000;
     --knob-back-border: #999;
-    --knob-value: #d3d347;
-    --knob-track-init: #999;
-    --knob-back-track-color: #303030;   /*373738*/
+    /*--knob-value: #d3d347;*/
+    --knob-value: #e7c100;
+    --knob-track-init: #bc9d00;
+    /*--knob-back-track-color: #303030;   !*373738*!*/
 
     --bt-text: #ddd;
     --label: #bbb;
@@ -32,8 +33,9 @@
     --side-panel-color: #ddd;
     --side-panel-border: #222;
 
-    --enzo-gold: #006ab7;
+    /*--enzo-gold: #006ab7;*/
     /*--enzo-gold: gold;*/
+    --enzo-gold: #a28700;
 }
 
 .enzo-gold {
@@ -157,7 +159,7 @@ html {
 
 .glow {
     color: #ddf6ff!important;
-    text-shadow: 0 0 12px #e7ff00;
+    text-shadow: 0 0 12px #ffffff;
 }
 
 #title > div.neon,
@@ -182,7 +184,8 @@ div.controls {
 
 .stompswitch {
     font-size: 5rem;
-    color: var(--knob-track-init);
+    /*color: var(--knob-track-init);*/
+    color: #706c58;
 }
 
 .menu i {
@@ -202,9 +205,10 @@ div.controls {
 
 #messages {
     align-self: stretch!important;
-    background: transparent none !important;
+    /*background: transparent none !important;*/
     border: 2px solid #333;
     color: yellow;
+    background: #4b3f00!important;
     /*font-size: 1.25rem;*/
     /*text-align: center;*/
 }
@@ -215,7 +219,7 @@ div.controls {
 
 .preset-selection {
     display: flex;
-    margin: 5px 0;
+    margin: 5px 0 10px 0;
 }
 
 .preset {
@@ -224,7 +228,7 @@ div.controls {
     /*font-size: 3em;*/
     text-align: center;
     /*background-color: #3E3E46;*/
-    border: 1px solid #333;
+    border: 1px solid #4b3f00;
     margin: 0 5px;
     cursor: pointer;
 }
