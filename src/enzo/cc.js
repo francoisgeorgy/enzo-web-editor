@@ -74,19 +74,37 @@ const _pitch = function (v) {
     }
 };
 
+// human:
 const _filter_type = function (v) {
     if (v < 4) {
-        return "LP";
+        return "ladder LP";
     } else if (v < 33) {
-        return "BP";
+        return "ladder BP";
     } else if (v < 60) {
-        return "HP";
+        return "ladder HP";
     } else if (v < 88) {
-        return "V LP";
+        return "state variable LP";
     } else if (v < 116) {
-        return "V BP";
+        return "state variable BP";
     } else {
-        return "V HP";
+        return "state variable HP";
+    }
+};
+
+// map_raw:
+const _filter_type_values = function (v) {
+    if (v < 4) {
+        return 0;
+    } else if (v < 33) {
+        return 32;
+    } else if (v < 60) {
+        return 59;
+    } else if (v < 88) {
+        return 87;
+    } else if (v < 116) {
+        return 115;
+    } else {
+        return 127;
     }
 };
 
@@ -189,6 +207,7 @@ function defineControls() {
     control[control_id.filter_type] = { // 23,
         name: "filter type",
         human: _filter_type,
+        map_raw: _filter_type_values,
         sysex: {
             offset: 16,
             mask: [0x7F]

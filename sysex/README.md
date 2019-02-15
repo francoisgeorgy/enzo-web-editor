@@ -32,19 +32,19 @@ Note: "Japanese Group" manufacturers have only one ID byte. See [https://www.mid
 | ------:| -----:| :--------- | :------------------ | ----:| ----------- |
 |      1 |     3 | `7F 7F 7F` | `01111111 01111111 01111111` | 3x 8 | Manufacturer ID |
 |      8 |     1 | `7F`       | `01111111         ` |    7 | Patch number |
-|      9 |     1 | `7F`       | `01111111`          |    7 | Pitch |
-|     10 |     1 | `7F`       | `01111111`          |    7 | Filter |
-|     11 |     1 | `7F`       | `01111111`          |    7 | Mix |
-|     12 |     1 | `7F`       | `01111111`          |    7 | Sustain |
-|     13 |     1 | `7F`       | `01111111`          |    7 | Filter envelope |
-|     14 |     1 | `7F`       | `01111111`          |    7 | Modulation |
-|     15 |     1 | `7F`       | `01111111`          |    7 | Portamento |
-|     16 |     1 | `7F`       | `01111111`          |    7 | Filter type |
-|     17 |     1 | `7F`       | `01111111`          |    7 | Delay level |
-|     18 |     1 | `7F`       | `01111111`          |    7 | Ring modulation |
-|     19 |     1 | `7F`       | `01111111`          |    7 | Filter bandwidth |
-|     20 |     1 | `7F`       | `01111111`          |    7 | Delay feedback |
-|     21 |     1 | `7F`       | `01111111`          |    7 | Bypass |
-|     22 |     1 | `7F`       | `01111111`          |    7 | Envelope type |
-|     23 |     1 | `7F`       | `01111111`          |    7 | Synth mode |
-|     24 |     1 | `7F`       | `01111111`          |    7 | Waveshape |
+|      9 |     1 | `7F`       | `01111111`          |    7 | Pitch (CC 16) |
+|     10 |     1 | `7F`       | `01111111`          |    7 | Filter (CC 17) |
+|     11 |     1 | `7F`       | `01111111`          |    7 | Mix (CC 18) |
+|     12 |     1 | `7F`       | `01111111`          |    7 | Sustain (CC 19) |
+|     13 |     1 | `7F`       | `01111111`          |    7 | Filter envelope (CC 20) |
+|     14 |     1 | `7F`       | `01111111`          |    7 | Modulation (CC 21) |
+|     15 |     1 | `7F`       | `01111111`          |    7 | Portamento (CC 22) |
+|     16 |     1 | `7F`       | `01111111`          |    7 | Filter type (CC 23) |
+|     17 |     1 | `7F`       | `01111111`          |    7 | Delay level (CC 24) |
+|     18 |     1 | `7F`       | `01111111`          |    7 | Ring modulation (CC 25) |
+|     19 |     1 | `7F`       | `01111111`          |    7 | Filter bandwidth (CC 26) |
+|     20 |     1 | `7F`       | `01111111`          |    7 | Delay feedback (CC 27) |
+|     21 |     1 | `7F`       | `01111111`          |    7 | Bypass (CC 14) |
+|     22 |     1 | `7F`       | `01111111`          |    7 | Envelope type (CC 9) |
+|     23 |     1 | `7F`       | `01111111`          |    7 | Synth mode (CC 29) |
+|     24 |     1 | `7F`       | `01111111`          |    7 | Waveshape (CC 30) |

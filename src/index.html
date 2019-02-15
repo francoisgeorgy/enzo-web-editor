@@ -24,7 +24,7 @@
 -->
 
         <div id="title">
-            <div class="neon">Enzo</div>
+            <div class="neon">Enzo web editor</div>
             <div class="menu">
                 <!--<a id="menu-favorites" href="#"><i class="far fa-heart" aria-hidden="true" title="favorites"></i> <span class="menu-text">Favorites</span></a>-->
                 <span class="menu-entry"><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</a></span>
@@ -152,6 +152,7 @@
         -->
         <div id="portamento">
             <div class="header">
+                <div class="header-shortcut">[O]</div>
                 <div>portamento</div>
             </div>
             <div class="controls">
@@ -179,8 +180,16 @@
             <div class="header">
                 <div>filter type</div>
             </div>
-            <div class="controls">
-                <svg class="knob" id="cc-23"></svg>
+            <!--<div class="controls">-->
+                <!--<svg class="knob" id="cc-23"></svg>-->
+            <!--</div>-->
+            <div id="cc-23-options" class="grid-3x2">
+                <div id="cc-23-0" class="bt">LP</div>
+                <div id="cc-23-87" class="bt">v. LP</div>
+                <div id="cc-23-32" class="bt">BP</div>
+                <div id="cc-23-115" class="bt">v. BP</div>
+                <div id="cc-23-59" class="bt">HP</div>
+                <div id="cc-23-127" class="bt">v. HP</div>
             </div>
         </div>
 
@@ -228,6 +237,7 @@
         -->
         <div id="ring-mod">
             <div class="header">
+                <div class="header-shortcut">[Z,U]</div>
                 <div>ring mod</div>
             </div>
             <div class="controls">
@@ -265,6 +275,7 @@
         -->
         <div id="modulation">
             <div class="header">
+                <div class="header-shortcut">[-,+]</div>
                 <div>modulation</div>
             </div>
             <div class="controls">
@@ -289,6 +300,7 @@
         -->
         <div id="tap">
             <div class="header">
+                <div class="header-shortcut">[T]</div>
                 <div>tap</div>
             </div>
             <div class="controls">
@@ -372,6 +384,7 @@
         -->
         <div id="bypass">
             <div class="header">
+                <div class="header-shortcut">[SPACE]</div>
                 <div>bypass</div>
             </div>
             <div class="controls">
@@ -382,17 +395,6 @@
             </div>
         </div>
 
-        <!--<div id="status-bar">-->
-<!--
-            <div style="float:right">
-                MIDI:
-                <span id="midi-in-led">in</span>
-                <span id="midi-out-led">out</span>
-            </div>
--->
-            <!--<div id="status">-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 
     <div id="load-preset-dialog" class="dialog lity-hide">
@@ -473,8 +475,12 @@
                 <li>H, J: animate filter Q</li>
                 <li>Y, X: animate mix</li>
                 <li>K, L: animate delay level</li>
+                <li>Z, U: animate ring mod</li>
+                <li>-, +: animate modulation</li>
+                <li>O: animate portamento</li>
             </ul>
         </div>
+        Use shift to play animation until 50%.
         <div class="dialog-info">
             <span style="float:right">ESC to close</span>
         </div>

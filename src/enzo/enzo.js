@@ -20,6 +20,11 @@ const getControlValue = function (ctrl) {
     return "raw_value" in ctrl ? ctrl.raw_value : 0;
 };
 
+const getMappedControlValue = function (ctrl) {
+    const v = "raw_value" in ctrl ? ctrl.raw_value : 0;
+    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
+};
+
 /**
  * setControlValue(control_object, value)
  * setControlValue(control_type, control_number, value)
@@ -143,6 +148,7 @@ export default {
     randomize,
     getControl,
     getControlValue,
+    getMappedControlValue,
     setControlValue,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     getSysEx: sysex.getDump,     // export all values as a SysEx dump

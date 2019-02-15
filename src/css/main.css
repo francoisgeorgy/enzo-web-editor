@@ -112,6 +112,20 @@ html {
     grid-template-columns: 1fr 1fr;
 }
 
+.grid-3x2 {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-3x2 .bt {
+    margin-bottom: 0;
+}
+
+.grid-3x2 .bt:nth-child(2n+1) {
+    margin-right: 0;
+}
+
 #main {
     background-color: var(--enzo-gold);
     margin: 0 auto;

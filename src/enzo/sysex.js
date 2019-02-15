@@ -1,6 +1,7 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
 import {control_id} from "./cc";
+import {toHexString} from "../lib/utils";
 
 /**
  *
@@ -9,7 +10,7 @@ import {control_id} from "./cc";
  */
 const validate = function (data) {
 
-    console.log("validate", data);
+    // console.log("validate", data);
 
     const SYSEX_START = 0xF0;
     const SYSEX_END = 0xF7;
@@ -22,7 +23,7 @@ const validate = function (data) {
     let offset = meta.signature.sysex.offset;
     for (let i = 0; i < meta.signature.sysex.value.length; i++) {
         if (data[offset + i] !== meta.signature.sysex.value[i]) {
-            console.log(`validate: invalid sysex at offset ${offset + i}. Expected ${meta.signature.sysex.value[i]}. Found ${data[offset + i]}`);
+            // console.log(`validate: invalid sysex at offset ${offset + i}. Expected ${meta.signature.sysex.value[i]}. Found ${data[offset + i]}`);
             return false;
         }
     }
@@ -31,7 +32,7 @@ const validate = function (data) {
         last_byte = data[i];
     }
 
-    console.log("validate, last_byte", last_byte);
+    // console.log("validate, last_byte", last_byte);
     return last_byte === SYSEX_END;
 };
 
@@ -40,7 +41,7 @@ const validate = function (data) {
  * @param data
  */
 function decodeMeta(data) {
-    console.log("decodeMeta", data, meta);
+    // console.log("decodeMeta", data, meta);
     meta.preset_id.value = data[meta.preset_id.sysex.offset]
 }
 
@@ -51,7 +52,7 @@ function decodeMeta(data) {
  */
 function decodeControls(data, controls) {
 
-    console.groupCollapsed("decodeSysExControls");
+    // console.groupCollapsed("decodeSysExControls");
 
     for (let i = 0; i < controls.length; i++) {
 
@@ -72,9 +73,12 @@ function decodeControls(data, controls) {
 
         controls[i]["raw_value"] = raw_value;
         controls[i]["value"] = final_value;
+
+        // console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
+
     }
 
-    console.groupEnd();
+    // console.groupEnd();
 
 }
 

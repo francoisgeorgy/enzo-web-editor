@@ -348,10 +348,15 @@ function updateMomentaryStompswitch(id, value) {
  * @param control_type
  * @param control_number
  * @param value
+ * @param mappedValue
  */
-function updateControl(control_type, control_number, value) {
+function updateControl(control_type, control_number, value, mappedValue) {
 
     if (TRACE) console.log(`updateControl(${control_type}, ${control_number}, ${value})`);
+
+    if (mappedValue === undefined) {
+        mappedValue = value;
+    }
 
     const id = control_type + "-" + control_number;
     if (knobs.hasOwnProperty(id)) {
@@ -368,20 +373,20 @@ function updateControl(control_type, control_number, value) {
         if (c.length) { // jQuery trick to check if element was found
             console.warn("updateControl: unsupported control (1): ", control_type, control_number, value);
         } else {
-            c = $(`#${id}-${value}`);
+            c = $(`#${id}-${mappedValue}`);
             if (c.length) {
                 if (c.is(".bt")) {
-                    updateOptionSwitch(id + "-" + value, value);
+                    updateOptionSwitch(id + "-" + mappedValue, mappedValue);
                 } else if (c.is(".sw")) {
                     //TODO: handle .sw controls
                 } else if (c.is(".swm")) {
-                    updateMomentaryStompswitch(`${id}-${value}`, value);
-                    setTimeout(() => updateMomentaryStompswitch(`${id}-${value}`, 0), 200);
+                    updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
+                    setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
                 } else {
                     console.warn("updateControl: unsupported control (2): ", control_type, control_number, value);
                 }
             } else {
-                console.warn(`no control for ${id}-${value}`);
+                console.warn(`no control for ${id}-${mappedValue}`);
             }
         }
 
@@ -515,7 +520,7 @@ function updateControls() {
 
     for (let i=0; i < DEVICE.control.length; i++) {
         if (typeof DEVICE.control[i] === "undefined") continue;
-        updateControl(DEVICE.control[i].cc_type, i, DEVICE.getControlValue(DEVICE.control[i]));
+        updateControl(DEVICE.control[i].cc_type, i, DEVICE.getControlValue(DEVICE.control[i]), DEVICE.getMappedControlValue(DEVICE.control[i]));
     }
 
 } // updateControls()
@@ -1052,48 +1057,64 @@ function keyDown(code, alt, shift) {
         //     animateControl();
         //     break;
         case 67:                // C
-            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 0);
+            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0);
             break;
         case 86:                // V
-            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), 127);
+            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 127);
             break;
         case 70:                // F
-            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 0);
+            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), shift ? 63 : 0);
             break;
         case 71:                // G
-            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), 127);
+            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), shift ? 63 : 127);
             break;
         case 72:                // H
-            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), 0);
+            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), shift ? 63 : 0);
             break;
         case 74:                // J
-            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), 127);
+            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), shift ? 63 : 127);
             break;
         case 75:                // K    delay level
-            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), 0);
+            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), shift ? 63 : 0);
             break;
         case 76:                // L    delay level
-            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), 127);
+            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), shift ? 63 : 127);
             break;
         case 89:                // Y    min mix
-            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 0);
+            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 0);
             break;
         case 88:                // X    max mix
-            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), 127);
+            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 127);
             break;
         case 66:                // B    min sustain
             // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 0);
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 0);
             break;
         case 78:                // N    max sustain
             // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 127);
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 127);
             break;
         case 84:                // T            tap
-            tapDown("cc-28-127");
+            tapDown("cc-28-shift ? 63 : 127");
+            break;
+        case 90:                // Z
+            animateCC(DEVICE.control_id.ring_modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.ring_modulation)), shift ? 63 : 0);
+            break;
+        case 85:                // U
+            animateCC(DEVICE.control_id.ring_modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.ring_modulation)), shift ? 63 : 127);
             break;
         case 32:                // SPACE
             toggleBypass();
+            break;
+        case 109:               // num keypad "-"
+            animateCC(DEVICE.control_id.modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.modulation)), shift ? 63 : 0);
+            break;
+        case 107:               // num keypad "+"
+            animateCC(DEVICE.control_id.modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.modulation)), shift ? 63 : 127);
+            break;
+        case 79:                   // O
+            const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.portamento));
+            animateCC(DEVICE.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
             break;
         // case 66:                // B
         // case 67:                // C
@@ -1137,13 +1158,12 @@ function keyDown(code, alt, shift) {
         case 87:                // W Sawtooth wave
             selectSawtooth();
             break;
+        case 38:                // Up arrow
         case 39:                // Right arrow
-        case 107:               // num keypad "+"
             presetInc();
             break;
         case 40:                // Down arrow
         case 37:                // Left arrow
-        case 109:               // num keypad "-"
             presetDec();
             break;
     }
