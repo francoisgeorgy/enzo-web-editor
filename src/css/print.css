@@ -40,13 +40,19 @@ h2 {
     margin-bottom: 9px;
 }
 
-#preset-number, #preset-name {
-    font-weight: bold;
+.preset-number {
 }
 
-.wrapper {
+.filename {
+    margin-left: 0.5cm;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.columns {
     display: flex;
     flex-direction: row;
+    margin-bottom: 1cm;
 }
 
 table.first {
@@ -56,11 +62,10 @@ table.first {
 table {
     border-spacing: 0;
     border-collapse: collapse;
-    /*width: 100%;*/
 }
 
 table tr td {
-    padding: 2mm 2mm;
+    padding: 2mm 2mm 2mm 0;
 }
 
 .instructions {
@@ -68,22 +73,31 @@ table tr td {
     line-height: 140%;
 }
 
+.dropzone {
+    box-sizing: border-box;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    background: rgba(#60a7dc,.8);
+    border: 11px dashed #60a7dc;
+}
+
 @media print {
     @page {
-        margin: 0;
-        /*size: landscape;*/
-        /*margin: 15mm;*/
+        margin: 5mm;
     }
 
     body {
         margin: 0 15mm;
-        /*margin: 0;*/
         font-size: 8pt;
     }
 
     h1 {
         margin-top: 10mm;
-        page-break-before: always;
     }
 
     h2 {
@@ -92,13 +106,13 @@ table tr td {
         border: none;
     }
 
-    .wrapper {
+    .print-wrapper {
+        page-break-inside: avoid;
+    }
+
+    .columns {
         grid-gap: 2mm;
-        /*display: grid;*/
-        /*grid-gap: 10px;*/
         grid-template-columns: repeat(4, 1fr);
-        /*background-color: #fff;*/
-        /*margin-bottom: 20px;*/
     }
 
     .box {
@@ -107,9 +121,12 @@ table tr td {
         padding: 2mm;
     }
 
-    a, #cmds {
+    a,
+    #cmds,
+    .dropzone {
         display: none;
     }
 
-
 }
+
+

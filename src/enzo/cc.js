@@ -145,11 +145,11 @@ function defineControls() {
     //     }
     // };
     control[control_id.tempo] = { // 15,
-        name: "tempo"
+        name: "Tempo"
         //TODO: tempo from sysex
     };
     control[control_id.pitch] = { // 16,
-        name: "pitch",
+        name: "Pitch",
         init_value: 63,
         cc_center: [63, 64],
         human: _pitch,
@@ -159,7 +159,7 @@ function defineControls() {
         }
     };
     control[control_id.filter] = { // 17,
-        name: "filter",
+        name: "Filter",
         init_value: 127,
         sysex: {
             offset: 10,
@@ -167,7 +167,7 @@ function defineControls() {
         }
     };
     control[control_id.mix] = { // 18,
-        name: "mix",
+        name: "Mix",
         init_value: 127,
         human: _percent,
         sysex: {
@@ -176,21 +176,21 @@ function defineControls() {
         }
     };
     control[control_id.sustain] = { // 19,
-        name: "sustain",
+        name: "Sustain",
         sysex: {
             offset: 12,
             mask: [0x7F]
         }
     };
     control[control_id.filter_envelope] = { // 20,
-        name: "filter env",
+        name: "Filter env",
         sysex: {
             offset: 13,
             mask: [0x7F]
         }
     };
     control[control_id.modulation] = { // 21,
-        name: "modulation",
+        name: "Modulation",
         human: _off_when_zero,
         sysex: {
             offset: 14,
@@ -198,14 +198,14 @@ function defineControls() {
         }
     };
     control[control_id.portamento] = { // 22,
-        name: "portamento",
+        name: "Portamento",
         sysex: {
             offset: 15,
             mask: [0x7F]
         }
     };
     control[control_id.filter_type] = { // 23,
-        name: "filter type",
+        name: "Filter type",
         human: _filter_type,
         map_raw: _filter_type_values,
         sysex: {
@@ -214,35 +214,35 @@ function defineControls() {
         }
     };
     control[control_id.delay_level] = { // 24,
-        name: "delay level",
+        name: "Delay level",
         sysex: {
             offset: 17,
             mask: [0x7F]
         }
     };
     control[control_id.ring_modulation] = { //  25,
-        name: "ring mod",
+        name: "Ring modulation",
         sysex: {
             offset: 18,
             mask: [0x7F]
         }
     };
     control[control_id.filter_bandwidth] = { // 26,
-        name: "filter Q",
+        name: "Filter Q",
         sysex: {
             offset: 19,
             mask: [0x7F]
         }
     };
     control[control_id.delay_feedback] = { // 27,
-        name: "delay feedback",
+        name: "Delay feedback",
         sysex: {
             offset: 20,
             mask: [0x7F]
         }
     };
     control[control_id.bypass] = { // 14,
-        name: "bypass",
+        name: "Bypass",
         no_init: true,
         no_randomize: true,
         map_raw: _2_steps,
@@ -252,7 +252,7 @@ function defineControls() {
         }
     };
     control[control_id.envelope_type] = { // 9,
-        name: "env type",
+        name: "Envelope type",
         human: _env_type,
         map_raw: _2_steps,
         sysex: {
@@ -261,7 +261,7 @@ function defineControls() {
         }
     };
     control[control_id.synth_mode] = { // 29,
-        name: "synth mode",
+        name: "Synth mode",
         init_value: 63,
         human: _synth_mode,
         map_raw: _4_steps,
@@ -271,7 +271,7 @@ function defineControls() {
         }
     };
     control[control_id.synth_waveshape] = { // 30
-        name: "waveshape",
+        name: "Waveshape",
         init_value: 0,
         human: _waveshape,
         map_raw: _2_steps,
@@ -281,7 +281,7 @@ function defineControls() {
         }
     };
     control[control_id.tap] = { // 28,
-        name: "tap",
+        name: "Tap",
         no_init: true,
         no_randomize: true
         // sysex: {

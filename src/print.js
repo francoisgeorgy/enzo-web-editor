@@ -5,11 +5,12 @@ import {hexy} from "hexy";
 import LZString from "lz-string";
 import "./css/print.css";
 
+const TRACE = false;
+
 const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
 
 function renderControlName(control_number) {
-    const c = DEVICE.control[control_number];
-    return c.name;
+    return DEVICE.control[control_number].name;
 }
 
 function renderControlValue(control_number) {
@@ -17,35 +18,25 @@ function renderControlValue(control_number) {
     return c.human(c.raw_value);
 }
 
-function renderPreset(template) {
-
-    // $("#preset-number").text(DEVICE.meta.getStringValue(DEVICE.meta.preset_id.value));
-
+function renderPreset(template, filename) {
     const t = $(template).filter("#template-main").html();
     const p = {
-        "n": function () {
-            return function (text) {
-                return renderControlName(text.trim().toLowerCase());
-            }
-        },
-        "v": function () {
-            return function (text) {
-                return renderControlValue(text.trim().toLowerCase());
-            }
-        }
+        "f": () => () => filename ? `(${filename})` : "",
+        "id": () => () => DEVICE.meta.preset_id.value,
+        "n": () => text => renderControlName(text.trim().toLowerCase()),
+        "v": () => text => renderControlValue(text.trim().toLowerCase())
     };
-
     $("body").append(Mustache.render(t, p));
-
     $("#print").click(function(){
         window.print();
         return false;
     });
 }
 
-function loadTemplate(data) {
+function loadTemplate(data, filename) {
     $.get("templates/preset-template.html", function(template) {
-        let d = null;
+        // let d = null;
+/*
         if (data) {
             for (let i=0; i<data.length; i++) {
                 if (data[i] === 240) {
@@ -61,14 +52,18 @@ function loadTemplate(data) {
                 d.push(data[i]);
             }
         }
-        if (d) {
-            if (DEVICE.setValuesFromSysEx(d)) {
-                renderPreset(template);
-            } else {
-                console.warn("unable to update device from sysex");
-            }
+*/
+        let ok = false;
+        if (data) {
+            ok = DEVICE.setValuesFromSysEx(data)
+        } else {
+            ok = true;
         }
-        renderPreset(template);
+        if (ok) {
+            renderPreset(template, filename);
+        } else {
+            console.warn("invalid data");
+        }
     });
 }
 
@@ -92,6 +87,67 @@ function loadErrorTemplate(data) {
 
 $(function () {
 
+
+    /**
+     * Handler for the #preset-file file input element in #load-preset
+     */
+    function readFile(f) {
+
+        const SYSEX_END = 0xF7;
+
+        let data = [];
+        if (TRACE) console.log(`read file`, f.name);
+
+        if (f) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                let view   = new Uint8Array(e.target.result);
+                for (let i=0; i<view.length; i++) {
+                    data.push(view[i]);
+                    if (view[i] === SYSEX_END) break;
+                }
+                loadTemplate(data, f.name);
+            };
+            reader.readAsArrayBuffer(f);
+        }
+    }
+
+    const dropZone = document.getElementById('dropzone');
+
+    function showDropZone() {
+        dropZone.style.display = "block";
+    }
+
+    function hideDropZone() {
+        dropZone.style.display = "none";
+    }
+
+    function allowDrag(e) {
+        // if (true) {  // Test that the item being dragged is a valid one
+            e.dataTransfer.dropEffect = 'copy';
+            e.preventDefault();
+        // }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        hideDropZone();
+        $(".title").remove();
+        $(".columns").remove();
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            readFile(file);
+        }
+    }
+
+    window.addEventListener('dragenter', showDropZone);
+    dropZone.addEventListener('dragenter', allowDrag);
+    dropZone.addEventListener('dragover', allowDrag);
+    dropZone.addEventListener('dragleave', hideDropZone);
+    dropZone.addEventListener('drop', handleDrop);
+
     DEVICE.init();
 
     let valid = false;
@@ -107,7 +163,7 @@ $(function () {
     }
 
     if (valid) {
-        loadTemplate(null);
+        loadTemplate();
     } else {
         loadErrorTemplate(data);
     }
