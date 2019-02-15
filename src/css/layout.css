@@ -4,13 +4,13 @@
 /*.zoom-1 {width: calc(70vw - 1vh);}*/
 .zoom-2 {width: calc(100vw - 1vh); height: calc(100vh - (2 * 0.5vh));}
 
-#main.zoom-0 {font-size: 0.85rem; margin-top: 20px;}
+#main.zoom-0 {font-size: 0.85rem; margin-top: 1vh;}
 #main.zoom-1 {font-size: 1rem; margin-top: 20px;}
 #main.zoom-2 {font-size: 1rem; border-radius: 0;}
 
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
-.zoom-2 .menu {font-size: 1rem;}
+.zoom-2 .menu {font-size: 1.25rem;}
 
 .zoom-0 .menu span.menu-entry {margin-left: 15px;}
 .zoom-1 .menu span.menu-entry {margin-left: 10px;}
@@ -42,7 +42,7 @@
 .zoom-1 .stompswitch {font-size: 4rem; margin-top: 30px;}
 .zoom-2 .stompswitch {font-size: 5rem; margin-top: 40px;}
 
-.zoom-0 .knob {height: 8vh; margin: 0;}
+.zoom-0 .knob {height: 80px; margin: 0;}
 .zoom-1 .knob {width: 125px; margin: 0;}
 /*.zoom-1 .knob {height: 12vh; margin: 0;}*/
 .zoom-2 .knob {height: 15vh; margin: 0;}
