@@ -1095,7 +1095,7 @@ function keyDown(code, alt, shift) {
             animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 127);
             break;
         case 84:                // T            tap
-            tapDown("cc-28-shift ? 63 : 127");
+            tapDown("cc-28-127");
             break;
         case 90:                // Z
             animateCC(DEVICE.control_id.ring_modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.ring_modulation)), shift ? 63 : 0);
