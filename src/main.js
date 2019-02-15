@@ -1046,16 +1046,7 @@ function keyDown(code, alt, shift) {
         return;
     }
 
-    // if ((code >= 65) && (code <= 70)) {   // A..F
-    //     preset_number = code - 65 + 10 + 1;
-    //     displayPreset();
-    //     return;
-    // }
-
     switch (code) {
-        // case 35:                // End
-        //     animateControl();
-        //     break;
         case 67:                // C
             animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0);
             break;
@@ -1087,11 +1078,9 @@ function keyDown(code, alt, shift) {
             animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 127);
             break;
         case 66:                // B    min sustain
-            // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
             animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 0);
             break;
         case 78:                // N    max sustain
-            // const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain));
             animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 127);
             break;
         case 84:                // T            tap
@@ -1116,27 +1105,9 @@ function keyDown(code, alt, shift) {
             const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.portamento));
             animateCC(DEVICE.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
             break;
-        // case 66:                // B
-        // case 67:                // C
-        // case 68:                // D
-        // case 69:                // E
-        // case 70:                // F
-        // case 71:                // G
-        //     break;
         case 82:                // R Randomize
             randomize();
             break;
-        // case 79:                // O Arpeggiator
-        //     toggleLatch();
-        //     break;
-        // case 76:                // L Latch
-        //     toggleLatch();
-        //     break;
-        // case 27:                // ESC Panic
-        // case 80:                // P Panic
-        //     stopNote(last_note);
-        //     // panic();
-        //     break;
         case 77:                // M Mono
             selectMono();
             break;
@@ -1188,16 +1159,11 @@ function setupMenu() {
 
     if (TRACE) console.log("setupMenu()");
 
-    // $("#menu-favorites").click(openFavoritesPanel);
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     $("#menu-load-preset").click(loadPresetFromFile);
-    // $("#menu-save-preset").click(savePresetToFile);
-    // $("#menu-get-url").click(reloadWithPresetUrl);
     $("#menu-print-preset").click(printPreset);
-    // $("#menu-sync").click(syncUIwithDEVICE);
     $("#menu-midi").click(openMidiWindow);
-    // $("#menu-settings").click(openSettingsPanel);
     $("#menu-help").click(openHelpDialog);
     $("#menu-about").click(openCreditsDialog);
 
@@ -1206,35 +1172,6 @@ function setupMenu() {
 
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
-
-    // // in settings dialog:
-    // $("#midi-channel").change(setMidiChannel);
-    // $(".close-settings-panel").click(closeSettingsPanel);
-    //
-    // // in favorites dialog:
-    // $("#add-favorite-bt").click(function(){
-    //     addToFavorites();
-    //     // closeFavoritesDialog();
-    // });
-    // $(".close-favorites-panel").click(closeFavoritesPanel);
-    //
-
-    //
-    // // close all opened panel on outside click:
-    // $(document).mousedown(function(e) {
-    //     $(".panel").each(function() {
-    //         let element = $(this);
-    //         if (element.is(":visible")) {
-    //             // if the target of the click isn"t the container nor a descendant of the container
-    //             if (!element.is(e.target)) {
-    //                 if (element.has(e.target).length === 0) {
-    //                     element.hide("slide", {direction: "left"}, 500);
-    //                 }
-    //             }
-    //         }
-    //     });
-    // });
-
 }
 
 //==================================================================================================================
