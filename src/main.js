@@ -1341,7 +1341,7 @@ function setInputDevice(id) {
     if (input) {
         connectInput(input);
     } else {
-        setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
+        setStatusError(`Please connect your device or check the MIDI channel.`);
         setMidiInStatus(false);
     }
 }
@@ -1362,7 +1362,7 @@ function setOutputDevice(id) {
     if (output) {
         connectOutput(output);
     } else {
-        setStatusError(`MIDI device not found. Please connect your device or check the MIDI channel.`);
+        setStatusError(`Please connect your device or check the MIDI channel.`);
         // setMidiOutStatus(false);
     }
 }
