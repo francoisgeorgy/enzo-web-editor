@@ -3,195 +3,142 @@
 <head>
     <meta charset="utf-8">
     <title>Enzo sysex file reader</title>
-    <meta name="description" content="Enzo - read sysex data from a file">
+    <meta name="description" content="Enzo - decode sysex data from a file">
     <meta name="author" content="francois.georgy@gmail.com">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../enzo.js"></script>
+    <script src="../../../dist/bundle.js"></script>
     <style>
         #data {
             font-family: Courier New, Courier, monospace;
             white-space: pre;
         }
+
+        .wrapper {
+            max-width: 50rem;
+            margin: 1rem auto;
+            padding: .2rem 1rem;
+
+            border: 2px solid #444;
+            background: rgba(#444,.2);
+        }
+
+        .pen_info {
+            margin: 1rem 0;
+            padding: 0 1rem;
+            border: 2px solid #60a7dc;
+            border-radius: .4rem;
+            background: rgba(#60a7dc,.5);
+        }
+
+        .dropzone {
+            box-sizing: border-box;
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+
+            background: rgba(#60a7dc,.8);
+            border: 11px dashed #60a7dc;
+        }
+
     </style>
 </head>
 <body>
+    <div id="dropzone" class="dropzone"></div>
 <h2>Enzo sysex file reader</h2>
 <hr />
 <div id="data"></div>
 <script>
-    const SYSEX_START = 0xF0;
-    const SYSEX_END = 0xF7;
 
-//    var midi = null;  // global MIDIAccess object
 
-    String.prototype.padZero = function (len, c) {
-        var s = '', c = c || '0', len = (len || 2) - this.length;
-        while (s.length < len) s += c;
-        return s + this;
-    };
-    /*
-    String.prototype.padSpace = function(len) {
-        var s = '';
-        while (s.length < len) s += ' ';
-        return s + this;
-    };
-    */
-    String.prototype.paddingLeft = function(paddingValue) {
-        return String(paddingValue + this).slice(-paddingValue.length);
-    };
 
-    function v8(lsb, mask_lsb) {
-        let r = getRightShift(mask_lsb);
-        let b = (lsb & mask_lsb) >> r;
-        return b;
-    }
-
-    function v16(msb, lsb, mask_msb, mask_lsb) {
-        let r = getRightShift(mask_lsb);
-        let s = getSetBits(mask_lsb);
-        let a = (msb & mask_msb) << s;
-        let b = (lsb & mask_lsb) >> r;
-        return a + b;
-    }
-
-    /**
-     * Returns the number of bit 0 before the rightmost bit set to 1.
-     * @param {*} v
-     */
-    function getRightShift(v) {
-        if (!v) return -1;  //means there isn't any 1-bit
-        let i = 0;
-        while ((v & 1) == 0) {
-            i++;
-            v = v>>1;
-        }
-        return i;
-    }
-
-    /**
-     * return the number of bit set
-     */
-    function getSetBits(v) {
-        for (var c = 0; v; c++) {
-            v &= v - 1; // clear the least significant bit set
-        }
-        return c;
-    }
-
-    /**
-     * returns a string
-     */
-    function rawSysEx(data) {
-        let s = '';
-        for (let i=0; i<data.length; i++) {
-            s += data[i].toString(16).padZero(2) + ' ';
-            if ((i+1) % 16 == 0) s += '<br />';
-        }
-        return s;
-    }
-
-    /**
-     * returns a string
-     */
-    function decodeSysEx(data, controls) {
-
-        console.log('decodeSysEx()');
-
-        var s = '';
-
-//        for (var prop in BS2.param) {
-        for (let i=0; i < controls.length; i++) {
-
-            if (typeof controls[i] == 'undefined') continue;
-            if (!controls[i].hasOwnProperty('sysex')) continue;
-
-            let sysex = controls[i].sysex;
-            if (!sysex.hasOwnProperty('mask')) continue;
-
-            s += 'mask: ';
-
-            let bytes = new Uint8Array(sysex.mask.length);
-
-            if (sysex.mask.length < 2) {
-                s += '........ ';
-            }
-
-            for (let k=0; k < sysex.mask.length; k++) {
-                s += sysex.mask[k].toString(2).padZero(8) + ' ';
-            }
-
-            s += ' raw value: ';
-
-            if (sysex.mask.length < 2) {
-                s += '........ ';
-            }
-
-            for (let k=0; k<sysex.mask.length; k++) {
-                let b = data[sysex.offset + k];
-                b = b & sysex.mask[k];
-                bytes[k] = b;
-                s += b.toString(2).padZero(8) + ' ';
-            }
-
-            let param_value = 0;
-            if (sysex.mask.length === 2) {
-                param_value = v16(data[sysex.offset], data[sysex.offset + 1], sysex.mask[0], sysex.mask[1])
-                s += ` ${param_value.toString().paddingLeft('   ')} `;
-            } else {
-                param_value = v8(data[sysex.offset], sysex.mask[0]);
-                s += ` ${param_value.toString().paddingLeft('   ')} `;
-            }
-
-            s += ' final value: ';
-
-            let final_value = 0;
-            if (controls[i].hasOwnProperty('map')) {
-                console.log('compute final value with transform function and raw_value=' + param_value);
-                final_value = controls[i].map(param_value);
-                console.log('final value', final_value);
-            } else {
-                final_value = param_value;
-            }
-
-            s += final_value.toString().paddingLeft('        ');
-
-            s += ` - ${controls[i].name}<br />`;
+    function readFile() {
+        let data = [];
+        let f = this.files[0];
+        if (f) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                let view   = new Uint8Array(e.target.result);
+                for (let i=0; i<view.length; i++) {
+                    data.push(view[i]);
+                    if (view[i] == SYSEX_END) break;
+                }
+                if (prev_data === null) prev_data = data;
+                updateDisplay(data);
+                prev_data = data;
+            };
+            reader.readAsArrayBuffer(f);
         }
 
-        console.log('decodeSysEx end');
-
-        return s;
     }
 
-//    function handleMessage(event) {
-//        if (event instanceof MIDIMessageEvent) {
-//            if (event.data[0] == SYSEX_START) {
-//                console.log('sysex message received');
-//                $("#data").empty()
-//                    .append(decodeSysEx(event.data, BS2.control))
-//                    .append(decodeSysEx(event.data, BS2.nrpn));
-//            }
-//        }
-//    }
-//
-//    function subscribeInputs(midiAccess) {
-//        var inputs = midiAccess.inputs.values();
-//        // loop over all available inputs
-//        for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
-//            input.value.onmidimessage = handleMessage;
-//        }
-//    }
+
+
 
     $(function () {
-//        navigator.requestMIDIAccess({ sysex: true }).then(onMIDISuccess, onMIDIFailure);
-//        function onMIDISuccess(midiAccess) {
-//            console.log("Got access to MIDI");
-//            midi = midiAccess;
-//            subscribeInputs(midi);
-//        }
-//        function onMIDIFailure(msg) {
-//            console.log("onMIDIFailure", msg);
-//        }
+
+        var dropZone = document.getElementById('dropzone');
+
+        function showDropZone() {
+            dropZone.style.display = "block";
+        }
+        function hideDropZone() {
+            dropZone.style.display = "none";
+        }
+
+        function allowDrag(e) {
+            if (true) {  // Test that the item being dragged is a valid one
+                e.dataTransfer.dropEffect = 'copy';
+                e.preventDefault();
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            hideDropZone();
+
+            console.log('Drop!', e);
+
+            var dt = e.dataTransfer;
+            var files = dt.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                // var reader = new FileReader();
+                //
+                // //attach event handlers here...
+                // reader.readAsDataURL(file);
+                //
+                // addEventHandler(reader, 'loadend', function (e, file) {
+                //     var bin = this.result;
+                //     var newFile = document.createElement('div');
+                //     newFile.innerHTML = 'Loaded : ' + file.name + ' size ' + file.size + ' B';
+                //     list.appendChild(newFile);
+                //     var fileNumber = list.getElementsByTagName('div').length;
+                //     status.innerHTML = fileNumber < files.length ? 'Loaded 100% of file ' + fileNumber + ' of ' + files.length + '...' : 'Done loading. processed ' + fileNumber + ' files.';
+                //
+                //     var img = document.createElement("img");
+                //     img.file = file;
+                //     img.src = bin;
+                //     list.appendChild(img);
+                // }.bindToEventHandler(file));
+                console.log(file);
+            }
+
+        }
+
+        window.addEventListener('dragenter', function(e) {
+            showDropZone();
+        });
+        dropZone.addEventListener('dragenter', allowDrag);
+        dropZone.addEventListener('dragover', allowDrag);
+        dropZone.addEventListener('dragleave', function(e) {
+            hideDropZone();
+        });
+        dropZone.addEventListener('drop', handleDrop);
+
     });
 
 </script>
