@@ -17,7 +17,7 @@ import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operat
 import {KNOB_CONF} from "./conf";
 import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
 
-const TRACE = true;    // when true, will log more details in the console
+const TRACE = false;    // when true, will log more details in the console
 const VERSION = "[AIV]{version}[/AIV]";
 const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
 
