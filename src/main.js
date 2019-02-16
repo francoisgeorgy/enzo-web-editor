@@ -17,7 +17,7 @@ import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operat
 import {KNOB_CONF} from "./conf";
 import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
 
-const TRACE = false;    // when true, will log more details in the console
+const TRACE = true;    // when true, will log more details in the console
 const VERSION = "[AIV]{version}[/AIV]";
 const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
 
@@ -26,6 +26,8 @@ let midi_output = null;
 // let midi_channel = "all";
 let knobs = {};         // svg-knob
 let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
+
+const MSG_SEND_SYSEX = "To update the editor with the current setup of your Enzo, plese send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 
 const browser = detect();
 
@@ -59,12 +61,12 @@ function setMidiInStatus(status) {
 }
 
 function setStatus(msg) {
-    if (TRACE) console.info("status:", msg);
+    // if (TRACE) console.info("status:", msg);
     $("#info-message").html(msg);
 }
 
 function appendStatus(msg) {
-    if (TRACE) console.info("status:", msg);
+    // if (TRACE) console.info("status:", msg);
     $("#info-message").html((index, old) => old + '<br />' + msg);
 }
 
@@ -73,7 +75,7 @@ function clearStatus(msg) {
 }
 
 function setStatusError(msg) {
-    if (TRACE) console.warn("error:", msg);
+    // if (TRACE) console.warn("error:", msg);
     $("#error-message").text(msg);
 }
 
@@ -217,6 +219,8 @@ function sendPC(pc) {
         if (TRACE) console.log(`send program change ${preset_number}`);
         showMidiOutActivity();
         midi_output.sendProgramChange(preset_number, settings.midi_channel);
+        setStatus(`Preset ${pc} selected.`);
+        appendStatus(MSG_SEND_SYSEX);
     }
     logOutgoingMidiMessage("PC", preset_number);
 }
@@ -614,7 +618,8 @@ function updateSelectDeviceList() {
     s.empty().append($("<option>").val("").text("- select -"));
     s.append(
         WebMidi.inputs.map((port, index) => {
-            present = port.id === settings.input_device_id;
+            present = present || (port.id === settings.input_device_id);
+            console.log("input select:", port.id, settings.input_device_id, typeof port.id, typeof settings.input_device_id, present);
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
@@ -625,7 +630,8 @@ function updateSelectDeviceList() {
     s.empty().append($("<option>").val("").text("- select -"));
     s.append(
         WebMidi.outputs.map((port, index) => {
-            present = port.id === settings.output_device_id;
+            present = present || (port.id === settings.output_device_id);
+            console.log("output select:", port.id, settings.output_device_id, typeof port.id, typeof settings.output_device_id, present);
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
@@ -1102,7 +1108,7 @@ function connectInput(input) {
             if (DEVICE.setValuesFromSysEx(e.data)) {
                 updateUI();
                 clearError();
-                setStatus("SysEx received.");
+                setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
                 if (TRACE) console.log("DEVICE updated with sysex");
             } else {
                 clearStatus();
@@ -1114,7 +1120,7 @@ function connectInput(input) {
     setMidiInStatus(true);
     clearError();
     setStatus(`${midi_input.name} connected on MIDI channel ${settings.midi_channel}.`);
-    appendStatus(`To update the editor with the current setup of your Enzo, plese send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.`);
+    appendStatus(MSG_SEND_SYSEX);
 
 }
 
@@ -1136,15 +1142,24 @@ function setInputDevice(id) {
 
     if (TRACE) console.log(`setInputDevice(${id})`);
 
+    if (midi_input && (midi_input.id === id)) {
+        console.log(`setInputDevice(${id}): port is already connected`);
+        return;
+    }
+
+    const port = WebMidi.getInputById(id);
+
+    if (TRACE) console.log(`%csetInputDevice(${id}): will use [${port.type} ${port.id} ${port.name}] as input`, "color: green; font-weight: bold");
+
     // save in settings for autoloading at next restart:
     settings.input_device_id = id;
     saveSettings();
 
     disconnectInput();
 
-    const input = WebMidi.getInputById(id);
-    if (input) {
-        connectInput(input);
+    // const input = WebMidi.getInputById(id);
+    if (port) {
+        connectInput(port);
     } else {
         clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -1154,7 +1169,16 @@ function setInputDevice(id) {
 
 function setOutputDevice(id) {
 
-    if (TRACE) console.log(`setOutputDevice(${id})`, settings);
+    if (TRACE) console.log(`setOutputDevice(${id})`);
+
+    if (midi_output && (midi_output.id === id)) {
+        console.log(`setOutputDevice(${id}): port is already connected`);
+        return;
+    }
+
+    const port = WebMidi.getOutputById(id);
+
+    if (TRACE) console.log(`%csetOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
 
     // save in settings for autoloading at next restart:
     settings.output_device_id = id;
@@ -1162,9 +1186,8 @@ function setOutputDevice(id) {
 
     disconnectOutput();
 
-    const output = WebMidi.getOutputById(id);
-    if (output) {
-        connectOutput(output);
+    if (port) {
+        connectOutput(port);
     } else {
         clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -1176,7 +1199,7 @@ function setOutputDevice(id) {
  * @param info
  */
 function deviceConnect(info) {
-    if (TRACE) console.log("deviceConnect", info);
+    if (TRACE) console.log("%cdeviceConnect", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
     if (settings) {
         setInputDevice(settings.input_device_id);
         setOutputDevice(settings.output_device_id);
@@ -1189,7 +1212,7 @@ function deviceConnect(info) {
  * @param info
  */
 function deviceDisconnect(info) {
-    if (TRACE) console.log("deviceDisconnect", info);
+    if (TRACE) console.log("%cdeviceDisconnect", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
     updateSelectDeviceList();
 }
 
