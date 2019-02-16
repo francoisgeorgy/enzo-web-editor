@@ -108,6 +108,15 @@ const _filter_type_values = function (v) {
     }
 };
 
+const _filter_env = function (v) {
+    if (v===0) return "OFF";
+    if (v < 64) {
+        return `D ${63-v}`;
+    } else {
+        return `A ${v-64}`;
+    }
+};
+
 const _env_type = function (v) {
     if (v < 64) {
         return "TRIGGERED";
@@ -137,13 +146,13 @@ const _waveshape = function (v) {
 };
 
 function defineControls() {
-    // control[control_id.exp_pedal] = { // 4,
-    //     name: "Exp pedal",
-    //     sysex: {
-    //         offset: 22,
-    //         mask: [0x7F]
-    //     }
-    // };
+    control[control_id.exp_pedal] = { // 4,
+        name: "Exp pedal",
+        sysex: {
+            offset: 22,
+            mask: [0x7F]
+        }
+    };
     control[control_id.tempo] = { // 15,
         name: "Tempo"
         //TODO: tempo from sysex
@@ -184,6 +193,7 @@ function defineControls() {
     };
     control[control_id.filter_envelope] = { // 20,
         name: "Filter env",
+        human: _filter_env,
         sysex: {
             offset: 13,
             mask: [0x7F]

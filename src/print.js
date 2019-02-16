@@ -22,7 +22,7 @@ function renderPreset(template, filename) {
     const t = $(template).filter("#template-main").html();
     const p = {
         "f": () => () => filename ? `(${filename})` : "",
-        "id": () => () => DEVICE.meta.preset_id.value,
+        "id": () => () => DEVICE.meta.preset_id.value ? `#${DEVICE.meta.preset_id.value}` : '(unsaved)',
         "n": () => text => renderControlName(text.trim().toLowerCase()),
         "v": () => text => renderControlValue(text.trim().toLowerCase())
     };

@@ -216,7 +216,7 @@ let preset_number = 0;
 function sendPC(pc) {
     preset_number = pc;
     if (midi_output) {
-        if (TRACE) console.log(`send program change ${preset_number}`);
+        if (TRACE) console.log(`send program change ${preset_number}`, pc);
         showMidiOutActivity();
         midi_output.sendProgramChange(preset_number, settings.midi_channel);
         setStatus(`Preset ${pc} selected.`);
@@ -259,6 +259,8 @@ function handlePC(e) {
     logIncomingMidiMessage("PC", 0, e.value);
 
     preset_number = e.value;
+    displayPreset();
+
 }
 
 /**
@@ -463,18 +465,26 @@ function handleUserAction(control_type, control_number, value) {
 function init(sendUpdate = true) {
     if (TRACE) console.log(`init(${sendUpdate})`);
     DEVICE.init();
+    preset_number = 0;
+    displayPreset();
     updateUI(true);
     if (sendUpdate) {
         updateConnectedDevice();
     }
+    clearError();
+    setStatus("Enzo set to 'init' configuration.")
     return false;   // disable the normal href behavior
 }
 
 function randomize() {
     if (TRACE) console.log("randomize");
     DEVICE.randomize();
+    preset_number = 0;
+    displayPreset();
     updateUI();
     updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
+    clearError();
+    setStatus("Enzo randomized.")
     return false;   // disable the normal href behavior
 }
 
@@ -761,7 +771,7 @@ function openCreditsDialog() {
 function printPreset() {
     if (TRACE) console.log("printPreset");
     let url = "print.html?" + URL_PARAM_SYSEX + "=" + encodeURIComponent(LZString.compressToBase64(Utils.toHexString(DEVICE.getSysEx())));
-    window.open(url, "_blank", "width=800,height=600,location,resizable,scrollbars,status");
+    window.open(url, "_blank", "width=600,height=500,top=100,left=200,location,resizable,scrollbars,status");
     return false;   // disable the normal href behavior
 }
 
@@ -781,7 +791,7 @@ function setMidiChannel(channel) {
  * @returns {boolean}
  */
 function openMidiWindow() {
-    midi_window = window.open("midi.html", "_midi", "location=no,height=480,width=350,scrollbars=yes,status=no");
+    midi_window = window.open("midi.html", "_midi", "location=no,height=600,width=400,scrollbars=yes,status=no");
     return false;   // disable the normal href behavior
 }
 
@@ -810,14 +820,14 @@ function toggleBypass() {
 
 function selectSquareware() {
     const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
-    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
-    updateControl(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
+    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
+    updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
 }
 
 function selectSawtooth() {
     const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
-    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
-    updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
+    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
+    updateControl(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
 }
 
 function selectDry() {
@@ -917,12 +927,14 @@ function keyDown(code, alt, shift) {
 
     if (code === 48) {   // 0
         preset_number = 10;
+        sendPC(preset_number);
         displayPreset();
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
         preset_number = code - 48;
+        sendPC(preset_number);
         displayPreset();
         return;
     }
@@ -957,6 +969,9 @@ function keyDown(code, alt, shift) {
             break;
         case 88:                // X    max mix
             animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 127);
+            break;
+        case 8:                 // DEL  min sustain
+            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 0);
             break;
         case 66:                // B    min sustain
             animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 0);
@@ -1104,12 +1119,12 @@ function connectInput(input) {
             handleCC(e);
         })
         .on("sysex", settings.midi_channel, function(e) {
-            if (TRACE) console.log("update DEVICE with sysex");
+            if (TRACE) console.log("%cSysEx received", "color: yellow; font-weight: bold");
             if (DEVICE.setValuesFromSysEx(e.data)) {
                 updateUI();
                 clearError();
                 setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
-                if (TRACE) console.log("DEVICE updated with sysex");
+                if (TRACE) console.log("Device updated with SysEx");
             } else {
                 clearStatus();
                 setStatusError("Unable to update from SysEx data.")

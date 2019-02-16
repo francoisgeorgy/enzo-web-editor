@@ -115,8 +115,7 @@ const getDump = function () {
     data[2] = 0x20;
     data[3] = 0x10;
 
-    data[8] = 0x10;
-
+    data[8] = meta.preset_id.value;
     data[9] = control[control_id.pitch].raw_value;
     data[10] = control[control_id.filter].raw_value;
     data[11] = control[control_id.mix].raw_value;

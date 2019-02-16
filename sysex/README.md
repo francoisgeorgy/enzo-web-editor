@@ -31,7 +31,7 @@ Note: "Japanese Group" manufacturers have only one ID byte. See [https://www.mid
 | Offset | Bytes | Hex mask   | Bin mask            | Bits | Description |
 | ------:| -----:| :--------- | :------------------ | ----:| ----------- |
 |      1 |     3 | `7F 7F 7F` | `01111111 01111111 01111111` | 3x 8 | Manufacturer ID |
-|      8 |     1 | `7F`       | `01111111         ` |    7 | Patch number |
+|      8 |     1 | `7F`       | `01111111         ` |    7 | Preset number |
 |      9 |     1 | `7F`       | `01111111`          |    7 | Pitch (CC 16) |
 |     10 |     1 | `7F`       | `01111111`          |    7 | Filter (CC 17) |
 |     11 |     1 | `7F`       | `01111111`          |    7 | Mix (CC 18) |
