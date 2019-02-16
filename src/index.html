@@ -17,16 +17,9 @@
 <body>
     <div id="main" class="zoom-1">
 
-<!--
-        <div id="panel">
-            side panel
-        </div>
--->
-
         <div id="title">
             <div class="neon">Enzo web editor</div>
             <div class="menu">
-                <!--<a id="menu-favorites" href="#"><i class="far fa-heart" aria-hidden="true" title="favorites"></i> <span class="menu-text">Favorites</span></a>-->
                 <span class="menu-entry"><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</a></span>
                 <span class="menu-entry"><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</a></span>
                 <!--<span><a id="menu-sync" href="#" title="Sync with the connected Enzo"><i class="fas fa-sync-alt"></i> <span class="menu-text">Sync</a></span> &lt;!&ndash;&#8651;&ndash;&gt;-->
@@ -35,7 +28,6 @@
                 <!--<span class="menu-entry"><a id="menu-get-url" href="#" title="Save the current preset to a .syx file"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">Get URL</a></span>-->
                 <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</a></span>
                 <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</a></span>
-                <!--<span class="menu-entry"><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Settings</a></span>    &lt;!&ndash;&#x2699;&ndash;&gt;-->
                 <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</a></span>
                 <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</a></span>      <!--&#x3f;-->
                 <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
@@ -89,16 +81,6 @@
                     <option value="16">16</option>
                 </select>
             </div>
-<!--
-            <div>
-                Display:
-                <select id="zoom-0ize">
-                    <option value="zoom-0">small</option>
-                    <option value="zoom-1" selected>regular</option>
-                    <option value="zoom-2">large</option>
-                </select>
-            </div>
--->
         </div>
 
         <!--
@@ -131,7 +113,7 @@
         </div>
 
         <!--
-            EXPRESSION PEDAL
+            TODO: EXPRESSION PEDAL
         -->
 
         <!--
@@ -180,9 +162,6 @@
             <div class="header">
                 <div>filter type</div>
             </div>
-            <!--<div class="controls">-->
-                <!--<svg class="knob" id="cc-23"></svg>-->
-            <!--</div>-->
             <div id="cc-23-options" class="grid-3x2">
                 <div id="cc-23-0" class="bt">LP</div>
                 <div id="cc-23-87" class="bt">v. LP</div>
@@ -492,60 +471,8 @@
                 <stop offset="0%" stop-color="#555" />
                 <stop offset="95%" stop-color="#222" />
             </linearGradient>
-            <!--<g id="knob">-->
-                <!--<circle fill="url(#grad)" class="path" cx="50" cy="50" r="40"/>-->
-                <!--<text class="value" text-anchor="middle" x="50" y="58"></text>-->
-            <!--</g>-->
         </defs>
     </svg>
 
-    <div id="settings-panel" class="panel" style="display:none">
-        <h2><span style="float:right" class="close-settings-panel">&#x2715;</span>Settings</h2>
-        <div id="settings-dialog-instructions">
-        </div>
-        <div>
-            <h3>Display</h3>
-            <input type="checkbox" name="fade-unused" value="1"> Fade unused controls
-            <div style="margin-top: 0.5rem;font-size: 0.8rem">
-                When checked, the controls that haven't changed from an init preset will be faded.
-            </div>
-        </div>
-        <div>
-            <h3>Randomizer</h3>
-            <p>Randomize the following groups of parameters:</p>
-            <div id="randomizer-settings">
-            </div>
-            <a href="#" id="randomizer-select-all">select all</a>
-            <a href="#" id="randomizer-select-none">select none</a>
-        </div>
-        <div id="settings-dialog-error" style="color:red ">
-        </div>
-        <div class="dialog-info">
-            <span style="float:right">ESC to close</span>
-            All changes are immediately saved and applied.
-        </div>
-    </div>
-
-    <div id="favorites-panel" class="panel" style="display:none">
-        <div id="favorites-header">
-            <h2><span style="float:right" class="close-favorites-panel">&#x2715;</span>Favorites</h2>
-        </div>
-        <div id="favorites-add">
-            <h3>Add the current preset to your favorites</h3>
-            Name:<br />
-            <input type="text" name="preset-name" id="add-favorite-preset-name" placeholder="" ><br />
-            Description:<br />
-            <textarea name="preset-description" id="add-favorite-preset-description" ></textarea><br />
-            <button type="button" id="add-favorite-bt" style="float:right">Add to favorites</button>
-            <div style="clear:both"></div>
-        </div>
-        <div id="favorites-load">
-            <h3>Load a preset from your favorites</h3>
-            <div id="favorites-list"></div>
-        </div>
-        <div id="favorites-footer" class="dialog-info">
-            <span style="float:right">ESC to close</span>
-        </div>
-    </div>
 </body>
 </html>

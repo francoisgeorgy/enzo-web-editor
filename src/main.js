@@ -58,20 +58,27 @@ function setMidiInStatus(status) {
     }
 }
 
-// function setMidiOutStatus(status) {
-//     // toggleOnOff("#midi-out-status", status);
-// }
-
 function setStatus(msg) {
     if (TRACE) console.info("status:", msg);
-    // $("#status").removeClass("error").text(msg);
-    $("#info-message").text(msg);
+    $("#info-message").html(msg);
+}
+
+function appendStatus(msg) {
+    if (TRACE) console.info("status:", msg);
+    $("#info-message").html((index, old) => old + '<br />' + msg);
+}
+
+function clearStatus(msg) {
+    $("#info-message").text("");
 }
 
 function setStatusError(msg) {
     if (TRACE) console.warn("error:", msg);
-    // $("#status").addClass("error").text(msg);
     $("#error-message").text(msg);
+}
+
+function clearError(msg) {
+    $("#error-message").text("");
 }
 
 function applyZoom() {
@@ -164,27 +171,6 @@ function logOutgoingMidiMessage(type, control, value) {
 function getCurrentPresetAsLink() {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + Utils.toHexString(DEVICE.getSysEx());
-}
-*/
-
-//==================================================================================================================
-// Utilities
-
-/*
-let momentary_active = false;
-
-function momentary(callback) {
-    if (!momentary_active) {
-        momentary_active = true;
-        $("#midi-in-led").addClass("on");
-        let timeoutID = window.setTimeout(
-            function () {
-                $("#midi-in-led").removeClass("on");
-                momentary_active = false;
-                timeoutID = null;
-            },
-            500);
-    }
 }
 */
 
@@ -460,24 +446,11 @@ function handleUserAction(control_type, control_number, value) {
 
     if (TRACE) console.log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
 
-    // if (control_type==='cc' && (control_number===28 || control_number===71)) {
-    //     console.log(`${control_type}-${control_number}: ${value}`);
-    // }
-
     if (control_type === 'pc') {
         sendPC(control_number);
     } else {
         updateDevice(control_type, control_number, value);
     }
-
-    // if (control_type === "cc") {
-    //     if (["102", "103", "104", "105"].includes(control_number)) {
-    //         envelopes["mod-envelope"].envelope = DEVICE.getADSREnv("mod");
-    //     } else if (["90", "91", "92", "93"].includes(control_number)) {
-    //         if (TRACE) console.log("redraw amp env", envelopes);
-    //         envelopes["amp-envelope"].envelope = DEVICE.getADSREnv("amp");
-    //     }
-    // }
 
 }
 
@@ -577,23 +550,11 @@ function setupPresetSelectors() {
 
     $("div#pc-down").click(function() {
         if (TRACE) console.log(`click on ${this.id}`);
-        // if (!this.classList.contains("on")) {   // if not already on...
-        //     $(this).siblings(".preset-id").removeClass("on");
-        //     this.classList.add("on");
-        //     // handleUserAction(...c.split("-"), v);
-        //     handleUserAction(...this.id.split("-"));
-        // }
         presetDec();
     });
 
     $("div#pc-up").click(function() {
         if (TRACE) console.log(`click on ${this.id}`);
-        // if (!this.classList.contains("on")) {   // if not already on...
-        //     $(this).siblings(".preset-id").removeClass("on");
-        //     this.classList.add("on");
-        //     // handleUserAction(...c.split("-"), v);
-        //     handleUserAction(...this.id.split("-"));
-        // }
         presetInc();
     });
 
@@ -602,7 +563,6 @@ function setupPresetSelectors() {
         if (!this.classList.contains("on")) {   // if not already on...
             $(this).siblings(".preset-id").removeClass("on");
             this.classList.add("on");
-            // handleUserAction(...c.split("-"), v);
             handleUserAction(...this.id.split("-"));
         }
     });
@@ -639,7 +599,6 @@ function setupSwitches() {
 }
 
 function setupSelects() {
-    $("#zoom-0ize").change((event) => setLayoutSize(event.target.value));
     $("#midi-channel").change((event) => setMidiChannel(event.target.value));
     $("#midi-channel").val(settings.midi_channel);
     $("#midi-input-device").change((event) => setInputDevice(event.target.value));
@@ -703,7 +662,6 @@ function setupUI() {
     $("span.version").text(VERSION);
 
     setMidiInStatus(false);
-    // setMidiOutStatus(false);
 
     setupKnobs();
     setupPresetSelectors();
@@ -717,48 +675,6 @@ function setupUI() {
 }
 
 //==================================================================================================================
-// Favorites dialog
-
-let default_favorite_name = "";
-
-function getFavorites() {
-}
-
-function refreshFavoritesList() {
-}
-
-/**
- * Add the current preset to the list of favorites preset in the local storage
- */
-function addToFavorites() {
-    return false;   // disable the normal href behavior
-}
-
-function openFavoritesPanel() {
-    return false;   // disable the normal href behavior
-}
-
-function closeFavoritesPanel() {
-}
-
-function reloadWithPresetUrl() {
-    return false;   // disable the normal href behavior
-}
-
-//==================================================================================================================
-// Settings
-
-function openSettingsPanel() {
-    if (TRACE) console.log("toggle settings-panel");
-    return false;   // disable the normal href behavior
-}
-
-function closeSettingsPanel() {
-    if (TRACE) console.log("closeSettingsPanel");
-    $("#settings-panel").hide("slide", { direction: "left" }, 500);
-}
-
-//==================================================================================================================
 // Preset file handling
 
 var lightbox = null;    // lity dialog
@@ -767,7 +683,7 @@ var lightbox = null;    // lity dialog
  *
  */
 function loadPresetFromFile() {
-    // $("#load-preset-error").empty();
+    $("#load-preset-error").empty();
     $("#preset-file").val("");
     lightbox = lity("#load-preset-dialog");
     return false;   // disable the normal href behavior
@@ -844,17 +760,6 @@ function printPreset() {
 }
 
 /**
- * header"s "sync" button handler
- */
-/*
-function syncUIwithDEVICE() {
-    // ask the DEVICE to send us its current preset:
-    // requestSysExDump();
-    return false;   // disable the normal href behavior
-}
-*/
-
-/**
  * header"s "midi channel" select handler
  */
 function setMidiChannel(channel) {
@@ -878,7 +783,6 @@ function setLayoutSize(size) {
     if (TRACE) console.log(`setLayoutSize(${size})`);
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(size);
 }
-
 
 function updateBypassSwitch(value) {
     if (TRACE) console.log("updateBypassSwitch", value);
@@ -977,26 +881,6 @@ function animateCC(control_number, from, to) {
     }
 }
 
-/*
-function animateCC(control_number, from, to) {
-    let p = 0;
-    $({ n: from }).animate({ n: to}, {
-        duration: 2000,
-        step: function(now) {
-            // console.log(now);
-            const i = Math.round(now);
-            if (p !== i) {
-                p = i;
-                const v = Math.round(now);
-                // console.log(p);
-                dispatch("cc", control_number, v);
-                updateDevice("cc", control_number, v);
-            }
-        }
-    });
-}
-*/
-
 /**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
  */
@@ -1012,15 +896,7 @@ function setupKeyboard() {
         mergeAll()
     );
 
-    // var keyPresses = keyDowns
-    //     .merge(keyUps)
-    //     .groupBy(e => e.keyCode)
-    //     .map(group => group.distinctUntilChanged(null, e => e.type))
-    //     .mergeAll()
-
     keyPresses.subscribe(function(e) {
-        //console.log(e.type, e.key || e.which, e.keyIdentifier);
-        // if (TRACE) console.log(e.keyCode, e.type, e.altKey, e.shiftKey, e);
         if (e.type === "keydown") {
             keyDown(e.keyCode, e.altKey, e.shiftKey);
         } else if (e.type === "keyup") {
@@ -1029,7 +905,6 @@ function setupKeyboard() {
     });
 
     if (TRACE) console.log("keyboard set up");
-
 }
 
 function keyDown(code, alt, shift) {
@@ -1142,10 +1017,8 @@ function keyDown(code, alt, shift) {
 
 function keyUp(code, alt, shift) {
     switch (code) {
-        case 27:                // close all opened panel with ESC key:
-            closeFavoritesPanel();
-            closeSettingsPanel();
-            break;
+        // case 27:                // close all opened panel with ESC key:
+        //     break;
         case 84:                // T            tap
             tapRelease("cc-28-127");
             break;
@@ -1186,14 +1059,10 @@ let settings = {
 function loadSettings() {
     const s = store.get("enzo.settings");
     if (s) settings = JSON.parse(s);
-    // settings.input_device_id = store.get("enzo.settings.input_device_id");
-    // settings.output_device_id = store.get("enzo.settings.output_device_id");
 }
 
 function saveSettings() {
     store("enzo.settings", JSON.stringify(settings));
-    // store("enzo.settings.input_device_id", settings.input_device_id);
-    // store("enzo.settings.output_device_id", settings.output_device_id);
 }
 
 //==================================================================================================================
@@ -1218,12 +1087,9 @@ function connectInput(input) {
 
     if (!input) return;
 
-    if (TRACE) console.log(`connect input to channel ${settings.midi_channel}`);
-    // if (input) {
     midi_input = input;
-    // setStatus(`"${midi_input.name}" input connected.`);
     if (TRACE) console.log(`midi_input assigned to "${midi_input.name}"`);
-    // }
+
     midi_input
         .on("programchange", settings.midi_channel, function(e) {        // sent by the DEVICE when changing preset
             handlePC(e);
@@ -1232,19 +1098,24 @@ function connectInput(input) {
             handleCC(e);
         })
         .on("sysex", settings.midi_channel, function(e) {
-            // console.log("sysex handler");
             if (TRACE) console.log("update DEVICE with sysex");
             if (DEVICE.setValuesFromSysEx(e.data)) {
                 updateUI();
+                clearError();
                 setStatus("SysEx received.");
                 if (TRACE) console.log("DEVICE updated with sysex");
             } else {
+                clearStatus();
                 setStatusError("Unable to update from SysEx data.")
             }
         });
+
     if (TRACE) console.log(`${midi_input.name} listening on channel ${settings.midi_channel}`);
     setMidiInStatus(true);
+    clearError();
     setStatus(`${midi_input.name} connected on MIDI channel ${settings.midi_channel}.`);
+    appendStatus(`To update the editor with the current setup of your Enzo, plese send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.`);
+
 }
 
 function disconnectOutput() {
@@ -1259,12 +1130,9 @@ function connectOutput(output) {
     if (TRACE) console.log("connect output");
     midi_output = output;
     if (TRACE) console.log(`midi_output assigned to "${midi_output.name}"`);
-    // setMidiOutStatus(true);
 }
 
 function setInputDevice(id) {
-
-    // if (!id) return;
 
     if (TRACE) console.log(`setInputDevice(${id})`);
 
@@ -1274,18 +1142,17 @@ function setInputDevice(id) {
 
     disconnectInput();
 
-    let input = WebMidi.getInputById(id);
+    const input = WebMidi.getInputById(id);
     if (input) {
         connectInput(input);
     } else {
+        clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
         setMidiInStatus(false);
     }
 }
 
 function setOutputDevice(id) {
-
-    // if (!id) return;
 
     if (TRACE) console.log(`setOutputDevice(${id})`, settings);
 
@@ -1295,12 +1162,12 @@ function setOutputDevice(id) {
 
     disconnectOutput();
 
-    let output = WebMidi.getOutputById(id);
+    const output = WebMidi.getOutputById(id);
     if (output) {
         connectOutput(output);
     } else {
+        clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
-        // setMidiOutStatus(false);
     }
 }
 
@@ -1310,7 +1177,6 @@ function setOutputDevice(id) {
  */
 function deviceConnect(info) {
     if (TRACE) console.log("deviceConnect", info);
-    // updateSelectDeviceList();
     if (settings) {
         setInputDevice(settings.input_device_id);
         setOutputDevice(settings.output_device_id);
@@ -1325,21 +1191,6 @@ function deviceConnect(info) {
 function deviceDisconnect(info) {
     if (TRACE) console.log("deviceDisconnect", info);
     updateSelectDeviceList();
-/*
-    if ((info.port.name !== DEVICE.name_device_in) && (info.port.name !== DEVICE.name_device_out)) {
-        console.log(`disconnect event ignored for device ${info.port.name}`);
-        return;
-    }
-    if (info.port.name === DEVICE.name_device_in) {
-        midi_input = null;
-        setStatus(`${DEVICE.name_device_in} has been disconnected.`);
-        setMidiInStatus(false);
-    }
-    if (info.port.name === DEVICE.name_device_out) {
-        midi_output = null;
-        // setMidiOutStatus(false);
-    }
-*/
 }
 
 //==================================================================================================================
@@ -1356,15 +1207,13 @@ $(function () {
 
     setupUI();
 
-    // init(false);    // init DEVICE then UI without sending any CC to the DEVICE
-
     setStatus("Waiting for MIDI interface access...");
 
     WebMidi.enable(function (err) {
 
         if (err) {
 
-            console.log("webmidi err", err);
+            console.warn("webmidi err", err);
 
             setStatusError("ERROR: WebMidi could not be enabled.");
 
