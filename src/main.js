@@ -271,6 +271,13 @@ function handlePC(e) {
  */
 function handleCC(e) {
 
+    const t = performance.now();
+    // console.log(last_send_time, t);
+
+    if (t < (last_send_time + 100)) {
+        return;
+    }
+
     const msg = e.data;
     const cc = msg[1];
     const v = msg[2];
@@ -391,6 +398,8 @@ function updateControl(control_type, control_number, value, mappedValue) {
 //==================================================================================================================
 // Updating to the connected device
 
+let last_send_time = performance.now();
+
 /**
  * Send a control value to the connected device.
  * @param control
@@ -403,6 +412,7 @@ function sendCC(control) {
         if (midi_output) {
             if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
             showMidiOutActivity();
+            last_send_time = performance.now();
             midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
         } else {
             if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
