@@ -91,12 +91,14 @@ function zoomIn() {
     if (zoom_level === 2) return;
     zoom_level++;
     applyZoom();
+    return false;
 }
 
 function zoomOut() {
     if (zoom_level === 0) return;
     zoom_level--;
     applyZoom();
+    return false;
 }
 
 //
@@ -795,10 +797,12 @@ function openMidiWindow() {
     return false;   // disable the normal href behavior
 }
 
+/*
 function setLayoutSize(size) {
     if (TRACE) console.log(`setLayoutSize(${size})`);
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(size);
 }
+*/
 
 function updateBypassSwitch(value) {
     if (TRACE) console.log("updateBypassSwitch", value);
@@ -1140,6 +1144,7 @@ function connectInput(input) {
 }
 
 function disconnectOutput() {
+    if (TRACE) console.log("disconnectOutput()");
     midi_output = null;
 }
 
