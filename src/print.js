@@ -62,7 +62,7 @@ function loadTemplate(data, filename) {
         if (ok) {
             renderPreset(template, filename);
         } else {
-            console.warn("invalid data");
+            if (TRACE) console.warn("invalid data");
         }
     });
 }

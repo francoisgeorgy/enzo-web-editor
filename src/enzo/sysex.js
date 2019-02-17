@@ -16,7 +16,7 @@ const validate = function (data) {
     const SYSEX_END = 0xF7;
 
     if (data[0] !== SYSEX_START) {
-        console.warn("validate: invalid start byte", data[0]);
+        if (TRACE) console.warn("validate: invalid start byte", data[0]);
         return false;
     }
 

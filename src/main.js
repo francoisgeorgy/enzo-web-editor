@@ -284,7 +284,7 @@ function handleCC(e) {
     if (DEVICE.control[cc]) {
         dispatch("cc", cc, v);
     } else {
-        console.warn(`unsupported CC: ${cc}`)
+        if (TRACE) console.warn(`unsupported CC: ${cc}`)
     }
 }
 
@@ -365,7 +365,7 @@ function updateControl(control_type, control_number, value, mappedValue) {
         let c = $(`#${id}`);
 
         if (c.length) { // jQuery trick to check if element was found
-            console.warn("updateControl: unsupported control (1): ", control_type, control_number, value);
+            if (TRACE) console.warn("updateControl: unsupported control (1): ", control_type, control_number, value);
         } else {
             c = $(`#${id}-${mappedValue}`);
             if (c.length) {
@@ -377,10 +377,10 @@ function updateControl(control_type, control_number, value, mappedValue) {
                     updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
                     setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
                 } else {
-                    console.warn("updateControl: unsupported control (2): ", control_type, control_number, value);
+                    if (TRACE) console.warn("updateControl: unsupported control (2): ", control_type, control_number, value);
                 }
             } else {
-                console.warn(`no control for ${id}-${mappedValue}`);
+                if (TRACE) console.warn(`no control for ${id}-${mappedValue}`);
             }
         }
 
@@ -415,7 +415,7 @@ function sendCC(control) {
  * Send all values to the connected device
  */
 function updateConnectedDevice(onlyChanged = false) {
-    console.log("TODO: updateConnectedDevice()");
+    if (TRACE) console.log("TODO: updateConnectedDevice()");
     const c = DEVICE.control;
     for (let i=0; i < c.length; i++) {
         if (typeof c[i] === "undefined") continue;
@@ -505,7 +505,7 @@ function tapRelease(id) {
  * Set value of the controls (input and select) from the DEVICE values
  */
 function updateControls() {
-    console.log("updateControls()");
+    if (TRACE) console.log("updateControls()");
 
     for (let i=0; i < DEVICE.control.length; i++) {
         if (typeof DEVICE.control[i] === "undefined") continue;
@@ -631,7 +631,7 @@ function updateSelectDeviceList() {
     s.append(
         WebMidi.inputs.map((port, index) => {
             present = present || (port.id === settings.input_device_id);
-            console.log("input select:", port.id, settings.input_device_id, typeof port.id, typeof settings.input_device_id, present);
+            if (TRACE) console.log("input select:", port.id, settings.input_device_id, typeof port.id, typeof settings.input_device_id, present);
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
@@ -643,7 +643,7 @@ function updateSelectDeviceList() {
     s.append(
         WebMidi.outputs.map((port, index) => {
             present = present || (port.id === settings.output_device_id);
-            console.log("output select:", port.id, settings.output_device_id, typeof port.id, typeof settings.output_device_id, present);
+            if (TRACE) console.log("output select:", port.id, settings.output_device_id, typeof port.id, typeof settings.output_device_id, present);
             return $("<option>").val(port.id).text(`${port.name}`);
         })
     );
@@ -741,7 +741,7 @@ function readFile() {
                 updateConnectedDevice();
 
             } else {
-                console.log("unable to set value from file");
+                if (TRACE) console.log("unable to set value from file");
                 $("#load-preset-error").show().text("The file is invalid.");
             }
         };
@@ -781,11 +781,19 @@ function printPreset() {
  * header"s "midi channel" select handler
  */
 function setMidiChannel(channel) {
-    if (TRACE) console.log("setMidiChannel", channel);
+    // if (TRACE) console.log(`setMidiChannel(${channel}): save current input and output id`);
+    // const in_device = settings.input_device_id;
+    // const out_device = settings.input_device_id;
+    if (TRACE) console.log(`setMidiChannel(${channel}): disconnect input`);
     disconnectInput();
+    if (TRACE) console.log(`setMidiChannel(${channel}): disconnect output`);
+    disconnectOutput();
     settings.midi_channel = channel;
     saveSettings();
-    connectInput(midi_input);
+    if (TRACE) console.log(`setMidiChannel(${channel}): connect input ${settings.input_device_id}`);
+    setInputDevice(settings.input_device_id);
+    if (TRACE) console.log(`setMidiChannel(${channel}): connect output ${settings.output_device_id}`);
+    setOutputDevice(settings.output_device_id);
 }
 
 /**
@@ -1100,6 +1108,7 @@ function disconnectInput() {
         midi_input = null;
         if (TRACE) console.log("midi_input not listening");
     }
+    setStatus(`Device disconnected.`);
 }
 
 /**
@@ -1146,6 +1155,7 @@ function connectInput(input) {
 function disconnectOutput() {
     if (TRACE) console.log("disconnectOutput()");
     midi_output = null;
+    // setStatus(`Output device disconnected.`);
 }
 
 /**
@@ -1163,7 +1173,7 @@ function setInputDevice(id) {
     if (TRACE) console.log(`setInputDevice(${id})`);
 
     if (midi_input && (midi_input.id === id)) {
-        console.log(`setInputDevice(${id}): port is already connected`);
+        if (TRACE) console.log(`setInputDevice(${id}): port is already connected`);
         return;
     }
 
@@ -1192,7 +1202,7 @@ function setOutputDevice(id) {
     if (TRACE) console.log(`setOutputDevice(${id})`);
 
     if (midi_output && (midi_output.id === id)) {
-        console.log(`setOutputDevice(${id}): port is already connected`);
+        if (TRACE) console.log(`setOutputDevice(${id}): port is already connected`);
         return;
     }
 
@@ -1233,6 +1243,12 @@ function deviceConnect(info) {
  */
 function deviceDisconnect(info) {
     if (TRACE) console.log("%cdeviceDisconnect", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
+    if (midi_input && info.port.id === midi_input.id) {
+        disconnectInput();
+    }
+    if (midi_output && info.port.id === midi_output.id) {
+        disconnectOutput();
+    }
     updateSelectDeviceList();
 }
 
@@ -1268,7 +1284,7 @@ $(function () {
                     if (TRACE) console.log("sysex loaded in device");
                     updateUI();
                 } else {
-                    console.log("unable to set value from sysex param");
+                    if (TRACE) console.log("unable to set value from sysex param");
                 }
             }
 
