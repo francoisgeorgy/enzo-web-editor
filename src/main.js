@@ -1,33 +1,41 @@
-import DEVICE from "./enzo/enzo.js";
-import Knob from "svg-knob";
-import store from 'storejs';
+import {TRACE} from "./debug";
 import * as Utils from "./lib/utils.js";
 import LZString from "lz-string";
 import * as WebMidi from "webmidi";
-// CSS order is important
 import * as lity from "lity";
+import {detect} from "detect-browser";
+import DEVICE from "./enzo/enzo.js";
+import {URL_PARAM_SYSEX, VERSION} from "./constants";
+import {loadSettings, saveSettings, settings} from "./settings";
+import {
+    setupMomentarySwitches,
+    setupSwitches,
+    tapDown, tapRelease
+} from "./ui_switches";
+import {setupKnobs} from "./ui_knobs";
+import {setupPresetSelectors} from "./ui_presets";
+import {clearError, clearStatus, MSG_SEND_SYSEX, setMidiInStatus, setStatus, setStatusError} from "./ui_messages";
+import {openMidiWindow} from "./ui_midi_window";
+import {zoomIn, zoomOut} from "./ui_layout";
+import {handleUserAction, updateUI} from "./ui";
+import {updateSelectDeviceList} from "./ui_selects";
 import "./css/lity.min.css";
 import "./css/main.css";
 import "./css/grid.css";
 import "./css/layout.css";
 import "./css/knob.css";
-import {detect} from "detect-browser";
-import { fromEvent } from 'rxjs'
-import { groupBy, merge, map, mergeAll, distinctUntilChanged } from 'rxjs/operators';
-import {KNOB_CONF} from "./conf";
-import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
+import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
+import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
+import {init, randomize} from "./presets";
+import {setupKeyboard} from "./ui_keyboard";
+import {loadPresetFromFile, readFile} from "./read_file";
 
-const TRACE = false;    // when true, will log more details in the console
-const VERSION = "[AIV]{version}[/AIV]";
-const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
-
-let midi_input = null;
-let midi_output = null;
+// let midi_input = null;
+// let midi_output = null;
 // let midi_channel = "all";
-let knobs = {};         // svg-knob
-let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
+// let knobs = {};         // svg-knob
+// let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 
-const MSG_SEND_SYSEX = "To update the editor with the current setup of your Enzo, plese send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 
 const browser = detect();
 
@@ -47,11 +55,12 @@ if (browser) {
                 "Thank you for your understanding.");
     }
 }
+/*
 
-/**
+/!**
  * Makes the app name glows, or not.
  * @param status
- */
+ *!/
 function setMidiInStatus(status) {
     if (status) {
         $(".neon").addClass("glow");
@@ -60,28 +69,23 @@ function setMidiInStatus(status) {
     }
 }
 
-function setStatus(msg) {
-    // if (TRACE) console.info("status:", msg);
-    $("#info-message").html(msg);
+function setStatus(msg, msg2) {
+    $("#info-message").html(msg2 === undefined ? msg : (msg + '<br />' + msg2));
 }
 
-function appendStatus(msg) {
-    // if (TRACE) console.info("status:", msg);
-    $("#info-message").html((index, old) => old + '<br />' + msg);
-}
-
-function clearStatus(msg) {
+function clearStatus() {
     $("#info-message").text("");
 }
 
 function setStatusError(msg) {
-    // if (TRACE) console.warn("error:", msg);
     $("#error-message").text(msg);
 }
 
-function clearError(msg) {
+function clearError() {
     $("#error-message").text("");
 }
+*/
+/*
 
 function applyZoom() {
     $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(`zoom-${zoom_level}`)
@@ -100,6 +104,8 @@ function zoomOut() {
     applyZoom();
     return false;
 }
+*/
+/*
 
 //
 // Popup to display MIDI messages
@@ -112,12 +118,12 @@ var midi_window = null;
 let midi_in_messages = 0;
 let midi_out_messages = 0;
 
-/**
+/!**
  *
  * @param type
  * @param control
  * @param value
- */
+ *!/
 function logIncomingMidiMessage(type, control, value) {
     if (midi_window) {
         const ctrl = parseInt(control);
@@ -134,12 +140,12 @@ function logIncomingMidiMessage(type, control, value) {
     }
 }
 
-/**
+/!**
  *
  * @param type
  * @param control
  * @param value
- */
+ *!/
 function logOutgoingMidiMessage(type, control, value) {
     if (midi_window) {
         const ctrl = parseInt(control);
@@ -164,6 +170,7 @@ function logOutgoingMidiMessage(type, control, value) {
         $("#midi-messages-out", midi_window.document).prepend(`<div>${s.toUpperCase()}</div>`);
     }
 }
+*/
 
 //==================================================================================================================
 
@@ -180,6 +187,7 @@ function getCurrentPresetAsLink() {
 
 //==================================================================================================================
 // Midi messages handling
+/*
 
 let activity_in = false;
 
@@ -212,21 +220,13 @@ function showMidiOutActivity() {
             500);
     }
 }
+*/
 
+/*
 let preset_number = 0;
+*/
 
-function sendPC(pc) {
-    preset_number = pc;
-    if (midi_output) {
-        if (TRACE) console.log(`send program change ${preset_number}`, pc);
-        showMidiOutActivity();
-        midi_output.sendProgramChange(preset_number, settings.midi_channel);
-        setStatus(`Preset ${pc} selected.`);
-        appendStatus(MSG_SEND_SYSEX);
-    }
-    logOutgoingMidiMessage("PC", preset_number);
-}
-
+/*
 function displayPreset() {
     $(".preset-id").removeClass("on");
     $(`#pc-${preset_number}`).addClass("on");
@@ -245,40 +245,45 @@ function presetDec() {
     sendPC(preset_number);
     displayPreset();
 }
+*/
 
 /**
  * Handle Program Change messages
  * @param e
  */
-function handlePC(e) {
+/*
+function handlePC(msg) {
 
-    if (TRACE) console.log("receive PC", e);
+    if (TRACE) console.log("receive PC", msg);
 
-    if (e.type !== "programchange") return;
+    if (msg.type !== "programchange") return;
 
     showMidiInActivity();
 
-    logIncomingMidiMessage("PC", 0, e.value);
+    logIncomingMidiMessage("PC", 0, msg.value);
 
-    preset_number = e.value;
+    setPresetNumber(msg.value);
     displayPreset();
 
 }
+*/
 
 /**
  * Handle all control change messages received
- * @param e
+ * @param msg
  */
-function handleCC(e) {
+/*
+function handleCC(msg) {
+function handleCC(msg) {
 
     const t = performance.now();
     // console.log(last_send_time, t);
 
-    if (t < (last_send_time + 100)) {
+    // suppress echo:
+    if (t < (getLastSendTime() + 100)) {
         return;
     }
 
-    const msg = e.data;
     const cc = msg[1];
     const v = msg[2];
 
@@ -288,14 +293,30 @@ function handleCC(e) {
 
     logIncomingMidiMessage("CC", cc, v);
 
-    if (DEVICE.control[cc]) {
-        dispatch("cc", cc, v);
-    } else {
-        if (TRACE) console.warn(`unsupported CC: ${cc}`)
-    }
+    // if (DEVICE.control[cc]) {
+        updateModelAndUI("cc", cc, v);
+    // } else {
+    //     if (TRACE) console.warn(`unsupported CC: ${cc}`)
+    // }
 }
 
-/**
+function handleSysex(data) {
+    if (TRACE) console.log("%cSysEx received", "color: yellow; font-weight: bold");
+    if (DEVICE.setValuesFromSysEx(data)) {
+        updateUI();
+        clearError();
+        setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
+        if (TRACE) console.log("Device updated with SysEx");
+    } else {
+        clearStatus();
+        setStatusError("Unable to update from SysEx data.")
+    }
+}
+*/
+
+/*
+
+/!**
  * Update DEVICE and associated on-screen control from CC or NRPN value.
  *
  * @param control_type
@@ -303,27 +324,35 @@ function handleCC(e) {
  * @param value
  *
  * Return the device's control
- */
-function dispatch(control_type, control_number, value) {
+ *!/
+function updateModelAndUI(control_type, control_number, value) {
 
-    if (TRACE) console.log("dispatch", control_type, control_number, value, "#" + control_type + "-" + control_number);
+    if (TRACE) console.log("updateModelAndUI", control_type, control_number, value, "#" + control_type + "-" + control_number);
 
     control_type = control_type.toLowerCase();
+    if ((control_type !== "cc") && (control_type !== "nrpn")) {
+        if (TRACE) console.warn(`updateModelAndUI: unsupported control type: ${control_type}`);
+        return;
+    }
 
-    if ((control_type !== "cc") && (control_type !== "nrpn")) return; //TODO: signal an error
-
-    let control = DEVICE.setControlValue(control_type, control_number, value);  // return a handle on the device control; may be useful later
-
-    updateControl(control_type, control_number, value);
-
-    return control;
+    if (DEVICE.control[control_number]) {
+        // update the model:
+        DEVICE.setControlValue(control_type, control_number, value);
+        // update the UI:
+        updateControl(control_type, control_number, value);
+    } else {
+        if (TRACE) console.log(`the DEVICE does not support this control: ${control_number}`)
+    }
 }
+*/
 
-/**
+/*
+
+/!**
  *
  * @param id
  * @param value
- */
+ *!/
 function updateOptionSwitch(id, value) {
     // "radio button"-like behavior
     if (TRACE) console.log(`updateOptionSwitch(${id}, ${value})`);
@@ -343,14 +372,16 @@ function updateMomentaryStompswitch(id, value) {
         $(`#${id}-on`).removeClass("sw-off");
     }
 }
+*/
+/*
 
-/**
+/!**
  *
  * @param control_type
  * @param control_number
  * @param value
  * @param mappedValue
- */
+ *!/
 function updateControl(control_type, control_number, value, mappedValue) {
 
     if (TRACE) console.log(`updateControl(${control_type}, ${control_number}, ${value})`);
@@ -394,16 +425,19 @@ function updateControl(control_type, control_number, value, mappedValue) {
     }
 
 }
+*/
 
 //==================================================================================================================
 // Updating to the connected device
 
-let last_send_time = performance.now();
+/*
 
-/**
+let last_send_time = performance.now();     // for echo suppression
+
+/!**
  * Send a control value to the connected device.
  * @param control
- */
+ *!/
 function sendCC(control) {
 
     let a = DEVICE.getMidiMessagesForCC(control);
@@ -412,7 +446,7 @@ function sendCC(control) {
         if (midi_output) {
             if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
             showMidiOutActivity();
-            last_send_time = performance.now();
+            last_send_time = performance.now(); // for echo suppression
             midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
         } else {
             if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
@@ -421,11 +455,31 @@ function sendCC(control) {
     }
 }
 
-/**
+/!**
+ * Update the connected device.
+ * Note: jQuery Knob transmits the value as a float
+ *
+ * Called by the onChange handlers of dials, switches and selects.
+ *
+ * @param control_type
+ * @param control_number
+ * @param value_float
+ *!/
+function updateDevice(control_type, control_number, value_float) {
+
+    let value = Math.round(value_float);
+
+    if (TRACE) console.log("updateDevice", control_type, control_number, value_float, value);
+
+    sendCC(DEVICE.setControlValue(control_type, control_number, value));
+}
+
+
+/!**
  * Send all values to the connected device
- */
-function updateConnectedDevice(onlyChanged = false) {
-    if (TRACE) console.log("TODO: updateConnectedDevice()");
+ *!/
+function fullUpdateDevice(onlyChanged = false) {
+    if (TRACE) console.log("fullUpdateDevice()");
     const c = DEVICE.control;
     for (let i=0; i < c.length; i++) {
         if (typeof c[i] === "undefined") continue;
@@ -436,30 +490,23 @@ function updateConnectedDevice(onlyChanged = false) {
     }
 }
 
-//==================================================================================================================
 
-/**
- * Update the virtual DEVICE and the connected device.
- * Note: jQuery Knob transmits the value as a float
- *
- * Called by the onChange handlers of dials, switches and selects.
- *
- * @param control_type
- * @param control_number
- * @param value_float
- */
-function updateDevice(control_type, control_number, value_float) {
-
-    let value = Math.round(value_float);
-
-    if (TRACE) console.log("updateDevice", control_type, control_number, value_float, value);
-
-    sendCC(DEVICE.setControlValue(control_type, control_number, value));
+function sendPC(pc) {
+    setPresetNumber(pc);
+    if (midi_output) {
+        if (TRACE) console.log(`send program change ${pc}`);
+        showMidiOutActivity();
+        midi_output.sendProgramChange(pc, settings.midi_channel);
+        setStatus(`Preset ${pc} selected.`, MSG_SEND_SYSEX);
+    }
+    logOutgoingMidiMessage("PC", pc);
 }
+*/
+/*
 
-/**
+/!**
  * Handles a change made by the user in the UI.
- */
+ *!/
 function handleUserAction(control_type, control_number, value) {
 
     if (TRACE) console.log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
@@ -471,49 +518,42 @@ function handleUserAction(control_type, control_number, value) {
     }
 
 }
+*/
 
 //==================================================================================================================
+/*
 
-function init(sendUpdate = true) {
-    if (TRACE) console.log(`init(${sendUpdate})`);
+function init() {
+    if (TRACE) console.log("init()");
     DEVICE.init();
-    preset_number = 0;
+    setPresetNumber(0);
     displayPreset();
     updateUI(true);
-    if (sendUpdate) {
-        updateConnectedDevice();
-    }
+    fullUpdateDevice();
     clearError();
-    setStatus("Enzo set to 'init' configuration.")
+    setStatus("Enzo set to 'init' configuration.");
     return false;   // disable the normal href behavior
 }
 
 function randomize() {
     if (TRACE) console.log("randomize");
     DEVICE.randomize();
-    preset_number = 0;
+    setPresetNumber(0);
     displayPreset();
     updateUI();
-    updateConnectedDevice(true);    // true == update only updated values (values which have been marked as changed)
+    fullUpdateDevice(true);    // true == update only updated values (values which have been marked as changed)
     clearError();
-    setStatus("Enzo randomized.")
+    setStatus("Enzo randomized.");
     return false;   // disable the normal href behavior
 }
-
-function tapDown(id) {
-    updateMomentaryStompswitch(id, 127);
-    handleUserAction(...id.split("-"));
-}
-
-function tapRelease(id) {
-    updateMomentaryStompswitch(id, 0);
-}
+*/
 
 //==================================================================================================================
+/*
 
-/**
+/!**
  * Set value of the controls (input and select) from the DEVICE values
- */
+ *!/
 function updateControls() {
     if (TRACE) console.log("updateControls()");
 
@@ -523,10 +563,12 @@ function updateControls() {
     }
 
 } // updateControls()
+*/
+/*
 
-/**
+/!**
  *
- */
+ *!/
 function setupKnobs() {
 
     if (TRACE) console.log("setupKnobs()");
@@ -568,7 +610,9 @@ function setupKnobs() {
     }
 
 } // setupKnobs
+*/
 
+/*
 
 function setupPresetSelectors() {
 
@@ -594,10 +638,12 @@ function setupPresetSelectors() {
     });
 
 }
+*/
 
 /**
  *
  */
+/*
 function setupSwitches() {
 
     if (TRACE) console.log("setupSwitches()");
@@ -623,14 +669,15 @@ function setupSwitches() {
     $(".swm").mousedown(function() { tapDown(this.id) }).mouseup(function() { tapRelease(this.id) });
 
 }
+*/
 
 function setupSelects() {
     $("#midi-channel").change((event) => setMidiChannel(event.target.value));
     $("#midi-channel").val(settings.midi_channel);
-    $("#midi-input-device").change((event) => setInputDevice(event.target.value));
-    $("#midi-output-device").change((event) => setOutputDevice(event.target.value));
+    $("#midi-input-device").change((event) => connectInputDevice(event.target.value));
+    $("#midi-output-device").change((event) => connectOutputDevice(event.target.value));
 }
-
+/*
 function updateSelectDeviceList() {
 
     if (TRACE) console.log("updateSelectDeviceList", settings.input_device_id, settings.output_device_id);
@@ -659,25 +706,39 @@ function updateSelectDeviceList() {
     );
     s.val(present ? settings.output_device_id : "");
 }
+*/
+/*
 
-/**
+/!**
  * Update the patch number and patch name displayed in the header.
- */
+ *!/
 function updateMeta() {
     if (DEVICE.meta.preset_id.value) {
-        preset_number = DEVICE.meta.preset_id.value;
+        setPresetNumber(DEVICE.meta.preset_id.value);
         displayPreset();
     }
 }
 
-/**
+/!**
  * Update the UI from the DEVICE controls values.
- */
+ *!/
 function updateUI() {
     updateMeta();
     updateControls();
     if (TRACE) console.log("updateUI done");
 }
+*/
+/*
+
+function tapDown(id) {
+    updateMomentaryStompswitch(id, 127);
+    handleUserAction(...id.split("-"));
+}
+
+function tapRelease(id) {
+    updateMomentaryStompswitch(id, 0);
+}
+*/
 
 /**
  * Initial setup of the UI.
@@ -690,13 +751,12 @@ function setupUI() {
     $("span.version").text(VERSION);
 
     setMidiInStatus(false);
-
-    setupKnobs();
-    setupPresetSelectors();
-    setupSwitches();
+    setupPresetSelectors(handleUserAction);
+    setupKnobs(handleUserAction);
+    setupSwitches(handleUserAction);
+    setupMomentarySwitches(tapDown, tapRelease);
     setupMenu();
     setupSelects();
-
     setupKeyboard();
 
     if (TRACE) console.groupEnd();
@@ -704,12 +764,13 @@ function setupUI() {
 
 //==================================================================================================================
 // Preset file handling
+/*
 
 var lightbox = null;    // lity dialog
 
-/**
+/!**
  *
- */
+ *!/
 function loadPresetFromFile() {
     $("#load-preset-error").empty();
     $("#preset-file").val("");
@@ -717,54 +778,22 @@ function loadPresetFromFile() {
     return false;   // disable the normal href behavior
 }
 
-/**
+/!**
  *
- */
+ *!/
 function savePresetToFile() {
     return false;   // disable the normal href behavior
 }
+*/
 
-/**
- * Handler for the #preset-file file input element in #load-preset
- */
-function readFile() {
-
-    const SYSEX_END = 0xF7;
-
-    let data = [];
-    let f = this.files[0];
-    if (TRACE) console.log(`read file`, f);
-
-    if (f) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            let view   = new Uint8Array(e.target.result);
-            for (let i=0; i<view.length; i++) {
-                data.push(view[i]);
-                if (view[i] === SYSEX_END) break;
-            }
-            if (DEVICE.setValuesFromSysEx(data)) {
-                if (TRACE) console.log("file read OK");
-                if (lightbox) lightbox.close();
-
-                updateUI();
-                updateConnectedDevice();
-
-            } else {
-                if (TRACE) console.log("unable to set value from file");
-                $("#load-preset-error").show().text("The file is invalid.");
-            }
-        };
-        reader.readAsArrayBuffer(f);
-    }
-}
+let helpLightbox = null;
 
 /**
  *
  * @returns {boolean}
  */
 function openHelpDialog() {
-    lightbox = lity("#help-dialog");
+    helpLightbox = lity("#help-dialog");
     return false;   // disable the normal href behavior
 }
 
@@ -773,7 +802,7 @@ function openHelpDialog() {
  * @returns {boolean}
  */
 function openCreditsDialog() {
-    lightbox = lity("#credits-dialog");
+    helpLightbox = lity("#credits-dialog");
     return false;   // disable the normal href behavior
 }
 
@@ -790,30 +819,43 @@ function printPreset() {
 /**
  * header"s "midi channel" select handler
  */
-function setMidiChannel(channel) {
+function setMidiChannel(midi_channel) {
+
+    // Note: output does not use any event listener, so there's nothing to update on the output device when we only
+    //       change the MIDI channel.
+
     // if (TRACE) console.log(`setMidiChannel(${channel}): save current input and output id`);
     // const in_device = settings.input_device_id;
     // const out_device = settings.input_device_id;
-    if (TRACE) console.log(`setMidiChannel(${channel}): disconnect input`);
-    disconnectInput();
-    if (TRACE) console.log(`setMidiChannel(${channel}): disconnect output`);
-    disconnectOutput();
-    settings.midi_channel = channel;
-    saveSettings();
-    if (TRACE) console.log(`setMidiChannel(${channel}): connect input ${settings.input_device_id}`);
-    setInputDevice(settings.input_device_id);
-    if (TRACE) console.log(`setMidiChannel(${channel}): connect output ${settings.output_device_id}`);
-    setOutputDevice(settings.output_device_id);
-}
 
-/**
+    if (TRACE) console.log(`setMidiChannel(${midi_channel}): disconnect input`);
+    disconnectInputPort();
+
+    // settings.midi_channel = channel;
+    // Set new channel:
+    if (TRACE) console.log(`setMidiChannel(${midi_channel}): set new channel`);
+    saveSettings({midi_channel});
+
+    // if (TRACE) console.log(`setMidiChannel(${midi_channel}): disconnect output`);
+    // disconnectOutputPort();
+
+    if (TRACE) console.log(`setMidiChannel(${midi_channel}): reconnect input ${settings.input_device_id}`);
+    connectInputDevice(settings.input_device_id);
+
+    // if (TRACE) console.log(`setMidiChannel(${midi_channel}): connect output ${settings.output_device_id}`);
+    // connectOutputDevice(settings.output_device_id);
+}
+/*
+
+/!**
  *
  * @returns {boolean}
- */
+ *!/
 function openMidiWindow() {
     midi_window = window.open("midi.html", "_midi", "location=no,height=600,width=400,scrollbars=yes,status=no");
     return false;   // disable the normal href behavior
 }
+*/
 
 /*
 function setLayoutSize(size) {
@@ -822,6 +864,7 @@ function setLayoutSize(size) {
 }
 */
 
+/*
 function updateBypassSwitch(value) {
     if (TRACE) console.log("updateBypassSwitch", value);
     if (value === 0) {
@@ -832,6 +875,8 @@ function updateBypassSwitch(value) {
         $("#cc-14-0").removeClass("sw-off");
     }
 }
+*/
+/*
 
 function toggleBypass() {
     const c = DEVICE.control[DEVICE.control_id.bypass];
@@ -875,7 +920,9 @@ function selectArp() {
     updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.arp);
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.arp);
 }
+*/
 
+/*
 
 let animations = {};     // one entry possible per CC; entry is {timeout_handler, target_value}
 
@@ -918,10 +965,12 @@ function animateCC(control_number, from, to) {
         });
     }
 }
+*/
+/*
 
-/**
+/!**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
- */
+ *!/
 function setupKeyboard() {
 
     let keyDowns = fromEvent(document, "keydown");
@@ -945,83 +994,101 @@ function setupKeyboard() {
     if (TRACE) console.log("keyboard set up");
 }
 
+function animateFromTo(cc, from, to) {
+    animateCC(cc, from, to, function (v) {
+        updateModelAndUI("cc", cc, v);
+        updateDevice("cc", cc, v);
+    });
+}
+
+function animateTo(cc, to) {
+    animateFromTo(cc, DEVICE.getControlValue(DEVICE.getControl(cc)), to);
+    // animateCC(cc, DEVICE.getControlValue(DEVICE.getControl(cc)), to, function (v) {
+    //     dispatch("cc", cc, v);
+    //     updateDevice("cc", cc, v);
+    // });
+}
+
 function keyDown(code, alt, shift) {
 
     if (code === 48) {   // 0
-        preset_number = 10;
-        sendPC(preset_number);
+        setPresetNumber(10);
+        sendPC(10);
         displayPreset();
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
-        preset_number = code - 48;
-        sendPC(preset_number);
+        let pc = code - 48;
+        setPresetNumber(code - 48);
+        sendPC(pc);
         displayPreset();
         return;
     }
 
     switch (code) {
         case 67:                // C
-            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.pitch, shift ? 63 : 0);
+            // animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0, animate_callback);
             break;
         case 86:                // V
-            animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.pitch, shift ? 63 : 127);
+            // animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 127);
             break;
         case 70:                // F
-            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.filter, shift ? 63 : 0);
             break;
         case 71:                // G
-            animateCC(DEVICE.control_id.filter, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.filter, shift ? 63 : 127);
             break;
         case 72:                // H
-            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.filter_bandwidth, shift ? 63 : 0);
             break;
         case 74:                // J
-            animateCC(DEVICE.control_id.filter_bandwidth, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.filter_bandwidth)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.filter_bandwidth, shift ? 63 : 127);
             break;
         case 75:                // K    delay level
-            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.delay_level, shift ? 63 : 0);
             break;
         case 76:                // L    delay level
-            animateCC(DEVICE.control_id.delay_level, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.delay_level)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.delay_level, shift ? 63 : 127);
             break;
         case 89:                // Y    min mix
-            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.mix, shift ? 63 : 0);
             break;
         case 88:                // X    max mix
-            animateCC(DEVICE.control_id.mix, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.mix)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.mix, shift ? 63 : 127);
             break;
         case 8:                 // DEL  min sustain
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), 0);
+            animateTo(DEVICE.control_id.sustain, 0);
             break;
         case 66:                // B    min sustain
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.sustain, shift ? 63 : 0);
             break;
         case 78:                // N    max sustain
-            animateCC(DEVICE.control_id.sustain, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.sustain)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.sustain, shift ? 63 : 127);
             break;
         case 84:                // T            tap
             tapDown("cc-28-127");
             break;
         case 90:                // Z
-            animateCC(DEVICE.control_id.ring_modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.ring_modulation)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.ring_modulation, shift ? 63 : 0);
             break;
         case 85:                // U
-            animateCC(DEVICE.control_id.ring_modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.ring_modulation)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.ring_modulation, shift ? 63 : 127);
             break;
         case 32:                // SPACE
             toggleBypass();
             break;
         case 109:               // num keypad "-"
-            animateCC(DEVICE.control_id.modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.modulation)), shift ? 63 : 0);
+            animateTo(DEVICE.control_id.modulation, shift ? 63 : 0);
             break;
         case 107:               // num keypad "+"
-            animateCC(DEVICE.control_id.modulation, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.modulation)), shift ? 63 : 127);
+            animateTo(DEVICE.control_id.modulation, shift ? 63 : 127);
             break;
         case 79:                   // O
             const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.portamento));
-            animateCC(DEVICE.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
+            animateFromTo(DEVICE.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
             break;
         case 82:                // R Randomize
             randomize();
@@ -1049,11 +1116,11 @@ function keyDown(code, alt, shift) {
             break;
         case 38:                // Up arrow
         case 39:                // Right arrow
-            presetInc();
+            presetInc(handleUserAction);
             break;
         case 40:                // Down arrow
         case 37:                // Left arrow
-            presetDec();
+            presetDec(handleUserAction);
             break;
     }
 }
@@ -1067,14 +1134,13 @@ function keyUp(code, alt, shift) {
             break;
     }
 }
+*/
 
 /**
  *
  */
 function setupMenu() {
-
     if (TRACE) console.log("setupMenu()");
-
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     $("#menu-load-preset").click(loadPresetFromFile);
@@ -1082,16 +1148,15 @@ function setupMenu() {
     $("#menu-midi").click(openMidiWindow);
     $("#menu-help").click(openHelpDialog);
     $("#menu-about").click(openCreditsDialog);
-
     // in load-preset-dialog:
     $("#preset-file").change(readFile);
-
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
 }
 
 //==================================================================================================================
 // Settings
+/*
 
 let settings = {
     midi_channel: "all",
@@ -1104,20 +1169,29 @@ function loadSettings() {
     if (s) settings = JSON.parse(s);
 }
 
-function saveSettings() {
+function saveSettings(options = {}) {
+    Object.assign(settings, settings, options);
     store("enzo.settings", JSON.stringify(settings));
 }
+*/
 
 //==================================================================================================================
 // WebMidi events handling
 
-function disconnectInput() {
+function disconnectInputPort() {
     if (TRACE) console.log("disconnectInput()");
-    if (midi_input) {
-        midi_input.removeListener();    // remove all listeners for all channels
-        midi_input = null;
+    // if (midi_input) {
+    //     midi_input.removeListener();    // remove all listeners for all channels
+    //     midi_input = null;
+    //     if (TRACE) console.log("midi_input not listening");
+    // }
+    const p = getMidiInputPort();
+    if (p) {
+        p.removeListener();    // remove all listeners for all channels
+        setMidiInputPort(null);
         if (TRACE) console.log("midi_input not listening");
     }
+
     setStatus(`Device disconnected.`);
 }
 
@@ -1125,46 +1199,49 @@ function disconnectInput() {
  *
  * @param input
  */
-function connectInput(input) {
+function connectInputPort(input) {
 
     if (TRACE) console.log("connectInput()");
 
     if (!input) return;
 
-    midi_input = input;
-    if (TRACE) console.log(`midi_input assigned to "${midi_input.name}"`);
+    // midi_input = input;
+    setMidiInputPort(input);
+    if (TRACE) console.log(`midi_input assigned to "${input.name}"`);
 
-    midi_input
+    // midi_input
+    input
         .on("programchange", settings.midi_channel, function(e) {        // sent by the DEVICE when changing preset
-            handlePC(e);
+            handlePC(e.data);
         })
         .on("controlchange", settings.midi_channel, function(e) {
-            handleCC(e);
+            handleCC(e.data);
         })
         .on("sysex", settings.midi_channel, function(e) {
-            if (TRACE) console.log("%cSysEx received", "color: yellow; font-weight: bold");
-            if (DEVICE.setValuesFromSysEx(e.data)) {
-                updateUI();
-                clearError();
-                setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
-                if (TRACE) console.log("Device updated with SysEx");
-            } else {
-                clearStatus();
-                setStatusError("Unable to update from SysEx data.")
-            }
+            // if (TRACE) console.log("%cSysEx received", "color: yellow; font-weight: bold");
+            // if (DEVICE.setValuesFromSysEx(e.data)) {
+            //     updateUI();
+            //     clearError();
+            //     setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
+            //     if (TRACE) console.log("Device updated with SysEx");
+            // } else {
+            //     clearStatus();
+            //     setStatusError("Unable to update from SysEx data.")
+            // }
+            handleSysex(e.data);
         });
 
-    if (TRACE) console.log(`${midi_input.name} listening on channel ${settings.midi_channel}`);
+    if (TRACE) console.log(`${input.name} listening on channel ${settings.midi_channel}`);
     setMidiInStatus(true);
     clearError();
-    setStatus(`${midi_input.name} connected on MIDI channel ${settings.midi_channel}.`);
-    appendStatus(MSG_SEND_SYSEX);
+    setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
 
 }
 
-function disconnectOutput() {
+function disconnectOutputPort() {
     if (TRACE) console.log("disconnectOutput()");
-    midi_output = null;
+    // midi_output = null;
+    setMidiOutputPort(null);
     // setStatus(`Output device disconnected.`);
 }
 
@@ -1172,34 +1249,40 @@ function disconnectOutput() {
  *
  * @param output
  */
-function connectOutput(output) {
+function connectOutputPort(output) {
     if (TRACE) console.log("connect output");
-    midi_output = output;
-    if (TRACE) console.log(`midi_output assigned to "${midi_output.name}"`);
+    setMidiOutputPort(output);
+    if (TRACE) console.log(`midi_output assigned to "${output.name}"`);
 }
 
-function setInputDevice(id) {
+function connectInputDevice(id) {
 
     if (TRACE) console.log(`setInputDevice(${id})`);
 
-    if (midi_input && (midi_input.id === id)) {
+    if (!id) {
+        return;
+    }
+
+    // do nothing if already connected
+    const p = getMidiInputPort();
+    if (p && (p.id === id)) {
         if (TRACE) console.log(`setInputDevice(${id}): port is already connected`);
         return;
     }
 
-    const port = WebMidi.getInputById(id);
-
-    if (TRACE) console.log(`%csetInputDevice(${id}): will use [${port.type} ${port.id} ${port.name}] as input`, "color: green; font-weight: bold");
+    // if (TRACE) console.log(`%csetInputDevice(${id}): will use [${port.type} ${port.id} ${port.name}] as input`, "color: green; font-weight: bold");
 
     // save in settings for autoloading at next restart:
-    settings.input_device_id = id;
-    saveSettings();
+    // settings.input_device_id = id;
+    saveSettings({input_device_id: id});
 
-    disconnectInput();
+    // We only handle one connection, so we disconnected any connected port before connecting the new one.
+    disconnectInputPort();
 
     // const input = WebMidi.getInputById(id);
+    const port = WebMidi.getInputById(id);
     if (port) {
-        connectInput(port);
+        connectInputPort(port);
     } else {
         clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -1207,11 +1290,17 @@ function setInputDevice(id) {
     }
 }
 
-function setOutputDevice(id) {
+function connectOutputDevice(id) {
 
     if (TRACE) console.log(`setOutputDevice(${id})`);
 
-    if (midi_output && (midi_output.id === id)) {
+    if (!id) {
+        return;
+    }
+
+    // do nothing if already connected
+    const p = getMidiOutputPort();
+    if (p && (p.id === id)) {   //TODO: make as a function in midi_out.js
         if (TRACE) console.log(`setOutputDevice(${id}): port is already connected`);
         return;
     }
@@ -1224,10 +1313,11 @@ function setOutputDevice(id) {
     settings.output_device_id = id;
     saveSettings();
 
-    disconnectOutput();
+    // We only handle one connection, so we disconnected any connected port before connecting the new one.
+    disconnectOutputPort();
 
     if (port) {
-        connectOutput(port);
+        connectOutputPort(port);
     } else {
         clearStatus();
         setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -1238,26 +1328,30 @@ function setOutputDevice(id) {
  *
  * @param info
  */
-function deviceConnect(info) {
-    if (TRACE) console.log("%cdeviceConnect", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
-    if (settings) {
-        setInputDevice(settings.input_device_id);
-        setOutputDevice(settings.output_device_id);
-        updateSelectDeviceList();
-    }
+function deviceConnected(info) {
+    if (TRACE) console.log("%cdeviceConnected", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
+
+    // Auto-connect if not already connected.
+    if (getMidiInputPort() === null) connectInputDevice(settings.input_device_id);
+    if (getMidiOutputPort() === null) connectOutputDevice(settings.output_device_id);
+
+    updateSelectDeviceList();
 }
 
 /**
  *
  * @param info
  */
-function deviceDisconnect(info) {
-    if (TRACE) console.log("%cdeviceDisconnect", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
-    if (midi_input && info.port.id === midi_input.id) {
-        disconnectInput();
+function deviceDisconnected(info) {
+    if (TRACE) console.log("%cdeviceDisconnected", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
+
+    const p_in = getMidiInputPort();
+    if (p_in && info.port.id === p_in.id) {
+        disconnectInputPort();
     }
-    if (midi_output && info.port.id === midi_output.id) {
-        disconnectOutput();
+    const p_out = getMidiOutputPort();
+    if (p_out && info.port.id === p_out.id) {       //TODO: make as a function in midi_out.js
+        disconnectOutputPort();
     }
     updateSelectDeviceList();
 }
@@ -1309,12 +1403,13 @@ $(function () {
                 WebMidi.outputs.map(i => console.log("available output: ", i));
             }
 
-            WebMidi.addListener("connected", e => deviceConnect(e));
-            WebMidi.addListener("disconnected", e => deviceDisconnect(e));
+            WebMidi.addListener("connected", e => deviceConnected(e));
+            WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
             if (settings) {
-                setInputDevice(settings.input_device_id);
-                setOutputDevice(settings.output_device_id);
+                //AUTO CONNECT
+                connectInputDevice(settings.input_device_id);
+                connectOutputDevice(settings.output_device_id);
                 updateSelectDeviceList();
             }
 

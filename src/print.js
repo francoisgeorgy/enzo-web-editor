@@ -4,10 +4,8 @@ import * as Mustache from "mustache";
 import {hexy} from "hexy";
 import LZString from "lz-string";
 import "./css/print.css";
-
-const TRACE = false;
-
-const URL_PARAM_SYSEX = "sysex";    // name of sysex parameter in the query-string
+import {TRACE} from "./debug";
+import {URL_PARAM_SYSEX} from "./constants";
 
 function renderControlName(control_number) {
     return DEVICE.control[control_number].name;
