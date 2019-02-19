@@ -202,6 +202,29 @@ function deviceDisconnected(info) {
     updateSelectDeviceList();
 }
 
+function initFromSysexURL(updateConnectedDevice = true) {
+    let s = Utils.getParameterByName(URL_PARAM_SYSEX);
+    if (s) {
+        if (TRACE) console.log("sysex param present");
+        if (DEVICE.setValuesFromSysEx(Utils.fromHexString(s))) {
+            if (TRACE) console.log("sysex loaded in device");
+            updateUI();
+            if (updateConnectedDevice) fullUpdateDevice();
+        } else {
+            if (TRACE) console.log("unable to set value from sysex param");
+        }
+    }
+}
+
+function autoConnect() {
+    if (settings) {
+        //AUTO CONNECT
+        connectInputDevice(settings.input_device_id);
+        connectOutputDevice(settings.output_device_id);
+        updateSelectDeviceList();
+    }
+}
+
 //==================================================================================================================
 // Main
 
@@ -221,17 +244,8 @@ $(function () {
 
             setStatusError("ERROR: WebMidi could not be enabled.");
 
-            let s = Utils.getParameterByName(URL_PARAM_SYSEX);
-            if (s) {
-                if (TRACE) console.log("sysex param present");
-                let data = Utils.fromHexString(s);
-                if (DEVICE.setValuesFromSysEx(data)) {
-                    if (TRACE) console.log("sysex loaded in device");
-                    updateUI();
-                } else {
-                    if (TRACE) console.log("unable to set value from sysex param");
-                }
-            }
+            // Even we don't have MIDI available, we update at least the UI:
+            initFromSysexURL(false);
 
         } else {
 
@@ -247,28 +261,8 @@ $(function () {
             WebMidi.addListener("connected", e => deviceConnected(e));
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
-            if (settings) {
-                //AUTO CONNECT
-                connectInputDevice(settings.input_device_id);
-                connectOutputDevice(settings.output_device_id);
-                updateSelectDeviceList();
-            }
-
-            let s = Utils.getParameterByName(URL_PARAM_SYSEX);
-            if (s) {
-                if (TRACE) console.log("sysex param present");
-                if (DEVICE.setValuesFromSysEx(Utils.fromHexString(s))) {
-                    console.log("sysex loaded in device");
-                    updateUI();
-                    fullUpdateDevice();
-                } else {
-                    console.log("unable to set value from sysex param");
-                }
-            // } else {
-            //     //TODO: we should ask the user
-            //     // ask the DEVICE to send us its current preset:
-            //     requestSysExDump();
-            }
+            autoConnect();
+            initFromSysexURL();
 
         }
 
