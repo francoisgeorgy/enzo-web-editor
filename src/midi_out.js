@@ -70,7 +70,7 @@ export function updateDevice(control_type, control_number, value_float) {
  * Send all values to the connected device
  */
 export function fullUpdateDevice(onlyChanged = false) {
-    if (TRACE) console.log(`fullUpdateDevice(${onlyChanged})`);
+    if (TRACE) console.groupCollapsed(`fullUpdateDevice(${onlyChanged})`);
     const c = DEVICE.control;
     for (let i=0; i < c.length; i++) {
         if (typeof c[i] === "undefined") continue;
@@ -79,6 +79,7 @@ export function fullUpdateDevice(onlyChanged = false) {
             c[i].randomized = false;
         }
     }
+    if (TRACE) console.groupEnd();
 }
 
 

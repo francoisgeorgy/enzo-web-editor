@@ -20,6 +20,7 @@ import {openMidiWindow} from "./ui_midi_window";
 import {zoomIn, zoomOut} from "./ui_layout";
 import {toHexString} from "./lib/utils";
 import {settings} from "./settings";
+import {updateBookmark} from "./hash";
 
 /**
  * Handles a change made by the user in the UI.
@@ -89,11 +90,12 @@ export function updateControl(control_type, control_number, value, mappedValue) 
  * Set value of the controls (input and select) from the DEVICE values
  */
 function updateControls() {
-    if (TRACE) console.log("updateControls()");
+    if (TRACE) console.groupCollapsed("updateControls()");
     for (let i=0; i < DEVICE.control.length; i++) {
         if (typeof DEVICE.control[i] === "undefined") continue;
         updateControl(DEVICE.control[i].cc_type, i, DEVICE.getControlValue(DEVICE.control[i]), DEVICE.getMappedControlValue(DEVICE.control[i]));
     }
+    if (TRACE) console.groupEnd();
 } // updateControls()
 
 /**
@@ -142,15 +144,23 @@ export function updateModelAndUI(control_type, control_number, value) {
     }
 }
 
+/*
 function getCurrentPatchAsLink() {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
-    return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
+    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
+    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
+    // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx())
+    const h = toHexString(DEVICE.getSysEx());
+    if (TRACE) console.log(`getCurrentPatchAsLink: set hash to ${h}`);
+    window.location.hash = h;
 }
+*/
 
 function reloadWithSysexParam() {
-    let url = getCurrentPatchAsLink();
-    if (TRACE) console.log(`reloadWithPatchUrl: url=${url}`);
-    window.location.href = url;
+    updateBookmark();
+    // let url = getCurrentPatchAsLink();
+    // if (TRACE) console.log(`reloadWithPatchUrl: url=${url}`);
+    // window.location.href = url;
     return false;   // disable the normal href behavior
 }
 
@@ -173,7 +183,7 @@ function setupMenu() {
     $("#menu-print-preset").click(printPreset);
     $("#menu-midi").click(openMidiWindow);
     $("#menu-get-url").click(reloadWithSysexParam);
-    $("#menu-send").click(() => fullUpdateDevice(false));
+    $("#menu-send").click(() => {fullUpdateDevice(false); return false});
     $("#menu-help").click(openHelpDialog);
     $("#menu-about").click(openCreditsDialog);
     $("#preset-file").change(readFile);     // in load-preset-dialog

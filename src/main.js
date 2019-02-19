@@ -15,6 +15,7 @@ import "./css/main.css";
 import "./css/grid.css";
 import "./css/layout.css";
 import "./css/knob.css";
+import {initFromBookmark, locationHashChanged, setupBookmarkSupport} from "./hash";
 
 const browser = detect();
 
@@ -202,20 +203,6 @@ function deviceDisconnected(info) {
     updateSelectDeviceList();
 }
 
-function initFromSysexURL(updateConnectedDevice = true) {
-    let s = Utils.getParameterByName(URL_PARAM_SYSEX);
-    if (s) {
-        if (TRACE) console.log("sysex param present");
-        if (DEVICE.setValuesFromSysEx(Utils.fromHexString(s))) {
-            if (TRACE) console.log("sysex loaded in device");
-            updateUI();
-            if (updateConnectedDevice) fullUpdateDevice();
-        } else {
-            if (TRACE) console.log("unable to set value from sysex param");
-        }
-    }
-}
-
 function autoConnect() {
     if (settings) {
         //AUTO CONNECT
@@ -234,6 +221,7 @@ $(function () {
 
     loadSettings();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
+    setupBookmarkSupport();
     setStatus("Waiting for MIDI interface access...");
 
     WebMidi.enable(function (err) {
@@ -245,7 +233,7 @@ $(function () {
             setStatusError("ERROR: WebMidi could not be enabled.");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromSysexURL(false);
+            initFromBookmark(false);
 
         } else {
 
@@ -262,7 +250,7 @@ $(function () {
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
             autoConnect();
-            initFromSysexURL();
+            initFromBookmark();
 
         }
 
