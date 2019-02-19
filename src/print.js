@@ -24,10 +24,6 @@ function renderPreset(template, filename) {
         "v": () => text => renderControlValue(text.trim().toLowerCase())
     };
     $("body").append(Mustache.render(t, p));
-    $("#print").click(function(){
-        window.print();
-        return false;
-    });
 }
 
 function loadTemplate(data, filename) {
@@ -84,6 +80,10 @@ function loadErrorTemplate(data) {
 
 $(function () {
 
+    $("#print").click(function(){
+        window.print();
+        return false;
+    });
 
     /**
      * Handler for the #preset-file file input element in #load-preset
