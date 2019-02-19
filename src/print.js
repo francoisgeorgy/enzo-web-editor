@@ -2,7 +2,6 @@ import DEVICE from "./enzo/enzo.js";
 import * as Utils from "./lib/utils.js";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
-import LZString from "lz-string";
 import "./css/print.css";
 import {TRACE} from "./debug";
 import {URL_PARAM_SYSEX} from "./constants";
@@ -153,7 +152,8 @@ $(function () {
     const s = Utils.getParameterByName(URL_PARAM_SYSEX);
     if (s) {
         try {
-            data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
+            // data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
+            data = Utils.fromHexString(decodeURI(s));
             valid = DEVICE.setValuesFromSysEx(data);
         } catch (error) {
             console.warn(error);

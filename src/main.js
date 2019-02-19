@@ -9,7 +9,7 @@ import {clearError, clearStatus, MSG_SEND_SYSEX, setMidiInStatus, setStatus, set
 import {setupUI, updateUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
-import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
+import {fullUpdateDevice, getMidiOutputPort, setMidiOutputPort} from "./midi_out";
 import "./css/lity.min.css";
 import "./css/main.css";
 import "./css/grid.css";
@@ -254,24 +254,21 @@ $(function () {
                 updateSelectDeviceList();
             }
 
-/*
             let s = Utils.getParameterByName(URL_PARAM_SYSEX);
             if (s) {
                 if (TRACE) console.log("sysex param present");
-                let data = Utils.fromHexString(s);
-                if (DEVICE.setValuesFromSysEx(data)) {
+                if (DEVICE.setValuesFromSysEx(Utils.fromHexString(s))) {
                     console.log("sysex loaded in device");
                     updateUI();
-                    updateConnectedDevice();
+                    fullUpdateDevice();
                 } else {
                     console.log("unable to set value from sysex param");
                 }
-            } else {
-                //TODO: we should ask the user
-                // ask the DEVICE to send us its current preset:
-                requestSysExDump();
+            // } else {
+            //     //TODO: we should ask the user
+            //     // ask the DEVICE to send us its current preset:
+            //     requestSysExDump();
             }
-*/
 
         }
 

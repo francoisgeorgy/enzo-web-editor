@@ -293,7 +293,8 @@ function defineControls() {
     control[control_id.tap] = { // 28,
         name: "Tap",
         no_init: true,
-        no_randomize: true
+        no_randomize: true,
+        map_raw: () => 127,
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]

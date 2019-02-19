@@ -9,8 +9,8 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {sendPC, updateDevice} from "./midi_out";
-import {VERSION} from "./constants";
+import {fullUpdateDevice, sendPC, updateDevice} from "./midi_out";
+import {URL_PARAM_SYSEX, VERSION} from "./constants";
 import {setMidiInStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
@@ -18,6 +18,7 @@ import {loadPresetFromFile, readFile} from "./read_file";
 import {openCreditsDialog, openHelpDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
 import {zoomIn, zoomOut} from "./ui_layout";
+import {toHexString} from "./lib/utils";
 import {settings} from "./settings";
 
 /**
@@ -48,11 +49,12 @@ export function updateControl(control_type, control_number, value, mappedValue) 
     }
 
     const id = control_type + "-" + control_number;
+
     if (knobs.hasOwnProperty(id)) {
         knobs[id].value = value;
     } else {
 
-        if (control_type === "cc" && control_number == 14) {
+        if (control_type === "cc" && control_number == 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
             return;
         }
@@ -114,13 +116,11 @@ export function updateUI() {
 }
 
 /**
- * Update DEVICE and associated on-screen control from CC or NRPN value.
+ * Update DEVICE and associated on-screen control from CC value.
  *
  * @param control_type
  * @param control_number
  * @param value
- *
- * Return the device's control
  */
 export function updateModelAndUI(control_type, control_number, value) {
 
@@ -142,6 +142,18 @@ export function updateModelAndUI(control_type, control_number, value) {
     }
 }
 
+function getCurrentPatchAsLink() {
+    // window.location.href.split("?")[0] is the current URL without the query-string if any
+    return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
+}
+
+function reloadWithSysexParam() {
+    let url = getCurrentPatchAsLink();
+    if (TRACE) console.log(`reloadWithPatchUrl: url=${url}`);
+    window.location.href = url;
+    return false;   // disable the normal href behavior
+}
+
 function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
     // $("#midi-channel").change((event) => setMidiChannel(event.target.value));
     // $("#midi-channel").val(settings.midi_channel);
@@ -160,6 +172,8 @@ function setupMenu() {
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-print-preset").click(printPreset);
     $("#menu-midi").click(openMidiWindow);
+    $("#menu-get-url").click(reloadWithSysexParam);
+    $("#menu-send").click(() => fullUpdateDevice(false));
     $("#menu-help").click(openHelpDialog);
     $("#menu-about").click(openCreditsDialog);
     $("#preset-file").change(readFile);     // in load-preset-dialog
