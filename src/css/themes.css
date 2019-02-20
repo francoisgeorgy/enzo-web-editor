@@ -1,0 +1,82 @@
+
+/* default theme */
+html {
+    --controls-row-start: 4;
+    --controls-col-start: 1;
+
+    --value: #f9d000;
+    --knob-back-border: #999;
+    /*--knob-value: #d3d347;*/
+    --knob-value: #e7c100;
+    --knob-track-init: #bc9d00;
+    /*--knob-back-track-color: #303030;   !*373738*!*/
+
+    --bt-text: #ddd;
+    --label: #bbb;
+
+    --body-bg-from: #202023;
+    --body-bg-to: #3E3E46;
+
+    --title-text: #fff;
+    --header-text: #ccc;
+    --header-shortcut-text: #999;
+
+    --menu-icon: #ccc;
+    --menu-text: #ddd;
+    --menu-text-hover: yellow;
+
+    --default-bg-from: #454547;
+    --default-bg-to: #373738;
+
+    --select-border: #777;
+
+    --side-panel-bg: rgba(20, 20, 20, 0.95);
+    --side-panel-color: #ddd;
+    --side-panel-border: #222;
+
+    /*--enzo-gold: #006ab7;*/
+    /*--enzo-gold: gold;*/
+    --enzo-gold: #a28700;
+}
+
+html[data-theme="gold"] {
+
+    --controls-row-start: 4;
+    --controls-col-start: 1;
+
+    --value: #f9d000;
+    --knob-back-border: #999;
+    /*--knob-value: #d3d347;*/
+    --knob-value: #e7c100;
+    --knob-track-init: #bc9d00;
+    /*--knob-back-track-color: #303030;   !*373738*!*/
+
+    --bt-text: #ddd;
+    --label: #bbb;
+
+    --body-bg-from: #202023;
+    --body-bg-to: #3E3E46;
+
+    --title-text: #fff;
+    --header-text: #ccc;
+    --header-shortcut-text: #999;
+
+    --menu-icon: #ccc;
+    --menu-text: #ddd;
+    --menu-text-hover: yellow;
+
+    --default-bg-from: #454547;
+    --default-bg-to: #373738;
+
+    --select-border: #777;
+
+    --side-panel-bg: rgba(20, 20, 20, 0.95);
+    --side-panel-color: #ddd;
+    --side-panel-border: #222;
+
+    /*--enzo-gold: #006ab7;*/
+    /*--enzo-gold: gold;*/
+    --enzo-gold: #a28700;
+
+}
+

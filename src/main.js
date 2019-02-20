@@ -1,22 +1,21 @@
 import {TRACE} from "./debug";
-import * as Utils from "./lib/utils.js";
 import * as WebMidi from "webmidi";
 import {detect} from "detect-browser";
-import DEVICE from "./enzo/enzo.js";
-import {URL_PARAM_SYSEX, VERSION} from "./constants";
+import {VERSION} from "./constants";
 import {loadSettings, saveSettings, settings} from "./settings";
 import {clearError, clearStatus, MSG_SEND_SYSEX, setMidiInStatus, setStatus, setStatusError} from "./ui_messages";
-import {setupUI, updateUI} from "./ui";
+import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
-import {fullUpdateDevice, getMidiOutputPort, setMidiOutputPort} from "./midi_out";
+import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
+import {initFromBookmark, setupBookmarkSupport} from "./hash";
 import "./css/lity.min.css";
+import "./css/themes.css";
 import "./css/main.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
-import "./css/layout.css";
+import "./css/zoom.css";
 import "./css/knob.css";
-import {initFromBookmark, locationHashChanged, setupBookmarkSupport} from "./hash";
 
 const browser = detect();
 
@@ -235,6 +234,10 @@ $(function () {
     if (TRACE) console.log(`Enzo Web Interface ${VERSION}`);
 
     loadSettings();
+
+    // The documentElement is the "<html>" element for HTML documents.
+    if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
+
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
     setupBookmarkSupport();
     setStatus("Waiting for MIDI interface access...");

@@ -10,15 +10,14 @@ import {
     updateOptionSwitch
 } from "./ui_switches";
 import {fullUpdateDevice, sendPC, updateDevice} from "./midi_out";
-import {URL_PARAM_SYSEX, VERSION} from "./constants";
+import {VERSION} from "./constants";
 import {setMidiInStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {loadPresetFromFile, readFile} from "./read_file";
 import {openCreditsDialog, openHelpDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
-import {zoomIn, zoomOut} from "./ui_layout";
-import {toHexString} from "./lib/utils";
+import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {settings} from "./settings";
 import {updateBookmark} from "./hash";
 import {closeSettingsPanel, openSettingsPanel} from "./ui_settings";
@@ -208,6 +207,8 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     if (TRACE) console.groupCollapsed("setupUI");
 
     $("span.version").text(VERSION);
+
+    initZoom(settings.zoom_level);
 
     setMidiInStatus(false);
     setupPresetSelectors(handleUserAction);
