@@ -197,7 +197,7 @@ div.controls {
     /*background: transparent none !important;*/
     border: 2px solid #333;
     color: yellow;
-    background: #4b3f00!important;
+    background: var(--messages-bg)!important;
     /*font-size: 1.25rem;*/
     /*text-align: center;*/
 }
@@ -224,6 +224,7 @@ div.controls {
 
 .preset:hover {
     border: 1px solid var(--preset-hover-color);
+    background-color: var(--preset-hover-bg-color);
 }
 
 .preset-sel {
@@ -231,7 +232,7 @@ div.controls {
 
 .preset.on {
     background-color: transparent;
-    color: var(--value);
+    color: var(--preset-on-color);
     text-shadow: 0 0 8px lightyellow;
     box-shadow: 0 0 8px var(--value);
     border: 1px solid var(--value);
