@@ -40,6 +40,9 @@ module.exports = {
             //     },
             //     "css-loader"
             // ]
+        }, {
+            test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+            loader: 'url-loader?limit=100000'
         }]
     },
     plugins: [
@@ -68,7 +71,8 @@ module.exports = {
             { from: "./src/css/midi.css", to: "css" },
             { from: "./src/favicon-16x16.png" },
             { from: "./src/favicon-32x32.png" },
-            { from: "./src/favicon-96x96.png" }
+            { from: "./src/favicon-96x96.png" },
+            { from: "./src/gold-texture.jpg" }
             // { from: "./src/css/patch.css", to: "css" },
             // { from: "./src/css/print.css", to: "css" },
         ])  //,

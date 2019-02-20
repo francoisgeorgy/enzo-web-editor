@@ -88,7 +88,7 @@ html {
 }
 
 #main {
-    background-color: var(--enzo-gold);
+    /*background-color: var(--enzo-gold);*/
     margin: 0 auto;
     padding: 5px;
     justify-content: stretch;
@@ -163,6 +163,7 @@ html {
 div.controls {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .stompswitch {
@@ -212,11 +213,11 @@ div.controls {
 
 .preset {
     width: calc(100% / 18 - 10px);
-    color: #fff;
+    color: var(--preset-color);
     /*font-size: 3em;*/
     text-align: center;
     /*background-color: #3E3E46;*/
-    border: 1px solid #4b3f00;
+    border: 1px solid var(--preset-border);
     margin: 0 5px;
     cursor: pointer;
 }
@@ -236,20 +237,32 @@ div.controls {
     border: 1px solid var(--value);
 }
 
+/*
+.preset.on {
+    background-color: transparent;
+    color: var(--value);
+    text-shadow: none;
+    box-shadow: inset 0 0 6px #000000;
+    border: 2px solid #1d1c17;
+}
+*/
+
 .knob-combo {
     /*line-height: 100%;*/
     text-align: center;
 }
 
+/*
 .knob-label {
     text-align: center;
     padding: 0px 2px 0px 2px;
     margin: 0 0.2vh 1vh;
     font-size: 1rem;
-    /*line-height: 1.7vh;*/
+    !*line-height: 1.7vh;*!
     color: var(--label);
     cursor: pointer;
 }
+*/
 
 .no-margin {
     margin: 0;

@@ -12,7 +12,7 @@ html {
     /*--knob-back-track-color: #303030;   !*373738*!*/
 
     --bt-text: #ddd;
-    --label: #bbb;
+    /*--label: #bbb;*/
 
     --body-bg-from: #202023;
     --body-bg-to: #3E3E46;
@@ -24,6 +24,9 @@ html {
     --menu-icon: #ccc;
     --menu-text: #ddd;
     --menu-text-hover: yellow;
+
+    --preset-border: #4b3f00;
+    --preset-color: #fff;
 
     --default-bg-from: #454547;
     --default-bg-to: #373738;
@@ -47,28 +50,31 @@ html[data-theme="gold"] {
     --value: #f9d000;
     --knob-back-border: #999;
     /*--knob-value: #d3d347;*/
-    --knob-value: #e7c100;
+    --knob-value: #fff;
     --knob-track-init: #bc9d00;
     /*--knob-back-track-color: #303030;   !*373738*!*/
 
-    --bt-text: #ddd;
-    --label: #bbb;
+    --bt-text: #000;
+    /*--label: #000;*/
 
     --body-bg-from: #202023;
     --body-bg-to: #3E3E46;
 
-    --title-text: #fff;
-    --header-text: #ccc;
-    --header-shortcut-text: #999;
+    --title-text: #000;
+    --header-text: #000;
+    --header-shortcut-text: #666;
 
-    --menu-icon: #ccc;
-    --menu-text: #ddd;
-    --menu-text-hover: yellow;
+    --menu-icon: #333;
+    --menu-text: #333;
+    --menu-text-hover: #000;
+
+    --preset-border: #666;
+    --preset-color: #333;
 
     --default-bg-from: #454547;
     --default-bg-to: #373738;
 
-    --select-border: #777;
+    --select-border: #000;
 
     --side-panel-bg: rgba(20, 20, 20, 0.95);
     --side-panel-color: #ddd;
@@ -80,3 +86,25 @@ html[data-theme="gold"] {
 
 }
 
+html #main {
+    background-color: var(--enzo-gold);
+}
+
+html[data-theme="gold"] #main {
+    background: url("../gold-texture.jpg");
+}
+
+html[data-theme="gold"] #main > div {
+    background: transparent;
+}
+
+html[data-theme="gold"] .header {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+html[data-theme="gold"] .knob-bg {
+    fill: url("#grad2");
+    /*fill: #000;*/
+    stroke: #000;
+}

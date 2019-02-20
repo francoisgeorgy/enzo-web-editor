@@ -236,7 +236,8 @@ $(function () {
     loadSettings();
 
     // The documentElement is the "<html>" element for HTML documents.
-    if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
+    // if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
+    document.documentElement.setAttribute('data-theme', "gold");
 
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
     setupBookmarkSupport();
