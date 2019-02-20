@@ -35,7 +35,7 @@ html {
 
 .header {
     margin: 3px 3px 0 3px;
-    letter-spacing: 1px;
+    /*letter-spacing: 1px;*/
     color: var(--header-text);
 }
 
@@ -223,7 +223,7 @@ div.controls {
 }
 
 .preset:hover {
-    border: 1px solid var(--value);
+    border: 1px solid var(--preset-hover-color);
 }
 
 .preset-sel {
