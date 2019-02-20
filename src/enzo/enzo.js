@@ -150,6 +150,7 @@ export default {
     setControlValue,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     getSysEx: sysex.getDump,     // export all values as a SysEx dump
+    getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig,
     validate: sysex.validate,   // validate a SysEx dump
     getMidiMessagesForCC
 };

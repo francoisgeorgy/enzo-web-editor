@@ -23,6 +23,7 @@ import {settings} from "./settings";
 import {updateBookmark} from "./hash";
 import {closeSettingsPanel, openSettingsPanel} from "./ui_settings";
 import "webpack-jquery-ui/effects";
+import {setupGlobalConfig} from "./ui_global_config";
 
 /**
  * Handles a change made by the user in the UI.
@@ -213,6 +214,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
+    setupGlobalConfig(null);
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();

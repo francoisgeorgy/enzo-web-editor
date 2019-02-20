@@ -9,6 +9,25 @@
 #global-settings {
     grid-row: 3 / span 4;
     grid-column: 1 / span 6;
+    color: var(--header-text);
+}
+
+#global-settings .header {
+    border-bottom: 1px solid #4b3f00;
+}
+
+#global-params {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+    justify-content: start;
+    grid-column-gap: 20px;
+    margin-bottom: 15px;
+}
+
+.g0 {
+   margin: 15px 0 5px 0;
 }
 
 label {

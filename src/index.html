@@ -119,7 +119,7 @@
         <!--
             PITCH
         -->
-        <div id="pitch" class="grid-default">>
+        <div id="pitch" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[C,V]</div>
                 <div>pitch</div>
@@ -132,7 +132,7 @@
         <!--
             PORTAMENTO
         -->
-        <div id="portamento" class="grid-default">>
+        <div id="portamento" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[O]</div>
                 <div>portamento</div>
@@ -145,7 +145,7 @@
         <!--
             FILTER
         -->
-        <div id="filter" class="grid-default">>
+        <div id="filter" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[F,G]</div>
                 <div>filter</div>
@@ -158,7 +158,7 @@
         <!--
             FILTER TYPE
         -->
-        <div id="filter-type" class="grid-default">>
+        <div id="filter-type" class="grid-default">
             <div class="header">
                 <div>filter type</div>
             </div>
@@ -175,7 +175,7 @@
         <!--
             MIX
         -->
-        <div id="mix" class="grid-default">>
+        <div id="mix" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[Y,X]</div>
                 <div>mix</div>
@@ -188,7 +188,7 @@
         <!--
             DELAY LEVEL
         -->
-        <div id="delay-level" class="grid-default">>
+        <div id="delay-level" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[K,L]</div>
                 <div>delay level</div>
@@ -201,7 +201,7 @@
         <!--
             SUSTAIN
         -->
-        <div id="sustain" class="grid-default">>
+        <div id="sustain" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[DEL,B,N]</div>
                 <div>sustain</div>
@@ -214,7 +214,7 @@
         <!--
             RING MODULATION
         -->
-        <div id="ring-mod" class="grid-default">>
+        <div id="ring-mod" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[Z,U]</div>
                 <div>ring mod</div>
@@ -227,7 +227,7 @@
         <!--
             FILTER ENVELOPE
         -->
-        <div id="filter-env" class="grid-default">>
+        <div id="filter-env" class="grid-default">
             <div class="header">
                 <div>filter env</div>
             </div>
@@ -239,7 +239,7 @@
         <!--
             FILTER BANDWITDH
         -->
-        <div id="filter-bandwidth" class="grid-default">>
+        <div id="filter-bandwidth" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[H,J]</div>
                 <div>filter Q</div>
@@ -252,7 +252,7 @@
         <!--
             MODULATION
         -->
-        <div id="modulation" class="grid-default">>
+        <div id="modulation" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[-,+]</div>
                 <div>modulation</div>
@@ -265,7 +265,7 @@
         <!--
             DELAY FEEDBACK
         -->
-        <div id="delay-feedback" class="grid-default">>
+        <div id="delay-feedback" class="grid-default">
             <div class="header">
                 <div>delay-feedback</div>
             </div>
@@ -277,7 +277,7 @@
         <!--
             TAP
         -->
-        <div id="tap" class="grid-default">>
+        <div id="tap" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[T]</div>
                 <div>tap</div>
@@ -296,7 +296,7 @@
             MAX DELAY FEEDBACK
         -->
 <!--
-        <div id="max-delay-feedback" class="grid-default">>
+        <div id="max-delay-feedback" class="grid-default">
             <div class="header">
                 <div>max delay feedback</div>
             </div>
@@ -308,7 +308,7 @@
         <!--
             TEMPO
         -->
-        <div id="tempo" class="grid-default">>
+        <div id="tempo" class="grid-default">
             <div class="header">
                 <div>tempo</div>
             </div>
@@ -320,7 +320,7 @@
         <!--
             ENVELOPE TYPE
         -->
-        <div id="env-type" class="grid-default">>
+        <div id="env-type" class="grid-default">
             <div class="header">
                 <div>envelope type</div>
             </div>
@@ -333,7 +333,7 @@
         <!--
             SYNTH MODE
         -->
-        <div id="synth-mode" class="grid-default">>
+        <div id="synth-mode" class="grid-default">
             <div class="header">
                 <div>synth mode</div>
             </div>
@@ -348,7 +348,7 @@
         <!--
             SYNTH WAVESHAPE
         -->
-        <div id="waveshape" class="grid-default">>
+        <div id="waveshape" class="grid-default">
             <div class="header">
                 <div>waveshape</div>
             </div>
@@ -361,7 +361,7 @@
         <!--
             BYPASS
         -->
-        <div id="bypass" class="grid-default">>
+        <div id="bypass" class="grid-default">
             <div class="header">
                 <div class="header-shortcut">[SPACE]</div>
                 <div>bypass</div>
@@ -376,149 +376,182 @@
 
         <div id="global-settings" class="grid-global-settings">
             <div class="header">
-                <div>
-                    <span style="float:right" class="close-settings-panel">&#x2715;</span>
-                    GLOBAL SETTINGS
-                </div>
-                <div>
+                <span style="float:right" class="close-settings-panel">close</span>
+                GLOBAL SETTINGS
+            </div>
+            <div id="global-params">
+
+                <div class="g0">
                     INPUT MODE
-                    <div>
-                        <label>
-                            <input type="radio" name="global-0" value="0">
-                            mono
-                        </label>
-                        <label>
-                            <input type="radio" name="global-0" value="127">
-                            stereo
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="radio" class="global-config" name="global-0" value="0">
+                        mono in
+                    </label>
+                    <label>
+                        <input type="radio" class="global-config" name="global-0" value="127">
+                        stereo in (TRS)
+                    </label>
                 </div>
                 <div>
+                    instructions...
+                </div>
+
+                <div class="g0">
                     INPUT LEVEL
-                    <div>
-                        <label>
-                            <input type="radio" name="global-1" value="0">
-                            instrument level
-                        </label>
-                        <label>
-                            <input type="radio" name="global-1" value="127">
-                            line level
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="radio" class="global-config" name="global-1" value="0">
+                        instrument level
+                    </label>
+                    <label>
+                        <input type="radio" class="global-config" name="global-1" value="127">
+                        line level
+                    </label>
                 </div>
                 <div>
+                    instructions...
+                </div>
+
+                <div class="g0">
                     BYPASS MODE
-                    <div>
-                        <label>
-                            <input type="radio" name="global-2" value="0">
-                            buffered bypass
-                        </label>
-                        <label>
-                            <input type="radio" name="global-2" value="127">
-                            relay bypass
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="radio" class="global-config" name="global-2" value="0">
+                        buffered bypass
+                    </label>
+                    <label>
+                        <input type="radio" class="global-config" name="global-2" value="127">
+                        relay bypass
+                    </label>
                 </div>
                 <div>
+                    instructions...
+                </div>
+
+                <div class="g0">
                     KILL DRY
-                    <div>
-                        <label>
-                            <input type="radio" name="global-3" value="0">
-                            dry active
-                        </label>
-                        <label>
-                            <input type="radio" name="global-3" value="127">
-                            dry muted
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="radio" class="global-config" name="global-3" value="0">
+                        dry active
+                    </label>
+                    <label>
+                        <input type="radio" class="global-config" name="global-3" value="127">
+                        dry muted
+                    </label>
                 </div>
                 <div>
+                    With DRY MUTED, the pedal delivers wet only in active mode; in bypass, the entire pedal is muted.
+                </div>
+
+                <div class="g0">
                     TRAILS
-                    <div>
-                        <label>
-                            <input type="checkbox" name="global-4-0" value="0">
-                            trails
-                        </label>
-                        <label>
-                            <input type="checkbox" name="global-4-1" value="1">
-                            split
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="checkbox" class="global-config" name="global-4-0" value="0">
+                        trails
+                    </label>
+                    <label>
+                        <input type="checkbox" class="global-config" name="global-4-1" value="1">
+                        split
+                    </label>
                 </div>
                 <div>
-                    EXPRESSION MODE
-                    <div>
+                    instructions...
+                </div>
+<!--
+                    <div class="g0">
+                        EXPRESSION MODE
                         <div>
-                            <label>
-                                <input type="radio" name="global-x" value="0">
-                                expression
-                            </label>
-                            The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer
-                            knob values).
-                        </div>
-                        <div>
-                        <label>
-                            <input type="radio" name="global-x" value="63">
-                            tap
-                            </label>
-                                The external switch controls Tap Tempo and has all of the same functionality as the tap button on the main
-                                pedal, this includes max feedback.
+                            <div>
+                                <label>
+                                    <input type="radio" class="global-config" name="global-x" value="0">
+                                    expression
+                                </label>
+                                The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer
+                                knob values).
                             </div>
-                        <div>
+                            <div>
                             <label>
-                                <input type="radio" name="global-x" value="95">
-                                preset
-                            </label>
-                            This mode gives you access to and instant enabling of presets 1 through 4, when connected with a proprietary Meris 4
-                            button switch.
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" name="global-x" value="127">
-                                MIDI
-                            </label>
-                            To connect to a Meris MIDI adapter.
+                                <input type="radio" class="global-config" name="global-x" value="63">
+                                tap
+                                </label>
+                                    The external switch controls Tap Tempo and has all of the same functionality as the tap button on the main
+                                    pedal, this includes max feedback.
+                                </div>
+                            <div>
+                                <label>
+                                    <input type="radio" class="global-config" name="global-x" value="95">
+                                    preset
+                                </label>
+                                This mode gives you access to and instant enabling of presets 1 through 4, when connected with a proprietary Meris 4
+                                button switch.
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="radio" class="global-config" name="global-x" value="127">
+                                    MIDI
+                                </label>
+                                To connect to a Meris MIDI adapter.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    MIDI CHANNEL
+-->
+    <!--
                     <div>
-                        <select>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                        </select>
+                        MIDI CHANNEL
+                        <div>
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    MIDI THRU
-                </div>
-                <div>
+                    <div>
+                        MIDI THRU
+                    </div>
+    -->
+                <div class="g0">
                     TEMPO
-                    <div>
-                        <label>
-                            <input type="radio" name="global-5" value="0">
-                            global tempo
-                        </label>
-                        <label>
-                            <input type="radio" name="global-5" value="127">
-                            preset tempo
-                        </label>
-                    </div>
+                </div>
+                <div></div>
+                <div>
+                    <label>
+                        <input type="radio" class="global-config" name="global-5" value="0">
+                        global tempo
+                    </label>
+                    <label>
+                        <input type="radio" class="global-config" name="global-5" value="127">
+                        preset tempo
+                    </label>
+                </div>
+                <div>
+                    instructions...
                 </div>
             </div>
         </div>

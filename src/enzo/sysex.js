@@ -140,8 +140,40 @@ const getDump = function () {
     return data;
 };
 
+const getSysexDataForGlobalConfig = function(global_num, value) {
+
+    // F0
+    // 00 20 10    Meris ID	(different manufacturers have different IDs)
+    // 00          Prod ID 	(user definable, matches midi channel)
+    // 01          Group ID    (01 = pedal series)
+    // 00          Model #	(00 = Ottobit Jr, 01 = Mercury7, 02 = Polymoon)
+    // 2A          Command (2A = global edit via syex)
+    // 00          Global Num (listed below, 0 is TRS input)
+    // 7F          Value (00 = OFF, 7F = ON)
+    // F7
+
+    let data = new Uint8Array(6);
+
+    // data[0] = 0xF0;
+    // data[1] = 0x00;
+    // data[2] = 0x20;
+    // data[3] = 0x10;
+
+    data[0] = 0x00;
+    data[1] = 0x01;
+    data[2] = 0x03;
+    data[3] = 0x2A;
+    data[4] = global_num;
+    data[5] = value;
+
+    // data[10] = 0xF7;   // end-of-sysex marker
+
+    return data;
+};
+
 export default {
     validate,
     setDump,
-    getDump
+    getDump,
+    getSysexDataForGlobalConfig: getSysexDataForGlobalConfig
 }

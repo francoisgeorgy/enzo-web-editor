@@ -95,3 +95,12 @@ export function sendPC(pc) {
     }
     logOutgoingMidiMessage("PC", pc);
 }
+
+
+export function sendSysEx(data) {
+    if (midi_output) {
+        showMidiOutActivity();
+        midi_output.sendSysex(DEVICE.meta.signature.sysex.value, data);
+    }
+    logOutgoingMidiMessage("SysEx", 0);
+}
