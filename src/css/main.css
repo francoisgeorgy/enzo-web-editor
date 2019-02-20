@@ -90,7 +90,7 @@ html {
 #main {
     background-color: var(--enzo-gold);
     margin: 0 auto;
-    padding: 0.5vh;
+    padding: 5px;
     justify-content: stretch;
     align-content: stretch;
     align-items: start;
