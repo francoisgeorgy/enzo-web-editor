@@ -109,16 +109,24 @@ function connectOutputPort(output) {
 
 function connectInputDevice(id) {
 
-    if (TRACE) console.log(`setInputDevice(${id})`);
+    if (TRACE) console.log(`connectInputDevice(${id})`);
 
-    if (!id) {
+    const p = getMidiInputPort();
+
+    if (!id && p) {
+        // save in settings for autoloading at next restart:
+        saveSettings({input_device_id: id});
+        // the user select no device, disconnect.
+        disconnectInputPort();
+        clearStatus();
+        setStatusError(`Please connect your device or check the MIDI channel.`);
+        setMidiInStatus(false);
         return;
     }
 
-    // do nothing if already connected
-    const p = getMidiInputPort();
+    // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {
-        if (TRACE) console.log(`setInputDevice(${id}): port is already connected`);
+        if (TRACE) console.log(`connectInputDevice(${id}): port is already connected`);
         return;
     }
 
@@ -140,30 +148,36 @@ function connectInputDevice(id) {
 
 function connectOutputDevice(id) {
 
-    if (TRACE) console.log(`setOutputDevice(${id})`);
+    if (TRACE) console.log(`connectOutputDevice(${id})`);
 
-    if (!id) {
+    const p = getMidiOutputPort();
+
+    if (!id && p) {
+        // save in settings for autoloading at next restart:
+        settings.output_device_id = id;
+        saveSettings();
+        // the user select no device, disconnect.
+        disconnectOutputPort();
+        clearStatus();
+        setStatusError(`Please connect your device or check the MIDI channel.`);
         return;
     }
 
-    // do nothing if already connected
-    const p = getMidiOutputPort();
+    // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {   //TODO: make as a function in midi_out.js
         if (TRACE) console.log(`setOutputDevice(${id}): port is already connected`);
         return;
     }
 
-    const port = WebMidi.getOutputById(id);
-
-    if (TRACE) console.log(`%csetOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
+    // if (TRACE) console.log(`%cconnectOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
 
     // save in settings for autoloading at next restart:
-    settings.output_device_id = id;
-    saveSettings();
+    saveSettings({output_device_id: id});
 
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
     disconnectOutputPort();
 
+    const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
     } else {

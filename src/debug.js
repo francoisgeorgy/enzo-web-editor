@@ -1,2 +1,2 @@
 
-export const TRACE = false;
+export const TRACE = true;
