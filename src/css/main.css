@@ -136,6 +136,14 @@ html {
     border-radius: 6px;
 }
 
+#main.main-default .grid-global-settings {
+    display: none;
+}
+
+#main.main-global-settings .grid-default {
+    display: none;
+}
+
 #main > div {
     align-self: stretch;
     /*background: var(--default-bg-from) linear-gradient(to bottom, var(--default-bg-from), var(--default-bg-to));*/
@@ -211,6 +219,11 @@ div.controls {
 }
 .menu a:hover {
     color: var(--menu-text-hover);
+}
+
+.menu-active a,
+.menu-active i {
+    color: var(--menu-text-hover)!important;
 }
 
 #tools {

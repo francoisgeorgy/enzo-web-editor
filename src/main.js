@@ -12,7 +12,8 @@ import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} fro
 import {fullUpdateDevice, getMidiOutputPort, setMidiOutputPort} from "./midi_out";
 import "./css/lity.min.css";
 import "./css/main.css";
-import "./css/grid.css";
+import "./css/grid-default.css";
+import "./css/grid-global-settings.css";
 import "./css/layout.css";
 import "./css/knob.css";
 import {initFromBookmark, locationHashChanged, setupBookmarkSupport} from "./hash";

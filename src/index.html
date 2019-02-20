@@ -15,7 +15,7 @@
     <script src="bundle.js"></script>
 </head>
 <body>
-    <div id="main" class="zoom-1">
+    <div id="main" class="main-default zoom-1">
 
         <div id="title">
             <div class="neon">Enzo web editor</div>
@@ -27,6 +27,7 @@
                 <span class="menu-entry"><a id="menu-send" href="#" title="Update the Enzo with the current preset"><i class="fas fa-upload"></i> Send</a></span> <!--&#8651;-->
                 <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</a></span>
                 <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</a></span>
+                <span class="menu-entry"><a id="menu-settings" href="#"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a></span>    <!--&#x2699;-->
                 <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</a></span>
                 <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</a></span>      <!--&#x3f;-->
                 <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
@@ -85,7 +86,7 @@
         <!--
             PRESET CHANGE AND QUICK ACCESS
         -->
-        <div id="presets">
+        <div id="presets" class="grid-default">
             <div class="header">
                 <div>presets</div>
             </div>
@@ -118,7 +119,7 @@
         <!--
             PITCH
         -->
-        <div id="pitch">
+        <div id="pitch" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[C,V]</div>
                 <div>pitch</div>
@@ -131,7 +132,7 @@
         <!--
             PORTAMENTO
         -->
-        <div id="portamento">
+        <div id="portamento" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[O]</div>
                 <div>portamento</div>
@@ -144,7 +145,7 @@
         <!--
             FILTER
         -->
-        <div id="filter">
+        <div id="filter" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[F,G]</div>
                 <div>filter</div>
@@ -157,7 +158,7 @@
         <!--
             FILTER TYPE
         -->
-        <div id="filter-type">
+        <div id="filter-type" class="grid-default">>
             <div class="header">
                 <div>filter type</div>
             </div>
@@ -174,7 +175,7 @@
         <!--
             MIX
         -->
-        <div id="mix">
+        <div id="mix" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[Y,X]</div>
                 <div>mix</div>
@@ -187,7 +188,7 @@
         <!--
             DELAY LEVEL
         -->
-        <div id="delay-level">
+        <div id="delay-level" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[K,L]</div>
                 <div>delay level</div>
@@ -200,7 +201,7 @@
         <!--
             SUSTAIN
         -->
-        <div id="sustain">
+        <div id="sustain" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[DEL,B,N]</div>
                 <div>sustain</div>
@@ -213,7 +214,7 @@
         <!--
             RING MODULATION
         -->
-        <div id="ring-mod">
+        <div id="ring-mod" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[Z,U]</div>
                 <div>ring mod</div>
@@ -226,7 +227,7 @@
         <!--
             FILTER ENVELOPE
         -->
-        <div id="filter-env">
+        <div id="filter-env" class="grid-default">>
             <div class="header">
                 <div>filter env</div>
             </div>
@@ -238,7 +239,7 @@
         <!--
             FILTER BANDWITDH
         -->
-        <div id="filter-bandwidth">
+        <div id="filter-bandwidth" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[H,J]</div>
                 <div>filter Q</div>
@@ -251,7 +252,7 @@
         <!--
             MODULATION
         -->
-        <div id="modulation">
+        <div id="modulation" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[-,+]</div>
                 <div>modulation</div>
@@ -264,7 +265,7 @@
         <!--
             DELAY FEEDBACK
         -->
-        <div id="delay-feedback">
+        <div id="delay-feedback" class="grid-default">>
             <div class="header">
                 <div>delay-feedback</div>
             </div>
@@ -276,7 +277,7 @@
         <!--
             TAP
         -->
-        <div id="tap">
+        <div id="tap" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[T]</div>
                 <div>tap</div>
@@ -295,7 +296,7 @@
             MAX DELAY FEEDBACK
         -->
 <!--
-        <div id="max-delay-feedback">
+        <div id="max-delay-feedback" class="grid-default">>
             <div class="header">
                 <div>max delay feedback</div>
             </div>
@@ -307,7 +308,7 @@
         <!--
             TEMPO
         -->
-        <div id="tempo">
+        <div id="tempo" class="grid-default">>
             <div class="header">
                 <div>tempo</div>
             </div>
@@ -319,7 +320,7 @@
         <!--
             ENVELOPE TYPE
         -->
-        <div id="env-type">
+        <div id="env-type" class="grid-default">>
             <div class="header">
                 <div>envelope type</div>
             </div>
@@ -332,7 +333,7 @@
         <!--
             SYNTH MODE
         -->
-        <div id="synth-mode">
+        <div id="synth-mode" class="grid-default">>
             <div class="header">
                 <div>synth mode</div>
             </div>
@@ -347,7 +348,7 @@
         <!--
             SYNTH WAVESHAPE
         -->
-        <div id="waveshape">
+        <div id="waveshape" class="grid-default">>
             <div class="header">
                 <div>waveshape</div>
             </div>
@@ -360,7 +361,7 @@
         <!--
             BYPASS
         -->
-        <div id="bypass">
+        <div id="bypass" class="grid-default">>
             <div class="header">
                 <div class="header-shortcut">[SPACE]</div>
                 <div>bypass</div>
@@ -370,6 +371,16 @@
                     <div id="cc-14-127" class="sw"><i class="fas fa-circle" aria-hidden="true" title="click to switch on"></i></div>
                     <div id="cc-14-0" class="sw sw-off sw-on"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
                 </div>
+            </div>
+        </div>
+
+        <div id="global-settings" class="grid-global-settings">
+            <div class="header">
+                <div>
+                    <span style="float:right" class="close-settings-panel">&#x2715;</span>
+                    GLOBAL SETTINGS
+                </div>
+
             </div>
         </div>
 
@@ -464,6 +475,20 @@
             <span style="float:right">ESC to close</span>
         </div>
     </div>
+
+<!--
+    <div id="settings-panel" class="panel" style="display:none">
+        <h2><span style="float:right" class="close-settings-panel">&#x2715;</span>Settings</h2>
+        <div id="settings-dialog-instructions">
+        </div>
+        <div id="settings-dialog-error" style="color:red ">
+        </div>
+        <div class="dialog-info">
+            <span style="float:right">ESC to close</span>
+            All changes are immediately saved and applied.
+        </div>
+    </div>
+-->
 
     <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
         <defs>

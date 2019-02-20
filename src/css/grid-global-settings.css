@@ -1,0 +1,12 @@
+#main.main-global-settings {
+    display: grid;
+    grid-column-gap: 0.5vh;
+    grid-row-gap: 0.5vh;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+
+#global-settings {
+    grid-row: 3 / span 4;
+    grid-column: 1 / span 6;
+}

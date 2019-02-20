@@ -21,6 +21,8 @@ import {zoomIn, zoomOut} from "./ui_layout";
 import {toHexString} from "./lib/utils";
 import {settings} from "./settings";
 import {updateBookmark} from "./hash";
+import {closeSettingsPanel, openSettingsPanel} from "./ui_settings";
+import "webpack-jquery-ui/effects";
 
 /**
  * Handles a change made by the user in the UI.
@@ -189,6 +191,12 @@ function setupMenu() {
     $("#preset-file").change(readFile);     // in load-preset-dialog
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
+    $("#menu-settings").click(openSettingsPanel);
+
+    // in settings dialog:
+    // $("#midi-channel").change(setMidiChannel);
+    $(".close-settings-panel").click(closeSettingsPanel);
+
 }
 
 /**
