@@ -66,7 +66,8 @@ function disconnectInputPort() {
         setMidiInputPort(null);
         if (TRACE) console.log("midi_input not listening");
     }
-    setStatus(`Device disconnected.`);
+    setMidiInStatus(false);
+    setStatus(`Device is disconnected.`);
 }
 
 function connectInputPort(input) {

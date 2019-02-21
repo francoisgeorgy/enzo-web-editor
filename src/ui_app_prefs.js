@@ -27,10 +27,12 @@ export function openAppPreferencesPanel() {
     hideDefaultPanel();
     closeSettingsPanel();
     $(CONTAINER).removeClass("closed");
+    return false;
 }
 
 export function closeAppPreferencesPanel() {
     $(CONTAINER).addClass("closed");
+    return false;
 }
 
 export function setupAppPreferences() {

@@ -360,7 +360,7 @@ div.btc.on {
 .sw-on {
     /*display: inherit;*/
     text-shadow: 0 0 8px var(--sw-on-shadow-color);
-    color: var(--value);
+    color: var(--sw-on-color);
     /*border: 1px solid var(--value);*/
 }
 

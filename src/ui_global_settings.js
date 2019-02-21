@@ -29,10 +29,12 @@ export function openSettingsPanel() {
     hideDefaultPanel();
     closeAppPreferencesPanel();
     $(CONTAINER).removeClass("closed");
+    return false;
 }
 
 export function closeSettingsPanel() {
     $(CONTAINER).addClass("closed");
+    return false;
 }
 
 export function setupGlobalConfig() {

@@ -5,6 +5,8 @@ import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
 import {MSG_SEND_SYSEX, setStatus} from "./ui_messages";
+import {toHexString} from "./lib/utils";
+import {setSuppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
 
@@ -65,7 +67,6 @@ export function updateDevice(control_type, control_number, value_float) {
     sendCC(DEVICE.setControlValue(control_type, control_number, value));
 }
 
-
 /**
  * Send all values to the connected device
  */
@@ -82,7 +83,6 @@ export function fullUpdateDevice(onlyChanged = false) {
     if (TRACE) console.groupEnd();
 }
 
-
 export function sendPC(pc) {
     setPresetNumber(pc);
     if (midi_output) {
@@ -96,11 +96,12 @@ export function sendPC(pc) {
     logOutgoingMidiMessage("PC", pc);
 }
 
-
 export function sendSysEx(data) {
+    if (TRACE) console.log("sendSysEx", toHexString(data, ' '), data);
     if (midi_output) {
         showMidiOutActivity();
-        midi_output.sendSysex(DEVICE.meta.signature.sysex.value, data);
+        setSuppressSysexEcho();
+        midi_output.sendSysex(DEVICE.meta.signature.sysex.value, Array.from(data));
     }
     logOutgoingMidiMessage("SysEx", 0);
 }

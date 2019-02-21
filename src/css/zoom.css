@@ -1,6 +1,6 @@
 
 #wrapper.zoom-0 {width: 650px; margin: 10px auto 0 auto; } /* calc(50vw - 1vh); height: calc(50vh - 0.5vh);*/
-#wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 5px; border-radius: 3px; }
+#wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }
 /*#wrapper.zoom-1 {width: calc(70vw - 1vh);}*/
 #wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; }
 
@@ -56,8 +56,8 @@
 .zoom-2 .header {font-size: 1.5rem;}
 
 .zoom-0 .bt {margin: 2px 2px 0 2px; padding: 1px 0; font-size: 0.85rem;}
-.zoom-1 .bt {margin: 5px 5px 0 5px; padding: 2px 0;     font-size: 1.25rem; }
-.zoom-2 .bt {margin: 5px 5px 0 5px; padding: 0 0;       font-size: 1.5rem;}
+.zoom-1 .bt {margin: 5px 5px 0 5px; padding: 3px 0 2px 0; font-size: 1.25rem; }
+.zoom-2 .bt {margin: 5px 5px 0 5px; padding: 0 0; font-size: 1.5rem;}
 
 .zoom-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
 .zoom-1 .stompswitch {font-size: 4rem; margin-top: 30px;}

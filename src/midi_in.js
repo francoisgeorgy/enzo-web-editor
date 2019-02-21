@@ -9,12 +9,18 @@ import {clearError, clearStatus, setStatus, setStatusError} from "./ui_messages"
 
 let midi_input = null;
 
+let suppress_sysex_echo = false;
+
 export function getMidiInputPort() {
     return midi_input;
 }
 
 export function setMidiInputPort(port) {
     midi_input = port;
+}
+
+export function setSuppressSysexEcho(v = true) {
+    suppress_sysex_echo = v;
 }
 
 /**
@@ -67,7 +73,12 @@ export function handleCC(msg) {
 }
 
 export function handleSysex(data) {
-    if (TRACE) console.log("%cSysEx received", "color: yellow; font-weight: bold");
+    if (TRACE) console.log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold");
+    if (suppress_sysex_echo) {
+        if (TRACE) console.log("handleSysex: suppress echo (ignore sysex received)");
+        suppress_sysex_echo = false;
+        return;
+    }
     if (DEVICE.setValuesFromSysEx(data)) {
         updateUI();
         clearError();

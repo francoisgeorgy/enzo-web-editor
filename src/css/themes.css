@@ -34,6 +34,7 @@ html {
     --preset-hover-bg-color: #transparent;
     --preset-on-color: #f9d000;
 
+    --sw-on-color: #f9d000;
     --sw-on-shadow-color: yellow;
 
     --default-bg-from: #454547;
@@ -91,6 +92,7 @@ html[data-theme="gold"] {
     /*--bt-on-bg-color: #f0f008;*/
     --bt-on-bg-color: yellow;
 
+    --sw-on-color: yellow;
     --sw-on-shadow-color: #1d1d01;
 
     --default-bg-from: #454547;

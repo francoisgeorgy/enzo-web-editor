@@ -152,6 +152,8 @@ const getSysexDataForGlobalConfig = function(global_num, value) {
     // 7F          Value (00 = OFF, 7F = ON)
     // F7
 
+    // 00 01 03 2a 02 7f
+
     let data = new Uint8Array(6);
 
     // data[0] = 0xF0;
@@ -175,5 +177,5 @@ export default {
     validate,
     setDump,
     getDump,
-    getSysexDataForGlobalConfig: getSysexDataForGlobalConfig
+    getSysexDataForGlobalConfig
 }

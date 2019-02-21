@@ -26,10 +26,17 @@
     /*text-align: left;*/
 /*}*/
 
+.settings-columns {
+    display: flex;
+    flex-direction: row;
+}
+
 .settings-rows {
     padding: 5px;
     display: grid;
     grid-template-columns: auto auto;
+    align-content: start;
+    align-items: start;
     justify-items: start;
     justify-content: start;
     grid-column-gap: 20px;
