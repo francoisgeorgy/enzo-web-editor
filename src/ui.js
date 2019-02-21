@@ -20,9 +20,14 @@ import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {settings} from "./settings";
 import {updateBookmark} from "./hash";
-import {closeSettingsPanel, openSettingsPanel} from "./ui_settings";
+import {
+    setupGlobalConfig,
+    closeSettingsPanel,
+    toggleGlobalSettingsPanel,
+    openSettingsPanel
+} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
-import {setupGlobalConfig} from "./ui_global_config";
+import {toggleAppPreferencesPanel, setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 
 /**
  * Handles a change made by the user in the UI.
@@ -191,12 +196,10 @@ function setupMenu() {
     $("#preset-file").change(readFile);     // in load-preset-dialog
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
-    $("#menu-settings").click(openSettingsPanel);
-
+    $("#menu-global").click(openSettingsPanel);
+    $("#menu-prefs").click(openAppPreferencesPanel);
     // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
-    $(".close-settings-panel").click(closeSettingsPanel);
-
 }
 
 /**
@@ -215,10 +218,19 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
-    setupGlobalConfig(null);
+    setupGlobalConfig();
+    setupAppPreferences();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
 
     if (TRACE) console.groupEnd();
+}
+
+export function showDefaultPanel() {
+    $("#main").removeClass("settings-view").addClass("main-default");
+}
+
+export function hideDefaultPanel() {
+    $("#main").removeClass("main-default").addClass("settings-view");
 }

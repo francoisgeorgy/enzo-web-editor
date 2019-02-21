@@ -2,13 +2,15 @@ import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {TRACE} from "./debug";
 import {animateCC} from "./animate_cc";
-import {handleUserAction, updateControl, updateModelAndUI} from "./ui";
+import {handleUserAction, showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
 import {sendPC, updateDevice} from "./midi_out";
 import DEVICE from "./enzo/enzo";
 import {displayPreset, presetDec, presetInc, setPresetNumber} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
+import {closeAppPreferencesPanel} from "./ui_app_prefs";
+import {closeSettingsPanel} from "./ui_global_settings";
 
 
 function toggleBypass() {
@@ -213,8 +215,11 @@ function keyDown(code, alt, shift) {
 
 function keyUp(code, alt, shift) {
     switch (code) {
-        // case 27:                // close all opened panel with ESC key:
-        //     break;
+        case 27:                // close all opened panel with ESC key
+            closeAppPreferencesPanel();
+            closeSettingsPanel();
+            showDefaultPanel();
+            break;
         case 84:                // T            tap
             tapRelease("cc-28-127");
             break;

@@ -12,9 +12,9 @@ import {initFromBookmark, setupBookmarkSupport} from "./hash";
 import "./css/lity.min.css";
 import "./css/themes.css";
 import "./css/main.css";
+import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
-import "./css/zoom.css";
 import "./css/knob.css";
 
 const browser = detect();

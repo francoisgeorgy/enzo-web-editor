@@ -97,11 +97,25 @@ html {
     border-radius: 6px;
 }
 
+/*
 #main.main-default .grid-global-settings {
     display: none;
 }
+*/
 
-#main.main-global-settings .grid-default {
+.closed {
+    display: none;
+}
+
+#global-settings {
+    /*display: none;*/
+}
+
+#app-preferences {
+    /*display: none;*/
+}
+
+#main.settings-view .grid-default {
     display: none;
 }
 
@@ -206,6 +220,10 @@ div.controls {
     color: var(--header-text);
 }
 
+#presets .header {
+    text-align: left;
+}
+
 .preset-selection {
     display: flex;
     margin: 5px 0 10px 0;
@@ -223,6 +241,7 @@ div.controls {
 }
 
 .preset:hover {
+    color: var(--preset-hover-color);
     border: 1px solid var(--preset-hover-color);
     background-color: var(--preset-hover-bg-color);
 }
@@ -277,6 +296,13 @@ div.btc {   /* "checkbox"-like switches: */
     cursor: pointer;
     text-align: center;
     border: 1px solid #333;
+}
+
+.bt:hover,
+.btc:hover {
+    color: var(--preset-hover-color);
+    border: 1px solid var(--preset-hover-color);
+    background-color: var(--preset-hover-bg-color);
 }
 
 div.bt.on,

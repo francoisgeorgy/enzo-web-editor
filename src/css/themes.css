@@ -64,8 +64,6 @@ html[data-theme="gold"] {
     /*--knob-track-init: #bc9d00;*/
     /*--knob-back-track-color: #303030;   !*373738*!*/
 
-    --bt-text: #000;
-    /*--label: #000;*/
 
     --body-bg-from: #202023;
     --body-bg-to: #3E3E46;
@@ -83,6 +81,11 @@ html[data-theme="gold"] {
     --preset-hover-color: #000;
     --preset-hover-bg-color: yellow;
     --preset-on-color: #000;
+    /*--preset-on-bg-color: #eaea02;*/
+    --preset-on-bg-color: #f0f008;
+
+    --bt-text: #333;
+    --bt-on-bg-color: #f0f008;
 
     --default-bg-from: #454547;
     --default-bg-to: #373738;
@@ -104,7 +107,8 @@ html #main {
 }
 
 html[data-theme="gold"] #main {
-    background: url("../gold-texture.jpg");
+    /*background: url("../gold-texture.jpg");*/
+    background: linear-gradient(to right, #feda9e, #fdb53e 3%, #fdb53e 97%, #feda9e);
 }
 
 html[data-theme="gold"] #main > div {
@@ -123,9 +127,19 @@ html[data-theme="gold"] .knob-bg {
 }
 
 html[data-theme="gold"] .preset.on {
-    background-color: yellow;
+    background-color: var(--preset-on-bg-color);
     color: var(--preset-on-color)!important;
     text-shadow: none;
     box-shadow: inset 0 0 6px #000000;
     /*border: 1px solid #1d1c17;*/
+}
+
+html[data-theme="gold"] div.bt.on,
+html[data-theme="gold"] div.btc.on {
+    background-color: var(--bt-on-bg-color);
+    color: var(--preset-on-color)!important;
+    /*text-shadow: 0 0 8px lightyellow;*/
+    /*border: 1px solid var(--value);*/
+    text-shadow: none;
+    box-shadow: inset 0 0 6px #000000;
 }
