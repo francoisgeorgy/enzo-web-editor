@@ -33,6 +33,10 @@ html {
     height: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 .header {
     margin: 3px 3px 0 3px;
     /*letter-spacing: 1px;*/
@@ -51,6 +55,10 @@ html {
     color: var(--header-shortcut-text);
 }
 
+.close-panel-action {
+    font-size: 1rem;
+}
+
 #midi-in-led,
 #midi-out-led {
     color: #999;
@@ -67,6 +75,18 @@ html {
     border-right: none !important;
 }
 
+.options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /*margin-top: 5px;*/
+}
+
+.options .bt {
+    width: 80%;
+}
+
 .grid-2x2 {
     display: grid;
     grid-template-rows: auto auto;
@@ -77,6 +97,7 @@ html {
     display: grid;
     grid-template-rows: auto auto auto;
     grid-template-columns: 1fr 1fr;
+    /*margin-top: 5px;*/
 }
 
 .grid-3x2 .bt {
@@ -87,9 +108,13 @@ html {
     margin-right: 0;
 }
 
+#wrapper {
+    margin: 10px auto 0 auto;
+    padding: 0 10px;
+}
+
 #main {
-    /*background-color: var(--enzo-gold);*/
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     padding: 5px;
     justify-content: stretch;
     align-content: stretch;
@@ -115,7 +140,7 @@ html {
     /*display: none;*/
 }
 
-#main.settings-view .grid-default {
+#main.settings-view .grid-default {     /* TODO: is this definition still used? */
     display: none;
 }
 
@@ -137,7 +162,7 @@ html {
 }
 
 .cell {
-    padding: 4px;
+    padding: 6px;
     height: calc(100% - 8px);
     border-radius: 6px;
     border: 1px solid #333;
@@ -226,6 +251,13 @@ div.controls {
 }
 
 #options {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+    justify-content: start;
+    grid-column-gap: 5px;
+    grid-row-gap: 2px;
+    /*margin-bottom: 15px;*/
     color: var(--header-text);
 }
 
@@ -300,7 +332,7 @@ div.controls {
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
     /*padding: 0 0.2rem 0 0;*/
-    margin: 5px;
+    /*margin: 5px 5px 0 5px;*/
     color: var(--bt-text);
     cursor: pointer;
     text-align: center;
@@ -331,6 +363,7 @@ div.btc.on {
     color: var(--value);
     /*border: 1px solid var(--value);*/
 }
+
 
 .dialog {
     overflow:auto;
@@ -421,6 +454,7 @@ select option {
     border-radius: 6px;
 }
 
+/*
 #favorites-panel input,
 #favorites-panel select,
 #favorites-panel textarea {
@@ -428,7 +462,6 @@ select option {
     margin: 0.5vh 0 1vh 0;
     padding: 6px 4px;
     border: none;
-    /*font-family: "Roboto Condensed", sans-serif;*/
     font-size: 1rem;
 }
 
@@ -438,9 +471,7 @@ select option {
     padding: 0;
     color: #000;
     margin: 0 0 1vh 0;
-    max-height: 50vh;   /* unperfect but simple solution to the problem of the div overflowing its parent despite the overflow-y directive.
-    /*flex-grow: 2;*/
-    /*font-family: "Roboto Condensed", sans-serif;*/
+    max-height: 50vh;
     font-size: 1rem;
 }
 
@@ -478,10 +509,13 @@ select option {
     font-style: italic;
     text-align: center;
 }
+*/
 
+/*
 #settings-panel a,
 #settings-panel a:active,
 #settings-panel a:visited,
+*/
 #credits-dialog a,
 #credits-dialog a:active,
 #credits-dialog a:visited {

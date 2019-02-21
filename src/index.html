@@ -15,7 +15,8 @@
     <script src="bundle.js"></script>
 </head>
 <body>
-    <div id="main" class="main-default zoom-1">
+    <div id="wrapper" class="zoom-1">
+    <div id="main" class="main-default">
 
         <div id="title">
             <div class="neon">Enzo web editor</div>
@@ -47,23 +48,31 @@
 
         <div id="options">
             <div>
-                <div style="float:right"><i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i></div>
                 <div>MIDI</div>
+            </div>
+            <div style="width:100%;text-align:right">
+                <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
             </div>
             <div>
                 input:
+            </div>
+            <div>
                 <select id="midi-input-device">
                     <option>- select -</option>
                 </select>
             </div>
             <div>
                 output:
+            </div>
+            <div>
                 <select id="midi-output-device">
                     <option>- select -</option>
                 </select>
             </div>
             <div>
                 channel:
+            </div>
+            <div>
                 <select id="midi-channel">
                     <option value="all">all</option>
                     <option value="1">1</option>
@@ -124,7 +133,7 @@
         -->
         <div id="pitch" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[C,V]</div>
+                <div class="header-shortcut hidden">[C,V]</div>
                 <div>pitch</div>
             </div>
             <div class="controls">
@@ -137,7 +146,7 @@
         -->
         <div id="portamento" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[O]</div>
+                <div class="header-shortcut hidden">[O]</div>
                 <div>portamento</div>
             </div>
             <div class="controls">
@@ -150,7 +159,7 @@
         -->
         <div id="filter" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[F,G]</div>
+                <div class="header-shortcut hidden">[F,G]</div>
                 <div>filter</div>
             </div>
             <div class="controls">
@@ -180,7 +189,7 @@
         -->
         <div id="mix" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[Y,X]</div>
+                <div class="header-shortcut hidden">[Y,X]</div>
                 <div>mix</div>
             </div>
             <div class="controls">
@@ -193,7 +202,7 @@
         -->
         <div id="delay-level" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[K,L]</div>
+                <div class="header-shortcut hidden">[K,L]</div>
                 <div>delay level</div>
             </div>
             <div class="controls">
@@ -206,7 +215,7 @@
         -->
         <div id="sustain" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[DEL,B,N]</div>
+                <div class="header-shortcut hidden">[DEL,B,N]</div>
                 <div>sustain</div>
             </div>
             <div class="controls">
@@ -219,7 +228,7 @@
         -->
         <div id="ring-mod" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[Z,U]</div>
+                <div class="header-shortcut hidden">[Z,U]</div>
                 <div>ring mod</div>
             </div>
             <div class="controls">
@@ -244,7 +253,7 @@
         -->
         <div id="filter-bandwidth" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[H,J]</div>
+                <div class="header-shortcut hidden">[H,J]</div>
                 <div>filter Q</div>
             </div>
             <div class="controls">
@@ -257,7 +266,7 @@
         -->
         <div id="modulation" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[-,+]</div>
+                <div class="header-shortcut hidden">[-,+]</div>
                 <div>modulation</div>
             </div>
             <div class="controls">
@@ -282,7 +291,7 @@
         -->
         <div id="tap" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[T]</div>
+                <div class="header-shortcut hidden">[T]</div>
                 <div>tap</div>
             </div>
             <div class="controls">
@@ -327,7 +336,7 @@
             <div class="header">
                 <div>envelope type</div>
             </div>
-            <div id="cc-9-options">
+            <div id="cc-9-options" class="options">
                 <div id="cc-9-0" class="bt">TRIGGERED</div>
                 <div id="cc-9-127" class="bt">FOLLOWER</div>
             </div>
@@ -340,7 +349,7 @@
             <div class="header">
                 <div>synth mode</div>
             </div>
-            <div id="cc-29-options">
+            <div id="cc-29-options" class="options">
                 <div id="cc-29-0" class="bt">DRY</div>
                 <div id="cc-29-63" class="bt">MONO</div>
                 <div id="cc-29-95" class="bt">ARP</div>
@@ -355,7 +364,7 @@
             <div class="header">
                 <div>waveshape</div>
             </div>
-            <div id="cc-30-options">
+            <div id="cc-30-options" class="options">
                 <div id="cc-30-0" class="bt">SAWTOOTH</div>
                 <div id="cc-30-127" class="bt">SQUARE</div>
             </div>
@@ -366,7 +375,7 @@
         -->
         <div id="bypass" class="grid-default">
             <div class="header">
-                <div class="header-shortcut">[SPACE]</div>
+                <div class="header-shortcut hidden">[SPACE]</div>
                 <div>bypass</div>
             </div>
             <div class="controls">
@@ -379,7 +388,7 @@
 
         <div id="global-settings" class="grid-global-settings closed">
             <div class="header">
-                <span style="float:right" class="close-settings-panel" title="close and display the default panel"><i class="far fa-window-close"></i></span>
+                <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                 GLOBAL SETTINGS
             </div>
             <div class="settings-rows">
@@ -561,9 +570,11 @@
 
         <div id="app-preferences" class="grid-global-settings closed">
             <div class="header">
-                <span style="float:right" class="close-app-prefs-panel" title="close and display the default panel"><i class="far fa-window-close"></i></span>
+                <span style="float:right" class="close-app-prefs-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                 EDITOR PREFERENCES
             </div>
+            Feature available soon...
+<!--
             <div class="settings-rows">
                 <div class="g0">
                     STORED PREFERENCES
@@ -601,8 +612,10 @@
                     ...
                 </div>
             </div>
+-->
         </div>
 
+    </div>
     </div>
 
     <div id="load-preset-dialog" class="dialog lity-hide">
@@ -664,7 +677,7 @@
         <h4>Keyboard shortcuts:</h4>
         <div style="display:flex;flex-direction: row">
             <ul style="margin-top: 0;">
-                <li>ESC: close dialog</li>
+                <li>ESC: close dialogs and settings</li>
                 <li>SPACE BAR: Bypass on/off</li>
                 <li>0..9: presets 1..10</li>
                 <li>Up, Right, +: next preset</li>

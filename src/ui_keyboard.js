@@ -115,6 +115,9 @@ function keyDown(code, alt, shift) {
     }
 
     switch (code) {
+        case 18:                // ALT
+            $(".header-shortcut").removeClass("hidden");
+            break;
         case 67:                // C
             animateTo(DEVICE.control_id.pitch, shift ? 63 : 0);
             // animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0, animate_callback);
@@ -215,6 +218,9 @@ function keyDown(code, alt, shift) {
 
 function keyUp(code, alt, shift) {
     switch (code) {
+        case 18:                // ALT
+            $(".header-shortcut").addClass("hidden");
+            break;
         case 27:                // close all opened panel with ESC key
             closeAppPreferencesPanel();
             closeSettingsPanel();
