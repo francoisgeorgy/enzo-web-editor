@@ -136,6 +136,15 @@ html {
     margin-top: -1px;
 }
 
+.cell {
+    padding: 4px;
+    height: calc(100% - 8px);
+    border-radius: 6px;
+    border: 1px solid #333;
+    color: yellow;
+    background: var(--messages-bg)!important;
+}
+
 #title {
     background: transparent !important;
     border-top-color: transparent !important;
@@ -209,9 +218,9 @@ div.controls {
 #messages {
     align-self: stretch!important;
     /*background: transparent none !important;*/
-    border: 2px solid #333;
-    color: yellow;
-    background: var(--messages-bg)!important;
+    /*border: 2px solid #333;*/
+    /*color: yellow;*/
+    /*background: var(--messages-bg)!important;*/
     /*font-size: 1.25rem;*/
     /*text-align: center;*/
 }
@@ -318,7 +327,7 @@ div.btc.on {
 
 .sw-on {
     /*display: inherit;*/
-    text-shadow: 0 0 8px lightyellow;
+    text-shadow: 0 0 8px var(--sw-on-shadow-color);
     color: var(--value);
     /*border: 1px solid var(--value);*/
 }

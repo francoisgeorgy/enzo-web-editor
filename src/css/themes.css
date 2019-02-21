@@ -34,6 +34,8 @@ html {
     --preset-hover-bg-color: #transparent;
     --preset-on-color: #f9d000;
 
+    --sw-on-shadow-color: yellow;
+
     --default-bg-from: #454547;
     --default-bg-to: #373738;
 
@@ -82,10 +84,12 @@ html[data-theme="gold"] {
     --preset-hover-bg-color: yellow;
     --preset-on-color: #000;
     /*--preset-on-bg-color: #eaea02;*/
-    --preset-on-bg-color: #f0f008;
+    --preset-on-bg-color: #f8f812;
 
     --bt-text: #333;
     --bt-on-bg-color: #f0f008;
+
+    --sw-on-shadow-color: #1d1d01;
 
     --default-bg-from: #454547;
     --default-bg-to: #373738;
@@ -108,7 +112,7 @@ html #main {
 
 html[data-theme="gold"] #main {
     /*background: url("../gold-texture.jpg");*/
-    background: linear-gradient(to right, #feda9e, #fdb53e 3%, #fdb53e 97%, #feda9e);
+    background: linear-gradient(to right, #feda9e, #fdb53e 2%, #fdb53e 98%, #feda9e);
 }
 
 html[data-theme="gold"] #main > div {

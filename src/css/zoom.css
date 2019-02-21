@@ -8,9 +8,9 @@
 #main.main-default.zoom-1 { border-radius: 5px; grid-column-gap: 4px; grid-row-gap: 4px; }
 #main.main-default.zoom-2 { border-radius: 6px; grid-column-gap: 5px; grid-row-gap: 5px; }
 
-#main.zoom-0 > div { border-radius: 3px; }
-#main.zoom-1 > div { border-radius: 5px; }
-#main.zoom-2 > div { border-radius: 6px; }
+#main.zoom-0 > div { border-radius: 3px; padding-bottom: 0; }
+#main.zoom-1 > div { border-radius: 5px; padding-bottom: 5px; }
+#main.zoom-2 > div { border-radius: 6px; padding-bottom: 5px; }
 
 #main.zoom-0 {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
 #main.zoom-1 {font-size: 1rem; margin-top: 20px;  padding: 3px;}
@@ -30,9 +30,9 @@
 .zoom-1 #main select {font-size: 1rem;}
 .zoom-2 #main select {font-size: 1rem;}
 
-.zoom-0 .preset {padding: 5px 0;  font-size: 1rem;}
-.zoom-1 .preset {padding: 1vh 0;   font-size: 1.75rem;}
-.zoom-2 .preset {padding: 1vh 0; font-size: 2.5rem;}
+.zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
+.zoom-1 .preset {padding: 8px 0; font-size: 1.75rem;}
+.zoom-2 .preset {padding: 8px 0; font-size: 2.5rem;}
 
 .zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}
