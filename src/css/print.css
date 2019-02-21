@@ -1,6 +1,6 @@
 body {
     -webkit-print-color-adjust: exact;  /* force background graphics to be printed */
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
     font-size: 10pt;
 }
 

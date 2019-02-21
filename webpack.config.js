@@ -1,6 +1,9 @@
 const webpack = require("webpack");
+// const path = require('path');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-var WebpackAutoInject = require('webpack-auto-inject-version');
+const WebpackAutoInject = require('webpack-auto-inject-version');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
@@ -42,7 +45,18 @@ module.exports = {
             // ]
         }, {
             test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+            // test: /\.(jpe?g|png|gif)(\?[a-z0-9=.]+)?$/,
             loader: 'url-loader?limit=100000'
+        // },
+        // {
+        //     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        //     use: [{
+        //         loader: 'file-loader',
+        //         options: {
+        //             name: '[name].[ext]',
+        //             outputPath: 'fonts/'
+        //         }
+        //     }]
         }]
     },
     plugins: [
@@ -64,7 +78,7 @@ module.exports = {
             }
         }),
         new CopyWebpackPlugin([
-            { from: "./src/index.html" },
+            // { from: "./src/index.html" },
             { from: "./src/midi.html" },
             { from: "./src/print.html" },
             { from: "./src/templates/preset-template.html", to: "templates"},
@@ -75,7 +89,13 @@ module.exports = {
             // { from: "./src/gold-texture.jpg" }
             // { from: "./src/css/patch.css", to: "css" },
             // { from: "./src/css/print.css", to: "css" },
-        ])  //,
+        ]),
+        new HtmlWebpackPlugin({
+            hash: true,
+            inject: 'head',
+            template: './src/index.html',
+            filename: './index.html' //relative to root of the application
+        })
         // new UglifyJSPlugin({
         //     uglifyOptions: {
         //         compress: {
@@ -84,6 +104,10 @@ module.exports = {
         //     }
         // })
     ],
+    // output: {
+    //     filename: '[name].[contenthash].js',
+    //     path: path.resolve(__dirname, 'dist')
+    // },
     performance: {
         maxAssetSize: 1000000,
         maxEntrypointSize: 1000000
