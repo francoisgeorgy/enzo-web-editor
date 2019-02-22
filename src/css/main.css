@@ -57,6 +57,7 @@ html {
 
 .close-panel-action {
     font-size: 1rem;
+    cursor: pointer;
 }
 
 #midi-in-led,
@@ -110,6 +111,18 @@ html {
 
 .grid-3x2 .bt:nth-child(2n+1) {
     margin-right: 0;
+}
+
+.grid-3x3 {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto auto;
+    /*margin-top: 5px;*/
+}
+
+.grid-default-gap {
+    grid-column-gap: 20px;
+    grid-row-gap: 5px;
 }
 
 #wrapper {

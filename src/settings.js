@@ -2,12 +2,20 @@ import store from "storejs";
 
 const LOCAL_STORAGE_KEY = "enzo.settings";
 
+export const SETTINGS_UPDATE_URL = {
+    manually: 0,
+    on_randomize: 1,
+    on_init: 2,
+    on_randomize_and_init: 4
+};
+
 export let settings = {
-    theme: "",  // empty means default theme,
-    zoom_level: 1,
     midi_channel: "all",
-    input_device_id: null,    // web midi port ID
-    output_device_id: null    // web midi port ID
+    input_device_id: null,      // web midi port ID
+    output_device_id: null,     // web midi port ID
+    theme: "",                  // empty means default theme,
+    zoom_level: 1,
+    update_URL: SETTINGS_UPDATE_URL.manually
 };
 
 export function loadSettings() {
