@@ -1,7 +1,8 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
 import {control_id} from "./cc";
-import {warn} from "../debug";
+import {log, warn} from "../debug";
+import {toHexString} from "../utils";
 
 // will store the last sysex received (all bytes, without any transformation).
 let last_sysex = Array.from(new Uint8Array(39));
@@ -140,6 +141,8 @@ const getDump = function () {
     data[24] = control[control_id.synth_waveshape].raw_value;
 
     data[38] = 0xF7;   // end-of-sysex marker
+
+    log(data, meta.preset_id.value);
 
     return data;
 };

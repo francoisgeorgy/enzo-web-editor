@@ -42,11 +42,14 @@ html {
 
     --select-border: #777;
 
+    /*
     --side-panel-bg: rgba(20, 20, 20, 0.95);
     --side-panel-color: #ddd;
     --side-panel-border: #222;
+    */
 
-
+    --paused: #777;
+    --running: #fff;
 
     /*--enzo-gold: #006ab7;*/
     /*--enzo-gold: gold;*/
@@ -92,6 +95,7 @@ html[data-theme="gold"] {
     /*--bt-on-bg-color: #f0f008;*/
     --bt-on-bg-color: yellow;
 
+    --sw-color: #706c58;
     --sw-on-color: yellow;
     --sw-on-shadow-color: #1d1d01;
 
@@ -100,9 +104,14 @@ html[data-theme="gold"] {
 
     --select-border: #000;
 
+    /*
     --side-panel-bg: rgba(20, 20, 20, 0.95);
     --side-panel-color: #ddd;
     --side-panel-border: #222;
+    */
+
+    --paused: #706c58;
+    --running: red;
 
     /*--enzo-gold: #006ab7;*/
     /*--enzo-gold: gold;*/
