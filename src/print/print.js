@@ -98,6 +98,7 @@ $(function () {
         if (f) {
             let reader = new FileReader();
             reader.onload = function (e) {
+                // noinspection JSUnresolvedVariable
                 let view   = new Uint8Array(e.target.result);
                 for (let i=0; i<view.length; i++) {
                     data.push(view[i]);
