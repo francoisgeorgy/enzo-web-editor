@@ -31,12 +31,17 @@
 #presets {
     grid-row: 2;
     grid-column: 1 / span 2;
-}
-.preset-selection {
+
     display: grid;
-    grid-template-columns: repeat(8, auto);
+    grid-template-columns: repeat(8, 1fr);
     grid-template-rows: auto auto;
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
+    justify-items: stretch;
+    align-items: stretch;
 }
+
+
 
 #pitch {
     grid-row: calc(var(--controls-row-start) + 0);
