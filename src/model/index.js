@@ -149,5 +149,6 @@ export default {
     getSysEx: sysex.getDump,     // export all values as a SysEx dump
     getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig,
     validate: sysex.validate,   // validate a SysEx dump
+    // getLastSysEx: sysex.getLastSysEx,
     getMidiMessagesForCC
 };

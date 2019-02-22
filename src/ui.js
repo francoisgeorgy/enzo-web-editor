@@ -23,6 +23,7 @@ import {setupGlobalConfig, openSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
+import {downloadLastSysEx} from "./download";
 
 /**
  * Handles a change made by the user in the UI.
@@ -184,6 +185,7 @@ function setupMenu() {
     $("#menu-init").click(init);
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-print-preset").click(printPreset);
+    $("#menu-download-sysex").click(downloadLastSysEx);
     $("#menu-midi").click(openMidiWindow);
     $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-send").click(() => {fullUpdateDevice(false); return false});
