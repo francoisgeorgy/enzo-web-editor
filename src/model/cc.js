@@ -1,5 +1,3 @@
-// import * as consts from './constants.js';
-// import mapper from './mappers.js';
 
 export const control_id = {
     exp_pedal: 4,
@@ -145,6 +143,11 @@ const _waveshape = function (v) {
     }
 };
 
+const _tempo = function (v) {
+    // const bpm = v > 0 ? Math.round(60000 / (v * 10)) : "inf ";
+    return (v * 10) + "ms";
+};
+
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
@@ -154,7 +157,8 @@ function defineControls() {
         }
     };
     control[control_id.tempo] = { // 15,
-        name: "Tempo"
+        name: "Tempo",
+        human: _tempo,
         //TODO: tempo from sysex
     };
     control[control_id.pitch] = { // 16,

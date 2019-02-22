@@ -1,7 +1,7 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
 import {control_id} from "./cc";
-import {toHexString} from "../lib/utils";
+import {warn} from "../debug";
 
 /**
  *
@@ -16,7 +16,7 @@ const validate = function (data) {
     const SYSEX_END = 0xF7;
 
     if (data[0] !== SYSEX_START) {
-        if (TRACE) console.warn("validate: invalid start byte", data[0]);
+        warn("validate: invalid start byte", data[0]);
         return false;
     }
 

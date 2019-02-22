@@ -1,4 +1,4 @@
-import {TRACE} from "./debug";
+import {log} from "./debug";
 
 let animations = {};     // one entry possible per CC; entry is {timeout_handler, target_value}
 
@@ -23,7 +23,7 @@ function _stopAnimateCC(control_number) {
 }
 
 export function animateCC(control_number, from, to, callback) {
-    if (TRACE) console.log(`animateCC(${control_number}, ${from}, ${to})`);
+    log(`animateCC(${control_number}, ${from}, ${to})`);
     if (animations[control_number]) {
         if (animations[control_number].to === to) {
             _stopAnimateCC(control_number);
@@ -36,9 +36,5 @@ export function animateCC(control_number, from, to, callback) {
             to: to
         };
         _animateCC(control_number, from, callback);
-        // _animateCC(control_number, from, function (v) {
-        //     dispatch("cc", control_number, v);
-        //     updateDevice("cc", control_number, v);
-        // });
     }
 }

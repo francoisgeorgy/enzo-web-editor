@@ -1,4 +1,4 @@
-import {TRACE} from "./debug";
+import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import {detect} from "detect-browser";
 import {VERSION} from "./constants";
@@ -21,16 +21,16 @@ import "./css/lity.min.css";
 const browser = detect();
 
 if (browser) {
-    if (TRACE) console.log(browser.name);
-    if (TRACE) console.log(browser.version);
+    log(browser.name);
+    log(browser.version);
     switch (browser && browser.name) {
         case "chrome":
-            if (TRACE) console.log("supported browser");
+            log("supported browser");
             break;
         case "firefox":
         case "edge":
         default:
-            if (TRACE) console.log("unsupported browser");
+            log("unsupported browser");
             alert("Please use Chrome browser (recent version recommended). " +
                 "Any other browser is unsupported at the moment and the application may not work properly or not work at all. " +
                 "Thank you for your understanding.");
@@ -44,14 +44,14 @@ function setMidiChannel(midi_channel) {
     // Note: output does not use any event listener, so there's nothing to update on the output device when we only
     //       change the MIDI channel.
 
-    if (TRACE) console.log(`setMidiChannel(${midi_channel}): disconnect input`);
+    log(`setMidiChannel(${midi_channel}): disconnect input`);
     disconnectInputPort();
 
     // Set new channel:
-    if (TRACE) console.log(`setMidiChannel(${midi_channel}): set new channel`);
+    log(`setMidiChannel(${midi_channel}): set new channel`);
     saveSettings({midi_channel});
 
-    if (TRACE) console.log(`setMidiChannel(${midi_channel}): reconnect input ${settings.input_device_id}`);
+    log(`setMidiChannel(${midi_channel}): reconnect input ${settings.input_device_id}`);
     connectInputDevice(settings.input_device_id);
 }
 
@@ -59,12 +59,12 @@ function setMidiChannel(midi_channel) {
 // WebMidi events handling
 
 function disconnectInputPort() {
-    if (TRACE) console.log("disconnectInput()");
+    log("disconnectInput()");
     const p = getMidiInputPort();
     if (p) {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
-        if (TRACE) console.log("midi_input not listening");
+        log("midi_input not listening");
     }
     setMidiInStatus(false);
     setStatus(`Device is disconnected.`);
@@ -72,12 +72,12 @@ function disconnectInputPort() {
 
 function connectInputPort(input) {
 
-    if (TRACE) console.log("connectInput()");
+    log("connectInput()");
 
     if (!input) return;
 
     setMidiInputPort(input);
-    if (TRACE) console.log(`midi_input assigned to "${input.name}"`);
+    log(`midi_input assigned to "${input.name}"`);
 
     input
         .on("programchange", settings.midi_channel, function(e) {
@@ -90,7 +90,7 @@ function connectInputPort(input) {
             handleSysex(e.data);
         });
 
-    if (TRACE) console.log(`${input.name} listening on channel ${settings.midi_channel}`);
+    log(`${input.name} listening on channel ${settings.midi_channel}`);
     setMidiInStatus(true);
     clearError();
     setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
@@ -98,19 +98,19 @@ function connectInputPort(input) {
 }
 
 function disconnectOutputPort() {
-    if (TRACE) console.log("disconnectOutput()");
+    log("disconnectOutput()");
     setMidiOutputPort(null);
 }
 
 function connectOutputPort(output) {
-    if (TRACE) console.log("connect output");
+    log("connect output");
     setMidiOutputPort(output);
-    if (TRACE) console.log(`midi_output assigned to "${output.name}"`);
+    log(`midi_output assigned to "${output.name}"`);
 }
 
 function connectInputDevice(id) {
 
-    if (TRACE) console.log(`connectInputDevice(${id})`);
+    log(`connectInputDevice(${id})`);
 
     const p = getMidiInputPort();
 
@@ -127,7 +127,7 @@ function connectInputDevice(id) {
 
     // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {
-        if (TRACE) console.log(`connectInputDevice(${id}): port is already connected`);
+        log(`connectInputDevice(${id}): port is already connected`);
         return;
     }
 
@@ -149,7 +149,7 @@ function connectInputDevice(id) {
 
 function connectOutputDevice(id) {
 
-    if (TRACE) console.log(`connectOutputDevice(${id})`);
+    log(`connectOutputDevice(${id})`);
 
     const p = getMidiOutputPort();
 
@@ -166,11 +166,11 @@ function connectOutputDevice(id) {
 
     // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {   //TODO: make as a function in midi_out.js
-        if (TRACE) console.log(`setOutputDevice(${id}): port is already connected`);
+        log(`setOutputDevice(${id}): port is already connected`);
         return;
     }
 
-    // if (TRACE) console.log(`%cconnectOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
+    // log(`%cconnectOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
 
     // save in settings for autoloading at next restart:
     saveSettings({output_device_id: id});
@@ -192,7 +192,7 @@ function connectOutputDevice(id) {
  * @param info
  */
 function deviceConnected(info) {
-    if (TRACE) console.log("%cdeviceConnected", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
+    log("%cdeviceConnected", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
 
     // Auto-connect if not already connected.
     if (getMidiInputPort() === null) connectInputDevice(settings.input_device_id);
@@ -206,7 +206,7 @@ function deviceConnected(info) {
  * @param info
  */
 function deviceDisconnected(info) {
-    if (TRACE) console.log("%cdeviceDisconnected", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
+    log("%cdeviceDisconnected", "color: orange; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
 
     const p_in = getMidiInputPort();
     if (p_in && info.port.id === p_in.id) {
@@ -233,7 +233,7 @@ function autoConnect() {
 
 $(function () {
 
-    if (TRACE) console.log(`Enzo Web Interface ${VERSION}`);
+    log(`Enzo Web Interface ${VERSION}`);
 
     loadSettings();
 
@@ -249,7 +249,7 @@ $(function () {
 
         if (err) {
 
-            console.warn("webmidi err", err);
+            warn("webmidi err", err);
 
             setStatusError("ERROR: WebMidi could not be enabled.");
 
@@ -258,7 +258,7 @@ $(function () {
 
         } else {
 
-            if (TRACE) console.log("webmidi ok");
+            log("webmidi ok");
 
             setStatus("WebMidi enabled.");
 

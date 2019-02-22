@@ -1,14 +1,14 @@
 import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
-import {TRACE} from "./debug";
+import {log} from "./debug";
 import {animateCC} from "./animate_cc";
 import {handleUserAction, showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
 import {sendPC, updateDevice} from "./midi_out";
-import DEVICE from "./enzo/enzo";
+import DEVICE from "./model";
 import {displayPreset, presetDec, presetInc, setPresetNumber} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
-import {SYNTH_MODES, WAVESHAPES} from "./enzo/constants";
+import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
 
@@ -79,7 +79,7 @@ export function setupKeyboard() {
         }
     });
 
-    if (TRACE) console.log("keyboard set up");
+    log("keyboard set up");
 }
 
 function animateFromTo(cc, from, to) {

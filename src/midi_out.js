@@ -1,11 +1,11 @@
-import DEVICE from "./enzo/enzo";
-import {TRACE} from "./debug";
+import DEVICE from "./model";
+import {log, TRACE} from "./debug";
 import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
 import {MSG_SEND_SYSEX, setStatus} from "./ui_messages";
-import {toHexString} from "./lib/utils";
+import {toHexString} from "./utils";
 import {setSuppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
@@ -35,14 +35,14 @@ export function sendCC(control) {
 
     for (let i=0; i<a.length; i++) {
         if (midi_output) {
-            if (TRACE) console.log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
+            log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
             showMidiOutActivity();
             last_send_time = performance.now(); // for echo suppression
 
             midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
 
         } else {
-            if (TRACE) console.log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
+            log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
         }
         logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
     }
@@ -62,7 +62,7 @@ export function updateDevice(control_type, control_number, value_float) {
 
     let value = Math.round(value_float);
 
-    if (TRACE) console.log("updateDevice", control_type, control_number, value_float, value);
+    log("updateDevice", control_type, control_number, value_float, value);
 
     sendCC(DEVICE.setControlValue(control_type, control_number, value));
 }
@@ -86,7 +86,7 @@ export function fullUpdateDevice(onlyChanged = false) {
 export function sendPC(pc) {
     setPresetNumber(pc);
     if (midi_output) {
-        if (TRACE) console.log(`send program change ${pc}`);
+        log(`send program change ${pc}`);
         showMidiOutActivity();
 
         midi_output.sendProgramChange(pc, settings.midi_channel);
@@ -97,7 +97,7 @@ export function sendPC(pc) {
 }
 
 export function sendSysEx(data) {
-    if (TRACE) console.log("sendSysEx", toHexString(data, ' '), data);
+    log("sendSysEx", toHexString(data, ' '), data);
     if (midi_output) {
         showMidiOutActivity();
         setSuppressSysexEcho();

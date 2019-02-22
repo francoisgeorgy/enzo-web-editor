@@ -1,4 +1,4 @@
-import {TRACE} from "./debug";
+import {log} from "./debug";
 
 let preset_number = 0;
 
@@ -16,13 +16,13 @@ export function displayPreset() {
 }
 
 export function presetInc(callback) {
-    if (TRACE) console.log("presetInc");
+    log("presetInc");
     callback("pc", (preset_number % 16) + 1);
     displayPreset();
 }
 
 export function presetDec(callback) {
-    if (TRACE) console.log("presetDec");
+    log("presetDec");
     preset_number--;
     if (preset_number < 1) preset_number = 16;
     callback("pc", preset_number);
@@ -31,20 +31,20 @@ export function presetDec(callback) {
 
 export function setupPresetSelectors(callback) {
 
-    if (TRACE) console.log("setupPresetSelectors()");
+    log("setupPresetSelectors()");
 
     $("div#pc-down").click(function() {
-        if (TRACE) console.log(`click on ${this.id}`);
+        log(`click on ${this.id}`);
         presetDec(callback);
     });
 
     $("div#pc-up").click(function() {
-        if (TRACE) console.log(`click on ${this.id}`);
+        log(`click on ${this.id}`);
         presetInc(callback);
     });
 
     $("div.preset-id").click(function() {
-        if (TRACE) console.log(`click on ${this.id}`);
+        log(`click on ${this.id}`);
         if (!this.classList.contains("on")) {   // if not already on...
             $(this).siblings(".preset-id").removeClass("on");
             this.classList.add("on");

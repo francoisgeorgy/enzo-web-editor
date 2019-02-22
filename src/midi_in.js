@@ -3,8 +3,8 @@ import {displayPreset, setPresetNumber} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
-import {TRACE} from "./debug";
-import DEVICE from "./enzo/enzo";
+import {log} from "./debug";
+import DEVICE from "./model";
 import {clearError, clearStatus, setStatus, setStatusError} from "./ui_messages";
 
 let midi_input = null;
@@ -29,7 +29,7 @@ export function setSuppressSysexEcho(v = true) {
  */
 export function handlePC(msg) {
 
-    if (TRACE) console.log("receive PC", msg);
+    log("receive PC", msg);
 
     if (msg.type !== "programchange") return;
 
@@ -59,7 +59,7 @@ export function handleCC(msg) {
     const cc = msg[1];
     const v = msg[2];
 
-    if (TRACE) console.log("receive CC", cc, v);
+    log("receive CC", cc, v);
 
     showMidiInActivity();
 
@@ -68,14 +68,14 @@ export function handleCC(msg) {
     // if (DEVICE.control[cc]) {
     updateModelAndUI("cc", cc, v);
     // } else {
-    //     if (TRACE) console.warn(`unsupported CC: ${cc}`)
+    //     warn(`unsupported CC: ${cc}`)
     // }
 }
 
 export function handleSysex(data) {
-    if (TRACE) console.log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold");
+    log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold");
     if (suppress_sysex_echo) {
-        if (TRACE) console.log("handleSysex: suppress echo (ignore sysex received)");
+        log("handleSysex: suppress echo (ignore sysex received)");
         suppress_sysex_echo = false;
         return;
     }
@@ -83,7 +83,7 @@ export function handleSysex(data) {
         updateUI();
         clearError();
         setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
-        if (TRACE) console.log("Device updated with SysEx");
+        log("Device updated with SysEx");
     } else {
         clearStatus();
         setStatusError("Unable to update from SysEx data.")

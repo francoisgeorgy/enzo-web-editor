@@ -1,5 +1,5 @@
-import {TRACE} from "./debug";
-import DEVICE from "./enzo/enzo";
+import {log} from "./debug";
+import DEVICE from "./model";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
@@ -28,7 +28,7 @@ export function readFile() {
 
     let data = [];
     let f = this.files[0];
-    if (TRACE) console.log(`read file`, f);
+    log(`read file`, f);
 
     if (f) {
         let reader = new FileReader();
@@ -39,14 +39,14 @@ export function readFile() {
                 if (view[i] === SYSEX_END) break;
             }
             if (DEVICE.setValuesFromSysEx(data)) {
-                if (TRACE) console.log("file read OK");
+                log("file read OK");
                 if (lightbox) lightbox.close();
 
                 updateUI();
                 fullUpdateDevice();
 
             } else {
-                if (TRACE) console.log("unable to set value from file");
+                log("unable to set value from file");
                 $("#load-preset-error").show().text("The file is invalid.");
             }
         };

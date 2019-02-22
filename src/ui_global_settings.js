@@ -1,5 +1,5 @@
-import {TRACE} from "./debug";
-import DEVICE from "./enzo/enzo";
+import {log} from "./debug";
+import DEVICE from "./model";
 import {sendSysEx} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
@@ -38,7 +38,7 @@ export function closeSettingsPanel() {
 }
 
 export function setupGlobalConfig() {
-    if (TRACE) console.log("setupGlobalConfig()");
+    log("setupGlobalConfig()");
 
     $(".close-settings-panel").click(() => {
         closeSettingsPanel();
@@ -56,7 +56,7 @@ export function setupGlobalConfig() {
             console.log("setupGlobalConfig: invalid value", c.target.value);
             return false;
         }
-        if (TRACE) console.log(`setupGlobalConfig: ${setting_number}=${value}`);
+        log(`setupGlobalConfig: ${setting_number}=${value}`);
         sendSysEx(DEVICE.getSysexDataForGlobalConfig(setting_number, value));
     });
     return true;

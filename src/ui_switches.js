@@ -1,8 +1,8 @@
-import {TRACE} from "./debug";
+import {log} from "./debug";
 import {handleUserAction} from "./ui";
 
 export function updateBypassSwitch(value) {
-    if (TRACE) console.log("updateBypassSwitch", value);
+    log("updateBypassSwitch", value);
     if (value === 0) {
         $("#cc-14-0").addClass("sw-off");
         $("#cc-14-127").removeClass("sw-off");
@@ -15,7 +15,7 @@ export function updateBypassSwitch(value) {
 
 export function updateOptionSwitch(id, value) {
     // "radio button"-like behavior
-    if (TRACE) console.log(`updateOptionSwitch(${id}, ${value})`);
+    log(`updateOptionSwitch(${id}, ${value})`);
     let e = $("#" + id);
     if (!e.is(".on")) {   // if not already on...
         e.siblings(".bt").removeClass("on");
@@ -50,11 +50,11 @@ export function tapRelease(id) {
  */
 export function setupSwitches(userActionCallback) {
 
-    // if (TRACE) console.log("setupSwitches()");
+    // log("setupSwitches()");
 
     // "radio button"-like behavior:
     $("div.bt").click(function() {
-        // if (TRACE) console.log(`click on ${this.id}`);
+        // log(`click on ${this.id}`);
         if (!this.classList.contains("on")) {   // if not already on...
             $(this).siblings(".bt").removeClass("on");
             this.classList.add("on");

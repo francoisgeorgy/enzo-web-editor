@@ -1,11 +1,10 @@
-
-import {TRACE} from "./debug";
+import {log} from "./debug";
 import {settings} from "./settings";
 import * as WebMidi from "webmidi";
 
 export function updateSelectDeviceList() {
 
-    if (TRACE) console.log("updateSelectDeviceList");
+    log("updateSelectDeviceList");
 
     let present = false;
     let s = $("#midi-input-device");
