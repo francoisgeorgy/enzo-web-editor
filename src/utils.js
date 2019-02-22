@@ -1,4 +1,5 @@
 
+/*
 export let padZero = function(str, len, c) {
     let s = str;
     c = c || '0';
@@ -6,7 +7,7 @@ export let padZero = function(str, len, c) {
     while (s.length < len) s += c;
     return s;
 };
-
+*/
 
 export let toHexString = function(byteArray, sep) {
     return Array.from(byteArray, function (byte) {
@@ -14,12 +15,6 @@ export let toHexString = function(byteArray, sep) {
     }).join(sep || '')
 };
 
-/**
- *
- * @param string
- * @param sep
- * @returns {*}
- */
 export var fromHexString = function(string, sep) {
     let s = sep ? string.replace(sep, '') : string;
     if ((s.length % 2) > 0) {

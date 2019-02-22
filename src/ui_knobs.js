@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import DEVICE from "./model";
 import Knob from "svg-knob";
-import {KNOB_THEME_DEFAULT, KNOB_THEME_GOLD} from "./ui_knobs_theme";
+import {KNOB_THEME_GOLD} from "./ui_knobs_theme";
 
 export const knobs = {};         // svg-knob
 

@@ -68,12 +68,14 @@ html {
     color: var(--value)!important;
 }
 
+/*
 .no-left-border {
     border-left: none !important;
 }
 .no-right-border {
     border-right: none !important;
 }
+*/
 
 .options {
     display: flex;
@@ -87,11 +89,13 @@ html {
     width: 80%;
 }
 
+/*
 .grid-2x2 {
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr;
 }
+*/
 
 .grid-3x2 {
     display: grid;
@@ -401,6 +405,7 @@ div.btc.on {
     background: rgba(0, 0, 0, 0.80);
 }
 
+/*
 .panel {
     position: fixed;
     left: 0;
@@ -413,6 +418,7 @@ div.btc.on {
     border-right: 2px solid var(--side-panel-border);
     box-shadow: 0 0 15px rgba(0, 0, 0, 1);
 }
+*/
 
 .dialog h2, .dialog h3,
 .panel h2, .panel h3 {
@@ -523,6 +529,7 @@ select option {
     text-decoration: none;
 }
 
+/*
 #randomizer-select-all,
 #randomizer-select-none {
     margin-right: 10px;
@@ -537,5 +544,6 @@ select option {
     margin-right: 6px;
     transform: scale(1.4);
 }
+*/
 
 

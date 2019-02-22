@@ -20,7 +20,7 @@ function toggleBypass() {
     updateBypassSwitch(v);
 }
 
-function selectSquareware() {
+function selectSquarewave() {
     const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
     updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
     updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
@@ -200,7 +200,7 @@ function keyDown(code, alt, shift) {
             init();
             break;
         case 81:                // Q Squarewave
-            selectSquareware();
+            selectSquarewave();
             break;
         case 87:                // W Sawtooth wave
             selectSawtooth();
@@ -216,6 +216,7 @@ function keyDown(code, alt, shift) {
     }
 }
 
+// noinspection JSUnusedLocalSymbols
 function keyUp(code, alt, shift) {
     switch (code) {
         case 18:                // ALT

@@ -40,9 +40,4 @@ jspm_packages/
 .env
 .idea/
 .idea
-BS2-Web.iml
 
-patches
-BS2-Web.sublime-project
-BS2-Web.sublime-workspace
-ui-examples

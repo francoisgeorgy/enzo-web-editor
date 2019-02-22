@@ -1,5 +1,5 @@
 
-// export const MSG_SEND_SYSEX = "To update the editor with the current setup of your Enzo, plese send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
+// export const MSG_SEND_SYSEX = "To update the editor with the current setup of your Enzo, please send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 export const MSG_SEND_SYSEX = "To view the current pedal's preset, send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 
 /**

@@ -1,4 +1,5 @@
 
+/*
 const getStringValue = function(bytes) {
     let s = "";
     for (let i = 0; i < bytes.length; i++) {
@@ -8,6 +9,7 @@ const getStringValue = function(bytes) {
     }
     return s;
 };
+*/
 
 export default {
     signature: {
@@ -27,7 +29,6 @@ export default {
             range: [0, 127],
             mask: [0x7F]
         }
-    },
-    getStringValue
+    }
 };
 

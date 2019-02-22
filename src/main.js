@@ -137,6 +137,7 @@ function connectInputDevice(id) {
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
     disconnectInputPort();
 
+    // noinspection JSUnresolvedFunction
     const port = WebMidi.getInputById(id);
     if (port) {
         connectInputPort(port);
@@ -178,6 +179,7 @@ function connectOutputDevice(id) {
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
     disconnectOutputPort();
 
+    // noinspection JSUnresolvedFunction
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
@@ -245,6 +247,7 @@ $(function () {
     setupBookmarkSupport();
     setStatus("Waiting for MIDI interface access...");
 
+    // noinspection JSUnresolvedFunction
     WebMidi.enable(function (err) {
 
         if (err) {
@@ -263,11 +266,15 @@ $(function () {
             setStatus("WebMidi enabled.");
 
             if (TRACE) {
+                // noinspection JSUnresolvedVariable
                 WebMidi.inputs.map(i => console.log("available input: ", i));
+                // noinspection JSUnresolvedVariable
                 WebMidi.outputs.map(i => console.log("available output: ", i));
             }
 
+            // noinspection JSUnresolvedFunction
             WebMidi.addListener("connected", e => deviceConnected(e));
+            // noinspection JSUnresolvedFunction
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
             autoConnect();

@@ -5,7 +5,7 @@ import sysex from "./sysex.js";
 /**
  *
  * @returns {number}
- * @param ctrl
+ * @param number
  */
 const getControl = function (number) {
     return control[number];
@@ -89,9 +89,6 @@ const init = function () {
     meta.preset_id.value = 0;
 };
 
-/**
- * @param groups Array of group names. Specify which control groups to randomize. Example: ["sub", "lfo1", "lfo2", "osc1", "osc2"]
- */
 const randomize = function() {
 
     for (let i = 0; i < control.length; i++) {

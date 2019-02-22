@@ -24,7 +24,7 @@ export function setupAppPreferences() {
         showDefaultPanel();
     });
 
-    $("input[type='radio'].app-pref").on("change", function(c) {
+    $("input[type='radio'].app-pref").on("change", function() {
         // TODO
     });
     return true;

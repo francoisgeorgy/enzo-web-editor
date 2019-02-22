@@ -68,11 +68,6 @@ table tr td {
     padding: 2mm 2mm 2mm 0;
 }
 
-.instructions {
-    color: #555;
-    line-height: 140%;
-}
-
 .dropzone {
     box-sizing: border-box;
     display: none;

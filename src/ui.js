@@ -57,7 +57,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         knobs[id].value = value;
     } else {
 
-        if (control_type === "cc" && control_number == 14) {    //TODO: replace this hack with better code
+        if (control_type === "cc" && parseInt(control_number, 10) === 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
             return;
         }
@@ -171,8 +171,9 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
     // $("#midi-channel").val(settings.midi_channel);
     // $("#midi-input-device").change((event) => connectInputDevice(event.target.value));
     // $("#midi-output-device").change((event) => connectOutputDevice(event.target.value));
-    $("#midi-channel").change((event) => channelSelectionCallback(event.target.value));
-    $("#midi-channel").val(settings.midi_channel);
+    const c = $("#midi-channel");
+    c.change((event) => channelSelectionCallback(event.target.value));
+    c.val(settings.midi_channel);
     $("#midi-input-device").change((event) => inputSelectionCallback(event.target.value));
     $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
 }

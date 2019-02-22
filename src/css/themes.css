@@ -121,7 +121,7 @@ html[data-theme="gold"] #wrapper {
     background: linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
 }
 
-html[data-theme="gold"] #mainX {
+html[data-theme="gold"] #main__NOT_USED {
     /*background: url("../gold-texture.jpg");*/
     background: linear-gradient(to right, #feda9e, #fdb53e 2%, #fdb53e 98%, #feda9e);
 }
