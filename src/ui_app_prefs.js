@@ -5,6 +5,7 @@ import {saveSettings, settings} from "./settings";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startBookmarkAutomation, stopBookmarkAutomation} from "./hash";
+import {SETTINGS_UPDATE_URL} from "../../mercury7-web-editor/src/settings";
 
 const CONTAINER = "#app-preferences";
 
@@ -62,7 +63,7 @@ export function setupAppPreferences() {
         // console.log(event.target.value);
         const v = parseInt(event.target.value, 10);
         saveSettings({update_URL: v});
-        if (v === 4) {
+        if (v === SETTINGS_UPDATE_URL.every_second) {
             startBookmarkAutomation();
         } else {
             stopBookmarkAutomation();
