@@ -1,10 +1,10 @@
-import DEVICE from "./enzo/enzo.js";
-import * as Utils from "./lib/utils.js";
+import DEVICE from "../model/index.js";
+import * as Utils from "../utils.js";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
-import "./css/print.css";
-import {TRACE} from "./debug";
-import {URL_PARAM_SYSEX} from "./constants";
+import "./print.css";
+import {URL_PARAM_SYSEX} from "./../constants";
+import {log} from "../debug";
 
 function renderControlName(control_number) {
     return DEVICE.control[control_number].name;
@@ -55,7 +55,7 @@ function loadTemplate(data, filename) {
         if (ok) {
             renderPreset(template, filename);
         } else {
-            if (TRACE) console.warn("invalid data");
+            console.warn("invalid data");
         }
     });
 }
@@ -93,7 +93,7 @@ $(function () {
         const SYSEX_END = 0xF7;
 
         let data = [];
-        if (TRACE) console.log(`read file`, f.name);
+        log(`read file`, f.name);
 
         if (f) {
             let reader = new FileReader();
