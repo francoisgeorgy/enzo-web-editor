@@ -1,10 +1,10 @@
-import DEVICE from "./model";
+import MODEL from "./model";
 // import {log} from "./debug";
 // import {toHexString} from "./utils";
 
 export function downloadLastSysEx() {
 
-    let data = DEVICE.getSysEx();   // return Uint8Array
+    let data = MODEL.getSysEx();   // return Uint8Array
 
     // log("downloadLastSysEx", data, toHexString(data, ' '));
     // log("downloadLastSysEx", encodeURIComponent(data));
@@ -18,7 +18,7 @@ export function downloadLastSysEx() {
         ("0" + now.getUTCMinutes()).slice(-2) + "" +
         ("0" + now.getUTCSeconds()).slice(-2);
 
-    const preset_num = DEVICE.meta.preset_id.value;
+    const preset_num = MODEL.meta.preset_id.value;
 
     let shadowlink = document.createElement('a');
     shadowlink.style.display = 'none';
