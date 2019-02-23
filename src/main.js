@@ -120,7 +120,7 @@ function connectInputDevice(id) {
         // the user select no device, disconnect.
         disconnectInputPort();
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
         return;
     }
@@ -143,7 +143,7 @@ function connectInputDevice(id) {
         connectInputPort(port);
     } else {
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
     }
 }
@@ -161,7 +161,7 @@ function connectOutputDevice(id) {
         // the user select no device, disconnect.
         disconnectOutputPort();
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        // setStatusError(`Please connect your device or check the MIDI channel.`);
         return;
     }
 
@@ -185,7 +185,7 @@ function connectOutputDevice(id) {
         connectOutputPort(port);
     } else {
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        // setStatusError(`Please connect your device or check the MIDI channel.`);
     }
 }
 

@@ -36,7 +36,7 @@
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: auto auto;
     grid-column-gap: 4px;
-    grid-row-gap: 4px;
+    grid-row-gap: 8px;
     justify-items: stretch;
     align-items: stretch;
 }

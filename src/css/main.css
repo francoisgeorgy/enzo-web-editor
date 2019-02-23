@@ -69,6 +69,10 @@ html {
     color: var(--value)!important;
 }
 
+.error {
+    color: red;
+}
+
 #url-auto-toggle {
     cursor: pointer;
 }
@@ -187,12 +191,15 @@ html {
     border-color: var(--select-border);
     border-radius: 3px;
     margin-top: -1px;
+    font-size: 1em;
 }
 
-.cell {
-    padding: 6px;
-    height: calc(100% - 8px);
-    border-radius: 6px;
+#messages-list {
+    position: relative;
+    overflow-y: scroll;
+    /*padding: 6px;*/
+    /*height: 100px;*/
+    /*border-radius: 6px;*/
     border: 1px solid #333;
     color: yellow;
     background: var(--messages-bg)!important;
@@ -278,6 +285,7 @@ div.controls {
     /*text-align: center;*/
 }
 
+
 #options {
     /*
     display: grid;
@@ -328,6 +336,11 @@ div.controls {
     border: 1px solid var(--preset-border);
     /*margin: 0 5px;*/
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .preset:hover {

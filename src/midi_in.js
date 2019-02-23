@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {displayPreset, setPresetNumber} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime} from "./midi_out";
+import {getLastSendTime, sendCC} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -21,6 +21,27 @@ export function setMidiInputPort(port) {
 
 export function setSuppressSysexEcho(v = true) {
     suppress_sysex_echo = v;
+}
+
+const previous_values = new Array(127);
+const monitors = new Array(127);
+
+function updatePreviousValues() {
+    const c = MODEL.control;
+    for (let i=0; i < c.length; i++) {
+        if (typeof c[i] === "undefined") continue;
+        previous_values[i] = c.raw_value;
+    }
+}
+
+function monitorCC(control_number) {
+    clearTimeout(monitors[control_number]);
+    monitors[control_number] = setTimeout(() => {
+        const v = MODEL.control[control_number].raw_value;
+        console.log(`monitor receive CC ${control_number} = ${v}`);
+        // clearTimeout(monitors[control_number]);
+        // monitors[control_number] = null;
+    }, 200)
 }
 
 /**
@@ -62,6 +83,8 @@ export function handleCC(msg) {
     log("receive CC", cc, v);
 
     showMidiInActivity();
+
+    monitorCC(cc);
 
     logIncomingMidiMessage("CC", cc, v);
 

@@ -134,6 +134,8 @@ const getMidiMessagesForCC = function (ctrl) {
     return CC;
 };
 
+//TODO: getHumanValue() or getValue()
+
 export default {
     name: "Enzo",
     meta,
