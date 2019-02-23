@@ -5,7 +5,7 @@ import {getLastSendTime, sendCC} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
-import {clearError, clearStatus, setStatus, setStatusError} from "./ui_messages";
+import {clearError, clearStatus, monitorMessage, setStatus, setStatusError} from "./ui_messages";
 
 let midi_input = null;
 
@@ -38,9 +38,8 @@ function monitorCC(control_number) {
     clearTimeout(monitors[control_number]);
     monitors[control_number] = setTimeout(() => {
         const v = MODEL.control[control_number].raw_value;
-        console.log(`monitor receive CC ${control_number} = ${v}`);
-        // clearTimeout(monitors[control_number]);
-        // monitors[control_number] = null;
+        log(`monitor receive CC ${control_number} = ${v}`);
+        monitorMessage(control_number, v);
     }, 200)
 }
 

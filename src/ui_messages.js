@@ -28,7 +28,6 @@ const MAX_MESSAGE_DISPLAYED = 200;
 
 export function appendMessage(msg) {
 
-    console.log("append", messages);
     if (messages >= MAX_MESSAGE_DISPLAYED) {
         console.log("remove first");
         $("#messages-list div:first-child").remove();

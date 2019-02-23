@@ -34,10 +34,8 @@ function monitorCC(control_number) {
     clearTimeout(monitors[control_number]);
     monitors[control_number] = setTimeout(() => {
         const v = MODEL.control[control_number].raw_value;
-        console.log(`monitor send CC ${control_number} = ${v}`);
+        log(`monitor send CC ${control_number} = ${v}`);
         monitorMessage(control_number, v);
-        // clearTimeout(monitors[control_number]);
-        // monitors[control_number] = null;
     }, 200)
 }
 
