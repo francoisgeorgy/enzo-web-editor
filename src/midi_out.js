@@ -19,9 +19,10 @@ export function setMidiOutputPort(port) {
 }
 
 
-const previous_values = new Array(127);
+// const previous_values = new Array(127);
 const monitors = new Array(127);
 
+/*
 function updatePreviousValues() {
     const c = MODEL.control;
     for (let i=0; i < c.length; i++) {
@@ -29,6 +30,7 @@ function updatePreviousValues() {
         previous_values[i] = c.raw_value;
     }
 }
+*/
 
 function monitorCC(control_number) {
     clearTimeout(monitors[control_number]);

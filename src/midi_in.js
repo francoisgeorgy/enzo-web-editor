@@ -5,7 +5,7 @@ import {getLastSendTime, sendCC} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
-import {clearError, clearStatus, monitorMessage, setStatus, setStatusError} from "./ui_messages";
+import {appendMessage, clearError, clearStatus, monitorMessage, setStatus, setStatusError} from "./ui_messages";
 
 let midi_input = null;
 
@@ -23,16 +23,7 @@ export function setSuppressSysexEcho(v = true) {
     suppress_sysex_echo = v;
 }
 
-const previous_values = new Array(127);
 const monitors = new Array(127);
-
-function updatePreviousValues() {
-    const c = MODEL.control;
-    for (let i=0; i < c.length; i++) {
-        if (typeof c[i] === "undefined") continue;
-        previous_values[i] = c.raw_value;
-    }
-}
 
 function monitorCC(control_number) {
     clearTimeout(monitors[control_number]);
@@ -52,6 +43,8 @@ export function handlePC(msg) {
     log("receive PC", msg);
 
     if (msg.type !== "programchange") return;
+
+    // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
 
     showMidiInActivity();
 
