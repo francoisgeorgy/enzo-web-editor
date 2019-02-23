@@ -131,7 +131,7 @@ export function sendPC(pc) {
 
     setPresetNumber(pc);
 
-    appendMessage(`Preset ${pc} selected`);
+    appendMessage(`Select preset ${pc}`);
 
     MODEL.meta.preset_id.value = pc;
 
@@ -141,7 +141,7 @@ export function sendPC(pc) {
 
         midi_output.sendProgramChange(pc, settings.midi_channel);
 
-        setStatus(`Preset ${pc} selected.`, MSG_SEND_SYSEX);
+        appendMessage(MSG_SEND_SYSEX);
     }
     logOutgoingMidiMessage("PC", pc);
 }
