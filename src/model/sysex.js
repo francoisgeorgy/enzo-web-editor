@@ -11,7 +11,6 @@ const saveLastSysEx = function(data) {
 };
 
 /**
- *
  * @param data
  * @returns {boolean}
  */
@@ -34,6 +33,22 @@ const validate = function (data) {
             return false;
         }
     }
+
+    if ((data[meta.device_id.sysex.offset] > 0) && (data[meta.device_id.sysex.offset] !== meta.device_id.value)) {
+        log(`validate: invalid device_id: ${data[meta.device_id.sysex.offset]}`);
+        return false;
+    }
+
+    if (data[meta.group_id.sysex.offset] !== meta.group_id.value) {
+        log(`validate: invalid group_id: ${data[meta.group_id.sysex.offset]}`);
+        return false;
+    }
+
+    if (data[meta.model_id.sysex.offset] !== meta.model_id.value) {
+        log(`validate: invalid model_id: ${data[meta.model_id.sysex.offset]}`);
+        return false;
+    }
+
     let last_byte = 0;
     for (let i = 0; i < data.length; i++) {
         last_byte = data[i];
