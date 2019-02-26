@@ -201,7 +201,9 @@ html {
     /*height: 100px;*/
     /*border-radius: 6px;*/
     border: 1px solid #333;
-    color: yellow;
+    /*color: yellow;*/
+    /*background: var(--messages-bg)!important;*/
+    color: var(--messages-color);
     background: var(--messages-bg)!important;
 }
 

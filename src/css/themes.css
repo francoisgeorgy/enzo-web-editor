@@ -58,7 +58,10 @@ html {
 
 html[data-theme="gold"] {
 
-    --messages-bg: #0000003b;
+    /*--messages-bg: #0000003b;*/
+
+    --messages-bg: #ffffff70;
+    --messages-color: #424242;
 
     --controls-row-start: 3;
     --controls-col-start: 1;
