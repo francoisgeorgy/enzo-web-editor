@@ -26,6 +26,7 @@ export function setSuppressSysexEcho(v = true) {
 const monitors = new Array(127);
 
 function monitorCC(control_number) {
+    if (!MODEL.control[control_number]) return;
     clearTimeout(monitors[control_number]);
     monitors[control_number] = setTimeout(() => {
         const v = MODEL.control[control_number].raw_value;
@@ -99,8 +100,8 @@ export function handleSysex(data) {
         clearError();
         setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
         log("Device updated with SysEx");
-    } else {
-        clearStatus();
-        setStatusError("Unable to update from SysEx data.")
+    // } else {
+    //     clearStatus();
+    //     setStatusError("Unable to update from SysEx data.")
     }
 }
