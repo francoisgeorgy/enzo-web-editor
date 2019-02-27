@@ -4,7 +4,7 @@ import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
-import {appendMessage, monitorMessage, MSG_SEND_SYSEX, setStatus} from "./ui_messages";
+import {appendMessage, monitorMessage, MSG_SEND_SYSEX} from "./ui_messages";
 import {toHexString} from "./utils";
 import {setSuppressSysexEcho} from "./midi_in";
 
@@ -73,23 +73,6 @@ export function sendCC(control) {
 
     logOutgoingMidiMessage("CC", control.cc_number, v);
 
-    /*
-        let a = MODEL.getMidiMessagesForCC(control);
-
-        for (let i=0; i<a.length; i++) {
-            if (midi_output) {
-                log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
-                showMidiOutActivity();
-                last_send_time = performance.now(); // for echo suppression
-
-                midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
-
-            } else {
-                log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
-            }
-            logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
-        }
-    */
 }
 
 /**

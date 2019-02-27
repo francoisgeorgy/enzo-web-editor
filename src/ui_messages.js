@@ -18,7 +18,6 @@ export function setMidiInStatus(status) {
 }
 
 export function setStatus(msg, msg2) {  // TODO: change signature, use destructuring and accept any number of messages
-    //$("#info-message").html(msg2 === undefined ? msg : (msg + '<br />' + msg2));
     appendMessage(msg);
     if (msg2) appendMessage(msg2);
 }

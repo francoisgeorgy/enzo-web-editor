@@ -5,7 +5,6 @@ import {hexy} from "hexy";
 import "./print.css";
 import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
-import {appendErrorMessage} from "../ui_messages";
 
 function renderControlName(control_number) {
     return MODEL.control[control_number].name;
@@ -51,7 +50,6 @@ function loadTemplate(data, filename) {
         if (data) {
             const valid = MODEL.setValuesFromSysEx(data);
             if (valid.error) {
-                // appendErrorMessage(valid.message);
                 ok = false;
             }
         } else {
