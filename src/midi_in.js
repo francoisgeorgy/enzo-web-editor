@@ -70,6 +70,7 @@ export function handleCC(msg) {
     // suppress echo:
     const t = performance.now();
     if (t < (getLastSendTime() + 100)) {
+        log("ignore CC echo");
         return;
     }
 

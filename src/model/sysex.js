@@ -162,6 +162,10 @@ const setDump = function (data) {
  */
 const getDump = function () {
 
+    // exemple of dump sent by the Enzo with all values set to 0:
+    // 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00
+
+
     // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
     const data = Uint8Array.from(last_sysex);
 
@@ -170,7 +174,11 @@ const getDump = function () {
     data[2] = 0x20;
     data[3] = 0x10;
 
+    data[4] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    data[5] = meta.group_id.value;
+    data[6] = meta.model_id.value;
     data[8] = meta.preset_id.value;
+
     data[9] = control[control_id.pitch].raw_value;
     data[10] = control[control_id.filter].raw_value;
     data[11] = control[control_id.mix].raw_value;

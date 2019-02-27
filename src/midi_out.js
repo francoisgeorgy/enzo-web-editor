@@ -52,9 +52,9 @@ export function getLastSendTime() {
  * Send a control value to the connected device.
  * @param control
  */
-export function sendCC(control) {
+export function sendCC(control, monitor = true) {
 
-    monitorCC(control.cc_number);   // TODO: check that control exists
+    if (monitor) monitorCC(control.cc_number);   // TODO: check that control exists
 
     const v = MODEL.getControlValue(control);
 
@@ -97,15 +97,18 @@ export function updateDevice(control_type, control_number, value_float) {
 /**
  * Send all values to the connected device
  */
-export function fullUpdateDevice(onlyChanged = false) {
+export function fullUpdateDevice(onlyChanged = false, silent = false) {
     if (TRACE) console.groupCollapsed(`fullUpdateDevice(${onlyChanged})`);
     const c = MODEL.control;
     for (let i=0; i < c.length; i++) {
         if (typeof c[i] === "undefined") continue;
         if (!onlyChanged || c[i].randomized) {
-            sendCC(c[i]);
+            sendCC(c[i], false);
             c[i].randomized = false;
         }
+    }
+    if (!silent && midi_output) {
+        appendMessage("Current settings sent to the Enzo.")
     }
     if (TRACE) console.groupEnd();
 }
