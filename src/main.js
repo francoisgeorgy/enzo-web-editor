@@ -10,6 +10,7 @@ import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
 import {initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
+import "./css/lity.min.css";    // order important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
@@ -17,7 +18,6 @@ import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
 import "./css/grid-app-preferences.css";
 import "./css/knob.css";
-import "./css/lity.min.css";
 
 const browser = detect();
 

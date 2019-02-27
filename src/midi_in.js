@@ -5,7 +5,15 @@ import {getLastSendTime, sendCC} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
-import {appendMessage, clearError, clearStatus, monitorMessage, setStatus, setStatusError} from "./ui_messages";
+import {
+    appendErrorMessage,
+    appendMessage,
+    clearError,
+    clearStatus,
+    monitorMessage,
+    setStatus,
+    setStatusError
+} from "./ui_messages";
 
 let midi_input = null;
 
@@ -89,19 +97,23 @@ export function handleCC(msg) {
 }
 
 export function handleSysex(data) {
+
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold");
+
     if (suppress_sysex_echo) {
         log("handleSysex: suppress echo (ignore sysex received)");
         suppress_sysex_echo = false;
         return;
     }
-    if (MODEL.setValuesFromSysEx(data)) {
+
+    const valid = MODEL.setValuesFromSysEx(data);
+    if (valid.error) {
+        appendErrorMessage(valid.message);
+    } else {
         updateUI();
         clearError();
         setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
         log("Device updated with SysEx");
-    // } else {
-    //     clearStatus();
-    //     setStatusError("Unable to update from SysEx data.")
     }
+
 }
