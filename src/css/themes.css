@@ -50,6 +50,10 @@ html {
 
 }
 
+.dialog a {
+    color: var(--value);
+}
+
 #wrapper {
     background: linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
 }

@@ -310,6 +310,9 @@ div.btc {   /* "checkbox"-like switches: */
     color: var(--sw-on-color);
 }
 
+#more-help {
+    margin: 10px 0 20px 0;
+}
 
 .dialog {
     overflow:auto;
