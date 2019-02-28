@@ -82,4 +82,9 @@ export function locationHashChanged(e) {
 
 export function setupBookmarkSupport() {
     window.onhashchange = locationHashChanged;
+/*
+    window.onpopstate = function(event) {
+        log("popstate: " + document.location, event);
+    };
+*/
 }

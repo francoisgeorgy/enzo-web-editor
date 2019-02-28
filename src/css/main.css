@@ -379,6 +379,7 @@ div.btc {   /* "checkbox"-like switches: */
     margin-top: 0;
 }
 
+/*
 .panel h2 span {
     cursor: pointer;
 }
@@ -398,10 +399,13 @@ select option {
     font-size: 1rem;
     border-radius: 6px;
 }
+*/
 
+/*
 #credits-dialog a,
 #credits-dialog a:active,
 #credits-dialog a:visited {
     color: #8585FF!important;
     text-decoration: none;
 }
+*/
