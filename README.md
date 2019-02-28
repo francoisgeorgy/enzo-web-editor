@@ -159,7 +159,18 @@ done with success with Chrome under Linux Mint 17.1 and with Chrome under Window
 Still under active development. Feel free to log bugs/issues. This is a development I'm doing during my freetime. 
 
 
-# MIDI in your browser
+Known issues
+============
+
+The TEMPO value is not saved. If a preset uses a tempo value different from 0, then you have to set the tempo manually after loading the preset.
+
+There's still some issues with the preset loading from a bookmarked URL.
+
+It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when the footswitch is pressed, but not for when it is released.
+
+
+MIDI in your browser
+====================
 
 You need to allow your browser to use your MIDI device:
 
