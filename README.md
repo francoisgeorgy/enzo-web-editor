@@ -9,9 +9,11 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 Requirements
 ============
 
-- This application requires a browser that support the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, only **Chrome** and **Opera** support this standard. This app will therefore _not_ work in Firefox, Safari, IE or Edge. 
+- A browser that support the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, 
+only **Chrome** and **Opera** support this standard. 
 - A [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface.
-- A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, you can use a MIDI bluetooth interface plugged into the Meris MIDI I/O interface. 
+- A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, 
+you can use a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
 
 
 Usage
@@ -30,8 +32,8 @@ Usage
 11. Enjoy your Enzo!
 
 
-MIDI (Enzo)
------------
+MIDI on the Enzo
+----------------
 
 If you can't get the MIDI communication working, check the following on the Enzo:
 
@@ -50,8 +52,8 @@ the [Meris MIDI I/O User Manual](https://www.meris.us/wp-content/uploads/2018/03
 for instructions about how to set the Enzo's Global Settings.
 
 
-MIDI (browser)
---------------
+MIDI in the browser
+-------------------
 
 If you can't get the MIDI communication working, check the following on the browser:
 
@@ -63,13 +65,13 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 
     Web MIDI is not support under iOS (iPad, iPhone). It may work under Android but I did not test it.
 
-- The Web MIDI is not blocked by your browser. See below for information about this feature in Chrome.
+- The Web MIDI is not blocked by the browser. See below for information about this feature in Chrome.
 
 ### Web MIDI in Chrome
 
 The first time you access an application that uses the WebMIDI API, the browser will ask you for permission.
 
---screenshot--
+--TODO: screenshot--
 
 If you refuse access, then the Enzo Editor will display the following message:
 
@@ -78,53 +80,81 @@ If you refuse access, then the Enzo Editor will display the following message:
     
 You can change the permission at any time:
 
---screenshots--    
+--TODO: screenshots--    
     
-
 Menu: Settings / Advanced / Content settings / MIDI devices    
 
 Menu: Settings / search for "midi" 
 
+Application usage
+=================
+
+Setting up:
+-----------
+
+Once you have your Enzo connected to the MIDI I/O interface, you must configure the application:
+
+1. Select the input device 
+2. Select the output device
+3. Select the MIDI channel
+    You can leave the channel set to "all" but this is not recommended as this will send all messages to all channels every time and 
+    this can perturb other MIDI devices you may have connected to your computer. 
     
+The applications preferences (settings) are saved in your browser's _Local Storage_.      
+    
+Using the application:
+----------------------
 
-* Web editor
-    * Editor does not show the pedal current config
-        * Send a SysEx from the pedal
-    * Does not work
-        * Check channel
-        * Check pedal MIDI config (see above)
-        * Select input device
-        * Select output device
-        * Refresh the browser (F5)
-        * Check MIDI is allowed in the browser
-* MIDI in Chrome browser
-    * Enable / disable
-    * Menu:
-        * Paramètres 
-            * Type MIDI in the search field on top of the page or navigate:
-                * Confidentialité et sécurité / Paramètres du contenu / Appareils MIDI
-* Output only in left channel
-    * Use stereo input 
-    * Or set input to MONO
-* 
+**IMPORTANT:** please keep in mind that the application has no possibility to _read_ the Enzo settings. When the application starts, 
+the values displayed by the application will not reflect the current preset of the Enzo. 
+
+You have two possibilities to synchronize the application with the Enzo:
+
+1. From the Enzo, send the preset as Sysex Data (see _Enzo User Manual_ page 9). 
+To do that, press the Bypass LED switch while holding the ALT button. The application will tell you when it has received a 
+preset as SysEx.
+
+--TODO: screenshots--
+
+2. From the application, use the INIT or RANDOMIZE menu options to set all the values at once. 
+
+From now on, until you select a new preset, the application will show the current settings of the Enzo.
+
+### Changing preset
+
+After you select a new preset, you need to re-sync the application. In that case, in order to keep the preset settings, you can
+only send the preset as SysEx from the Enzo. After that, the application will show you the preset settings.
 
 
-## Bluetooth MIDI
+Bluetooth MIDI
+==============
 
-    * On Mac
-        * Midi configuration
+A small Bluetooth MIDI adapter such as the [Quicco Sound mi.1](https://www.thomann.de/intl/quicco_sound_mi.1_wireless_midi_adapter.htm) 
+or [Yamaha MD-BT01](https://www.thomann.de/intl/yamaha_md_bt01_wireless_midi_adapter.htm) is a very convenient way to connect the 
+MIDI I/O interface to your computer. 
+
+![Quicco Sound mi.1](/images/quicco_sound_mi1.jpg "Quicco Sound mi.1")
+
+![Yamaha MD-BT01](/images/yamaha_md_bt01.jpg "Yamaha MD-BT01")
+
+If you have a Mac, here is how to connect with such an adapter:
+
+--TODO: screenshot Mac config--    
+
+--TODO: photo MIDI I/O with adapter--
+
  
 
 
-Limitations
-===========
+Limitations of this application
+===============================
 
-This application isn't able to edit the Global configuration of the Enzo.
+This application will _not_ work in Firefox, Safari, IE or Edge because these browsers do not support the Web MIDI API. 
 
-This application does not offer presets management either.
+The application will not work under iOS (iPad, iPhone). 
 
-This application has mainly be tested with Chrome on a MacBook pro running OS X 10.14. Some tests have been done with success with Chrome under Linux Mint 17.1. 
-The application has not been thoroughly tested under Windows. Any Windows feedback is very welcome.
+This application has mainly be tested with Chrome on a MacBook pro running the latest OS release. Some tests have been 
+done with success with Chrome under Linux Mint 17.1 and with Chrome under Windows 10. 
 
 Still under active development. Feel free to log bugs/issues. This is a development I'm doing during my freetime. 
 
@@ -140,22 +170,29 @@ In case you didn't allow the use of MIDI device and want to change that, you can
 ![screenshot](/images/help-02.png "midi settings in Chrome")
 
 
-# FAQ
-
-_To be completed..._
-
-
-# Contribute
+Contribute
+==========
 
 This editor is an Open Source project. You are welcome to contribute.
 
 To contribute your bug fixes, new features, etc.: 1) fork the project, 2) create a pull-request.
 
 
-# Trademarks
+Trademarks
+==========
 
 This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.             
 
+
+License and disclaimer
+======================
+
 This application is published under [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You can view and get a copy the license at https://www.gnu.org/licenses/licenses.en.html#GPL.
