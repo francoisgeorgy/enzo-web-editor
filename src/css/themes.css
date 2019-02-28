@@ -6,10 +6,9 @@ html {
     --messages-color: #424242;
     --messages-border: #999;
 
-    --controls-row-start: 3;
-    --controls-col-start: 1;
-
     --value: #f9d000;
+    --dialog-link: #f9d000;
+
     --knob-back-border: #999;
     --knob-value: #ddd;
 
@@ -36,11 +35,10 @@ html {
     --sw-on-color: yellow;
     --sw-on-shadow-color: #1d1d01;
 
-    --default-bg-from: #454547;
-    --default-bg-to: #373738;
-
     --inset-shadow-color: #000000;
 
+    --select-color: #f9d000;
+    --select-bg: #373738;
     --select-border: #000;
 
     --on-color: #000;
@@ -48,10 +46,6 @@ html {
     --paused: #706c58;
     --running: red;
 
-}
-
-.dialog a {
-    color: var(--value);
 }
 
 #wrapper {

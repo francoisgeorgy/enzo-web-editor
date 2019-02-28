@@ -1,5 +1,3 @@
-
-// export const MSG_SEND_SYSEX = "To update the editor with the current setup of your Enzo, please send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 import {warn} from "./debug";
 import MODEL from "./model";
 

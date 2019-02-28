@@ -134,12 +134,13 @@ body {
 }
 
 #main select {
-    color: var(--value);
-    background-color: var(--default-bg-to);
+    color: var(--select-color);
+    background-color: var(--select-bg);
     border-color: var(--select-border);
     border-radius: 3px;
     margin-top: -1px;
-    font-size: 1em;
+    padding: 1px;
+    font-size: 0.9em;
 }
 
 #messages-list {
@@ -240,17 +241,23 @@ div.controls {
     color: var(--header-text);
 }
 
+/*
 #presets .header {
     text-align: left;
 }
+*/
 
+/*
 .knob-combo {
     text-align: center;
 }
+*/
 
+/*
 .no-margin {
     margin: 0;
 }
+*/
 
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
@@ -325,6 +332,10 @@ div.btc {   /* "checkbox"-like switches: */
     max-width: 80vw;
     color: #ddd;
     line-height: 140%;
+}
+
+.dialog a {
+    color: var(--dialog-link);
 }
 
 .dialog-info {

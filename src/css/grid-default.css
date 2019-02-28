@@ -1,3 +1,8 @@
+html {
+    --controls-row-start: 3;
+    --controls-col-start: 1;
+}
+
 #main.main-default {
     display: grid;
     grid-column-gap: 5px;
@@ -40,8 +45,6 @@
     justify-items: stretch;
     align-items: stretch;
 }
-
-
 
 #pitch {
     grid-row: calc(var(--controls-row-start) + 0);
