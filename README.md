@@ -144,6 +144,10 @@ If you have a Mac, here is how to connect with such an adapter:
 --TODO: photo MIDI I/O with adapter--
 
  
+MIDI tools
+==========
+
+If you use a MAc, check out the tools avaiable at https://www.snoize.com/. 
 
 
 Limitations of this application
