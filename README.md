@@ -73,6 +73,8 @@ The first time you access an application that uses the WebMIDI API, the browser 
 
 ![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
+You need to click "Allow" to authorize the application to use the Web MIDI API.
+
 If you refuse access, the application will display the following message:
 
 ![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
@@ -83,10 +85,25 @@ If you refuse access, the application will display the following message:
 You can change the permission at any time:
 
 ![Chrome change MIDI permission](/images/screenshots/chrome-midi-allow.jpg "Chrome change MIDI permission")
-    
-Menu: Settings / Advanced / Content settings / MIDI devices    
 
-Menu: Settings / search for "midi" 
+#### MIDI icon in the URL
+
+Chrome display a icon in the URL to remind you that you are on a page that have access to MIDI. You can click this icon to access the MIDI permission settings.
+
+![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon.jpg "Chrome MIDI icon in URL")
+
+![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon-dialog.jpg "Chrome MIDI icon in URL")
+
+    
+#### MIDI configuration in the browser settings:    
+    
+You can also access the MIDI permissions via the browser Settings page. 
+
+In Chrome, follow this path: Menu Settings / Advanced / Content settings / MIDI devices    
+
+You can also open the Settings page and search for "MIDI".
+
+ 
 
 Application usage
 =================
@@ -179,17 +196,6 @@ There's still some issues with the preset loading from a bookmarked URL.
 
 It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when the footswitch is pressed, but not for when it is released.
 
-
-MIDI in your browser
-====================
-
-You need to allow your browser to use your MIDI device:
-
-![screenshot](/images/help-01.png "midi settings in Chrome")
-
-In case you didn't allow the use of MIDI device and want to change that, you can right-click on the URL icon and change the setting:
-        
-![screenshot](/images/help-02.png "midi settings in Chrome")
 
 
 Contribute
