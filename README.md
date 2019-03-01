@@ -73,12 +73,13 @@ The first time you access an application that uses the WebMIDI API, the browser 
 
 ![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
+If you refuse access, the application will display the following message:
 
-If you refuse access, then the Enzo Editor will display the following message:
+![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
 
     Waiting for MIDI interface access...
     ERROR: WebMidi could not be enabled.
-    
+           
 You can change the permission at any time:
 
 ![Chrome change MIDI permission](/images/screenshots/chrome-midi-allow.jpg "Chrome change MIDI permission")
@@ -108,6 +109,11 @@ Using the application:
 
 **IMPORTANT:** please keep in mind that the application has no possibility to _read_ the Enzo settings. When the application starts, 
 the values displayed by the application will not reflect the current preset of the Enzo. 
+
+The application will tell remind you to send a Sysex from the Enzo:
+
+![Send SysEx reminder](/images/screenshots/message-send-sysex.jpg "Send SysEx reminder")
+
 
 You have two possibilities to synchronize the application with the Enzo:
 
