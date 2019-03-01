@@ -26,7 +26,7 @@ Usage
 5. Connect the MIDI I/O interface to your computer.
 6. Open https://sysex.io/enzo/editor 
 7. Allow the browser to access your MIDI devices.
-8. In the top-right of the application, select the MIDI input and output devices corresponding to the the MIDI I/O and the MIDI port corresponding to your Enzo MIDI port setting.
+8. In the top-right of the application, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Enzo MIDI port setting.
 9. Move a knob on your Enzo, the corresponding on-screen control must move accordingly. This tests the MIDI IN communication.
 10. Play some sound through the Enzo and move a knob on the Editor. The sound should change as if you have moved the same control on the Enzo. This tests the MIDI OUT communication.
 11. Enjoy your Enzo!
@@ -88,7 +88,7 @@ You can change the permission at any time:
 
 #### MIDI icon in the URL
 
-Chrome display a icon in the URL to remind you that you are on a page that have access to MIDI. You can click this icon to access the MIDI permission settings.
+Chrome display an icon in the URL to remind you that you are on a page that have access to MIDI. You can click this icon to access the MIDI permission settings.
 
 ![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon.jpg "Chrome MIDI icon in URL")
 
@@ -171,7 +171,7 @@ If you have a Mac, use the Audio MIDI Setup application.
 MIDI tools
 ==========
 
-If you use a Mac, check out the tools avaiable at https://www.snoize.com/. 
+If you use a Mac, check out the tools available at https://www.snoize.com/. 
 
 
 Limitations of this application
