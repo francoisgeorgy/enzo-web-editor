@@ -3,7 +3,7 @@ Enzo web editor
 
 Control your Meris Enzo pedal with your web browser. View all the pedal's settings at once.
 
---screenshot--
+![Enzo Editor screenshot](/images/enzo-editor-436x322.jpg "Enzo Editor screenshot")
 
 
 Requirements
@@ -71,7 +71,8 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 
 The first time you access an application that uses the WebMIDI API, the browser will ask you for permission.
 
---TODO: screenshot--
+![Chrome asks for MIDI permission](/images/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
+
 
 If you refuse access, then the Enzo Editor will display the following message:
 
