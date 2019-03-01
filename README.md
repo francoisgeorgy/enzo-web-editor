@@ -3,7 +3,7 @@ Enzo web editor
 
 Control your Meris Enzo pedal with your web browser. View all the pedal's settings at once.
 
-![Enzo Editor screenshot](/images/enzo-editor-436x322.jpg "Enzo Editor screenshot")
+![Enzo Editor screenshot](/images/screenshots/enzo-editor-436x322.jpg "Enzo Editor screenshot")
 
 
 Requirements
@@ -71,7 +71,7 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 
 The first time you access an application that uses the WebMIDI API, the browser will ask you for permission.
 
-![Chrome asks for MIDI permission](/images/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
+![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
 
 If you refuse access, then the Enzo Editor will display the following message:
@@ -81,7 +81,7 @@ If you refuse access, then the Enzo Editor will display the following message:
     
 You can change the permission at any time:
 
---TODO: screenshots--    
+![Chrome change MIDI permission](/images/screenshots/chrome-midi-allow.jpg "Chrome change MIDI permission")
     
 Menu: Settings / Advanced / Content settings / MIDI devices    
 
@@ -115,7 +115,7 @@ You have two possibilities to synchronize the application with the Enzo:
 To do that, press the Bypass LED switch while holding the ALT button. The application will tell you when it has received a 
 preset as SysEx.
 
---TODO: screenshots--
+![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
 
 2. From the application, use the INIT or RANDOMIZE menu options to set all the values at once. 
 
@@ -134,9 +134,9 @@ A small Bluetooth MIDI adapter such as the [Quicco Sound mi.1](https://www.thoma
 or [Yamaha MD-BT01](https://www.thomann.de/intl/yamaha_md_bt01_wireless_midi_adapter.htm) is a very convenient way to connect the 
 MIDI I/O interface to your computer. 
 
-![Quicco Sound mi.1](/images/quicco_sound_mi1.jpg "Quicco Sound mi.1")
+![Quicco Sound mi.1](/images/quicco_sound_mi1-33.jpg "Quicco Sound mi.1")
 
-![Yamaha MD-BT01](/images/yamaha_md_bt01.jpg "Yamaha MD-BT01")
+![Yamaha MD-BT01](/images/yamaha_md_bt01-33.jpg "Yamaha MD-BT01")
 
 If you have a Mac, here is how to connect with such an adapter:
 
