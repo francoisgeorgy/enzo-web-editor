@@ -102,11 +102,10 @@ You can also access the MIDI permissions via the browser Settings page.
 In Chrome, follow this path: Menu Settings / Advanced / Content settings / MIDI devices    
 
 You can also open the Settings page and search for "MIDI".
-
  
 
-Application usage
-=================
+Using the Editor
+================
 
 Setting up:
 -----------
@@ -121,8 +120,8 @@ Once you have your Enzo connected to the MIDI I/O interface, you must configure 
     
 The applications preferences (settings) are saved in your browser's _Local Storage_.      
     
-Using the application:
-----------------------
+Synchronizing to Enzo with Sysex:
+---------------------------------
 
 **IMPORTANT:** please keep in mind that the application has no possibility to _read_ the Enzo settings. When the application starts, 
 the values displayed by the application will not reflect the current preset of the Enzo. 
@@ -161,9 +160,10 @@ MIDI I/O interface to your computer.
 
 ![Yamaha MD-BT01](/images/yamaha_md_bt01-33.jpg "Yamaha MD-BT01")
 
-If you have a Mac, here is how to connect with such an adapter:
+If you have a Mac, use the Audio MIDI Setup application. 
 
---TODO: screenshot Mac config--    
+![Mac Audio Setup Application](/images/screenshots/mac-audio-setup.jpg "Mac Audio Setup Application")
+
 
 --TODO: photo MIDI I/O with adapter--
 
@@ -171,7 +171,7 @@ If you have a Mac, here is how to connect with such an adapter:
 MIDI tools
 ==========
 
-If you use a MAc, check out the tools avaiable at https://www.snoize.com/. 
+If you use a Mac, check out the tools avaiable at https://www.snoize.com/. 
 
 
 Limitations of this application
@@ -190,12 +190,13 @@ Still under active development. Feel free to log bugs/issues. This is a developm
 Known issues
 ============
 
-The TEMPO value is not saved. If a preset uses a tempo value different from 0, then you have to set the tempo manually after loading the preset.
+The TEMPO value is not saved. If a preset uses a tempo value different from 0, then you have to set the tempo 
+manually after loading the preset.
 
 There's still some issues with the preset loading from a bookmarked URL.
 
-It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when the footswitch is pressed, but not for when it is released.
-
+It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 
+the footswitch is pressed, but not for when it is released.
 
 
 Contribute
