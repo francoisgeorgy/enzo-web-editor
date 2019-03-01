@@ -1,10 +1,11 @@
 {
     "name": "enzo-web-editor",
-    "version": "0.31.3",
+    "version": "0.31.4",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/enzo-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
     "license": "GPL-3.0-or-later",
+    "private": true,
     "devDependencies": {
         "babel-core": "^6.26.3",
         "babel-env": "^2.4.1",
