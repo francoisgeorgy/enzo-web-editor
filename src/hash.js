@@ -4,8 +4,9 @@ import * as Utils from "./utils";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
-import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
+import {settings, SETTINGS_UPDATE_URL} from "./settings";
 import {appendErrorMessage} from "./ui_messages";
+import {SYSEX_PRESET} from "./model/sysex";
 
 let ignoreNextHashChange = false;
 
@@ -32,14 +33,14 @@ export function initFromBookmark(updateConnectedDevice = true) {
     if (s) {
         log("sysex hash present");               //TODO: check that the hash is a sysex hex string
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
-        if (valid.error) {
-            log("unable to set value from hash");
-            appendErrorMessage(valid.message);
-        } else {
+        if (valid.type === SYSEX_PRESET) {
             log("sysex loaded in device");
             updateUI();
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
+        } else {
+            log("hash value is not a preset sysex");
+            appendErrorMessage(valid.message);
         }
     }
     return false;

@@ -5,6 +5,7 @@ import {hexy} from "hexy";
 import "./print.css";
 import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
+import {SYSEX_PRESET} from "../model/sysex";
 
 function renderControlName(control_number) {
     return MODEL.control[control_number].name;
@@ -49,7 +50,7 @@ function loadTemplate(data, filename) {
         let ok = false;
         if (data) {
             const valid = MODEL.setValuesFromSysEx(data);
-            if (valid.error) {
+            if (valid.type !== SYSEX_PRESET) {                  //FIXME: check logic
                 ok = false;
             }
         } else {
@@ -159,6 +160,7 @@ $(function () {
             // data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
             data = Utils.fromHexString(decodeURI(s));
             valid = MODEL.setValuesFromSysEx(data);
+            //FIXME: check valid.type
         } catch (error) {
             console.warn(error);
         }

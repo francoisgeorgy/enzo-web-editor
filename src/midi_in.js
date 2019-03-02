@@ -12,6 +12,8 @@ import {
     setStatus
 } from "./ui_messages";
 import {toHexString} from "./utils";
+import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
+import {updateGlobalConfig} from "./ui_global_settings";
 
 let midi_input = null;
 
@@ -105,14 +107,22 @@ export function handleSysex(data) {
     }
 
     const valid = MODEL.setValuesFromSysEx(data);
-    if (valid.error) {
-        appendErrorMessage(valid.message);
-    } else {
-        updateUI();
-        clearError();
-        // setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
-        setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
-        log("handleSysex: device updated with SysEx");
+    switch (valid.type) {
+        case SYSEX_PRESET:
+            updateUI();
+            clearError();
+            // setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
+            setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
+            // log("handleSysex: device updated with SysEx");
+            break;
+        case SYSEX_GLOBALS:
+            updateGlobalConfig();
+            clearError();
+            setStatus(`Global config settings received.`);
+            // log("handleSysex: device updated with SysEx");
+            break;
+        default:
+            appendErrorMessage(valid.message);
     }
 
 }

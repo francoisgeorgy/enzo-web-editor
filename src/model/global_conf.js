@@ -12,49 +12,49 @@ export const global_id = {
 export const global_conf = new Array(6);
 
 function defineGlobals() {
+
     global_conf[global_id.input_mode] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 11,
             mask: [0x7F]
         }
     };
     global_conf[global_id.input_level] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 12,
             mask: [0x7F]
         }
     };
     global_conf[global_id.relay_bypass] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 13,
             mask: [0x7F]
         }
     };
     global_conf[global_id.kill_dry] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 14,
             mask: [0x7F]
         }
     };
     global_conf[global_id.trails] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 16,
             mask: [0x7F]
         }
     };
     global_conf[global_id.tempo_select] = {
         name: "",
         sysex: {
-            offset: 8,
+            offset: 17,
             mask: [0x7F]
         }
     };
-
 
     // add the missing default properties
     global_conf.forEach(function (obj) {
