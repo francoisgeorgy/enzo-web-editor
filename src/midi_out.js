@@ -7,6 +7,7 @@ import {setPresetNumber} from "./ui_presets";
 import {appendMessage, monitorMessage, MSG_SEND_SYSEX} from "./ui_messages";
 import {toHexString} from "./utils";
 import {setSuppressSysexEcho} from "./midi_in";
+import {CMD_GLOBAL_REQUEST, GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 
 let midi_output = null;
 
@@ -16,6 +17,11 @@ export function getMidiOutputPort() {
 
 export function setMidiOutputPort(port) {
     midi_output = port;
+    if (port) {
+        log(`setMidiOutputPort: midi_output assigned to "${port.name}"`);
+    } else {
+        log("setMidiOutputPort: midi_output set to null");
+    }
 }
 
 
@@ -117,7 +123,7 @@ export function sendPC(pc) {
 
     setPresetNumber(pc);
 
-    appendMessage(`Select preset ${pc}`);
+    appendMessage(`Preset ${pc} selected.`);
 
     MODEL.meta.preset_id.value = pc;
 
@@ -127,9 +133,11 @@ export function sendPC(pc) {
 
         midi_output.sendProgramChange(pc, settings.midi_channel);
 
-        appendMessage(MSG_SEND_SYSEX);
+        // appendMessage(MSG_SEND_SYSEX);
     }
     logOutgoingMidiMessage("PC", pc);
+
+    setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }
 
 export function sendSysEx(data) {
@@ -141,3 +149,31 @@ export function sendSysEx(data) {
     }
     logOutgoingMidiMessage("SysEx", 0);
 }
+
+function sendSysexCommand(command) {
+    log(`sendSysexCommand(${toHexString(command)})`);
+    if (midi_output) {
+        showMidiOutActivity();
+        // setSuppressSysexEcho();
+        const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
+        midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
+        logOutgoingMidiMessage("SysEx", toHexString(data, ' '));
+    }
+}
+
+export function requestPreset() {
+    log("requestPreset");
+    sendSysexCommand(SYSEX_CMD.preset_request);
+}
+
+export function savePreset(preset_number) {
+    log("TODO: savePreset(preset_number)");
+}
+
+export function requestGlobalConfig() {
+    log("requestPreset");
+    sendSysexCommand(SYSEX_CMD.globals_request);
+}
+
+
+

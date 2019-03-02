@@ -29,3 +29,5 @@ $ receivemidi syx dev "mi.1 Bluetooth" ts
 22:34:34.074   system-exclusive hex 00 20 10 00 01 03 26 04 00 00 00 00 00 00 24 57 43 47 1F 64 00 7F 3F 00 dec
 22:34:36.694   system-exclusive hex 00 20 10 00 01 03 26 04 00 00 00 00 00 00 24 57 43 47 1F 64 00 7F 00 00 dec
 22:36:10.979   system-exclusive hex 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00 dec
+
+                                 f0 00 20 10 00 01 03 26 0b 44 5d 5d 7f 7f 3f 39 00 4b 7f 00 00 00 f7

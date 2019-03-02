@@ -8,7 +8,7 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, sendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, requestPreset, sendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setMidiInStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
@@ -183,6 +183,7 @@ function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
+    $("#menu-sync").click(() => requestPreset());
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-print-preset").click(printPreset);
     $("#menu-download-sysex").click(downloadLastSysEx);

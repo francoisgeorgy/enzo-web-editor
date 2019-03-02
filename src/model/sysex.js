@@ -3,6 +3,7 @@ import meta from "./meta.js";
 import {control_id} from "./cc";
 import {log, warn} from "../debug";
 import {toHexString} from "../utils";
+import {SYSEX_CMD} from "./constants";
 
 // will store the last sysex received (all bytes, without any transformation).
 let last_sysex = Array.from(new Uint8Array(39));
@@ -66,6 +67,18 @@ const validate = function (data) {
         };
     }
 
+    // we ignore known commands, we let the other pass
+    const cmd = data[meta.command.sysex.offset];
+    // log("***", toHexString(data), data, meta.command.sysex.offset, data[meta.command.sysex.offset], cmd);
+    if ([SYSEX_CMD.globals_request, SYSEX_CMD.patch_write, SYSEX_CMD.preset_request].includes(cmd)) {
+        log(`validate: sysex ignored (command: ${cmd.toString(16)})`);
+        return {
+            valid: false,
+            error: "ignored sysex command",
+            message: ""
+        };
+    }
+
     let last_byte = 0;
     for (let i = 0; i < data.length; i++) {
         last_byte = data[i];
@@ -73,6 +86,7 @@ const validate = function (data) {
 
     // console.log("validate, last_byte", last_byte);
     if (last_byte === SYSEX_END) {
+        log("validate: the sysex is valid");
         return {
             valid: true,
             error: "",

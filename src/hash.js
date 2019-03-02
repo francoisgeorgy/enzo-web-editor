@@ -20,8 +20,13 @@ export function updateBookmark() {
     window.location.hash = h;
 }
 
+/**
+ *
+ * @param updateConnectedDevice
+ * @returns {boolean} true if we found a valid hash to initialize from
+ */
 export function initFromBookmark(updateConnectedDevice = true) {
-    log(`initFromHash: ${window.location.hash}`);
+    log(`initFromBookmark: ${window.location.hash}`);
     // let s = Utils.getParameterByName(URL_PARAM_SYSEX);
     const s = window.location.hash.substring(1);
     if (s) {
@@ -34,8 +39,10 @@ export function initFromBookmark(updateConnectedDevice = true) {
             log("sysex loaded in device");
             updateUI();
             if (updateConnectedDevice) fullUpdateDevice();
+            return true;
         }
     }
+    return false;
 }
 
 let automationHandler = null;
