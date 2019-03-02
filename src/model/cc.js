@@ -308,7 +308,7 @@ function defineControls() {
     // add the missing default properties
     control.forEach(function (obj) {
 
-        obj.cc_number = control.indexOf(obj);   // is also the msb
+        obj.cc_number = control.indexOf(obj);
         obj.cc_type = "cc";
 
         let bits = 7;

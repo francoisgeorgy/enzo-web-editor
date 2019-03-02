@@ -29,6 +29,10 @@ export function openSettingsPanel() {
     hideDefaultPanel();
     closeAppPreferencesPanel();
     $(CONTAINER).removeClass("closed");
+
+    //TODO: request sysex
+    updateGlobalConfig();
+
     return false;
 }
 
@@ -60,4 +64,20 @@ export function setupGlobalConfig() {
         sendSysEx(MODEL.getSysexDataForGlobalConfig(setting_number, value));
     });
     return true;
+}
+
+
+/**
+ * Update the UI from the MODEL controls values.
+ */
+export function updateGlobalConfig() {
+
+    console.log(MODEL.global_conf);
+    for (let i=0; i < MODEL.global_conf.length; i++) {
+        const g = MODEL.global_conf[i];
+        console.log(g);
+        $(`#global-${g.id}-${g.value}`).prop('checked', true);
+    }
+
+    log("updateGlobalConfig done");
 }
