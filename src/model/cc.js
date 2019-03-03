@@ -31,6 +31,10 @@ const _off_when_zero = function (v) {
     return v === 0 ? 'OFF' : v;
 };
 
+const _off_when_zero_percent = function (v) {
+    return v === 0 ? 'OFF' : _percent(v);
+};
+
 const _2_steps = function (v) {
     return v < 64 ? 0 : 127;
 };
@@ -151,6 +155,7 @@ const _tempo = function (v) {
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
+        human: _percent,
         sysex: {
             offset: 22,
             mask: [0x7F]
@@ -174,6 +179,7 @@ function defineControls() {
     control[control_id.filter] = { // 17,
         name: "Filter",
         init_value: 127,
+        human: _percent,
         sysex: {
             offset: 10,
             mask: [0x7F]
@@ -190,6 +196,7 @@ function defineControls() {
     };
     control[control_id.sustain] = { // 19,
         name: "Sustain",
+        human: _percent,
         sysex: {
             offset: 12,
             mask: [0x7F]
@@ -205,7 +212,7 @@ function defineControls() {
     };
     control[control_id.modulation] = { // 21,
         name: "Modulation",
-        human: _off_when_zero,
+        human: _off_when_zero_percent,
         sysex: {
             offset: 14,
             mask: [0x7F]
@@ -213,6 +220,7 @@ function defineControls() {
     };
     control[control_id.portamento] = { // 22,
         name: "Portamento",
+        human: _percent,
         sysex: {
             offset: 15,
             mask: [0x7F]
@@ -229,6 +237,7 @@ function defineControls() {
     };
     control[control_id.delay_level] = { // 24,
         name: "Delay level",
+        human: _percent,
         sysex: {
             offset: 17,
             mask: [0x7F]
@@ -236,6 +245,7 @@ function defineControls() {
     };
     control[control_id.ring_modulation] = { //  25,
         name: "Ring modulation",
+        human: _percent,
         sysex: {
             offset: 18,
             mask: [0x7F]
@@ -243,6 +253,7 @@ function defineControls() {
     };
     control[control_id.filter_bandwidth] = { // 26,
         name: "Filter Q",
+        human: _percent,
         sysex: {
             offset: 19,
             mask: [0x7F]
@@ -250,6 +261,7 @@ function defineControls() {
     };
     control[control_id.delay_feedback] = { // 27,
         name: "Delay feedback",
+        human: _percent,
         sysex: {
             offset: 20,
             mask: [0x7F]

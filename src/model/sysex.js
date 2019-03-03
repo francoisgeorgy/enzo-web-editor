@@ -32,7 +32,7 @@ const validate = function (data) {
         return {
             type: SYSEX_INVALID,
             error: "invalid start byte",
-            message: ""
+            message: "Invalid header"
         };
     }
 
@@ -43,7 +43,7 @@ const validate = function (data) {
             return {
                 type: SYSEX_IGNORE,
                 error: "invalid manufacturer ID",
-                message: ""
+                message: "Invalid signature"
             };
         }
     }
@@ -53,7 +53,7 @@ const validate = function (data) {
         return {
             type: SYSEX_IGNORE,
             error: "invalid device ID",
-            message: ""
+            message: "Invalid device ID"
         };
     }
 
@@ -62,7 +62,7 @@ const validate = function (data) {
         return {
             type: SYSEX_IGNORE,
             error: "invalid group ID",
-            message: ""
+            message: "Invalid group ID"
         };
     }
 

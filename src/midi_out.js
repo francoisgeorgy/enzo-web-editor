@@ -7,7 +7,7 @@ import {setPresetNumber} from "./ui_presets";
 import {appendMessage, monitorMessage, MSG_SEND_SYSEX, setStatus} from "./ui_messages";
 import {toHexString} from "./utils";
 // import {setSuppressSysexEcho} from "./midi_in";
-import {CMD_GLOBAL_REQUEST, GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
+import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 
 let midi_output = null;
 
@@ -100,23 +100,47 @@ export function updateDevice(control_type, control_number, value_float) {
     sendCC(MODEL.setControlValue(control_type, control_number, value));
 }
 
+let fullUpdateRunning = false;
+
 /**
  * Send all values to the connected device
+ * Wait 50ms between each CC
  */
 export function fullUpdateDevice(onlyChanged = false, silent = false) {
-    if (TRACE) console.groupCollapsed(`fullUpdateDevice(${onlyChanged})`);
+
+    log(`fullUpdateDevice(${onlyChanged})`);
+
+    if (fullUpdateRunning) return;
+
+    fullUpdateRunning = true;
+
     const c = MODEL.control;
-    for (let i=0; i < c.length; i++) {
-        if (typeof c[i] === "undefined") continue;
-        if (!onlyChanged || c[i].randomized) {
-            sendCC(c[i], false);
-            c[i].randomized = false;
+
+    let i = -1;
+    function f() {
+        i = i + 1;
+        // skip undefined entries:
+        while (i < c.length && typeof c[i] === "undefined") {
+            i = i + 1;
+        }
+        if (i >= c.length) {
+            log(`fullUpdateDevice done`);
+            fullUpdateRunning = false;
+            if (!silent && midi_output) {
+                appendMessage("Current settings sent to the Enzo.")
+            }
+        } else {
+            // log(`fullUpdateDevice: send CC ${i}`);
+            if (!onlyChanged || c[i].randomized) {
+                sendCC(c[i], false);
+                c[i].randomized = false;
+            }
+            setTimeout(f, 50);
         }
     }
-    if (!silent && midi_output) {
-        appendMessage("Current settings sent to the Enzo.")
-    }
-    if (TRACE) console.groupEnd();
+
+    f();
+
 }
 
 export function sendPC(pc) {
@@ -170,6 +194,7 @@ export function requestPreset() {
 
 export function savePreset(preset_number) {
     log("TODO: savePreset(preset_number)");
+    // sendSysexCommand(SYSEX_CMD.preset_write);
 }
 
 export function requestGlobalConfig() {

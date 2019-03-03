@@ -31,3 +31,34 @@ $ receivemidi syx dev "mi.1 Bluetooth" ts
 22:36:10.979   system-exclusive hex 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00 dec
 
                                  f0 00 20 10 00 01 03 26 0b 44 5d 5d 7f 7f 3f 39 00 4b 7f 00 00 00 f7
+
+
+
+sendmidi dev "mi.1 Bluetooth" system-exclusive hex 00 20 10 00 01 03 26 01 06 7b 7f 21 7b 39 00 54 7f 00 66 00 7f 00 7f 00 7f 40 7b 7f 21 7b 39 00 54 7f 00 66 00
+
+sendmidi dev "mi.1 Bluetooth" system-exclusive hex 00 20 10 00 01 03 26 10 5a 7f 52 00 60 00 00 4b 51 00 00 3f 7f 7f 00 00 22 3c 55 7f 00 5e 00 00 4d 00 00 70 00
+
+
+
+$ xxd -g 1 -c 39 Enzo_01_PolySwell.syx
+00000000: f0 00 20 10 00 01 03 26 01 06 7b 7f 21 7b 39 00 54 7f 00 66 00 7f 00 7f 00 7f 40 7b 7f 21 7b 39 00 54 7f 00 66 00 f7  .. ....&..{.!{9.T..f......@{.!{9.T..f..
+
+sendmidi dev "mi.1 Bluetooth" system-exclusive hex 00 20 10 00 01 03 26 01 06 7b 7f 21 7b 39 00 54 7f 00 66 00 7f 00 7f 00 7f 40 7b 7f 21 7b 39 00 54 7f 00 66 00
+
+
+$ receivemidi cc syx dev "mi.1 Bluetooth"
+system-exclusive hex 00 20 10 00 01 03 26 01 06 7B 7F 21 7B 39 00 54 7F 00 66 00 7F 00 7F 00 7F 40 7B 7F 21 7B 39 00 54 7F 00 66 00 dec
+
+$ sendmidi dev "mi.1 Bluetooth" system-exclusive hex 00 20 10 00 01 03 25
+
+$ receivemidi cc syx dev "mi.1 Bluetooth"
+system-exclusive hex 00 20 10 00 01 03 26 01 06 7B 7F 21 7B 39 00 54 7F 00 66 00 7F 00 7F 00 7F 40 7B 7F 21 7B 39 00 54 7F 00 66 00 dec
+system-exclusive hex 00 20 10 00 01 03 26 0D 40 7B 7F 7F 7A 39 61 54 7F 6E 62 00 7F 00 7F 7F 35 74 7B 7F 7F 7A 1F 61 54 7F 00 62 00 dec
+system-exclusive hex 00 20 10 00 01 03 25 dec
+
+
+sendmidi dev "mi.1 Bluetooth" pc 1
+
+system-exclusive hex 00 20 10 00 01 03 26 01 43 5E 47 00 4D 00 3A 00 00 37 00 00 00 00 3F 00 39 0F 08 0F 00 00 25 00 54 7F 00 66 00 dec
+system-exclusive hex 00 20 10 00 01 03 25 dec
+

@@ -27,5 +27,5 @@ export const SYSEX_CMD = {
     preset_response: 0x26,      // TO BE CONFIRMED
     globals_request: 0x27,
     globals_response: 0x28,     // TO BE CONFIRMED
-    patch_write: 0x29
+    preset_write: 0x29
 };
