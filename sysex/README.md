@@ -27,6 +27,10 @@ Note: "Japanese Group" manufacturers have only one ID byte. See [https://www.mid
 - **Mask**: mask to apply to the above bytes to get the bits relative to the parameter
 - **Bits**: how many bits form the value
 
+For Enzo, the start of the sysex is always:
+
+    F0 00 20 10 <midi chan> 01 03 <cmd>
+
 
 | Offset | Bytes | Hex mask   | Bin mask            | Bits | Description |
 | ------:| -----:| :--------- | :------------------ | ----:| ----------- |
@@ -34,7 +38,7 @@ Note: "Japanese Group" manufacturers have only one ID byte. See [https://www.mid
 |      4 |     1 | `7F`       | `01111111         ` |    7 | Prod ID (user definable, matches midi channel) |
 |      5 |     1 | `7F`       | `01111111         ` |    7 | Group ID (01 = pedal series) |
 |      6 |     1 | `7F`       | `01111111         ` |    7 | Model # (0=Ottobit Jr, 1=Mercury7, 2=Polymoon, 3=Enzo) |
-|      7 |     1 | `7F`       | `01111111         ` |    7 | ? |
+|      7 |     1 | `7F`       | `01111111         ` |    7 | Command |
 |      8 |     1 | `7F`       | `01111111         ` |    7 | Preset number |
 |      9 |     1 | `7F`       | `01111111`          |    7 | Pitch (CC 16) |
 |     10 |     1 | `7F`       | `01111111`          |    7 | Filter (CC 17) |

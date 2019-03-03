@@ -149,6 +149,28 @@ After you select a new preset, you need to re-sync the application. In that case
 only send the preset as SysEx from the Enzo. After that, the application will show you the preset settings.
 
 
+
+Out of sync
+-----------
+
+The application can become out-of-sync with the Enzo in that situation:
+
+1. The application is not yet connected to Enzo
+2. On the Enzo a preset has been loaded
+3. On the Enzo, Some values have been modified
+4. The application is started
+    a. The application will read the current preset settings
+    b. Enzo will send the value saved in memory for the current preset. It will _not_ send the current values of the knobs and buttons. 
+    
+To avoid this problem:
+
+- Possibility 1: Always sends a PC before reading a preset. The current configuration (not saved) will be lost and replaced by the saved preset.
+- Possibility 2: Save the current configuration then read the preset. This will overwrite the previously saved preset.   
+
+
+
+
+
 Bluetooth MIDI
 ==============
 

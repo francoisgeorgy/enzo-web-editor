@@ -183,7 +183,7 @@ function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    $("#menu-read").click(() => requestPreset());       //TODO: create function
+    // $("#menu-read").click(() => requestPreset());       //TODO: create function
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-print-preset").click(printPreset);
     $("#menu-download-sysex").click(downloadLastSysEx);
