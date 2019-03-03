@@ -104,7 +104,7 @@ let fullUpdateRunning = false;
 
 /**
  * Send all values to the connected device
- * Wait 50ms between each CC
+ * Wait 40ms between each CC
  */
 export function fullUpdateDevice(onlyChanged = false, silent = false) {
 
@@ -135,7 +135,7 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
                 sendCC(c[i], false);
                 c[i].randomized = false;
             }
-            setTimeout(f, 50);
+            setTimeout(f, 40);
         }
     }
 

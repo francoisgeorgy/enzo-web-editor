@@ -1,4 +1,6 @@
 
+- preferences
+    - display raw values or human values 
 
 - keyboard
     - ALT: show help keys

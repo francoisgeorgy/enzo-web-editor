@@ -9,7 +9,7 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
+import {hashSysexPresent, initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
 import "./css/lity.min.css";    // order important
 import "./css/themes.css";
 import "./css/main.css";
@@ -251,8 +251,26 @@ function deviceConnected(info) {
 
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync");
-        setStatus("Request current preset");
-        requestPreset();
+
+        let initFromDevice = false;
+
+        // if we have a hash sysex we ask the user if he want to initialize from the the hash or from the pedal
+        if (hashSysexPresent()) {
+            if (window.confirm("Initialize from the bookmark sysex values?")) {
+                initFromDevice = false;
+                initFromBookmark();
+            } else {
+                initFromDevice = true;
+            }
+        } else {
+            initFromDevice = true;
+        }
+
+        if (initFromDevice) {
+            setStatus("Request current preset");
+            requestPreset();
+        }
+
     }
 
     console.groupEnd();
@@ -340,9 +358,11 @@ $(function () {
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
             // autoConnect();
+/*
             if (!initFromBookmark()) {  //TODO: ask the user if he wants to initilize from the hash or if he wants to get the pedal's current preset
                 // requestPreset();
             }
+*/
 
         }
 
