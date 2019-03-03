@@ -4,7 +4,15 @@ import MODEL from "./model";
 import {detect} from "detect-browser";
 import {VERSION} from "./constants";
 import {loadSettings, saveSettings, settings} from "./settings";
-import {clearError, clearStatus, MSG_SEND_SYSEX, setMidiInStatus, setStatus, setStatusError} from "./ui_messages";
+import {
+    appendMessage,
+    clearError,
+    clearStatus,
+    MSG_SEND_SYSEX,
+    setMidiInStatus,
+    setStatus,
+    setStatusError
+} from "./ui_messages";
 import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
@@ -250,31 +258,33 @@ function deviceConnected(info) {
     updateSelectDeviceList();
 
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
-        log("deviceConnected: we can sync");
+        log("deviceConnected: we can sync", settings.init_from_bookmark);
 
-        let initFromDevice = false;
+        // let initFromDevice = false;
 
         // if we have a hash sysex we ask the user if he want to initialize from the the hash or from the pedal
-        if (hashSysexPresent()) {
-            if (window.confirm("Initialize from the bookmark sysex values?")) {
-                initFromDevice = false;
+        if (hashSysexPresent() && settings.init_from_bookmark === 1) {
+            // if (window.confirm("Initialize from the bookmark sysex values?")) {
+            // if (settings.init_from_bookmark) {
+            //     initFromDevice = false;
                 initFromBookmark();
-            } else {
-                initFromDevice = true;
-            }
+            // } else {
+            //     initFromDevice = true;
+            // }
         } else {
-            initFromDevice = true;
-        }
-
-        if (initFromDevice) {
+            // initFromDevice = true;
             setStatus("Request current preset");
             requestPreset();
         }
 
+        // if (initFromDevice) {
+        //     setStatus("Request current preset");
+        //     requestPreset();
+        // }
+
     }
 
     console.groupEnd();
-
 }
 
 /**

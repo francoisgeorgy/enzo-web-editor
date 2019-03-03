@@ -11,6 +11,7 @@ import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
+import {switchKnobsDisplay} from "./ui_knobs";
 
 
 function toggleBypass() {
@@ -73,9 +74,9 @@ export function setupKeyboard() {
 
     keyPresses.subscribe(function(e) {
         if (e.type === "keydown") {
-            keyDown(e.keyCode, e.altKey, e.shiftKey);
+            keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
         } else if (e.type === "keyup") {
-            keyUp(e.keyCode, e.altKey, e.shiftKey);
+            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
         }
     });
 
@@ -97,9 +98,9 @@ function animateTo(cc, to) {
     // });
 }
 
-function keyDown(code, alt, shift) {
+function keyDown(code, alt, shift, meta) {
 
-    log("keyDown", code, alt, shift);
+    log("keyDown", code, alt, shift, meta);
 
     if (code === 48) {   // 0
         setPresetNumber(10);
@@ -119,10 +120,11 @@ function keyDown(code, alt, shift) {
     switch (code) {
         case 18:                // ALT
             $(".header-shortcut").removeClass("hidden");
+            switchKnobsDisplay(true);
             break;
     }
 
-    if (!alt && !shift) {
+    if (!alt && !shift && !meta) {
         switch (code) {
             case 67:                // C
                 animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
@@ -224,10 +226,11 @@ function keyDown(code, alt, shift) {
 }
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code, alt, shift) {
+function keyUp(code, alt, shift, meta) {
     switch (code) {
         case 18:                // ALT
             $(".header-shortcut").addClass("hidden");
+            switchKnobsDisplay(false);
             break;
         case 27:                // close all opened panel with ESC key
             closeAppPreferencesPanel();

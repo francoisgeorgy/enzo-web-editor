@@ -48,3 +48,24 @@ export function setupKnobs(userActionCallback) {
     }
 
 } // setupKnobs
+
+/**
+ *
+ */
+export function switchKnobsDisplay(display_raw_value = false) {
+
+    log("switchKnobsDisplay()");
+
+/*
+    for (const id in knobs) {
+        if (knobs.hasOwnProperty(id)) {
+            //no a property from prototype chain
+            knobs[id].config = {
+                format: display_raw_value ? v => v : v => c.human(v)
+            };
+
+        }
+    }
+*/
+
+} // setupKnobs
