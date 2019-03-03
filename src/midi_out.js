@@ -4,9 +4,9 @@ import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
-import {appendMessage, monitorMessage, MSG_SEND_SYSEX} from "./ui_messages";
+import {appendMessage, monitorMessage, MSG_SEND_SYSEX, setStatus} from "./ui_messages";
 import {toHexString} from "./utils";
-import {setSuppressSysexEcho} from "./midi_in";
+// import {setSuppressSysexEcho} from "./midi_in";
 import {CMD_GLOBAL_REQUEST, GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 
 let midi_output = null;
@@ -141,10 +141,11 @@ export function sendPC(pc) {
 }
 
 export function sendSysEx(data) {
-    log("sendSysEx", toHexString(data, ' '), data);
+    log(`%csendSysEx: ${toHexString(data, ' ')}`, "color: red; font-weight: bold");
+    // log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
     if (midi_output) {
         showMidiOutActivity();
-        setSuppressSysexEcho();
+        // setSuppressSysexEcho(); //TODO: still needed?
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
     }
     logOutgoingMidiMessage("SysEx", 0);
@@ -152,13 +153,14 @@ export function sendSysEx(data) {
 
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command)})`);
-    if (midi_output) {
-        showMidiOutActivity();
-        // setSuppressSysexEcho();
-        const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
-        midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
-        logOutgoingMidiMessage("SysEx", toHexString(data, ' '));
-    }
+    sendSysEx([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
+    // if (midi_output) {
+    //     showMidiOutActivity();
+    //     // setSuppressSysexEcho();
+    //     const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
+    //     midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
+    //     logOutgoingMidiMessage("SysEx", toHexString(data, ' '));
+    // }
 }
 
 export function requestPreset() {
@@ -171,7 +173,7 @@ export function savePreset(preset_number) {
 }
 
 export function requestGlobalConfig() {
-    log("requestPreset");
+    log("requestGlobalConfig");
     sendSysexCommand(SYSEX_CMD.globals_request);
 }
 

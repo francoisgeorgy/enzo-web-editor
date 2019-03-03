@@ -99,6 +99,8 @@ function animateTo(cc, to) {
 
 function keyDown(code, alt, shift) {
 
+    log("keyDown", code, alt, shift);
+
     if (code === 48) {   // 0
         setPresetNumber(10);
         sendPC(10);
@@ -118,101 +120,106 @@ function keyDown(code, alt, shift) {
         case 18:                // ALT
             $(".header-shortcut").removeClass("hidden");
             break;
-        case 67:                // C
-            animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
-            // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 0, animate_callback);
-            break;
-        case 86:                // V
-            animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
-            // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 127);
-            break;
-        case 70:                // F
-            animateTo(MODEL.control_id.filter, shift ? 63 : 0);
-            break;
-        case 71:                // G
-            animateTo(MODEL.control_id.filter, shift ? 63 : 127);
-            break;
-        case 72:                // H
-            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
-            break;
-        case 74:                // J
-            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
-            break;
-        case 75:                // K    delay level
-            animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
-            break;
-        case 76:                // L    delay level
-            animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
-            break;
-        case 89:                // Y    min mix
-            animateTo(MODEL.control_id.mix, shift ? 63 : 0);
-            break;
-        case 88:                // X    max mix
-            animateTo(MODEL.control_id.mix, shift ? 63 : 127);
-            break;
-        case 8:                 // DEL  min sustain
-            animateTo(MODEL.control_id.sustain, 0);
-            break;
-        case 66:                // B    min sustain
-            animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
-            break;
-        case 78:                // N    max sustain
-            animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
-            break;
-        case 84:                // T            tap
-            tapDown("cc-28-127");
-            break;
-        case 90:                // Z
-            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
-            break;
-        case 85:                // U
-            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
-            break;
-        case 32:                // SPACE
-            toggleBypass();
-            break;
-        case 109:               // num keypad "-"
-            animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
-            break;
-        case 107:               // num keypad "+"
-            animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
-            break;
-        case 79:                   // O
-            const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
-            animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
-            break;
-        case 82:                // R Randomize
-            randomize();
-            break;
-        case 77:                // M Mono
-            selectMono();
-            break;
-        case 80:                // P Poly
-            selectPoly();
-            break;
-        case 65:                // A ARP
-            selectArp();
-            break;
-        case 68:                // D Dry
-            selectDry();
-            break;
-        case 73:                // I Init
-            init();
-            break;
-        case 81:                // Q Squarewave
-            selectSquarewave();
-            break;
-        case 87:                // W Sawtooth wave
-            selectSawtooth();
-            break;
-        case 38:                // Up arrow
-        case 39:                // Right arrow
-            presetInc(handleUserAction);
-            break;
-        case 40:                // Down arrow
-        case 37:                // Left arrow
-            presetDec(handleUserAction);
-            break;
+    }
+
+    if (!alt && !shift) {
+        switch (code) {
+            case 67:                // C
+                animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 0, animate_callback);
+                break;
+            case 86:                // V
+                animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 127);
+                break;
+            case 70:                // F
+                animateTo(MODEL.control_id.filter, shift ? 63 : 0);
+                break;
+            case 71:                // G
+                animateTo(MODEL.control_id.filter, shift ? 63 : 127);
+                break;
+            case 72:                // H
+                animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
+                break;
+            case 74:                // J
+                animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
+                break;
+            case 75:                // K    delay level
+                animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
+                break;
+            case 76:                // L    delay level
+                animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
+                break;
+            case 89:                // Y    min mix
+                animateTo(MODEL.control_id.mix, shift ? 63 : 0);
+                break;
+            case 88:                // X    max mix
+                animateTo(MODEL.control_id.mix, shift ? 63 : 127);
+                break;
+            case 8:                 // DEL  min sustain
+                animateTo(MODEL.control_id.sustain, 0);
+                break;
+            case 66:                // B    min sustain
+                animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
+                break;
+            case 78:                // N    max sustain
+                animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
+                break;
+            case 84:                // T            tap
+                tapDown("cc-28-127");
+                break;
+            case 90:                // Z
+                animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
+                break;
+            case 85:                // U
+                animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
+                break;
+            case 32:                // SPACE
+                toggleBypass();
+                break;
+            case 109:               // num keypad "-"
+                animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
+                break;
+            case 107:               // num keypad "+"
+                animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
+                break;
+            case 79:                   // O
+                const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
+                animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
+                break;
+            case 82:                // R Randomize
+                randomize();
+                break;
+            case 77:                // M Mono
+                selectMono();
+                break;
+            case 80:                // P Poly
+                selectPoly();
+                break;
+            case 65:                // A ARP
+                selectArp();
+                break;
+            case 68:                // D Dry
+                selectDry();
+                break;
+            case 73:                // I Init
+                init();
+                break;
+            case 81:                // Q Squarewave
+                selectSquarewave();
+                break;
+            case 87:                // W Sawtooth wave
+                selectSawtooth();
+                break;
+            case 38:                // Up arrow
+            case 39:                // Right arrow
+                presetInc(handleUserAction);
+                break;
+            case 40:                // Down arrow
+            case 37:                // Left arrow
+                presetDec(handleUserAction);
+                break;
+        }
     }
 }
 

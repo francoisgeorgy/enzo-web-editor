@@ -1,8 +1,9 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {sendSysEx} from "./midi_out";
+import {requestGlobalConfig, sendSysEx} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
+import {setStatus} from "./ui_messages";
 
 const CONTAINER = "#global-settings";
 // const MENU_ENTRY = "#menu-global";
@@ -26,12 +27,18 @@ export function toggleGlobalSettingsPanel() {
 */
 
 export function openSettingsPanel() {
+
+    log("openSettingsPanel()");
+
     hideDefaultPanel();
     closeAppPreferencesPanel();
     $(CONTAINER).removeClass("closed");
 
-    //TODO: request sysex
-    updateGlobalConfig();
+    setStatus("Request global config");
+    requestGlobalConfig();
+
+    // updateGlobalConfig() will be called by the sysex handler after having received the global conf sysex response.
+    // updateGlobalConfig();
 
     return false;
 }
@@ -72,10 +79,12 @@ export function setupGlobalConfig() {
  */
 export function updateGlobalConfig() {
 
-    console.log(MODEL.global_conf);
+    log("updateGlobalConfig()");
+
+    // console.log(MODEL.global_conf);
     for (let i=0; i < MODEL.global_conf.length; i++) {
         const g = MODEL.global_conf[i];
-        console.log(g);
+        // console.log(g);
         $(`#global-${g.id}-${g.value}`).prop('checked', true);
     }
 

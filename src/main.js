@@ -227,9 +227,12 @@ function deviceConnected(info) {
 
     //FIXME: use autoConnect() method
 
+    let new_connection = false;
+
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === settings.input_device_id)) {
             connectInputDevice(settings.input_device_id);
+            new_connection = true;
         } else {
             log("deviceConnected: input device ignored");
         }
@@ -238,6 +241,7 @@ function deviceConnected(info) {
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === settings.output_device_id)) {
             connectOutputDevice(settings.output_device_id);
+            new_connection = true;
         } else {
             log("deviceConnected: output device ignored");
         }
@@ -245,9 +249,10 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
-    if (getMidiInputPort() && getMidiOutputPort()) {
-        requestPreset();
+    if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync");
+        setStatus("Request current preset");
+        requestPreset();
     }
 
     console.groupEnd();
