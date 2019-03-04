@@ -33,6 +33,9 @@ export function setupKnobs(userActionCallback) {
 
         knobs[id] = new Knob(elem, KNOB_THEME_DEFAULT);
         knobs[id].config = {
+            // zero_at: 270.0,
+            // angle_min: 70.0,
+            // angle_max: 290.0,
             value_min: Math.min(...c.cc_range),
             value_max: Math.max(...c.cc_range),
             default_value: v,

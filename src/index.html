@@ -344,7 +344,7 @@
             -->
             <div id="env-type" class="grid-default">
                 <div class="header">
-                    <div>envelope type</div>
+                    <div>env type</div>
                 </div>
                 <div id="cc-9-options" class="options">
                     <div id="cc-9-0" class="bt">TRIGGERED</div>
@@ -357,19 +357,42 @@
             -->
             <div id="synth-mode" class="grid-default">
                 <div class="header">
-                    <div>synth mode</div>
+                    <div>synth</div>
                 </div>
+<!--
                 <div id="cc-29-options" class="options">
                     <div id="cc-29-0" class="bt">DRY</div>
                     <div id="cc-29-63" class="bt">MONO</div>
                     <div id="cc-29-95" class="bt">ARP</div>
                     <div id="cc-29-127" class="bt">POLY</div>
                 </div>
+-->
+                <div id="cc-29-options" class="synth-mode-grid">
+                    <div id="cc-29-0" class="bt">DRY</div>
+                    <div id="cc-29-95" class="bt">ARP</div>
+                    <div id="cc-29-63" class="bt">MONO</div>
+                    <div id="cc-29-127" class="bt">POLY</div>
+                </div>
+                <div id="cc-30-options" class="synth-wave-grid">
+                    <div id="cc-30-0" class="bt">SAW</div>
+                    <div id="cc-30-127" class="bt">SQUARE</div>
+                </div>
+<!--
+                <div id="cc-29-options" class="synth-grid">
+                    <div id="cc-29-0" style="display:flex"><div class="bt">MONO</div><div class="bt">ARP</div><div class="bt">POLY</div></div>
+                    <div id="cc-29-63" class="bt">MONO</div>
+                    <div id="cc-30-0" class="bt">SAW</div>
+                    <div id="cc-29-95" class="bt">ARP</div>
+                    <div id="cc-30-127" class="bt">SQUARE</div>
+                    <div id="cc-29-127" class="bt">POLY</div>
+                </div>
+-->
             </div>
 
             <!--
                 SYNTH WAVESHAPE
             -->
+<!--
             <div id="waveshape" class="grid-default">
                 <div class="header">
                     <div>waveshape</div>
@@ -377,6 +400,15 @@
                 <div id="cc-30-options" class="options">
                     <div id="cc-30-0" class="bt">SAWTOOTH</div>
                     <div id="cc-30-127" class="bt">SQUARE</div>
+                </div>
+            </div>
+-->
+            <div id="exp-controler" class="grid-default">
+                <div class="header">
+                    <div>EXP</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-4"></svg>
                 </div>
             </div>
 
@@ -664,16 +696,19 @@
                 <li>ESC: close dialogs and settings</li>
                 <li>SPACE BAR: Bypass on/off</li>
                 <li>0..9: presets 1..10</li>
-                <li>Up, Right, +: next preset</li>
-                <li>Down, Left, -: previous preset</li>
+                <li>Right, +: next preset</li>
+                <li>Left, -: previous preset</li>
                 <li>T: TAP</li>
                 <li>I: Init</li>
                 <li>R: Randomize</li>
                 <li>D,A,M,P: Dry, Arp, Mono, Poly</li>
                 <li>W: Sawtooth wave</li>
                 <li>Q: Square wave</li>
+                <li>PageUp: EXP max</li>
+                <li>PageDn: EXP min</li>
             </ul>
             <ul style="margin-top: 0;margin-left:40px">
+                <li>Up, Dn: animate exp</li>
                 <li>C, V: animate pitch</li>
                 <li>B, N: animate sustain</li>
                 <li>F, G: animate filter</li>

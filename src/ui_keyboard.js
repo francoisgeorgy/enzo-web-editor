@@ -57,6 +57,18 @@ function selectArp() {
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.arp);
 }
 
+function setExpMin() {
+    const c = MODEL.control[MODEL.control_id.exp_pedal];
+    updateDevice(c.cc_type, c.cc_number, 0);
+    updateControl(c.cc_type, c.cc_number, 0);
+}
+
+function setExpMax() {
+    const c = MODEL.control[MODEL.control_id.exp_pedal];
+    updateDevice(c.cc_type, c.cc_number, 127);
+    updateControl(c.cc_type, c.cc_number, 127);
+}
+
 /**
  * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
  */
@@ -213,11 +225,21 @@ function keyDown(code, alt, shift, meta) {
             case 87:                // W Sawtooth wave
                 selectSawtooth();
                 break;
+            case 33:                // PageUp
+                setExpMax();
+                break;
+            case 34:                // PageDown
+                setExpMin();
+                break;
             case 38:                // Up arrow
+                animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 127);
+                break;
             case 39:                // Right arrow
                 presetInc(handleUserAction);
                 break;
             case 40:                // Down arrow
+                animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 0);
+                break;
             case 37:                // Left arrow
                 presetDec(handleUserAction);
                 break;
