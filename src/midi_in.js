@@ -63,7 +63,7 @@ export function handlePC(msg) {
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
 
     showMidiInActivity();
-    logIncomingMidiMessage("PC", 0, msg.value);
+    logIncomingMidiMessage("PC", [msg.value]);
     setPresetNumber(msg.value);
     displayPreset();
 }
@@ -88,7 +88,7 @@ export function handleCC(msg) {
 
     showMidiInActivity();
     monitorCC(cc);
-    logIncomingMidiMessage("CC", cc, v);
+    logIncomingMidiMessage("CC", [cc, v]);
     updateModelAndUI("cc", cc, v);
 }
 

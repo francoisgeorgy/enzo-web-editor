@@ -77,7 +77,7 @@ export function sendCC(control, monitor = true) {
         log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel})`);
     }
 
-    logOutgoingMidiMessage("CC", control.cc_number, v);
+    logOutgoingMidiMessage("CC", [control.cc_number, v]);
 
 }
 
@@ -159,7 +159,7 @@ export function sendPC(pc) {
 
         // appendMessage(MSG_SEND_SYSEX);
     }
-    logOutgoingMidiMessage("PC", pc);
+    logOutgoingMidiMessage("PC", [pc]);
 
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }
@@ -172,7 +172,7 @@ export function sendSysEx(data) {
         // setSuppressSysexEcho(); //TODO: still needed?
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
     }
-    logOutgoingMidiMessage("SysEx", 0);
+    logOutgoingMidiMessage("SysEx", data);
 }
 
 function sendSysexCommand(command) {
@@ -183,7 +183,7 @@ function sendSysexCommand(command) {
     //     // setSuppressSysexEcho();
     //     const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
     //     midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
-    //     logOutgoingMidiMessage("SysEx", toHexString(data, ' '));
+    //     logOutgoingMidiMessage("SysEx", data);
     // }
 }
 
