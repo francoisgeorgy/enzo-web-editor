@@ -56,16 +56,11 @@ export function switchKnobsDisplay(display_raw_value = false) {
 
     log("switchKnobsDisplay()");
 
-/*
     for (const id in knobs) {
         if (knobs.hasOwnProperty(id)) {
-            //no a property from prototype chain
-            knobs[id].config = {
-                format: display_raw_value ? v => v : v => c.human(v)
-            };
-
+            console.log(id, knobs[id]);
+            knobs[id].setConfigValue("display_raw", display_raw_value);
         }
     }
-*/
 
 } // setupKnobs
