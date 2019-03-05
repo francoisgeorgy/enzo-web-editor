@@ -24,6 +24,7 @@ import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
+import {openHelpPanel, setupHelpPanel} from "./ui_help";
 
 /**
  * Handles a change made by the user in the UI.
@@ -190,13 +191,13 @@ function setupMenu() {
     $("#menu-midi").click(openMidiWindow);
     $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-send").click(() => {fullUpdateDevice(false); return false});
-    $("#menu-help").click(openHelpDialog);
-    $("#menu-about").click(openCreditsDialog);
     $("#preset-file").change(readFile);     // in load-preset-dialog
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
     $("#menu-global").click(openSettingsPanel);
     $("#menu-prefs").click(openAppPreferencesPanel);
+    $("#menu-help").click(openHelpPanel);
+    $("#menu-about").click(openCreditsDialog);
     $("#url-auto-toggle").click(toggleBookmarkAutomation);
     // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
@@ -220,6 +221,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupMomentarySwitches(tapDown, tapRelease);
     setupGlobalConfig();
     setupAppPreferences();
+    setupHelpPanel();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();

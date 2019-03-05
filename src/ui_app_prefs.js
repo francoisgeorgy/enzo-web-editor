@@ -5,6 +5,7 @@ import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startBookmarkAutomation, stopBookmarkAutomation} from "./hash";
+import {closeHelpPanel} from "./ui_help";
 
 const CONTAINER = "#app-preferences";
 
@@ -22,6 +23,7 @@ function displayCurrentPreferences() {
 export function openAppPreferencesPanel() {
     hideDefaultPanel();
     closeSettingsPanel();
+    closeHelpPanel();
     $(CONTAINER).removeClass("closed");
     displayCurrentPreferences();
     return false;

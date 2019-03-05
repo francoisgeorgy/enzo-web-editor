@@ -12,6 +12,7 @@ import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
+import {closeHelp, closeHelpPanel} from "./ui_help";
 
 
 function toggleBypass() {
@@ -257,6 +258,7 @@ function keyUp(code, alt, shift, meta) {
         case 27:                // close all opened panel with ESC key
             closeAppPreferencesPanel();
             closeSettingsPanel();
+            closeHelpPanel();
             showDefaultPanel();
             break;
         case 84:                // T            tap

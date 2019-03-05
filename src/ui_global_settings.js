@@ -4,6 +4,7 @@ import {requestGlobalConfig, sendSysEx} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {setStatus} from "./ui_messages";
+import {closeHelpPanel} from "./ui_help";
 
 const CONTAINER = "#global-settings";
 // const MENU_ENTRY = "#menu-global";
@@ -27,19 +28,13 @@ export function toggleGlobalSettingsPanel() {
 */
 
 export function openSettingsPanel() {
-
-    log("openSettingsPanel()");
-
     hideDefaultPanel();
     closeAppPreferencesPanel();
+    closeHelpPanel();
     $(CONTAINER).removeClass("closed");
-
     setStatus("Request global config");
     requestGlobalConfig();
-
     // updateGlobalConfig() will be called by the sysex handler after having received the global conf sysex response.
-    // updateGlobalConfig();
-
     return false;
 }
 
