@@ -49,9 +49,31 @@
                 </div>
             </div>
 
-            <div id="messages">
-                <div id="messages-list">
-                </div>
+            <!--
+                PRESET CHANGE AND QUICK ACCESS
+            -->
+            <div id="presets">
+                <!--
+                                    <div id="pc-down" class="preset preset-sel">&lt;</div>
+                                    <div id="pc-up" class="preset preset-sel">&gt;</div>
+                -->
+                <div id="pc-1" class="preset preset-id">1</div>
+                <div id="pc-2" class="preset preset-id">2</div>
+                <div id="pc-3" class="preset preset-id">3</div>
+                <div id="pc-4" class="preset preset-id">4</div>
+                <div id="pc-5" class="preset preset-id">5</div>
+                <div id="pc-6" class="preset preset-id">6</div>
+                <div id="pc-7" class="preset preset-id">7</div>
+                <div id="pc-8" class="preset preset-id">8</div>
+                <div id="pc-9" class="preset preset-id">9</div>
+                <div id="pc-10" class="preset preset-id">10</div>
+                <div id="pc-11" class="preset preset-id">11</div>
+                <div id="pc-12" class="preset preset-id">12</div>
+                <div id="pc-13" class="preset preset-id">13</div>
+                <div id="pc-14" class="preset preset-id">14</div>
+                <div id="pc-15" class="preset preset-id">15</div>
+                <div id="pc-16" class="preset preset-id">16</div>
+                <!--</div>-->
             </div>
 
             <div id="options">
@@ -108,31 +130,9 @@
                 </div>
             </div>
 
-            <!--
-                PRESET CHANGE AND QUICK ACCESS
-            -->
-            <div id="presets">
-<!--
-                    <div id="pc-down" class="preset preset-sel">&lt;</div>
-                    <div id="pc-up" class="preset preset-sel">&gt;</div>
--->
-                    <div id="pc-1" class="preset preset-id">1</div>
-                    <div id="pc-2" class="preset preset-id">2</div>
-                    <div id="pc-3" class="preset preset-id">3</div>
-                    <div id="pc-4" class="preset preset-id">4</div>
-                    <div id="pc-5" class="preset preset-id">5</div>
-                    <div id="pc-6" class="preset preset-id">6</div>
-                    <div id="pc-7" class="preset preset-id">7</div>
-                    <div id="pc-8" class="preset preset-id">8</div>
-                    <div id="pc-9" class="preset preset-id">9</div>
-                    <div id="pc-10" class="preset preset-id">10</div>
-                    <div id="pc-11" class="preset preset-id">11</div>
-                    <div id="pc-12" class="preset preset-id">12</div>
-                    <div id="pc-13" class="preset preset-id">13</div>
-                    <div id="pc-14" class="preset preset-id">14</div>
-                    <div id="pc-15" class="preset preset-id">15</div>
-                    <div id="pc-16" class="preset preset-id">16</div>
-                <!--</div>-->
+            <div id="messages">
+                <div id="messages-list">
+                </div>
             </div>
 
             <!--
@@ -185,7 +185,7 @@
                 <div class="header">
                     <div>filter type</div>
                 </div>
-                <div id="cc-23-options" class="grid-3x2">
+                <div id="cc-23-options" class="grid-3x2 controls-options-grid">
                     <div id="cc-23-0" class="bt">LP</div>
                     <div id="cc-23-87" class="bt">v. LP</div>
                     <div id="cc-23-32" class="bt">BP</div>
@@ -347,7 +347,7 @@
                 <div class="header">
                     <div>env type</div>
                 </div>
-                <div id="cc-9-options" class="options">
+                <div id="cc-9-options" class="grid-2x1 controls-options-grid">
                     <div id="cc-9-0" class="bt">TRIGGERED</div>
                     <div id="cc-9-127" class="bt">FOLLOWER</div>
                 </div>
@@ -368,13 +368,13 @@
                     <div id="cc-29-127" class="bt">POLY</div>
                 </div>
 -->
-                <div id="cc-29-options" class="synth-mode-grid">
+                <div id="cc-29-options" class="synth-mode-grid controls-options-grid">
                     <div id="cc-29-0" class="bt">DRY</div>
                     <div id="cc-29-95" class="bt">ARP</div>
                     <div id="cc-29-63" class="bt">MONO</div>
                     <div id="cc-29-127" class="bt">POLY</div>
                 </div>
-                <div id="cc-30-options" class="synth-wave-grid">
+                <div id="cc-30-options" class="synth-wave-grid controls-options-grid">
                     <div id="cc-30-0" class="bt">SAW</div>
                     <div id="cc-30-127" class="bt">SQUARE</div>
                 </div>
@@ -429,16 +429,20 @@
                 </div>
             </div>
 
-            <div id="global-settings" class="grid-global-settings closed">
+            <!--
+                GLOBAL SETTINGS
+            -->
+            <div id="global-settings" class="options-panel closed">
+
                 <div class="header">
                     <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     GLOBAL SETTINGS
                 </div>
 
-                <div style="margin:20px 0">
-                    Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />
-                    To set a global parameter, just click the radio button and the parameter will be set in the pedal.
-                </div>
+                <!--<div style="margin:20px 0">-->
+                    <!--Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />-->
+                    <!--To set a global parameter, just click the radio button and the parameter will be set in the pedal.-->
+                <!--</div>-->
 
                 <div class="settings-columns">
 
@@ -555,7 +559,11 @@
                 </div>
             </div>
 
-            <div id="app-preferences" class="grid-global-settings closed">
+            <!--
+                APP PREFERENCES
+            -->
+            <div id="app-preferences" class="options-panel closed">
+
                 <div class="header">
                     <span style="float:right" class="close-app-prefs-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     EDITOR PREFERENCES
@@ -632,7 +640,69 @@
 
             </div>
 
-        </div>
+            <!--
+                HELP
+            -->
+            <div id="help-panel" class="options-panel closed">
+
+                <div class="header">
+                    <span style="float:right" class="close-help-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
+                    HELP
+                </div>
+
+                <div id="more-help">More help online at <a href="https://sysex.io/enzo/editor/help/">sysex.io/enzo/editor/help/</a>.</div>
+
+                <h4>Instructions</h4>
+                <ol style="margin-top: 0;">
+                    <li>Allow the browser to access your MIDI devices.</li>
+                    <li>Connect your Enzo to the MIDI adapter.</li>
+                    <li>Select input & output devices and MIDI channel.</li>
+                    <li>Move a knob on your Enzo, the corresponding on-screen control must move accordingly.</li>
+                    <ul>
+                        <li>To move the knobs, use the mouse.</li>
+                        <li>Click and drag over the knob. You can also use the mousewheel.</li>
+                    </ul>
+                </ol>
+                <h4>Keyboard shortcuts:</h4>
+                <div style="display:flex;flex-direction: row">
+                    <ul style="margin-top: 0;">
+                        <li>ESC: close dialogs and settings</li>
+                        <li>0..9: presets 1..10</li>
+                        <li>Right, +: next preset</li>
+                        <li>Left, -: previous preset</li>
+                        <li>Alt: keep pressed to view raw values</li>
+                        <li>SPACE BAR: Bypass on/off</li>
+                        <li>T: TAP</li>
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                        <li>I: Init</li>
+                        <li>R: Randomize</li>
+                        <li>D,A,M,P: Dry, Arp, Mono, Poly</li>
+                        <li>W: Sawtooth wave</li>
+                        <li>Q: Square wave</li>
+                        <li>PageUp: EXP max</li>
+                        <li>PageDn: EXP min</li>
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                        <li>C, V: animate pitch</li>
+                        <li>F, G: animate filter</li>
+                        <li>H, J: animate filter Q</li>
+                        <li>Y, X: animate mix</li>
+                        <li>K, L: animate delay level</li>
+                        <li>B, N: animate sustain</li>
+                        <li>DEL: animate sustain to 0</li>
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                        <li>Up, Dn: animate exp</li>
+                        <li>Z, U: animate ring mod</li>
+                        <li>-, +: animate modulation</li>
+                        <li>O: animate portamento</li>
+                    </ul>
+                </div>
+                Use shift to play animations until 50%.
+            </div>
+
+            </div>
     </div>
 
     <div id="load-preset-dialog" class="dialog lity-hide">
@@ -678,6 +748,7 @@
         </p>
     </div>
 
+<!--
     <div id="help-dialog" class="dialog lity-hide">
         <div id="more-help">More help online at <a href="https://sysex.io/enzo/editor/help/">sysex.io/enzo/editor/help/</a>.</div>
         <h2>Instructions</h2>
@@ -727,6 +798,7 @@
             <span style="float:right">ESC to close</span>
         </div>
     </div>
+-->
 
 
 <!--

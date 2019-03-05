@@ -70,6 +70,7 @@ body {
     color: var(--running);
 }
 
+/*
 .options {
     display: flex;
     flex-direction: column;
@@ -79,6 +80,18 @@ body {
 
 .options .bt {
     width: 80%;
+}
+*/
+
+.grid-2x1 {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.grid-2x1 .bt {
+    width: 75%;
 }
 
 .grid-3x2 {
@@ -91,9 +104,9 @@ body {
     margin-bottom: 0;
 }
 
-.grid-3x2 .bt:nth-child(2n+1) {
-    margin-right: 0;
-}
+/*.grid-3x2 .bt:nth-child(2n+1) {*/
+    /*margin-right: 0;*/
+/*}*/
 
 .grid-3x3 {
     display: grid;
@@ -106,13 +119,13 @@ body {
     grid-row-gap: 5px;
 }
 
-#wrapper {
-    margin: 10px auto 0 auto;
-    padding: 0 10px;
-}
+/*#wrapper {*/
+    /*margin: 10px auto 0 auto;*/
+    /*padding: 0 10px;*/
+/*}*/
 
 #main {
-    padding: 5px;
+    /*padding: 5px;*/
     justify-content: stretch;
     align-content: stretch;
     align-items: start;
@@ -145,7 +158,7 @@ body {
 
 #messages-list {
     position: relative;
-    overflow-y: scroll;
+    overflow-y: auto;
     /*border: 1px solid var(--messages-border);*/
     color: var(--messages-color);
     background: var(--messages-bg)!important;
@@ -161,7 +174,7 @@ body {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-    padding: 4px 4px 0 4px !important;
+    /*padding: 4px 4px 0 4px !important;*/
     display: flex;
     align-items: flex-end;
     color: var(--header-text);
@@ -315,6 +328,15 @@ div.btc {   /* "checkbox"-like switches: */
 .sw-on {
     text-shadow: 0 0 8px var(--sw-on-shadow-color);
     color: var(--sw-on-color);
+}
+
+
+.options-panel .header {
+    color: var(--option-panel-header-color);
+}
+
+h4 {
+    margin: 0 0 10px 0;
 }
 
 #more-help {
