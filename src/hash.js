@@ -59,7 +59,7 @@ export function initFromBookmark(updateConnectedDevice = true) {
         if (valid.type === SYSEX_PRESET) {
             log("sysex loaded in device");
             updateUI();
-            appendMessage("Initilization from the bookmark.");
+            appendMessage("Initialization from the bookmark.");
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
         } else {

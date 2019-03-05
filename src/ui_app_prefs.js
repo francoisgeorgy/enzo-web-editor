@@ -44,7 +44,7 @@ export function setupAppPreferences() {
     });
 
     $("#settings_clear_midi_channel").click(() => {
-        saveSettings({midi_channel: "all"})
+        saveSettings({midi_channel: "all"});
         $("#midi-channel").val(settings.midi_channel);
         displayCurrentPreferences();
     });

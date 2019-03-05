@@ -5390,10 +5390,10 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg-knob@^1.7.0:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/svg-knob/-/svg-knob-1.8.3.tgz#4a5390017bb430ff10316ff262a54a6d9e83d7e2"
-  integrity sha512-NQQkJAIRRkr88xq/WxeTvYVhMdCIToLrAUzUt2dybWGiPPr17VJrzG73ElNqMn3SBgwvRI20kPuyhF8ZGZwHPg==
+svg-knob@^1.8.3:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/svg-knob/-/svg-knob-1.8.4.tgz#53554e984c9a7436b9298c0d8c7710bab380b4d0"
+  integrity sha512-PHMA6xTVwIhZ4MEX/sW5pbRrFglpeNtLJQ6NT9TMJ07JnEoDN3xkc2SCWdDSDyq8JOerk2HweueFxyzwAfMutw==
 
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"

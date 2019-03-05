@@ -95,7 +95,7 @@ const validate = function (data) {
             log("validate: sysex is globals data");
             type = SYSEX_GLOBALS;
             break;
-        case SYSEX_CMD.patch_write:
+        case SYSEX_CMD.preset_write:
             log("validate: sysex is preset write");
             type = SYSEX_IGNORE;
             break;

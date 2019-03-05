@@ -234,9 +234,11 @@ div.controls {
     color: var(--menu-text-hover)!important;
 }
 
+/*
 #tools {
     color: var(--header-text);
 }
+*/
 
 #options {
     display: flex;
@@ -277,10 +279,12 @@ div.btc {   /* "checkbox"-like switches: */
     text-align: center;
 }
 
+/*
 .preset-selection {
     display: flex;
     margin: 5px 0 10px 0;
 }
+*/
 
 .preset {
     justify-self: stretch;
@@ -343,6 +347,10 @@ h4 {
     margin: 10px 0 20px 0;
 }
 
+#more-help a {
+    color: var(--dialog-link);
+}
+
 .dialog {
     overflow:auto;
     background-color: rgba(40, 40, 40, 0.90);
@@ -360,6 +368,7 @@ h4 {
     color: var(--dialog-link);
 }
 
+/*
 .dialog-info {
     margin: 1.5rem 0 0 0;
     padding-top: 6px;
@@ -367,6 +376,7 @@ h4 {
     font-size: 0.8rem;
     color: #ddd;
 }
+*/
 
 .lity-container {
     vertical-align: top;

@@ -3,7 +3,7 @@ import MODEL from "./model";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
-import {appendErrorMessage, appendMessage} from "./ui_messages";
+import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 
 //==================================================================================================================

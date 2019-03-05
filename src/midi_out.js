@@ -127,7 +127,7 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
             log(`fullUpdateDevice done`);
             fullUpdateRunning = false;
             if (!silent && midi_output) {
-                appendMessage("Current settings sent to the Enzo.")
+                appendMessage("Current settings sent to Enzo.")
             }
         } else {
             // log(`fullUpdateDevice: send CC ${i}`);

@@ -5,10 +5,8 @@ import {detect} from "detect-browser";
 import {VERSION} from "./constants";
 import {loadSettings, saveSettings, settings} from "./settings";
 import {
-    appendMessage,
     clearError,
     clearStatus,
-    MSG_SEND_SYSEX,
     setMidiInStatus,
     setStatus,
     setStatusError
@@ -210,8 +208,6 @@ function connectOutputDevice(id) {
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
-
-
     } else {
         clearStatus();
         // setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -222,14 +218,14 @@ function connectOutputDevice(id) {
 
 /**
  * The is the event handler for the "device connected" event.
- * If we have a prefered device set in settings AND if there is no device connected yet and if the saved device corresponds
+ * If we have a preferred device set in settings AND if there is no device connected yet and if the saved device corresponds
  * to the event's device, then we connect it. Otherwise we just update the device list.
  * @param info
  */
 function deviceConnected(info) {
 
     // log("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
-    console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
+    if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
 
     // Auto-connect if not already connected.
 
@@ -284,7 +280,7 @@ function deviceConnected(info) {
 
     }
 
-    console.groupEnd();
+    if (TRACE) console.groupEnd();
 }
 
 /**
@@ -369,7 +365,7 @@ $(function () {
 
             // autoConnect();
 /*
-            if (!initFromBookmark()) {  //TODO: ask the user if he wants to initilize from the hash or if he wants to get the pedal's current preset
+            if (!initFromBookmark()) {  //TODO: ask the user if he wants to initialize from the hash or if he wants to get the pedal's current preset
                 // requestPreset();
             }
 */

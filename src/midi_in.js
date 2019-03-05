@@ -24,7 +24,7 @@ export function getMidiInputPort() {
 }
 
 export function setMidiInputPort(port) {
-    midi_input = port
+    midi_input = port;
     if (port) {
         log(`setMidiInputPort: midi_input assigned to "${port.name}"`);
     } else {

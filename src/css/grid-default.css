@@ -126,10 +126,12 @@ html {
     grid-column: calc(var(--controls-col-start) + 3);
 }
 
+/*
 #waveshape {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 4);
 }
+*/
 
 #exp-controler {
     grid-row: calc(var(--controls-row-start) + 2);
