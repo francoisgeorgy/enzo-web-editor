@@ -1,5 +1,6 @@
 import {log} from "./debug";
 import {handleUserAction} from "./ui";
+import {appendMessage} from "./ui_messages";
 
 export function updateBypassSwitch(value) {
     log("updateBypassSwitch", value);
@@ -32,9 +33,20 @@ export function updateMomentaryStompswitch(id, value) {
     }
 }
 
+let tap_timestamp = 0;
+
 export function tapDown(id) {
     updateMomentaryStompswitch(id, 127);
+    const t = Date.now();
     handleUserAction(...id.split("-"));
+    const dt = t - tap_timestamp;
+    tap_timestamp = t;
+    if (dt < 5000) {    // if more than 5 sec, reset
+        const bpm = Math.round(60000 / dt);
+        appendMessage(`TAP ${dt}ms ${bpm}bpm`);
+    } else {
+        appendMessage("TAP");
+    }
 }
 
 export function tapRelease(id) {

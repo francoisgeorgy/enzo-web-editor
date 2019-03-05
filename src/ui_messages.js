@@ -66,7 +66,8 @@ export function monitorMessage(control_number, raw_value) {
         return;
     }
     if (control_number === MODEL.control_id.tap) {
-        appendMessage(`TAP`);
+        // appendMessage(`TAP`);
+        // TAP message is generated in ui_switches/tapDown()
     } else if (control_number === MODEL.control_id.bypass) {
         appendMessage(`${c.name} ${raw_value > 0 ? 'ON' : 'OFF'}`);
     } else {
