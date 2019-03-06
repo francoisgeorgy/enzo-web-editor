@@ -5,6 +5,8 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 
 ![Enzo Editor screenshot](/images/screenshots/enzo-editor-436x322.jpg "Enzo Editor screenshot")
 
+![Open the editor](https://sysex.io/mercury7/editor/)
+
 
 Requirements
 ============
@@ -13,10 +15,10 @@ Requirements
 only **Chrome** and **Opera** support this standard. 
 - A [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface.
 - A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, 
-you can use a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
+a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
 
 
-Usage
+Setup
 =====
 
 1. Set the Enzo's EXP/MIDI connector for MIDI communication.
@@ -26,11 +28,10 @@ Usage
 5. Connect the MIDI I/O interface to your computer.
 6. Open https://sysex.io/enzo/editor 
 7. Allow the browser to access your MIDI devices.
-8. In the top-right of the application, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Enzo MIDI port setting.
-9. Move a knob on your Enzo, the corresponding on-screen control must move accordingly. This tests the MIDI IN communication.
-10. Play some sound through the Enzo and move a knob on the Editor. The sound should change as if you have moved the same control on the Enzo. This tests the MIDI OUT communication.
+8. In the top-right of the editor, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Enzo MIDI port setting.
+9. Move a knob on your Enzo, the corresponding control in the editor must react accordingly.
+10. Play some sound through the Enzo and move a knob in the editor. The sound should change as if you have moved the same control on the Enzo. 
 11. Enjoy your Enzo!
-
 
 MIDI on the Enzo
 ----------------
@@ -45,15 +46,123 @@ If you can't get the MIDI communication working, check the following on the Enzo
 - The Enzo is powered on.
 - The TSR cable is connected between one of the 4 MIDI I/O jack and the Enzo's EXP/MIDI connecter.
 - The MIDI I/O interface is connected to your PC.
-- The MIDI application uses the same channel as the Enzo's MIDI channel defined in the Global Settings.
+- The MIDI editor uses the same channel as the Enzo's MIDI channel defined in the Global Settings.
 
 Check the [Meris Enzo User Manual](https://www.meris.us/wp-content/uploads/2018/06/Meris_Enzo_Manual_v1c.pdf) and 
 the [Meris MIDI I/O User Manual](https://www.meris.us/wp-content/uploads/2018/03/Meris_MIDI_IO_Full_Manual_v1b.pdf) 
-for instructions about how to set the Enzo's Global Settings.
-
+for more informations and instructions about how to set the Enzo's Global Settings.
 
 MIDI in the browser
 -------------------
+
+You use a browser that supports the [Web MIDI](https://www.midi.org/17-the-mma/99-web-midi) API specifications. 
+
+Currently, only the following browsers [support](https://caniuse.com/#feat=midi) the Web MIDI API:
+
+- Chrome (Mac, Linux, Windows) 
+- Opera (Mac, Linux, Windows)
+
+Web MIDI is not support under iOS (iPad, iPhone). It may work under Android but I did not test it.
+
+Scroll down to [MIDI in the browser](#MIDI-in-the-browser) to get more information about how to check and setup MIDI in your browser.
+ 
+
+Using the Editor
+================
+
+Setting up
+----------
+
+Once you have your Enzo connected to the MIDI I/O interface, you must configure the editor:
+
+1. Select the input device 
+2. Select the output device
+3. Select the MIDI channel
+    * You can leave the channel set to "all" but this is not recommended as this will send every messages to all channels 
+    every time and this can perturb other MIDI devices which are connected to your computer. 
+    
+The editor's preferences (settings) are saved in your browser's _Local Storage_.      
+    
+Synchronizing Enzo and the editor
+---------------------------------
+
+**IMPORTANT:** please keep in mind that the editor only has the possibility to read the saved preset from Enzo. It can not read the _current_ values ​​of the controls. 
+These values may be different from the one saved in memory (saved as a preset).
+
+Also, do not forget that each time you access a "Alt/2nd layer" value, the preset is saved (see Enzo User Manual Section 7, page 9). 
+
+It is therefore recommended to always select a preset from the editor as first action after having opened it. After that, 
+unless the MIDI connection is interrupted, the Enzo and the editor should always remain in sync.
+    
+Saving presets
+--------------
+    
+1. Select a preset,
+2. Twist the knobs, have fun, make a great sound,
+3. Save the preset
+
+From the [Meris online FAQ](https://www.meris.us/support/): 
+> To save a preset, press one of the footswitches on the preset switch, modify your sound, then hold ALT to save."
+    
+You can not save to preset number different than the current number. 
+
+To save the preset, use the WRITE menu option in the editor or press and hold the ALT button on the Enzo. If you save on the Enzo,
+select the preset in the editor to make sure it remains in sync with the Enzo.    
+        
+Synchronizing with Sysex
+------------------------
+
+The editor can receive SysEx from the Enzo. You can use this possibility to update the editor with the current preset of the Enzo.
+You have two possibilities to synchronize the editor with the Enzo:
+
+1. From the Enzo, send the preset as Sysex Data (see _Enzo User Manual_ page 9). 
+To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
+preset as SysEx.
+
+![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
+
+Note: while you hold the ALT switch, the Enzo will save the preset before sending it. 
+ 
+Out of sync
+-----------
+
+The editor can become out-of-sync with the Enzo in that situation:
+
+1. The editor is not yet connected to Enzo.
+2. On the Enzo a preset has been loaded.
+3. On the Enzo, some values have been modified.
+4. The editor is started.
+    a. The editor will read the current preset (from the Enzo _memory_)
+    b. Enzo will send the value saved in memory for the current preset. It will not send the _current_ values of the knobs and buttons. 
+    
+To avoid this problem:
+
+- Option 1: select a preset in the editor. This will select the preset in the Enzo. Unsaved settings will be lost. 
+- Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Enzo) then select this preset from
+the editor. No settings will be lost and the editor will be in sync.   
+
+Menu commands
+-------------
+
+| icon | command | direction  | description  |
+|---|---|---|---|
+|   | Init | editor --> Enzo | Set convenient "default" values (send as CC messages, not SysEx preset). |
+|   | Randomize  | editor --> Enzo | Set random values for all controls (send as CC messages, not SysEx preset). |
+|   | Send  | editor --> Enzo | Send the current editor's values to Enzo (send as CC messages, not SysEx preset). |
+|   | Save  | editor --> Enzo | Tell the Enzo to save in memory the current settings (updates the current preset). |
+|   | URL  | editor only | Update the editor's URL with the current values. This makes a "_bookmarkable preset_". |
+|   | Print  | editor only | Open a popup window with the currents settings displayed for printing (or saving as PDF). |
+|   | Load  | editor --> Enzo | Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset). |
+|   | Download  | editor only | Download the current editor's values as a sysex file. |
+|   | Midi  | editor <--> Enzo | Open a popup displaying all the MIDI messages exchanged between the editor and the Enzo. |
+|   | Global  | editor <--> Enzo | Display and edit the Global Settings of the Enzo. |
+|   | Prefs  | editor only | Display and edit the editor's preferences. |
+|   | Help  | editor only | Display a summary of the editor usage. |
+|   | About  | editor only | Display version and credits about the editor. |
+
+
+MIDI in the browser
+===================
 
 If you can't get the MIDI communication working, check the following on the browser:
 
@@ -69,7 +178,7 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 
 ### Web MIDI in Chrome
 
-The first time you access an application that uses the WebMIDI API, the browser will ask you for permission.
+The first time you access a web page that uses the WebMIDI API, the browser will ask you for permission.
 
 ![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
@@ -102,73 +211,6 @@ You can also access the MIDI permissions via the browser Settings page.
 In Chrome, follow this path: Menu Settings / Advanced / Content settings / MIDI devices    
 
 You can also open the Settings page and search for "MIDI".
- 
-
-Using the Editor
-================
-
-Setting up:
------------
-
-Once you have your Enzo connected to the MIDI I/O interface, you must configure the application:
-
-1. Select the input device 
-2. Select the output device
-3. Select the MIDI channel
-    You can leave the channel set to "all" but this is not recommended as this will send all messages to all channels every time and 
-    this can perturb other MIDI devices you may have connected to your computer. 
-    
-The applications preferences (settings) are saved in your browser's _Local Storage_.      
-    
-Synchronizing to Enzo with Sysex:
----------------------------------
-
-**IMPORTANT:** please keep in mind that the application has no possibility to _read_ the Enzo settings. When the application starts, 
-the values displayed by the application will not reflect the current preset of the Enzo. 
-
-The application will tell remind you to send a Sysex from the Enzo:
-
-![Send SysEx reminder](/images/screenshots/message-send-sysex.jpg "Send SysEx reminder")
-
-
-You have two possibilities to synchronize the application with the Enzo:
-
-1. From the Enzo, send the preset as Sysex Data (see _Enzo User Manual_ page 9). 
-To do that, press the Bypass LED switch while holding the ALT button. The application will tell you when it has received a 
-preset as SysEx.
-
-![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
-
-2. From the application, use the INIT or RANDOMIZE menu options to set all the values at once. 
-
-From now on, until you select a new preset, the application will show the current settings of the Enzo.
-
-### Changing preset
-
-After you select a new preset, you need to re-sync the application. In that case, in order to keep the preset settings, you can
-only send the preset as SysEx from the Enzo. After that, the application will show you the preset settings.
-
-
-
-Out of sync
------------
-
-The application can become out-of-sync with the Enzo in that situation:
-
-1. The application is not yet connected to Enzo
-2. On the Enzo a preset has been loaded
-3. On the Enzo, Some values have been modified
-4. The application is started
-    a. The application will read the current preset settings
-    b. Enzo will send the value saved in memory for the current preset. It will _not_ send the current values of the knobs and buttons. 
-    
-To avoid this problem:
-
-- Possibility 1: Always sends a PC before reading a preset. The current configuration (not saved) will be lost and replaced by the saved preset.
-- Possibility 2: Save the current configuration then read the preset. This will overwrite the previously saved preset.   
-
-
-
 
 
 Bluetooth MIDI
@@ -196,17 +238,17 @@ MIDI tools
 If you use a Mac, check out the tools available at https://www.snoize.com/. 
 
 
-Limitations of this application
+Limitations of this editor
 ===============================
 
-This application will _not_ work in Firefox, Safari, IE or Edge because these browsers do not support the Web MIDI API. 
+This editor will _not_ work in Firefox, Safari, IE or Edge because these browsers do not support the Web MIDI API. 
 
-The application will not work under iOS (iPad, iPhone). 
+The editor will not work under iOS (iPad, iPhone). 
 
-This application has mainly be tested with Chrome on a MacBook pro running the latest OS release. Some tests have been 
+This editor has mainly been tested with Chrome on a MacBook pro running the latest OS release. Some tests have been 
 done with success with Chrome under Linux Mint 17.1 and with Chrome under Windows 10. 
 
-Still under active development. Feel free to log bugs/issues. This is a development I'm doing during my freetime. 
+Still under active development. Feel free to log bugs/issues.  
 
 
 Known issues
@@ -226,19 +268,24 @@ Contribute
 
 This editor is an Open Source project. You are welcome to contribute.
 
-To contribute your bug fixes, new features, etc.: 1) fork the project, 2) create a pull-request.
+The code is available at https://github.com/francoisgeorgy/enzo-web-editor.
+
+To contribute your bug fixes, new features, etc.:
+ 
+1. Fork the project.
+2. Create a pull-request.
 
 
 Trademarks
 ==========
 
-This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.             
+This editor is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.             
 
 
 License and disclaimer
 ======================
 
-This application is published under [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+This editor is published under [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
