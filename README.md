@@ -5,7 +5,7 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 
 ![Enzo Editor screenshot](/images/screenshots/enzo-editor-436x322.jpg "Enzo Editor screenshot")
 
-![Open the editor](https://sysex.io/mercury7/editor/)
+![Open the editor](https://sysex.io/enzo/editor/)
 
 
 Requirements
