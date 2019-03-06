@@ -19,7 +19,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | 57                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 127               |
 
 ### Enzo preset #2 (Enzo_02_PolyRing.syx)
 
@@ -41,7 +41,7 @@
 | Ring modulation                           | 68                |
 | Modulation                                | 19                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 127                 |
 
 ### Enzo preset #3 (Enzo_03_SparkArp.syx)
 
@@ -63,7 +63,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 8                 |
 
 ### Enzo preset #4 (Enzo_04_MonoEcho.syx)
 
@@ -85,7 +85,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | 57                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 63                 |
 
 ### Enzo preset #5 (Enzo_05_PolyGlide.syx)
 
@@ -107,7 +107,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 127               |
 
 ### Enzo preset #6 (Enzo_06_DarkArp.syx)
 
@@ -129,7 +129,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | 121               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 33                 |
 
 ### Enzo preset #7 (Enzo_07_MonoTyrell.syx)
 
@@ -151,7 +151,7 @@
 | Ring modulation                           | 49                |
 | Modulation                                | 127               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 63                 |
 
 ### Enzo preset #8 (Enzo_08_ShiftTrem.syx)
 
@@ -173,7 +173,7 @@
 | Ring modulation                           | 17                |
 | Modulation                                | 48                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 63                 |
 
 ### Enzo preset #9 (Enzo_09_BellLab.syx)
 
@@ -195,7 +195,7 @@
 | Ring modulation                           | 102               |
 | Modulation                                | 88                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 42                 |
 
 ### Enzo preset #10 (Enzo_10_Woodwind.syx)
 
@@ -217,7 +217,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | 57                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 63                 |
 
 ### Enzo preset #11 (Enzo_11_RileyCurve.syx)
 
@@ -239,7 +239,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 8                 |
 
 ### Enzo preset #12 (Enzo_12_PondBass.syx)
 
@@ -261,7 +261,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | 127               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 12                 |
 
 ### Enzo preset #13 (Enzo_13_Starland.syx)
 
@@ -283,7 +283,7 @@
 | Ring modulation                           | 110               |
 | Modulation                                | 57                |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 53                 |
 
 ### Enzo preset #14 (Enzo_14_FormantRing.syx)
 
@@ -305,7 +305,7 @@
 | Ring modulation                           | 127               |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 109                 |
 
 ### Enzo preset #15 (Enzo_15_LinkArp.syx)
 
@@ -327,7 +327,7 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 25                 |
 
 ### Enzo preset #16 (Enzo_16_ExpSweep.syx)
 
@@ -349,4 +349,4 @@
 | Ring modulation                           | 0                 |
 | Modulation                                | OFF               |
 | Tap                                       | 0                 |
-| Tempo                                     | 0                 |
+| Tempo                                     | 34                 |

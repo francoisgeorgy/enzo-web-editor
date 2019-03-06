@@ -155,16 +155,19 @@ const _tempo = function (v) {
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
-        human: _percent,
-        sysex: {
-            offset: 22,
-            mask: [0x7F]
-        }
+        human: _percent //,
+        // sysex: {
+        //     offset: ,
+        //     mask: [0x7F]
+        // }
     };
     control[control_id.tempo] = { // 15,
         name: "Tempo",
         human: _tempo,
-        //TODO: tempo from sysex
+        sysex: {
+            offset: 25,
+            mask: [0x7F]
+        }
     };
     control[control_id.pitch] = { // 16,
         name: "Pitch",

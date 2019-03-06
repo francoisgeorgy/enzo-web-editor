@@ -56,3 +56,4 @@ For Enzo, the start of the sysex is always:
 |     22 |     1 | `7F`       | `01111111`          |    7 | Envelope type (CC 9) |
 |     23 |     1 | `7F`       | `01111111`          |    7 | Synth mode (CC 29) |
 |     24 |     1 | `7F`       | `01111111`          |    7 | Waveshape (CC 30) |
+|     25 |     1 | `7F`       | `01111111`          |    7 | Tempo (CC 15) |
