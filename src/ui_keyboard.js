@@ -12,7 +12,7 @@ import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
-import {closeHelp, closeHelpPanel} from "./ui_help";
+import {closeHelpPanel} from "./ui_help";
 
 
 function toggleBypass() {

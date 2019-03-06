@@ -30,22 +30,22 @@
             <div id="title">
                 <div class="neon">ENZO</div>
                 <div class="menu">
-                    <span class="menu-entry"><a id="menu-init" href="#" title="Set all the control to a basic 'init' preset."><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
-                    <span class="menu-entry"><a id="menu-randomize" href="#" title="Set all the controls to random values."><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
-                    <!--<span class="menu-entry"><a id="menu-read" href="#" title="Read the current preset from the Enzo and update the application."><i class="fas fa-upload"></i> <span class="menu-text">Read</span></a></span>-->
-                    <span class="menu-entry"><a id="menu-send" href="#" title="Update the Enzo with the current preset."><i class="fas fa-download"></i> <span class="menu-text">Send</span></a></span>
-                    <!--<span class="menu-entry"><a id="menu-write" href="#" title="Write the current settings as preset in the Enzo."><i class="fas fa-download"></i> <span class="menu-text">Send</span></a></span>-->
-                    <span class="menu-entry"><a id="menu-get-url" href="#" title="Update the URL with the current preset values."><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
-                    <span class="menu-entry"><a id="menu-print-preset" href="#" title="Display the current preset for printing."><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
-                    <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a file."><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
-                    <span class="menu-entry"><a id="menu-download-sysex" href="#" title="Download the current preset as a sysex file."><i class="fas fa-file-download"></i> <span class="menu-text">Save</span></a></span> <!--&#8651;-->
-                    <span class="menu-entry"><a id="menu-midi" href="#" title="Open a popup that will display all the MIDI messages sent and received."><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</span></a></span>
-                    <span class="menu-entry"><a id="menu-global" href="#" title="View and edit the Global Settings of the Enzo."><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Global</span></a></span>    <!--&#x2699;-->
-                    <span class="menu-entry"><a id="menu-prefs" href="#" title="View and edit the preferences of this application."><i class="fas fa-sliders-h" aria-hidden="true"></i> <span class="menu-text">Prefs</span></a></span>    <!--&#x2699;-->
-                    <span class="menu-entry"><a id="menu-help" href="#" title="Help informations about this application."><i class="fas fa-question"></i> <span class="menu-text">Help</span></a></span>
-                    <span class="menu-entry"><a id="menu-about" href="#" title="About this application."><i class="fas fa-info"></i> <span class="menu-text">About</span></a></span>      <!--&#x3f;-->
-                    <span class="menu-entry"><a id="menu-zoom-out" href="#" title="Make the application smaller."><i class="fas fa-search-minus"></i></a></span>
-                    <span class="menu-entry"><a id="menu-zoom-in" href="#" title="Make the application bigger."><i class="fas fa-search-plus"></i></a></span>
+                    <span class="menu-entry"><a id="menu-init" href="#" title="Set convenient 'default' values (send as CC messages, not SysEx preset)."><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
+                    <span class="menu-entry"><a id="menu-randomize" href="#" title="Set random values for all controls (send as CC messages, not SysEx preset)."><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
+                    <!--<span class="menu-entry"><a id="menu-read" href="#" title="Read the current preset from the Enzo and update the editor."><i class="fas fa-upload"></i> <span class="menu-text">Read</span></a></span>-->
+                    <span class="menu-entry"><a id="menu-send" href="#" title="Send the current editor's values to Enzo (send as CC messages, not SysEx preset)."><i class="fas fa-download"></i> <span class="menu-text">Send</span></a></span>
+                    <span class="menu-entry"><a id="menu-save" href="#" title="Tell the Enzo to save in memory the current settings (updates the current preset)."><i class="fas fa-download"></i> <span class="menu-text">Save</span></a></span>
+                    <span class="menu-entry"><a id="menu-get-url" href="#" title="Update the editor's URL with the current values. This makes a 'bookmarkable preset'."><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
+                    <span class="menu-entry"><a id="menu-print-preset" href="#" title="Open a popup window with the currents settings displayed for printing (or saving as PDF)."><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
+                    <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset)."><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
+                    <span class="menu-entry"><a id="menu-download-sysex" href="#" title="Download the current editor's values as a sysex file."><i class="fas fa-file-download"></i> <span class="menu-text">Download</span></a></span> <!--&#8651;-->
+                    <span class="menu-entry"><a id="menu-midi" href="#" title="Open a popup displaying all the MIDI messages exchanged between the editor and the Enzo."><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</span></a></span>
+                    <span class="menu-entry"><a id="menu-global" href="#" title="Display and edit the Global Settings of the Enzo."><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Global</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-prefs" href="#" title="Display and edit the editor's preferences."><i class="fas fa-sliders-h" aria-hidden="true"></i> <span class="menu-text">Prefs</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-help" href="#" title="Display a summary of the editor usage."><i class="fas fa-question"></i> <span class="menu-text">Help</span></a></span>
+                    <span class="menu-entry"><a id="menu-about" href="#" title="About this editor."><i class="fas fa-info"></i> <span class="menu-text">About</span></a></span>      <!--&#x3f;-->
+                    <span class="menu-entry"><a id="menu-zoom-out" href="#" title="Make the editor smaller."><i class="fas fa-search-minus"></i></a></span>
+                    <span class="menu-entry"><a id="menu-zoom-in" href="#" title="Make the editor bigger."><i class="fas fa-search-plus"></i></a></span>
                 </div>
             </div>
 
@@ -435,7 +435,7 @@
                 </div>
 
                 <!--<div style="margin:20px 0">-->
-                    <!--Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />-->
+                    <!--Unfortunately, at the moment, the editor is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />-->
                     <!--To set a global parameter, just click the radio button and the parameter will be set in the pedal.-->
                 <!--</div>-->
 
@@ -619,7 +619,7 @@
 
                 <div class="settings-rows">
                     <div class="g0">
-                        APPLICATION SIZE
+                        EDITOR SIZE
                     </div>
                     <div></div>
                     <div>
@@ -726,7 +726,7 @@
         </p>
         <p>Enzo Web Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
         <h1 style="margin-top:20px">Credits</h1>
-        <p>This application uses the following Open Source components:</p>
+        <p>This editor uses the following Open Source components:</p>
         <ul>
             <li><a href="https://github.com/cotejp/webmidi" target="_blank" rel="noopener">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
             <li><a href="https://github.com/francoisgeorgy/svg-knob" target="_blank" rel="noopener">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
@@ -739,7 +739,7 @@
             <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto font</a> by Google.</li>
         </ul>
         <p class="trademarks">
-            This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
+            This editor is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
         </p>
     </div>
 

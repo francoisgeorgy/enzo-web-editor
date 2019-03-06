@@ -7,7 +7,7 @@ import {SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
 // will store the last sysex received (all bytes, without any transformation).
-let last_sysex = Array.from(new Uint8Array(39));
+// let last_sysex = Array.from(new Uint8Array(39));
 
 // const saveLastSysEx = function(data) {
 //     last_sysex = data;
