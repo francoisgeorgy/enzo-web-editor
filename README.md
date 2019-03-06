@@ -55,14 +55,14 @@ for more informations and instructions about how to set the Enzo's Global Settin
 MIDI in the browser
 -------------------
 
-You use a browser that supports the [Web MIDI](https://www.midi.org/17-the-mma/99-web-midi) API specifications. 
+You must use a browser that supports the [Web MIDI](https://www.midi.org/17-the-mma/99-web-midi) API specifications. 
 
 Currently, only the following browsers [support](https://caniuse.com/#feat=midi) the Web MIDI API:
 
 - Chrome (Mac, Linux, Windows) 
 - Opera (Mac, Linux, Windows)
 
-Web MIDI is not support under iOS (iPad, iPhone). It may work under Android but I did not test it.
+Web MIDI is not supported under iOS (iPad, iPhone). The editor may work under Android but I did not test it.
 
 Scroll down to [MIDI in the browser](#MIDI-in-the-browser) to get more information about how to check and setup MIDI in your browser.
  
