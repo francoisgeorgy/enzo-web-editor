@@ -93,7 +93,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
 /**
  * Set value of the controls (input and select) from the MODEL values
  */
-function updateControls() {
+export function updateControls(showExpValues = false) {
     if (TRACE) console.groupCollapsed("updateControls()");
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;

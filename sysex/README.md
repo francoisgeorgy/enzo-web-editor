@@ -57,3 +57,15 @@ For Enzo, the start of the sysex is always:
 |     23 |     1 | `7F`       | `01111111`          |    7 | Synth mode (CC 29) |
 |     24 |     1 | `7F`       | `01111111`          |    7 | Waveshape (CC 30) |
 |     25 |     1 | `7F`       | `01111111`          |    7 | Tempo (CC 15) |
+|     26 |     1 | `7F`       | `01111111`          |    7 | Pitch (CC 16) - second value when using EXP |
+|     27 |     1 | `7F`       | `01111111`          |    7 | Filter (CC 17) - second value when using EXP  |
+|     28 |     1 | `7F`       | `01111111`          |    7 | Mix (CC 18) - second value when using EXP  |
+|     29 |     1 | `7F`       | `01111111`          |    7 | Sustain (CC 19) - second value when using EXP  |
+|     30 |     1 | `7F`       | `01111111`          |    7 | Filter envelope (CC 20) - second value when using EXP  |
+|     31 |     1 | `7F`       | `01111111`          |    7 | Modulation (CC 21) - second value when using EXP  |
+|     32 |     1 | `7F`       | `01111111`          |    7 | Portamento (CC 22) - second value when using EXP  |
+|     33 |     1 | `7F`       | `01111111`          |    7 | Filter type (CC 23) - second value when using EXP  |
+|     34 |     1 | `7F`       | `01111111`          |    7 | Delay level (CC 24) - second value when using EXP  |
+|     35 |     1 | `7F`       | `01111111`          |    7 | Ring modulation (CC 25) - second value when using EXP  |
+|     36 |     1 | `7F`       | `01111111`          |    7 | Filter bandwidth (CC 26) - second value when using EXP  |
+|     37 |     1 | `7F`       | `01111111`          |    7 | Delay feedback (CC 27) - second value when using EXP  |

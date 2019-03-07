@@ -172,15 +172,28 @@ function decodeControls(data, controls) {
 
         let raw_value = data[sysex.offset] & sysex.mask[0];
 
-        // if (sysex.hasOwnProperty("f")) {
-        //     raw_value = sysex.f(raw_value);
-        // }
-
-        let final_value = 0;
-        final_value = controls[i].human(raw_value);
+        // let final_value = 0;
+        let final_value = controls[i].human(raw_value);
 
         controls[i]["raw_value"] = raw_value;
         controls[i]["value"] = final_value;
+
+        // 2nd value for the controls that support it:
+        if (control[i].hasOwnProperty("sysex2")) {
+
+            sysex = controls[i].sysex2;
+            if (!sysex.hasOwnProperty("mask")) continue;
+
+            if (sysex.offset >= data.length) {
+                // if second values not present in sysex, than we simply use the first values
+            } else {
+                raw_value = data[sysex.offset] & sysex.mask[0];
+                final_value = controls[i].human(raw_value);
+            }
+
+            controls[i]["raw_value2"] = raw_value;
+            controls[i]["value2"] = final_value;
+        }
 
         // console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
 
@@ -288,8 +301,21 @@ const getDump = function () {
     data[24] = control[control_id.synth_waveshape].raw_value;
     data[25] = control[control_id.tempo].raw_value;
 
-    data[26] = 0xF7;   // end-of-sysex marker
-    // data[38] = 0xF7;   // end-of-sysex marker
+    // values 2 (EXP)
+    data[26] = control[control_id.pitch].raw_value2;
+    data[27] = control[control_id.filter].raw_value2;
+    data[28] = control[control_id.mix].raw_value2;
+    data[29] = control[control_id.sustain].raw_value2;
+    data[30] = control[control_id.filter_envelope].raw_value2;
+    data[31] = control[control_id.modulation].raw_value2;
+    data[32] = control[control_id.portamento].raw_value2;
+    data[33] = control[control_id.filter_type].raw_value2;
+    data[34] = control[control_id.delay_level].raw_value2;
+    data[35] = control[control_id.ring_modulation].raw_value2;
+    data[36] = control[control_id.filter_bandwidth].raw_value2;
+    data[37] = control[control_id.delay_feedback].raw_value2;
+
+    data[38] = 0xF7;   // end-of-sysex marker
 
     log(data, meta.preset_id.value);
 

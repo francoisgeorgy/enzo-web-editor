@@ -13,7 +13,11 @@ function renderControlName(control_number) {
 
 function renderControlValue(control_number) {
     const c = MODEL.control[control_number];
-    return c.human(c.raw_value);
+    let s = c.human(c.raw_value);
+    if (c.two_values) {
+        s = s + ` (${c.human(c.raw_value2)})`;
+    }
+    return s;
 }
 
 function renderPreset(template, filename) {

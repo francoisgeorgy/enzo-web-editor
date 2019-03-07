@@ -74,6 +74,26 @@ const setControlValue = function () {
 };
 
 /**
+ * for each control that can be modified by EXP, do value2 = f(value1, exp_value)
+ * @param exp_value
+ */
+const interpolateExpValues = function (exp_value) {
+    for (let i = 0; i < control.length; i++) {
+        let c = control[i];
+        if (typeof c === "undefined") continue;
+        if (!c.hasOwnProperty("two_values")) {
+            continue;
+        }
+        // compute value corresponding the the EXP position (exp_value):
+        if ((exp_value === 0) || (c.raw_value2 === c.raw_value)) {
+            c.raw_value_exp = c.raw_value;
+        } else {
+            c.raw_value_exp = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
+        }
+    }
+};
+
+/**
  *
  */
 const init = function () {
@@ -157,6 +177,7 @@ export default {
     getControlValue,
     getMappedControlValue,
     setControlValue,
+    interpolateExpValues,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     getSysEx: sysex.getDump,     // export all values as a SysEx dump
     getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig,

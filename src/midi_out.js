@@ -7,6 +7,8 @@ import {setPresetNumber} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
+import {control_id} from "./model/cc";
+import {updateControls} from "./ui";
 
 let midi_output = null;
 
@@ -98,6 +100,13 @@ export function updateDevice(control_type, control_number, value_float) {
     log("updateDevice", control_type, control_number, value_float, value);
 
     sendCC(MODEL.setControlValue(control_type, control_number, value));
+
+    // EXP
+    // if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
+    //     MODEL.interpolateExpValues(value);
+    //     updateControls(true);
+    // }
+
 }
 
 let fullUpdateRunning = false;
