@@ -3,7 +3,7 @@ Enzo web editor
 
 Control your Meris Enzo pedal with your web browser. View all the pedal's settings at once.
 
-![Enzo Editor screenshot](/images/screenshots/enzo-editor-436x322.jpg "Enzo Editor screenshot")
+![Enzo Editor screenshot](/images/screenshots/enzo-editor-482x340.jpg "Enzo Editor screenshot")
 
 ![Open the editor](https://sysex.io/enzo/editor/)
 
