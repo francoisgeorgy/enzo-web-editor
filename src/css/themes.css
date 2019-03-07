@@ -7,7 +7,8 @@ html {
     --messages-border: #999;
 
     --value: #f9d000;
-    --dialog-link: #f9d000;
+    --dialog-link: #fff;
+    --panel-link: blue;
 
     --knob-back-border: #999;
     --knob-value: #ddd;

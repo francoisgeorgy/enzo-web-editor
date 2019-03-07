@@ -348,7 +348,7 @@ h4 {
 }
 
 #more-help a {
-    color: var(--dialog-link);
+    color: var(--panel-link);
 }
 
 .dialog {
