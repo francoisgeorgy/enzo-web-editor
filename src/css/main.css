@@ -213,6 +213,44 @@ div.controls {
     align-items: flex-start;
 }
 
+div.exp_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#exp-a1 {
+    grid-row: 1;
+    grid-column: 1;
+}
+#exp-a2 {
+    grid-row: 1;
+    grid-column: 2 / span 2;
+}
+#exp-a3 {
+    grid-row: 1;
+    grid-column: 3;
+}
+#exp-b1 {
+    grid-row: 2;
+    grid-column: 1;
+}
+#exp-b3 {
+    grid-row: 2;
+    grid-column: 3;
+}
+#exp-c1 {
+    grid-row: 3;
+    grid-column: 1;
+}
+#exp-c2 {
+    grid-row: 3;
+    grid-column: 2;
+}
+#exp-c3 {
+    grid-row: 3;
+    grid-column: 3;
+}
+
 div.controls-slider {
     display: flex;
     justify-content: center;
