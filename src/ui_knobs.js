@@ -2,6 +2,7 @@ import {log} from "./debug";
 import MODEL from "./model";
 import Knob from "svg-knob";
 import {KNOB_THEME_DEFAULT} from "./ui_knobs_theme";
+import {control} from "./model/cc";
 
 export const knobs = {};         // svg-knob
 
@@ -62,6 +63,31 @@ export function switchKnobsDisplay(display_raw_value = false) {
     for (const id in knobs) {
         if (knobs.hasOwnProperty(id)) {
             knobs[id].setConfigValue("display_raw", display_raw_value);
+        }
+    }
+
+} // setupKnobs
+
+export function showExpValues(display_exp_values = false) {
+
+    log("showExpValues()");
+
+    // for (const id in knobs) {
+    //     if (knobs.hasOwnProperty(id)) {
+    //         //knobs[id].setConfigValue("display_raw", display_raw_value);
+    //         knobs[id].value = display_raw_value ?
+    //     }
+    // }
+    for (let i = 0; i < control.length; i++) {
+
+        const c = control[i];
+        if (typeof c === "undefined") continue;
+        if (!c.two_values) continue;
+
+        const id = `${c.cc_type}-${c.cc_number}`;
+
+        if (knobs[id]) {
+            knobs[id].value = display_exp_values ? c.raw_value2 : c.raw_value;
         }
     }
 

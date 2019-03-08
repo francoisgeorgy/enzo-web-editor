@@ -133,6 +133,24 @@ const init = function () {
     meta.preset_id.value = 0;
 };
 
+function getRandomValue(c) {
+    let v;
+    // if (c.hasOwnProperty("randomize")) {
+    //     v = c.randomize;
+    // } else {
+    if (c.on_off) {
+        v = Math.round(Math.random());
+    } else {
+        let min = Math.min(...c.cc_range);
+        v = Math.round(Math.random() * (Math.max(...c.cc_range) - min)) + min;  //TODO: step
+    }
+    if (c.hasOwnProperty("map_raw")) {
+        v = c.map_raw(v);
+    }
+    // }
+    return v;
+}
+
 const randomize = function() {
 
     for (let i = 0; i < control.length; i++) {
@@ -142,10 +160,11 @@ const randomize = function() {
 
         if (c.no_randomize) continue;
 
+/*
         let v;
-        if (c.hasOwnProperty("randomize")) {
-            v = c.randomize;
-        } else {
+        // if (c.hasOwnProperty("randomize")) {
+        //     v = c.randomize;
+        // } else {
             if (c.on_off) {
                 v = Math.round(Math.random());
             } else {
@@ -155,9 +174,16 @@ const randomize = function() {
             if (c.hasOwnProperty("map_raw")) {
                 v = c.map_raw(v);
             }
-        }
+        // }
         c.raw_value = v;
+*/
+        c.raw_value = getRandomValue(c);
         c.randomized = true;
+
+        if (c.two_values) {
+            c.raw_value2 = getRandomValue(c);
+        }
+
     }
 
     meta.preset_id.value = 0;

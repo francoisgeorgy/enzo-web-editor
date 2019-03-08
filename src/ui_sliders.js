@@ -23,6 +23,8 @@ export function updateExpSlider(value) {
 
 export function setupSliders(userActionCallback) {
 
+
+
     log("setupSlider()");
 
     const id = "cc-4";

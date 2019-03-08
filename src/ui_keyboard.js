@@ -11,7 +11,7 @@ import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
-import {switchKnobsDisplay} from "./ui_knobs";
+import {showExpValues, switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
 
 
@@ -131,6 +131,9 @@ function keyDown(code, alt, shift, meta) {
     }
 
     switch (code) {
+        case 16:                // Shift
+            showExpValues(true);
+            break;
         case 18:                // ALT
             $(".header-shortcut").removeClass("hidden");
             switchKnobsDisplay(true);
@@ -251,6 +254,9 @@ function keyDown(code, alt, shift, meta) {
 // noinspection JSUnusedLocalSymbols
 function keyUp(code, alt, shift, meta) {
     switch (code) {
+        case 16:                // Shift
+            showExpValues(false);
+            break;
         case 18:                // ALT
             $(".header-shortcut").addClass("hidden");
             switchKnobsDisplay(false);
