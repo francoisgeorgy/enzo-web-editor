@@ -102,10 +102,10 @@ export function updateDevice(control_type, control_number, value_float) {
     sendCC(MODEL.setControlValue(control_type, control_number, value));
 
     // EXP
-    // if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
-    //     MODEL.interpolateExpValues(value);
-    //     updateControls(true);
-    // }
+    if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
+        MODEL.interpolateExpValues(value);
+        updateControls(true);
+    }
 
 }
 

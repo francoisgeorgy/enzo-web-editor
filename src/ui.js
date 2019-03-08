@@ -94,10 +94,14 @@ export function updateControl(control_type, control_number, value, mappedValue) 
  * Set value of the controls (input and select) from the MODEL values
  */
 export function updateControls(showExpValues = false) {
-    if (TRACE) console.groupCollapsed("updateControls()");
+    if (TRACE) console.groupCollapsed(`updateControls(${showExpValues})`);
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
-        updateControl(MODEL.control[i].cc_type, i, MODEL.getControlValue(MODEL.control[i]), MODEL.getMappedControlValue(MODEL.control[i]));
+        const c = MODEL.control[i];
+        updateControl(c.cc_type, i,
+            showExpValues ? MODEL.getControlValueExp(c) : MODEL.getControlValue(c),
+            showExpValues ? MODEL.getMappedControlValueExp(c) : MODEL.getMappedControlValue(c));
+        // updateControl(MODEL.control[i].cc_type, i, MODEL.getControlValue(MODEL.control[i]), MODEL.getMappedControlValue(MODEL.control[i]));
     }
     if (TRACE) console.groupEnd();
 } // updateControls()

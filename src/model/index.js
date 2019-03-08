@@ -2,6 +2,7 @@ import {control_id, control} from "./cc.js";
 import meta from "./meta.js";
 import sysex from "./sysex.js";
 import {global_conf, global_id} from "./global_conf";
+import {log} from "../debug";
 
 /**
  *
@@ -18,11 +19,29 @@ const getControl = function (number) {
  * @param ctrl
  */
 const getControlValue = function (ctrl) {
-    return "raw_value" in ctrl ? ctrl.raw_value : 0;
+    return "raw_value" in ctrl ? ctrl.raw_value : 0;        //TODO: raw_value should always exist
 };
 
 const getMappedControlValue = function (ctrl) {
-    const v = "raw_value" in ctrl ? ctrl.raw_value : 0;
+    const v = "raw_value" in ctrl ? ctrl.raw_value : 0;     //TODO: raw_value should always exist
+    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
+};
+
+const getControlValue2 = function (ctrl) {
+    return ctrl.two_values ? ctrl.raw_value2 : ctrl.raw_value;              //TODO: return null if not two_values?
+};
+
+const getMappedControlValue2 = function (ctrl) {
+    const v = ctrl.two_values in ctrl ? ctrl.raw_value2 : ctrl.raw_value;   //TODO: return null if not two_values?
+    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
+};
+
+const getControlValueExp = function (ctrl) {
+    return ctrl.two_values ? ctrl.raw_value_exp : ctrl.raw_value;
+};
+
+const getMappedControlValueExp = function (ctrl) {
+    const v = ctrl.two_values in ctrl ? ctrl.raw_value_exp : ctrl.raw_value;
     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
 };
 
@@ -74,14 +93,17 @@ const setControlValue = function () {
 };
 
 /**
- * for each control that can be modified by EXP, do value2 = f(value1, exp_value)
+ * for each control that can be modified by EXP, do value_exp = f(value_start, value_end, exp_value)
+ * raw_value and raw_value2 are not modified, they are the values saved in the preset
+ * the interpolated value is raw_value_exp
  * @param exp_value
  */
 const interpolateExpValues = function (exp_value) {
+    log("interpolateExpValues");
     for (let i = 0; i < control.length; i++) {
         let c = control[i];
         if (typeof c === "undefined") continue;
-        if (!c.hasOwnProperty("two_values")) {
+        if (!c.two_values) {
             continue;
         }
         // compute value corresponding the the EXP position (exp_value):
@@ -90,6 +112,7 @@ const interpolateExpValues = function (exp_value) {
         } else {
             c.raw_value_exp = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
         }
+        log(`interpolateExpValues: CC ${i}: ${c.raw_value_exp} = f(${c.raw_value}, ${c.raw_value2}, ${exp_value})`);
     }
 };
 
@@ -176,6 +199,8 @@ export default {
     getControl,
     getControlValue,
     getMappedControlValue,
+    getControlValueExp,
+    getMappedControlValueExp,
     setControlValue,
     interpolateExpValues,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump

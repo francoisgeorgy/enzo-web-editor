@@ -1,6 +1,7 @@
 import {log} from "./debug";
 import MODEL from "./model";
 import Knob from "svg-knob";
+import Slider from "svg-slider";
 import {KNOB_THEME_DEFAULT} from "./ui_knobs_theme";
 
 export const knobs = {};         // svg-knob
@@ -27,7 +28,7 @@ export function setupKnobs(userActionCallback) {
         if (elem === null) {
             continue;
         }
-        if (!elem.classList.contains("knob")) return;
+        if (!elem.classList.contains("knob")) continue;
 
         log(`configure #${id}: range=${c.cc_range}, init-value=${v}`);
 
@@ -49,6 +50,29 @@ export function setupKnobs(userActionCallback) {
             userActionCallback(c.cc_type, c.cc_number, event.detail);
         });
     }
+
+    log("setup slider");
+
+    let mixer_slider_scheme = {
+        palette: "dark",
+        value_min: 0,
+        value_max: 127,
+        width: 40,
+        markers_length: 30,
+        cursor_height: 12,
+        cursor_width: 20,
+        cursor_color: "#f8f812",
+        track_color: "#f8f812",
+        track_bg_color: "#333"
+    };
+
+    const slider_element = document.getElementById("cc-4");
+    const slider = new Slider(slider_element, mixer_slider_scheme);
+
+    document.getElementById("cc-4").addEventListener("change", function(event) {
+        userActionCallback("cc", 4, event.detail);
+    });
+
 
 } // setupKnobs
 

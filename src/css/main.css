@@ -213,6 +213,12 @@ div.controls {
     align-items: flex-start;
 }
 
+div.controls-slider {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
 .stompswitch {
     font-size: 5rem;
     color: var(--sw-color);
@@ -273,6 +279,18 @@ div.controls {
     margin: 0;
 }
 */
+
+.slider-combo {
+    padding-top: 5px;
+}
+
+.slider {
+    height: 100px;
+}
+
+.slider-value {
+    color: #fff;
+}
 
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
