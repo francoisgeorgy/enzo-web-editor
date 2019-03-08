@@ -25,6 +25,7 @@ import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
+import {setupSliders, updateExpSlider} from "./ui_sliders";
 
 /**
  * Handles a change made by the user in the UI.
@@ -45,7 +46,7 @@ export function handleUserAction(control_type, control_number, value) {
  * @param value
  * @param mappedValue
  */
-export function updateControl(control_type, control_number, value, mappedValue) {
+export function updateControl(control_type, control_number, value, mappedValue) {   //TODO: check that control_number is always an int and not a string
 
     log(`updateControl(${control_type}, ${control_number}, ${value})`);
 
@@ -56,8 +57,13 @@ export function updateControl(control_type, control_number, value, mappedValue) 
     const id = control_type + "-" + control_number;
 
     if (knobs.hasOwnProperty(id)) {
-        knobs[id].value = value;
+        knobs[id].value = value;        //TODO: doesn't the knob update its value itself?
     } else {
+
+        if (control_type === "cc" && parseInt(control_number, 10) === 4) {    //TODO: replace this hack with better code
+            updateExpSlider(value);
+            return;
+        }
 
         if (control_type === "cc" && parseInt(control_number, 10) === 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
@@ -72,10 +78,12 @@ export function updateControl(control_type, control_number, value, mappedValue) 
             c = $(`#${id}-${mappedValue}`);
             if (c.length) {
                 if (c.is(".bt")) {
+                    log(`updateControl(${control_type}, ${control_number}, ${value}) .bt`);
                     updateOptionSwitch(id + "-" + mappedValue, mappedValue);
-                } else if (c.is(".sw")) {
-                    //TODO: handle .sw controls
+                // } else if (c.is(".sw")) {
+                //     //TODO: handle .sw controls
                 } else if (c.is(".swm")) {
+                    log(`updateControl(${control_type}, ${control_number}, ${value}) .swm`);
                     updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
                     setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
                 } else {
@@ -98,9 +106,14 @@ export function updateControls(showExpValues = false) {
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
         const c = MODEL.control[i];
-        updateControl(c.cc_type, i,
-            showExpValues ? MODEL.getControlValueExp(c) : MODEL.getControlValue(c),
-            showExpValues ? MODEL.getMappedControlValueExp(c) : MODEL.getMappedControlValue(c));
+        // if showExpValues then only update two-values controls
+        if (showExpValues) {
+            if (c.two_values) {
+                updateControl(c.cc_type, i,MODEL.getControlValueExp(c), MODEL.getMappedControlValueExp(c));
+            }
+        } else {
+            updateControl(c.cc_type, i, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
+        }
         // updateControl(MODEL.control[i].cc_type, i, MODEL.getControlValue(MODEL.control[i]), MODEL.getMappedControlValue(MODEL.control[i]));
     }
     if (TRACE) console.groupEnd();
@@ -222,6 +235,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setMidiInStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
+    setupSliders(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
     setupGlobalConfig();

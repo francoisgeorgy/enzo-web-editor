@@ -24,6 +24,7 @@ export function updateOptionSwitch(id, value) {
 }
 
 export function updateMomentaryStompswitch(id, value) {
+    log(`updateMomentaryStompswitch(${id}, ${value})`);
     if (value === 0) {
         $(`#${id}-off`).removeClass("sw-off");
         $(`#${id}-on`).addClass("sw-off");
@@ -36,6 +37,7 @@ export function updateMomentaryStompswitch(id, value) {
 let tap_timestamp = 0;
 
 export function tapDown(id) {
+    log(`tapDown(${id})`);
     updateMomentaryStompswitch(id, 127);
     const t = Date.now();
     handleUserAction(...id.split("-"));

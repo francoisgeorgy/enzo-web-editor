@@ -285,11 +285,11 @@ div.controls-slider {
 }
 
 .slider {
-    height: 100px;
+    height: 85px;
 }
 
 .slider-value {
-    color: #fff;
+    text-align: center;
 }
 
 div.bt,     /* "radio button"-like switches */

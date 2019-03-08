@@ -75,3 +75,10 @@ html {
 .knob-cursor {
     stroke-linecap: butt;
 }
+
+.slider-value {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 125%;
+    color: #fff;
+}

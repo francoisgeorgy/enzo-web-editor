@@ -51,29 +51,6 @@ export function setupKnobs(userActionCallback) {
         });
     }
 
-    log("setup slider");
-
-    let mixer_slider_scheme = {
-        palette: "dark",
-        value_min: 0,
-        value_max: 127,
-        width: 40,
-        markers_length: 30,
-        cursor_height: 12,
-        cursor_width: 20,
-        cursor_color: "#f8f812",
-        track_color: "#f8f812",
-        track_bg_color: "#333"
-    };
-
-    const slider_element = document.getElementById("cc-4");
-    const slider = new Slider(slider_element, mixer_slider_scheme);
-
-    document.getElementById("cc-4").addEventListener("change", function(event) {
-        userActionCallback("cc", 4, event.detail);
-    });
-
-
 } // setupKnobs
 
 /**

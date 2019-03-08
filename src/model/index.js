@@ -99,7 +99,7 @@ const setControlValue = function () {
  * @param exp_value
  */
 const interpolateExpValues = function (exp_value) {
-    log("interpolateExpValues");
+    // log("interpolateExpValues");
     for (let i = 0; i < control.length; i++) {
         let c = control[i];
         if (typeof c === "undefined") continue;
@@ -112,7 +112,7 @@ const interpolateExpValues = function (exp_value) {
         } else {
             c.raw_value_exp = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
         }
-        log(`interpolateExpValues: CC ${i}: ${c.raw_value_exp} = f(${c.raw_value}, ${c.raw_value2}, ${exp_value})`);
+        // log(`interpolateExpValues: CC ${i}: ${c.raw_value_exp} = f(${c.raw_value}, ${c.raw_value2}, ${exp_value})`);
     }
 };
 
