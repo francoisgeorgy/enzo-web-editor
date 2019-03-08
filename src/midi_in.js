@@ -14,6 +14,7 @@ import {
 import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
 import {updateGlobalConfig} from "./ui_global_settings";
+import {resetExp} from "./ui_sliders";
 
 let midi_input = null;
 
@@ -108,6 +109,7 @@ export function handleSysex(data) {
     switch (valid.type) {
         case SYSEX_PRESET:
             log("handleSysex: sysex is preset data");
+            resetExp();
             updateUI();
             clearError();
             // setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);

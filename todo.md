@@ -4,15 +4,15 @@
 
 - preferences
     - display raw values or human values    DONE 
-    - display preference in the app
+    - display preference in the app         DONE
 
 - menu
-    - add WRITE command (save preset sysex)
+    - add WRITE command (save preset sysex) DONE
     - add READ command (read preset sysex)
-        - better to do with a PRESET select (send PC)
+        - better to do with a PRESET select (send PC)   DONE
 
 - keyboard
-    - ALT: show help keys   DONE
+    - ALT: show help keys               DONE
     - ALT: show controls' raw values    DONE
 
 - Offrir 2 layouts:

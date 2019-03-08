@@ -4,8 +4,20 @@ import MODEL from "./model";
 
 export const sliders = {};
 
+//TODO: move into own file
+export function resetExp() {
+    log("resetExp()");
+    MODEL.setControlValue("cc", 4, 0);
+    const id = "cc-4";
+    sliders[id].value = 0;
+    const slider_value_element = document.getElementById(`${id}-value`);
+    slider_value_element.innerText = "0";   //TODO: display human value
+}
+
 export function updateExpSlider(value) {
-    const slider_value_element = document.getElementById(`cc-4-value`);
+    const id = "cc-4";
+    sliders[id].value = value;
+    const slider_value_element = document.getElementById(`${id}-value`);
     slider_value_element.innerText = value;
 }
 

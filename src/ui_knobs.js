@@ -1,7 +1,6 @@
 import {log} from "./debug";
 import MODEL from "./model";
 import Knob from "svg-knob";
-import Slider from "svg-slider";
 import {KNOB_THEME_DEFAULT} from "./ui_knobs_theme";
 
 export const knobs = {};         // svg-knob

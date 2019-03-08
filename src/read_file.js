@@ -5,6 +5,7 @@ import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
+import {resetExp} from "./ui_sliders";
 
 //==================================================================================================================
 // Preset file handling
@@ -49,6 +50,7 @@ export function readFile() {
 
                 appendMessage("File read OK");
 
+                resetExp();
                 updateUI();
                 fullUpdateDevice();
 

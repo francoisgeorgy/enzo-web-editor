@@ -6,13 +6,15 @@ import {fullUpdateDevice} from "./midi_out";
 import {clearError, setStatus} from "./ui_messages";
 import {updateBookmark} from "./hash";
 import {settings, SETTINGS_UPDATE_URL} from "./settings";
+import {resetExp} from "./ui_sliders";
 
 export function init() {
     log("init()");
     MODEL.init();
     setPresetNumber(0);
     displayPreset();
-    updateUI(true);
+    resetExp();
+    updateUI();
     fullUpdateDevice(false, true);
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_init) ||
@@ -28,6 +30,7 @@ export function randomize() {
     MODEL.randomize();
     setPresetNumber(0);
     displayPreset();
+    resetExp();
     updateUI();
     fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
     clearError();

@@ -150,7 +150,8 @@ export function updateModelAndUI(control_type, control_number, value) {
     log("updateModelAndUI", control_type, control_number, value, "#" + control_type + "-" + control_number);
 
     control_type = control_type.toLowerCase();
-    if ((control_type !== "cc") && (control_type !== "nrpn")) {
+    // if ((control_type !== "cc") && (control_type !== "nrpn")) {
+    if (control_type !== "cc") {
         warn(`updateModelAndUI: unsupported control type: ${control_type}`);
         return;
     }
@@ -160,6 +161,12 @@ export function updateModelAndUI(control_type, control_number, value) {
         MODEL.setControlValue(control_type, control_number, value);
         // update the UI:
         updateControl(control_type, control_number, value);
+
+        if (control_number === MODEL.control_id.exp_pedal) {
+            MODEL.interpolateExpValues(value);
+            updateControls(true);
+        }
+
     } else {
         log(`the MODEL does not support this control: ${control_number}`)
     }

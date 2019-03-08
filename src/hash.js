@@ -7,6 +7,7 @@ import {toHexString} from "./utils";
 import {settings, SETTINGS_UPDATE_URL} from "./settings";
 import {appendErrorMessage, appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
+import {resetExp} from "./ui_sliders";
 
 let ignoreNextHashChange = false;
 
@@ -58,6 +59,7 @@ export function initFromBookmark(updateConnectedDevice = true) {
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
         if (valid.type === SYSEX_PRESET) {
             log("sysex loaded in device");
+            resetExp();
             updateUI();
             appendMessage("Initialization from the bookmark.");
             if (updateConnectedDevice) fullUpdateDevice();

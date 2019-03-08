@@ -27,14 +27,14 @@ const getMappedControlValue = function (ctrl) {
     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
 };
 
-const getControlValue2 = function (ctrl) {
-    return ctrl.two_values ? ctrl.raw_value2 : ctrl.raw_value;              //TODO: return null if not two_values?
-};
-
-const getMappedControlValue2 = function (ctrl) {
-    const v = ctrl.two_values in ctrl ? ctrl.raw_value2 : ctrl.raw_value;   //TODO: return null if not two_values?
-    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
-};
+// const getControlValue2 = function (ctrl) {
+//     return ctrl.two_values ? ctrl.raw_value2 : ctrl.raw_value;              //TODO: return null if not two_values?
+// };
+//
+// const getMappedControlValue2 = function (ctrl) {
+//     const v = ctrl.two_values in ctrl ? ctrl.raw_value2 : ctrl.raw_value;   //TODO: return null if not two_values?
+//     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
+// };
 
 const getControlValueExp = function (ctrl) {
     return ctrl.two_values ? ctrl.raw_value_exp : ctrl.raw_value;
@@ -199,9 +199,9 @@ export default {
     getControl,
     getControlValue,
     getMappedControlValue,
+    setControlValue,
     getControlValueExp,
     getMappedControlValueExp,
-    setControlValue,
     interpolateExpValues,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     getSysEx: sysex.getDump,     // export all values as a SysEx dump
