@@ -48,6 +48,8 @@ export function handleUserAction(control_type, control_number, value) {
  */
 export function updateControl(control_type, control_number, value, mappedValue) {   //TODO: check that control_number is always an int and not a string
 
+    //FIXME: no need for control_type
+
     log(`updateControl(${control_type}, ${control_number}, ${value})`);
 
     if (mappedValue === undefined) {
@@ -60,12 +62,12 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         knobs[id].value = value;        //TODO: doesn't the knob update its value itself?
     } else {
 
-        if (control_type === "cc" && parseInt(control_number, 10) === 4) {    //TODO: replace this hack with better code
+        if (/*control_type === "cc" &&*/ parseInt(control_number, 10) === 4) {    //TODO: replace this hack with better code
             updateExpSlider(value);
             return;
         }
 
-        if (control_type === "cc" && parseInt(control_number, 10) === 14) {    //TODO: replace this hack with better code
+        if (/*control_type === "cc" &&*/ parseInt(control_number, 10) === 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
             return;
         }
@@ -101,15 +103,16 @@ export function updateControl(control_type, control_number, value, mappedValue) 
 /**
  * Set value of the controls (input and select) from the MODEL values
  */
-export function updateControls(showExpValues = false) {
-    if (TRACE) console.groupCollapsed(`updateControls(${showExpValues})`);
+export function updateControls(onlyTwoValuesControls = false) {
+    if (TRACE) console.groupCollapsed(`updateControls(${onlyTwoValuesControls})`);
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
         const c = MODEL.control[i];
         // if showExpValues then only update two-values controls
-        if (showExpValues) {
+        if (onlyTwoValuesControls) {
             if (c.two_values) {
-                updateControl(c.cc_type, i,MODEL.getControlValueExp(c), MODEL.getMappedControlValueExp(c));
+                log(`updateControls: update two_values ${i}`);
+                updateControl(c.cc_type, i, MODEL.getControlValueExp(c), MODEL.getMappedControlValueExp(c));
             }
         } else {
             updateControl(c.cc_type, i, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
@@ -157,8 +160,10 @@ export function updateModelAndUI(control_type, control_number, value) {
     }
 
     if (MODEL.control[control_number]) {
+
         // update the model:
         MODEL.setControlValue(control_type, control_number, value);
+
         // update the UI:
         updateControl(control_type, control_number, value);
 

@@ -10,6 +10,7 @@ USER ACTION:
                 if exp: 
                     interpolate
                     updateControls
+                        updateControl that have two_values=true
 
 MIDI IN:
 

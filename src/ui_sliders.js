@@ -4,7 +4,6 @@ import MODEL from "./model";
 
 export const sliders = {};
 
-//TODO: move into own file
 export function resetExp() {
     log("resetExp()");
     MODEL.setControlValue("cc", 4, 0);
@@ -15,6 +14,7 @@ export function resetExp() {
 }
 
 export function updateExpSlider(value) {
+    console.log("updateExpSlider");
     const id = "cc-4";
     sliders[id].value = value;
     const slider_value_element = document.getElementById(`${id}-value`);

@@ -9,6 +9,7 @@ import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
+import {updateExpSlider} from "./ui_sliders";
 
 let midi_output = null;
 
@@ -103,7 +104,9 @@ export function updateDevice(control_type, control_number, value_float) {
 
     // EXP
     if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
+        log("updateDevice: control is EXP, interpolate and update");
         MODEL.interpolateExpValues(value);
+        updateExpSlider(value);
         updateControls(true);
     }
 

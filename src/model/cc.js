@@ -155,7 +155,7 @@ const _tempo = function (v) {
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
-        human: _percent //,
+        human: _percent
         // sysex: {
         //     offset: ,
         //     mask: [0x7F]
