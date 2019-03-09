@@ -3,7 +3,7 @@ import {log} from "./debug";
 import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {setPresetNumber} from "./ui_presets";
+import {cleanPreset, setPresetNumber} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
@@ -217,6 +217,7 @@ export function requestPreset() {
 export function savePreset() {
     log("TODO: savePreset");
     sendSysexCommand(SYSEX_CMD.preset_write);
+    cleanPreset();
 }
 
 export function requestGlobalConfig() {

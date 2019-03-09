@@ -11,17 +11,20 @@ export function setPresetNumber(pc) {
     preset_number = pc;
 }
 
-//TODO: call dirtyPreset() as soon as a control is changed, except EXP (CC 4) and BYPASS
-export function dirtyPreset() {
-    // $(".preset-id").removeClass("on");
-    if (!dirty) $(`#pc-${preset_number}`).removeClass("on").addClass("dirty");
-    dirty = true;
-}
-
 export function displayPreset() {
     dirty = false;
     $(".preset-id").removeClass("on dirty");
     $(`#pc-${preset_number}`).addClass("on");
+}
+
+//TODO: call dirtyPreset() as soon as a control is changed, except EXP (CC 4) and BYPASS
+export function dirtyPreset() {
+    if (!dirty) $(`#pc-${preset_number}`).removeClass("on").addClass("dirty");
+    dirty = true;
+}
+
+export function cleanPreset() {
+    displayPreset();
 }
 
 export function presetInc(callback) {

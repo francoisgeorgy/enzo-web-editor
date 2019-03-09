@@ -20,7 +20,7 @@ export function resetExp() {
 }
 
 export function updateExpSlider(value) {
-    console.log("updateExpSlider");
+    log("updateExpSlider");
     const id = "cc-4";
     sliders[id].value = value;
     const slider_value_element = document.getElementById(`${id}-value`);
@@ -28,8 +28,6 @@ export function updateExpSlider(value) {
 }
 
 export function setupSliders(userActionCallback) {
-
-
 
     log("setupSlider()");
 

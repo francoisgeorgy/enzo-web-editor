@@ -54,12 +54,12 @@ export function setupGlobalConfig() {
     $("input[type='radio'].global-config").on("change", function(c) {
         const setting_number = parseInt(c.target.name.split("-")[1]);
         if (isNaN(setting_number)) {
-            console.log("setupGlobalConfig: invalid setting number", c.target.name);
+            log("setupGlobalConfig: invalid setting number", c.target.name);
             return false;
         }
         const value = parseInt(c.target.value);
         if (isNaN(value)) {
-            console.log("setupGlobalConfig: invalid value", c.target.value);
+            log("setupGlobalConfig: invalid value", c.target.value);
             return false;
         }
         log(`setupGlobalConfig: ${setting_number}=${value}`);

@@ -262,6 +262,8 @@ Still under active development. Feel free to log bugs/issues.
 Known issues
 ============
 
+Filter Type does not follow EXP.
+
 The TEMPO value is not accurate when set from the TAP switch.
 
 There's still some issues with the preset loading from a bookmarked URL.
