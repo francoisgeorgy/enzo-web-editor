@@ -256,10 +256,10 @@ const setDump = function (data) {
 
 /**
  * Create a SysEx dump data structure
- *
+ * @param complete If false do not include the sysex header and footer bytes nor the manufacturer ID
  * @returns {Uint8Array}
  */
-const getDump = function () {
+const getDump = function (complete = true) {
 
     // exemple of dump sent by the Enzo with all values set to 0:
     // 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00
@@ -268,56 +268,60 @@ const getDump = function () {
 
     // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
     // const data = Uint8Array.from(last_sysex);
-    const data = new Uint8Array(27);
+    const data = new Uint8Array(complete ? 39 : 34);
 
-    data[0] = 0xF0;
-    data[1] = 0x00;
-    data[2] = 0x20;
-    data[3] = 0x10;
+    let i = 0;
 
-    data[4] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
-    data[5] = meta.group_id.value;
-    data[6] = meta.model_id.value;
+    if (complete) {
+        data[i++] = 0xF0;                                           // 0
+        data[i++] = 0x00;
+        data[i++] = 0x20;
+        data[i++] = 0x10;
+    }
 
-    data[7] = 0x26; // Enzo always sent this value when sending a sysex.
+    data[i++] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    data[i++] = meta.group_id.value;
+    data[i++] = meta.model_id.value;
 
-    data[8] = meta.preset_id.value;
+    data[i++] = 0x26; // Enzo always sent this value when sending a sysex.
 
-    data[9] = control[control_id.pitch].raw_value;
-    data[10] = control[control_id.filter].raw_value;
-    data[11] = control[control_id.mix].raw_value;
-    data[12] = control[control_id.sustain].raw_value;
-    data[13] = control[control_id.filter_envelope].raw_value;
-    data[14] = control[control_id.modulation].raw_value;
-    data[15] = control[control_id.portamento].raw_value;
-    data[16] = control[control_id.filter_type].raw_value;
-    data[17] = control[control_id.delay_level].raw_value;
-    data[18] = control[control_id.ring_modulation].raw_value;
-    data[19] = control[control_id.filter_bandwidth].raw_value;
-    data[20] = control[control_id.delay_feedback].raw_value;
-    data[21] = control[control_id.bypass].raw_value;
-    data[22] = control[control_id.envelope_type].raw_value;
-    data[23] = control[control_id.synth_mode].raw_value;
-    data[24] = control[control_id.synth_waveshape].raw_value;
-    data[25] = control[control_id.tempo].raw_value;
+    data[i++] = meta.preset_id.value;                               // 8
+
+    data[i++] = control[control_id.pitch].raw_value;                // 9
+    data[i++] = control[control_id.filter].raw_value;
+    data[i++] = control[control_id.mix].raw_value;
+    data[i++] = control[control_id.sustain].raw_value;
+    data[i++] = control[control_id.filter_envelope].raw_value;
+    data[i++] = control[control_id.modulation].raw_value;
+    data[i++] = control[control_id.portamento].raw_value;
+    data[i++] = control[control_id.filter_type].raw_value;
+    data[i++] = control[control_id.delay_level].raw_value;
+    data[i++] = control[control_id.ring_modulation].raw_value;
+    data[i++] = control[control_id.filter_bandwidth].raw_value;
+    data[i++] = control[control_id.delay_feedback].raw_value;
+    data[i++] = control[control_id.bypass].raw_value;
+    data[i++] = control[control_id.envelope_type].raw_value;
+    data[i++] = control[control_id.synth_mode].raw_value;
+    data[i++] = control[control_id.synth_waveshape].raw_value;
+    data[i++] = control[control_id.tempo].raw_value;
 
     // values 2 (EXP)
-    data[26] = control[control_id.pitch].raw_value2;
-    data[27] = control[control_id.filter].raw_value2;
-    data[28] = control[control_id.mix].raw_value2;
-    data[29] = control[control_id.sustain].raw_value2;
-    data[30] = control[control_id.filter_envelope].raw_value2;
-    data[31] = control[control_id.modulation].raw_value2;
-    data[32] = control[control_id.portamento].raw_value2;
-    data[33] = control[control_id.filter_type].raw_value2;
-    data[34] = control[control_id.delay_level].raw_value2;
-    data[35] = control[control_id.ring_modulation].raw_value2;
-    data[36] = control[control_id.filter_bandwidth].raw_value2;
-    data[37] = control[control_id.delay_feedback].raw_value2;
+    data[i++] = control[control_id.pitch].raw_value2;               // 26
+    data[i++] = control[control_id.filter].raw_value2;
+    data[i++] = control[control_id.mix].raw_value2;
+    data[i++] = control[control_id.sustain].raw_value2;
+    data[i++] = control[control_id.filter_envelope].raw_value2;
+    data[i++] = control[control_id.modulation].raw_value2;
+    data[i++] = control[control_id.portamento].raw_value2;
+    data[i++] = control[control_id.filter_type].raw_value2;
+    data[i++] = control[control_id.delay_level].raw_value2;
+    data[i++] = control[control_id.ring_modulation].raw_value2;
+    data[i++] = control[control_id.filter_bandwidth].raw_value2;
+    data[i++] = control[control_id.delay_feedback].raw_value2;      // 37
 
-    data[38] = 0xF7;   // end-of-sysex marker
+    if (complete) data[i] = 0xF7;   // end-of-sysex marker          // 38
 
-    log(data, meta.preset_id.value);
+    // log(data, meta.preset_id.value);
 
     return data;
 };

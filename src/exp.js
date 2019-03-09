@@ -57,7 +57,7 @@ export function editExpValues(enable = true, update_device = true) {
 
         showExpValues(true);
 
-        appendMessage("You edit the second values");   //TODO: find a better message
+        // appendMessage("You edit the second values");   //TODO: find a better message
 
     } else {
         $("#exp-close").removeClass("exp-on");
@@ -68,7 +68,7 @@ export function editExpValues(enable = true, update_device = true) {
 
         showExpValues(false);
 
-        appendMessage("You edit the default values");   //TODO: find a better message
+        // appendMessage("You edit the default values");   //TODO: find a better message
     }
 }
 

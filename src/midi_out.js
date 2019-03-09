@@ -121,7 +121,7 @@ let fullUpdateRunning = false;
 export function fullUpdateDevice(onlyChanged = false, silent = false) {
 
     log(`fullUpdateDevice(${onlyChanged})`);
-
+/*
     if (fullUpdateRunning) return;
 
     fullUpdateRunning = true;
@@ -152,9 +152,16 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
     }
 
     f();
+*/
+
+    sendSysex(MODEL.getSysex(false));
 
 }
 
+/**
+ *
+ * @param pc
+ */
 export function sendPC(pc) {
 
     setPresetNumber(pc);
@@ -176,8 +183,8 @@ export function sendPC(pc) {
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }
 
-export function sendSysEx(data) {
-    log(`%csendSysEx: ${toHexString(data, ' ')}`, "color: red; font-weight: bold");
+export function sendSysex(data) {
+    log(`%csendSysex: ${toHexString(data, ' ')}`, "color: red; font-weight: bold");
     // log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
     if (midi_output) {
         showMidiOutActivity();
@@ -188,8 +195,8 @@ export function sendSysEx(data) {
 }
 
 function sendSysexCommand(command) {
-    log(`sendSysexCommand(${toHexString(command)})`);
-    sendSysEx([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
+    log(`sendSysexCommand(${toHexString(command, ' ')})`);
+    sendSysex([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
     // if (midi_output) {
     //     showMidiOutActivity();
     //     // setSuppressSysexEcho();

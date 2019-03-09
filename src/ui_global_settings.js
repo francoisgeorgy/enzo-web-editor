@@ -1,6 +1,6 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {requestGlobalConfig, sendSysEx} from "./midi_out";
+import {requestGlobalConfig, sendSysex} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {setStatus} from "./ui_messages";
@@ -63,7 +63,7 @@ export function setupGlobalConfig() {
             return false;
         }
         log(`setupGlobalConfig: ${setting_number}=${value}`);
-        sendSysEx(MODEL.getSysexDataForGlobalConfig(setting_number, value));
+        sendSysex(MODEL.getSysexDataForGlobalConfig(setting_number, value));
     });
     return true;
 }

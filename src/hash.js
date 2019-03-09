@@ -16,7 +16,7 @@ export function updateBookmark() {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
     // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
-    const h = toHexString(MODEL.getSysEx());
+    const h = toHexString(MODEL.getSysex());
     log(`updateBookmark: set hash to ${h}`);
     ignoreNextHashChange = true;
     window.location.hash = h;

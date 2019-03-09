@@ -4,7 +4,7 @@ import MODEL from "./model";
 
 export function downloadLastSysEx() {
 
-    let data = MODEL.getSysEx();   // return Uint8Array
+    let data = MODEL.getSysex();   // return Uint8Array
 
     // log("downloadLastSysEx", data, toHexString(data, ' '));
     // log("downloadLastSysEx", encodeURIComponent(data));
