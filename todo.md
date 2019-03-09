@@ -1,8 +1,10 @@
+- Documentation
+    - doc about keyboard shortcuts
+
 - EXP
     - copy values
     - set exp value to 0 after loading a new preset         DONE
     - set exp value to 0 after receiving a sysex preset     DONE
-    
 
 - preferences
     - display raw values or human values    DONE 
