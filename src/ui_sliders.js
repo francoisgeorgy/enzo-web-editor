@@ -1,6 +1,7 @@
 import {log} from "./debug";
 import Slider from "svg-slider";
 import MODEL from "./model";
+import {editExpValues} from "./exp";
 
 export const sliders = {};
 
@@ -11,6 +12,11 @@ export function resetExp() {
     sliders[id].value = 0;
     const slider_value_element = document.getElementById(`${id}-value`);
     slider_value_element.innerText = "0";   //TODO: display human value
+
+    editExpValues(false, false);
+    $("#exp-close").removeClass("exp-on");
+    $("#exp-open").removeClass("exp-on");
+
 }
 
 export function updateExpSlider(value) {
@@ -62,4 +68,6 @@ export function setupSliders(userActionCallback) {
     // }
 
 }
+
+
 

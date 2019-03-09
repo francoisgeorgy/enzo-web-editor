@@ -94,13 +94,13 @@ export function sendCC(control, monitor = true) {
  * @param control_number
  * @param value_float
  */
-export function updateDevice(control_type, control_number, value_float) {
+export function updateDevice(control_type, control_number, value_float, in_exp_mode = false) {
 
     let value = Math.round(value_float);
 
     log("updateDevice", control_type, control_number, value_float, value);
 
-    sendCC(MODEL.setControlValue(control_type, control_number, value));
+    sendCC(MODEL.setControlValue(control_type, control_number, value, in_exp_mode));
 
     // EXP
     if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too

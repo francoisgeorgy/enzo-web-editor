@@ -11,8 +11,9 @@ import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
-import {showExpValues, switchKnobsDisplay} from "./ui_knobs";
+import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
+import {showExpValues} from "./exp";
 
 
 function toggleBypass() {

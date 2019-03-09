@@ -47,7 +47,7 @@ const getMappedControlValueExp = function (ctrl) {
 
 /**
  * setControlValue(control_object, value)
- * setControlValue(control_type, control_number, value)
+ * setControlValue(control_type, control_number, value, boolean value2)
  * return the updated control object
  */
 const setControlValue = function () {
@@ -62,7 +62,7 @@ const setControlValue = function () {
         } else {
             c.raw_value = v;
         }
-    } else if (arguments.length === 3) {
+    } else if (arguments.length >= 3) {
         let ca; // controls array
         if (arguments[0] === "cc") {                // [0] is control type
             ca = control;
@@ -76,10 +76,13 @@ const setControlValue = function () {
             let value = arguments[2];               // [2] is control value
             const v = typeof value === "number" ? value : parseInt(value);
             c = ca[arguments[1]];
+
+            const set_value2 = c.two_values && (arguments.length > 3) && arguments[3];
+
             if (c.hasOwnProperty("map_raw")) {
-                c.raw_value = c.map_raw(v);
+                c[set_value2 ? "raw_value2" : "raw_value"] = c.map_raw(v);
             } else {
-                c.raw_value = v;
+                c[set_value2 ? "raw_value2" : "raw_value"] = v;
             }
         } else {
             console.error("setControlValue: unknown number", arguments);
@@ -109,6 +112,8 @@ const interpolateExpValues = function (exp_value) {
         // compute value corresponding the the EXP position (exp_value):
         if ((exp_value === 0) || (c.raw_value2 === c.raw_value)) {
             c.raw_value_exp = c.raw_value;
+        // } else if (exp_value === 127) || (c.raw_value2 === c.raw_value)) {
+        //         c.raw_value_exp = c.raw_value2;
         } else {
             c.raw_value_exp = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
         }

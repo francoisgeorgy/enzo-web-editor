@@ -4,8 +4,9 @@ TODO: describe how the application works.
 USER ACTION:
 
     knob onChange:
-        handleUserAction
+        ui:handleUserAction
             updateDevice
+                MODEL.setControlValue
                 sendCC
                 if exp: 
                     interpolate

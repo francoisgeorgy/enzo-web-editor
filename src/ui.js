@@ -26,6 +26,7 @@ import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
 import {setupSliders, updateExpSlider} from "./ui_sliders";
+import {inExpMode, setupExp} from "./exp";
 
 /**
  * Handles a change made by the user in the UI.
@@ -35,7 +36,7 @@ export function handleUserAction(control_type, control_number, value) {
     if (control_type === 'pc') {
         sendPC(parseInt(control_number, 10));
     } else {
-        updateDevice(control_type, control_number, value);
+        updateDevice(control_type, control_number, value, inExpMode());
     }
 }
 
@@ -189,6 +190,7 @@ function getCurrentPatchAsLink() {
 }
 */
 
+
 function reloadWithSysexParam() {
     updateBookmark();
     // let url = getCurrentPatchAsLink();
@@ -254,6 +256,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupAppPreferences();
     setupHelpPanel();
     setupMenu();
+    setupExp();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
 
