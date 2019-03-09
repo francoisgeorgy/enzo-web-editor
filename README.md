@@ -262,6 +262,8 @@ Still under active development. Feel free to log bugs/issues.
 Known issues
 ============
 
+The TEMPO value is not accurate when set from the TAP switch.
+
 There's still some issues with the preset loading from a bookmarked URL.
 
 It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 

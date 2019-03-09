@@ -1,6 +1,7 @@
 import {log} from "./debug";
 
 let preset_number = 0;
+let dirty = false;      // true if the preset has been modified in the editor but not saved in Enzo. This flag is used to avoid changing the html element class too often.
 
 // export function getPresetNumber() {
 //     return preset_number;
@@ -10,8 +11,16 @@ export function setPresetNumber(pc) {
     preset_number = pc;
 }
 
+//TODO: call dirtyPreset() as soon as a control is changed, except EXP (CC 4) and BYPASS
+export function dirtyPreset() {
+    // $(".preset-id").removeClass("on");
+    if (!dirty) $(`#pc-${preset_number}`).removeClass("on").addClass("dirty");
+    dirty = true;
+}
+
 export function displayPreset() {
-    $(".preset-id").removeClass("on");
+    dirty = false;
+    $(".preset-id").removeClass("on dirty");
     $(`#pc-${preset_number}`).addClass("on");
 }
 

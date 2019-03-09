@@ -36,12 +36,16 @@ const getMappedControlValue = function (ctrl) {
 //     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
 // };
 
+const getControlValueInter = function (ctrl) {
+    return ctrl.two_values ? ctrl.raw_value_inter : ctrl.raw_value;
+};
+
 const getControlValueExp = function (ctrl) {
-    return ctrl.two_values ? ctrl.raw_value_exp : ctrl.raw_value;
+    return ctrl.two_values ? ctrl.raw_value2 : ctrl.raw_value;
 };
 
 const getMappedControlValueExp = function (ctrl) {
-    const v = ctrl.two_values in ctrl ? ctrl.raw_value_exp : ctrl.raw_value;
+    const v = ctrl.two_values in ctrl ? ctrl.raw_value_inter : ctrl.raw_value;
     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
 };
 
@@ -111,11 +115,11 @@ const interpolateExpValues = function (exp_value) {
         }
         // compute value corresponding the the EXP position (exp_value):
         if ((exp_value === 0) || (c.raw_value2 === c.raw_value)) {
-            c.raw_value_exp = c.raw_value;
+            c.raw_value_inter = c.raw_value;
         // } else if (exp_value === 127) || (c.raw_value2 === c.raw_value)) {
         //         c.raw_value_exp = c.raw_value2;
         } else {
-            c.raw_value_exp = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
+            c.raw_value_inter = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
         }
         // log(`interpolateExpValues: CC ${i}: ${c.raw_value_exp} = f(${c.raw_value}, ${c.raw_value2}, ${exp_value})`);
     }
@@ -133,8 +137,10 @@ const init = function () {
         }
         c.raw_value = c.init_value;
         c.value = c.human(c.raw_value);
+        if (c.two_values) {
+            c.raw_value2 = c.raw_value;
+        }
     }
-
     meta.preset_id.value = 0;
 };
 
@@ -232,6 +238,7 @@ export default {
     getMappedControlValue,
     setControlValue,
     getControlValueExp,
+    getControlValueInter,
     getMappedControlValueExp,
     interpolateExpValues,
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump

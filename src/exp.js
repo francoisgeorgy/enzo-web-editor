@@ -4,6 +4,7 @@ import {knobs} from "./ui_knobs";
 import {sendCC, updateDevice} from "./midi_out";
 import MODEL from "./model";
 import {appendMessage} from "./ui_messages";
+import {toHexString} from "./utils";
 
 let edit_exp_values = false;   // true when editing value2
 
@@ -13,7 +14,7 @@ export function inExpMode() {
 
 export function showExpValues(display_exp_values = false) {
 
-    log("showExpValues()");
+    log(`showExpValues(${display_exp_values})`);
 
     // for (const id in knobs) {
     //     if (knobs.hasOwnProperty(id)) {
@@ -45,7 +46,7 @@ export function showExpValues(display_exp_values = false) {
 // TODO: find a better name
 export function editExpValues(enable = true, update_device = true) {
 
-    log(`editExpValues(${enable})`);
+    log(`%ceditExpValues(${enable}, ${update_device})`, "color: yellow; font-weight: bold");
 
     edit_exp_values = enable;
     if (edit_exp_values) {
@@ -70,6 +71,8 @@ export function editExpValues(enable = true, update_device = true) {
 
         // appendMessage("You edit the default values");   //TODO: find a better message
     }
+
+    // return false; // onclick
 }
 
 // TODO: find a better name
@@ -77,8 +80,16 @@ function editNormalValues() {
     editExpValues(false);
 }
 
-export function setupExp() {
-    $("#exp-close").click(editExpValues);        // EXP slider "close"
-    $("#exp-open").click(editNormalValues);     // EXP slider "open"
+export function toggleExpEditMode() {
+    log("toggleExpEditMode()");
+    if (edit_exp_values) {
+        editNormalValues();
+    } else {
+        editExpValues();
+    }
 }
 
+export function setupExp() {
+    $("#exp-close").click(toggleExpEditMode);        // EXP slider "close"
+    $("#exp-open").click(editNormalValues);     // EXP slider "open"
+}

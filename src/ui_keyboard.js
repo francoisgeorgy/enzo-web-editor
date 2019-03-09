@@ -13,7 +13,7 @@ import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
-import {showExpValues} from "./exp";
+import {showExpValues, toggleExpEditMode} from "./exp";
 
 
 function toggleBypass() {
@@ -132,6 +132,9 @@ function keyDown(code, alt, shift, meta) {
     }
 
     switch (code) {
+        case 9:                 // TAB
+            toggleExpEditMode();
+            break;
         case 16:                // Shift
             showExpValues(true);
             break;
@@ -140,6 +143,8 @@ function keyDown(code, alt, shift, meta) {
             switchKnobsDisplay(true);
             break;
     }
+
+    //FIXME: map to key's position, not key's value (in order to be isolated from the keyboard layout)
 
     if (!alt && !shift && !meta) {
         switch (code) {
@@ -202,7 +207,7 @@ function keyDown(code, alt, shift, meta) {
             case 107:               // num keypad "+"
                 animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
                 break;
-            case 79:                   // O
+            case 79:                // O
                 const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
                 animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
                 break;

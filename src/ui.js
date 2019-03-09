@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {displayPreset, setPresetNumber, setupPresetSelectors} from "./ui_presets";
+import {dirtyPreset, displayPreset, setPresetNumber, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -33,10 +33,12 @@ import {inExpMode, setupExp} from "./exp";
  */
 export function handleUserAction(control_type, control_number, value) {
     log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
+    const n = parseInt(control_number, 10);
     if (control_type === 'pc') {
-        sendPC(parseInt(control_number, 10));
+        sendPC(n);
     } else {
-        updateDevice(control_type, control_number, value, inExpMode());
+        if ((n !== 4) && (n !== 14)) dirtyPreset();        //FIXME: use MODEL control_id values instead of magic number
+        updateDevice(control_type, n, value, inExpMode());
     }
 }
 
@@ -51,7 +53,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
 
     //FIXME: no need for control_type
 
-    log(`updateControl(${control_type}, ${control_number}, ${value})`);
+    log(`updateControl(${control_type}, ${control_number}, ${value}, ${mappedValue})`);
 
     if (mappedValue === undefined) {
         mappedValue = value;
@@ -64,7 +66,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
     } else {
 
         if (/*control_type === "cc" &&*/ parseInt(control_number, 10) === 4) {    //TODO: replace this hack with better code
-            updateExpSlider(value);
+            updateExpSlider(value);                                                     //FIXME: use MODEL control_id values instead of magic number
             return;
         }
 
@@ -88,7 +90,11 @@ export function updateControl(control_type, control_number, value, mappedValue) 
                 } else if (c.is(".swm")) {
                     log(`updateControl(${control_type}, ${control_number}, ${value}) .swm`);
                     updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
-                    setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
+                    // log(typeof mappedValue, mappedValue === 0);
+                    // if (mappedValue !== 0) {
+                    //     log("will call updateMomentaryStompswitch in 200ms");
+                        setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
+                    // }
                 } else {
                     warn("updateControl: unsupported control (2): ", control_type, control_number, value);
                 }
@@ -113,7 +119,7 @@ export function updateControls(onlyTwoValuesControls = false) {
         if (onlyTwoValuesControls) {
             if (c.two_values) {
                 log(`updateControls: update two_values ${i}`);
-                updateControl(c.cc_type, i, MODEL.getControlValueExp(c), MODEL.getMappedControlValueExp(c));
+                updateControl(c.cc_type, i, MODEL.getControlValueInter(c), MODEL.getMappedControlValueExp(c));
             }
         } else {
             updateControl(c.cc_type, i, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));

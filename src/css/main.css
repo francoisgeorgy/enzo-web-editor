@@ -383,6 +383,14 @@ div.btc {   /* "checkbox"-like switches: */
     border: 1px solid var(--bt-on-border);
 }
 
+.preset.dirty {
+    /*background-color: var(--bt-on-bg-color);*/
+    color: var(--bt-on-bg-color)!important;
+    text-shadow: none;
+    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+    /*border: 1px solid var(--bt-on-border);*/
+}
+
 .on {
     color: var(--on-color)!important;
 }

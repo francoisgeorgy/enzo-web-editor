@@ -10,6 +10,7 @@ import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_sliders";
+import {inExpMode} from "./exp";
 
 let midi_output = null;
 
@@ -65,7 +66,9 @@ export function sendCC(control, monitor = true) {
 
     if (monitor) monitorCC(control.cc_number);   // TODO: check that control exists
 
-    const v = MODEL.getControlValue(control);
+    // If we edit the EXP value then we send value2
+
+    const v = inExpMode() ? MODEL.getControlValueExp(control) : MODEL.getControlValue(control);
 
     if (midi_output) {
         log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel}`);
@@ -184,7 +187,7 @@ export function sendPC(pc) {
 }
 
 export function sendSysex(data) {
-    log(`%csendSysex: ${toHexString(data, ' ')}`, "color: red; font-weight: bold");
+    log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
     // log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
     if (midi_output) {
         showMidiOutActivity();

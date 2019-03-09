@@ -359,7 +359,8 @@ function defineControls() {
     };
     control[control_id.tap] = { // 28,
         name: "Tap",
-        no_init: true,
+        // no_init: true,
+        init_value: 0,
         no_randomize: true,
         map_raw: () => 127,
         // sysex: {
@@ -412,6 +413,7 @@ function defineControls() {
             obj.raw_value = obj.init_value;
         }
 
+        //FIXME: decide between value2 and value_exp name.
         if (obj.hasOwnProperty("sysex2")) {
             obj.two_values = true;    // true for the controls that can have two values, avaialble with the EXP pedal
             obj.init_value2 = obj.init_value;
