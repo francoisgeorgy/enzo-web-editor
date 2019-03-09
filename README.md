@@ -149,6 +149,23 @@ To avoid this problem:
 - Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Enzo) then select this preset from
 the editor. No settings will be lost and the editor will be in sync.   
 
+Expression pedal
+----------------
+
+Press the Tab key on your keyboard or click "close" near the EXP slider in the editor to toggle between the two sets of values stored in a preset.
+
+When you edit the second set of values, the control's name are written in _lowercase_. They are written in _uppercase_ when you edit the default set of value.
+
+### EXP slider:
+
+* The _open_ position correspond to an opened (toe up) expression pedal.
+* The _close_ position correspond to a close (toe down) expression pedal.
+
+When you go from open to close position the editor _interpolate_ the values of the other control. This probably reflects what the Enzo is doing but there is no guarantee about that.
+
+More help about this feature soon...
+
+
 Menu commands
 -------------
 
