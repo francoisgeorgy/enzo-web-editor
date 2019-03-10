@@ -37,7 +37,7 @@ export function handleUserAction(control_type, control_number, value) {
     if (control_type === 'pc') {
         sendPC(n);
     } else {
-        if ((n !== 4) && (n !== 14)) dirtyPreset();        //FIXME: use MODEL control_id values instead of magic number
+        if (n !== 4) dirtyPreset();        //FIXME: use MODEL control_id values instead of magic number
         updateDevice(control_type, n, value, inExpMode());
     }
 }
