@@ -42,28 +42,18 @@ export function presetDec(callback) {
 }
 
 export function setupPresetSelectors(callback) {
-
     log("setupPresetSelectors()");
-
-/*
-    $("div#pc-down").click(function() {
-        log(`click on ${this.id}`);
-        presetDec(callback);
-    });
-
-    $("div#pc-up").click(function() {
-        log(`click on ${this.id}`);
-        presetInc(callback);
-    });
-*/
-
     $("div.preset-id").click(function() {
-        log(`click on ${this.id}`);
-        if (!this.classList.contains("on")) {   // if not already on...
-            $(this).siblings(".preset-id").removeClass("on");
-            this.classList.add("on");
-        }
-        callback(...this.id.split("-"));
+        log(`setupPresetSelectors: click on ${this.id}`);
+        // if (!this.classList.contains("on")) {   // if not already on...
+        //     $(this).siblings(".preset-id").removeClass("on dirty");
+        //     this.classList.remove("dirty");
+        //     this.classList.add("on");
+        // }
+        const c = this.id.split("-");
+        log(`setupPresetSelectors: click on ${this.id}`, c[0], c[1]);
+        setPresetNumber(c[1]);
+        displayPreset(c[1]);
+        callback("pc", c[1]);
     });
-
 }

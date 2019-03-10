@@ -180,6 +180,8 @@ export function sendPC(pc) {
         midi_output.sendProgramChange(pc, settings.midi_channel);
 
         // appendMessage(MSG_SEND_SYSEX);
+    } else {
+        log(`(send program change ${pc})`);
     }
     logOutgoingMidiMessage("PC", [pc]);
 
