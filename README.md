@@ -65,13 +65,9 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 Web MIDI is not supported under iOS (iPad, iPhone). The editor may work under Android but I did not test it.
 
 Scroll down to [MIDI in the browser](#MIDI-in-the-browser) to get more information about how to check and setup MIDI in your browser.
- 
 
-Using the Editor
-================
-
-Setting up
-----------
+MIDI in the editor
+------------------
 
 Once you have your Enzo connected to the MIDI I/O interface, you must configure the editor:
 
@@ -81,10 +77,11 @@ Once you have your Enzo connected to the MIDI I/O interface, you must configure 
     * You can leave the channel set to "all" but this is not recommended as this will send every messages to all channels 
     every time and this can perturb other MIDI devices which are connected to your computer. 
     
-The editor's preferences (settings) are saved in your browser's _Local Storage_.      
-    
+The editor's preferences (settings) are saved in your browser's _Local Storage_.
+
+   
 Synchronizing Enzo and the editor
----------------------------------
+=================================
 
 **IMPORTANT:** please keep in mind that the editor only has the possibility to read the saved preset from Enzo. It can not read the _current_ values ​​of the controls. 
 These values may be different from the one saved in memory (saved as a preset).
@@ -94,29 +91,6 @@ Also, do not forget that each time you access a "Alt/2nd layer" value, the prese
 It is therefore recommended to always select a preset from the editor as first action after having opened it. After that, 
 unless the MIDI connection is interrupted, the Enzo and the editor should always remain in sync.
     
-Saving presets
---------------
-    
-1. Select a preset,
-2. Twist the knobs, have fun, make a great sound,
-3. Save the preset
-
-From the [Meris online FAQ](https://www.meris.us/support/): 
-> To save a preset, press one of the footswitches on the preset switch, modify your sound, then hold ALT to save."
-    
-You can not save to preset number different than the current number. 
-
-To save the preset, use the WRITE menu option in the editor or press and hold the ALT button on the Enzo. If you save on the Enzo,
-select the preset in the editor to make sure it remains in sync with the Enzo.    
-        
-Loading presets
----------------
-
-Presets can be stored in files (binary .syx files) and, with this editor, presets can also be stored as URLs. 
-
-When you load a preset, it is sent to the Enzo and replace the current _live_ values. It does not replace the preset _stored in memory_. If you want to keep the preset you loaded
-in the Enzo, then you need to store it, either by using the menu SAVE command of this editor or by pressing and holding the ALT button on the Enzo.  
-        
 Synchronizing with Sysex
 ------------------------
 
@@ -149,35 +123,115 @@ To avoid this problem:
 - Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Enzo) then select this preset from
 the editor. No settings will be lost and the editor will be in sync.   
 
-Expression pedal
+Presets
+=======
+
+Preset selection
 ----------------
+
+The square buttons 1 to 16 on the top left of the editor allow you to directly select one of the sixteen editor settings.
+
+After you select a preset, its selector gets a yellow background:
+
+![clean preset](/images/screenshots/preset-selected-clean.jpg)
+
+Now, if you modify any value, the selector changes to:
+
+![dirty preset](/images/screenshots/preset-selected-dirty.jpg)
+
+This reminds you that the currently selected preset number is the one shown, but that the current settings differ from those
+stored in the Enzo's memory for this preset.
+
+If you want to keep your current values and save them in the Enzo memory then you have to use the SAVE command from the menu. See next
+chapter.
+
+Saving presets
+--------------
+    
+1. Select a preset,
+2. Twist the knobs, have fun, make a great sound,
+3. Save the preset
+
+From the [Meris online FAQ](https://www.meris.us/support/): 
+> To save a preset, press one of the footswitches on the preset switch, modify your sound, then hold ALT to save."
+    
+Note: you can not save to preset number different than the current number. 
+
+To save the preset, use the SAVE menu option in the editor or press and hold the ALT button on the Enzo. 
+
+![save command](/images/screenshots/save_command.jpg)
+
+Note: if you save the preset on the Enzo (with ALT button), then you have to select the preset again in the editor
+to make sure it remains in sync with the Enzo.    
+    
+Loading presets
+---------------
+
+Presets can be stored in files (binary .syx files) and, with this editor, presets can also be stored as URLs. 
+
+When you load a preset, it is sent to the Enzo and replace the current _live_ values. It does not replace the preset _stored in memory_. If you want to keep the preset you loaded
+in the Enzo, then you need to store it, either by using the menu SAVE command of this editor or by pressing and holding the ALT button on the Enzo.  
+        
+        
+Expression pedal
+================
 
 Press the Tab key on your keyboard or click "close" near the EXP slider in the editor to toggle between the two sets of values stored in a preset.
 
 When you edit the second set of values, the control's name are written in _lowercase_. They are written in _uppercase_ when you edit the default set of value.
 
-### EXP slider:
+EXP slider
+----------
 
-* The _open_ position correspond to an opened (toe up) expression pedal.
-* The _close_ position correspond to a close (toe down) expression pedal.
+The EXP slider allows you to simulate an expression pedal connected to the Enzo.
 
-When you go from open to close position the editor _interpolate_ the values of the other control. This probably reflects what the Enzo is doing but there is no guarantee about that.
+* The slider's _open_ position (slider at 0) corresponds to a opened (toe-up) expression pedal.
+* The slider's _close_ position (slider at 0) corresponds to a closed (toe-down) expression pedal.
 
-More help about this feature soon...
+For each of its knobs, the Enzo store two values: 
+- the first one is the default one and is used when the expression pedal is at 0 or when no expression pedal is connected. 
+- the second value is the one ued when the expression pedal is at its maximum. 
+
+When you move the expression pedal between its min and max position, the Enzo will morph the values between those two sets of values.
+
+Please read the [Meris Enzo User Manual](https://www.meris.us/wp-content/uploads/2018/06/Meris_Enzo_Manual_v1c.pdf), section 5, for more informations.
+
+This editor lets you define the values for the two positions of the expression pedal.   
+
+By default, the first set of values is always used. To edit the second sets of values you have to click on EXP _close_:
+
+![todo](/images/screenshots/exp_edit_mode.jpg)
+
+The _close_ text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second sets of values.
+
+Note: you can also use your keyboard TAB key to switch to the second set or back.
+
+To switch back to the default set of value, simply click _close_ again. The _close_ text must change back to black and the knobs names must change back to uppercase.
+
+You can now use the EXP slider to smoothly morph between the two sets of values. The editor will interpolate the values to show you what the Enzo is probably doing. 
+But there is no guarantee about that. The editor does a linear interpolation. Maybe Enzo does a different kind of interpolation.
+
+If you want to use this with a real expression pedal connected to the Enzo (and thus without MIDI), do not forget to save your preset with the menu's SAVE command. 
+
+
+URL update
+==========
+
+Doc coming soon...
 
 
 Menu commands
--------------
+=============
 
 | icon | command | direction  | description  |
 |---|---|---|---|
-|   | Init | editor --> Enzo | Set convenient "default" values (send as CC messages, not SysEx preset). |
-|   | Randomize  | editor --> Enzo | Set random values for all controls (send as CC messages, not SysEx preset). |
-|   | Send  | editor --> Enzo | Send the current editor's values to Enzo (send as CC messages, not SysEx preset). |
+|   | Init | editor --> Enzo | Set convenient "default" values. |
+|   | Randomize  | editor --> Enzo | Set random values for all controls. |
+|   | Send  | editor --> Enzo | Send the current editor's values to Enzo (does _not_ save in Enzo's memory). |
 |   | Save  | editor --> Enzo | Tell the Enzo to save in memory the current settings (updates the current preset). |
 |   | URL  | editor only | Update the editor's URL with the current values. This makes a "_bookmarkable preset_". |
 |   | Print  | editor only | Open a popup window with the currents settings displayed for printing (or saving as PDF). |
-|   | Load  | editor --> Enzo | Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset). |
+|   | Load  | editor --> Enzo | Load a preset from a sysex file and send the values to the Enzo. |
 |   | Download  | editor only | Download the current editor's values as a sysex file. |
 |   | Midi  | editor <--> Enzo | Open a popup displaying all the MIDI messages exchanged between the editor and the Enzo. |
 |   | Global  | editor <--> Enzo | Display and edit the Global Settings of the Enzo. |
@@ -279,37 +333,17 @@ Still under active development. Feel free to log bugs/issues.
 Known issues
 ============
 
-Filter Type does not follow EXP.
-
-The TEMPO value is not accurate when set from the TAP switch.
-
-There's still some issues with the preset loading from a bookmarked URL.
-
-It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 
+- Filter Type does not follow EXP.
+- The TEMPO value is not accurate when set from the TAP switch.
+- There's still some issues with the preset loading from a bookmarked URL.
+- It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 
 the footswitch is pressed, but not for when it is released.
 
 
-Contribute
-==========
-
-This editor is an Open Source project. You are welcome to contribute.
-
-The code is available at https://github.com/francoisgeorgy/enzo-web-editor.
-
-To contribute your bug fixes, new features, etc.:
- 
-1. Fork the project.
-2. Create a pull-request.
-
-
-Trademarks
-==========
+Disclaimer and License
+======================
 
 This editor is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.             
-
-
-License and disclaimer
-======================
 
 This editor is published under [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
@@ -320,3 +354,11 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You can view and get a copy the license at https://www.gnu.org/licenses/licenses.en.html#GPL.
+
+This editor is an Open Source project. You are welcome to contribute. The code is available at https://github.com/francoisgeorgy/enzo-web-editor.
+
+To contribute your bug fixes, new features, etc.:
+ 
+1. Fork the project.
+2. Create a pull-request.
+
