@@ -18,8 +18,6 @@ import {resetExp} from "./ui_sliders";
 
 let midi_input = null;
 
-// let suppress_sysex_echo = false;
-
 export function getMidiInputPort() {
     return midi_input;
 }
@@ -33,11 +31,18 @@ export function setMidiInputPort(port) {
     }
 }
 
-/*
-export function setSuppressSysexEcho(v = true) {
-    suppress_sysex_echo = v;
+let suppress_sysex_echo = false;
+
+// export function setSuppressSysexEcho(v = true) {
+//     suppress_sysex_echo = v;
+// }
+/**
+ * Set a flag to ignore the next incoming sysex only. The following sysex will not be ignored.
+ * @param v
+ */
+export function suppressSysexEcho(v = true) {
+    suppress_sysex_echo = true;
 }
-*/
 
 const monitors = new Array(127);
 
@@ -96,21 +101,21 @@ export function handleCC(msg) {
 export function handleSysex(data) {
 
     // suppress echo:
+/*
     const t = performance.now();
     if (t < (getLastSendTime() + 200)) {
         log("handleCC: ignore sysex echo");
         return;
     }
+*/
 
-    log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
-
-/*
     if (suppress_sysex_echo) {
-        log("handleSysex: suppress echo (ignore sysex received)");
+        log("handleSysex: ignore sysex echo");
         suppress_sysex_echo = false;
         return;
     }
-*/
+
+    log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity();
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
