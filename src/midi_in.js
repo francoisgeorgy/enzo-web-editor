@@ -95,6 +95,13 @@ export function handleCC(msg) {
 
 export function handleSysex(data) {
 
+    // suppress echo:
+    const t = performance.now();
+    if (t < (getLastSendTime() + 200)) {
+        log("handleCC: ignore sysex echo");
+        return;
+    }
+
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
 
 /*

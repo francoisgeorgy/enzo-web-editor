@@ -115,7 +115,7 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
 
 }
 
-let fullUpdateRunning = false;
+// let fullUpdateRunning = false;
 
 /**
  * Send all values to the connected device
@@ -194,6 +194,9 @@ export function sendSysex(data) {
     if (midi_output) {
         showMidiOutActivity();
         // setSuppressSysexEcho(); //TODO: still needed?
+
+        last_send_time = performance.now(); // for echo suppression
+
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
     }
     logOutgoingMidiMessage("SysEx", data);

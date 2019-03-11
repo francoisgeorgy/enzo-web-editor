@@ -9,9 +9,29 @@ import {appendErrorMessage, appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_sliders";
 
+export function setTitle(t = null) {
+
+    let title;
+
+    if (t) {
+        title = t;
+    } else {
+        const now = new Date();
+        t = now.getUTCFullYear() + "-" +
+            ("0" + (now.getUTCMonth() + 1)).slice(-2) + "-" +
+            ("0" + now.getUTCDate()).slice(-2) + "-" +
+            ("0" + now.getUTCHours()).slice(-2) + "h" +
+            ("0" + now.getUTCMinutes()).slice(-2) + "m" +
+            ("0" + now.getUTCSeconds()).slice(-2) + "s";
+    }
+
+    document.title = `Enzo Web Editor (${t})`;
+
+}
+
 let ignoreNextHashChange = false;
 
-export function updateBookmark() {
+export function updateBookmark(window_title = null) {
     log("updateBookmark()");
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
@@ -20,6 +40,7 @@ export function updateBookmark() {
     log(`updateBookmark: set hash to ${h}`);
     ignoreNextHashChange = true;
     window.location.hash = h;
+    setTitle(window_title);
 }
 
 /**

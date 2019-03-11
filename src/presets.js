@@ -20,7 +20,7 @@ export function init() {
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_init) ||
         (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
-        updateBookmark();
+        updateBookmark("init");
     }
     setStatus("Enzo set to 'init' configuration.");
     return false;   // disable the normal href behavior

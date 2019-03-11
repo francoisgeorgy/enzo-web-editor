@@ -14,9 +14,9 @@ export function downloadLastSysEx() {
         now.getUTCFullYear() + "-" +
         ("0" + (now.getUTCMonth()+1)).slice(-2) + "-" +
         ("0" + now.getUTCDate()).slice(-2) + "-" +
-        ("0" + now.getUTCHours()).slice(-2) + "" +
-        ("0" + now.getUTCMinutes()).slice(-2) + "" +
-        ("0" + now.getUTCSeconds()).slice(-2);
+        ("0" + now.getUTCHours()).slice(-2) + "h" +
+        ("0" + now.getUTCMinutes()).slice(-2) + "m" +
+        ("0" + now.getUTCSeconds()).slice(-2) + "s";
 
     const preset_num = MODEL.meta.preset_id.value;
 
