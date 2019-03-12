@@ -370,6 +370,13 @@ Known issues
 - There's still some issues with the preset loading from a bookmarked URL.
 - It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 
 the footswitch is pressed, but not for when it is released.
+- Selecting a preset with EXP set to max in the editor does not reset EXP when the new setting is loaded.
+
+
+Thanks
+======
+
+A big thank you to Meris for having provided precious information regarding the SysEx data. This editor could not have been so complete without their support.
 
 
 Disclaimer and License
