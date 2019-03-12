@@ -187,7 +187,7 @@ export function sendSysex(data) {
     if (midi_output) {
         log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
         showMidiOutActivity();
-        suppressSysexEcho();
+        suppressSysexEcho(data);
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
     } else {
         log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
@@ -206,7 +206,7 @@ export function requestPreset() {
 }
 
 export function savePreset() {
-    log("TODO: savePreset");
+    log("savePreset");
     sendSysexCommand(SYSEX_CMD.preset_write);
     cleanPreset();
 }

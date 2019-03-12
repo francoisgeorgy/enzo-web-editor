@@ -85,30 +85,31 @@ export function handleCC(msg) {
     updateModelAndUI("cc", cc, v);
 }
 
-let suppress_sysex_echo = false;
+let suppress_sysex_echo = null;
 
 /**
  * Set a flag to ignore the next incoming sysex only. The following sysex will not be ignored.
- * @param v
+ * @param data Data to ignore
  */
-export function suppressSysexEcho() {
-    suppress_sysex_echo = true;
+export function suppressSysexEcho(data) {
+    suppress_sysex_echo = data === null ? null : data.slice();
+}
+
+export function isSysexEcho(data) {
+    if (suppress_sysex_echo === null) return false;
+    // the sysex received contains the header, footer and manufacturer id bytes. The sysex we have as reference does not.
+    if (suppress_sysex_echo.length !== (data.length - 5)) return false;
+    for (let i=0; i < suppress_sysex_echo.length; i++) {
+        if (data[i+4] !== suppress_sysex_echo[i]) return false;
+    }
+    return true;
 }
 
 export function handleSysex(data) {
 
-    // suppress echo:
-/*
-    const t = performance.now();
-    if (t < (getLastSendTime() + 200)) {
-        log("handleCC: ignore sysex echo");
-        return;
-    }
-*/
-
-    if (suppress_sysex_echo) {
+    if (isSysexEcho(data)) {
         log("handleSysex: ignore sysex echo");
-        suppress_sysex_echo = false;
+        suppress_sysex_echo = null;
         return;
     }
 

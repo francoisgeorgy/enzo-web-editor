@@ -11,7 +11,7 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 Requirements
 ============
 
-- A browser that support the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, 
+- A browser that [supports](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility) the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, 
 only **Chrome** and **Opera** support this standard. 
 - A [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface.
 - A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, 
@@ -139,7 +139,7 @@ Now, if you modify any value, the selector changes to:
 
 ![dirty preset](/images/screenshots/preset-selected-dirty.jpg)
 
-This reminds you that the currently selected preset number is the one shown, but that the current settings differ from those
+This reminds you that the currently selected _preset number_ is the one shown, but that the current settings differ from those
 stored in the Enzo's memory for this preset.
 
 If you want to keep your current values and save them in the Enzo memory then you have to use the SAVE command from the menu. See next
@@ -186,9 +186,9 @@ EXP slider
 The EXP slider allows you to simulate an expression pedal connected to the Enzo.
 
 * The slider's _open_ position (slider at 0) corresponds to a opened (toe-up) expression pedal.
-* The slider's _close_ position (slider at 0) corresponds to a closed (toe-down) expression pedal.
+* The slider's _close_ position (slider at 127) corresponds to a closed (toe-down) expression pedal.
 
-For each of its knobs, the Enzo store two values: 
+For each of its knobs, the Enzo stores two values: 
 - the first one is the default one and is used when the expression pedal is at 0 or when no expression pedal is connected. 
 - the second value is the one ued when the expression pedal is at its maximum. 
 
@@ -204,7 +204,7 @@ By default, the first set of values is always used. To edit the second sets of v
 
 The _close_ text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second sets of values.
 
-Note: you can also use your keyboard TAB key to switch to the second set or back.
+Note: you can also use your keyboard TAB key to toggle between the two sets of values.
 
 To switch back to the default set of value, simply click _close_ again. The _close_ text must change back to black and the knobs names must change back to uppercase.
 
@@ -224,7 +224,7 @@ The editor can update its URL to include a representation of the current setting
 When you access an URL containing such a parameter, then the editor will use it to set the value of the knobs and switches. It will also
 send these values to the Enzo.
 
-So you can use URLs as _presets bookmarks_!
+So you can use URLs as _preset bookmarks_!
 
 Opening the editor with a URL containing a preset
 -------------------------------------------------
