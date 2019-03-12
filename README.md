@@ -217,7 +217,39 @@ If you want to use this with a real expression pedal connected to the Enzo (and 
 URL update
 ==========
 
-Doc coming soon...
+The editor can update its URL to include a representation of the current settings. This is like appending a hexadecimal SysEx to the URL.
+
+![SysEx as URL hash](/images/screenshots/url_hash.jpg "SysEx as URL hash")
+
+When you access an URL containing such a parameter, then the editor will use it to set the value of the knobs and switches. It will also
+send these values to the Enzo.
+
+So you can use URLs as _presets bookmarks_!
+
+Opening the editor with a URL containing a preset
+-------------------------------------------------
+
+If you already have the Enzo running with a nice preset and you connect it to the editor, maybe you don't want the editor to overwrite
+this preset because you open it with such a URL. To avoid this case, in the editor preferences, you can choose the behavior you
+prefer:
+
+![Preference for start mode](/images/screenshots/pref-init.jpg "Preference for start mode")
+    
+Automatic update of the URL
+---------------------------
+
+You can manually update the URL with the URL command in the menu or you can let the editor automatically update it. You can
+set this in the editor preferences:
+
+![Preference URL](/images/screenshots/pref-url.jpg "Preference URL")
+
+The REC button also lets you start at will the auto-updating of the URL.
+
+![REC button](/images/screenshots/rec.jpg "REC button")
+
+REC is automatically stopped if you use your browser's history. 
+
+Use REC to record all your changes and later on travel back in time!
 
 
 Menu commands
