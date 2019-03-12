@@ -11,6 +11,7 @@ import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_sliders";
 import {inExpMode} from "./exp";
+import {suppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
 
@@ -162,42 +163,34 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
 }
 
 /**
- *
+ * 1. Send a PC command
+ * 2. Wait 50 ms
+ * 3. Read the preset (send sysex read preset command)
  * @param pc
  */
 export function sendPC(pc) {
-
     setPresetNumber(pc);
-
     appendMessage(`Preset ${pc} selected.`);
-
     MODEL.meta.preset_id.value = pc;
-
     if (midi_output) {
         log(`send program change ${pc}`);
         showMidiOutActivity();
-
         midi_output.sendProgramChange(pc, settings.midi_channel);
-
-        // appendMessage(MSG_SEND_SYSEX);
     } else {
         log(`(send program change ${pc})`);
     }
     logOutgoingMidiMessage("PC", [pc]);
-
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }
 
 export function sendSysex(data) {
-    log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
-    // log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
     if (midi_output) {
+        log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
         showMidiOutActivity();
-        // setSuppressSysexEcho(); //TODO: still needed?
-
-        last_send_time = performance.now(); // for echo suppression
-
+        suppressSysexEcho();
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+    } else {
+        log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
     }
     logOutgoingMidiMessage("SysEx", data);
 }
@@ -205,13 +198,6 @@ export function sendSysex(data) {
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command, ' ')})`);
     sendSysex([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
-    // if (midi_output) {
-    //     showMidiOutActivity();
-    //     // setSuppressSysexEcho();
-    //     const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
-    //     midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
-    //     logOutgoingMidiMessage("SysEx", data);
-    // }
 }
 
 export function requestPreset() {

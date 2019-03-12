@@ -6,13 +6,6 @@ import {toHexString} from "../utils";
 import {SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
-// will store the last sysex received (all bytes, without any transformation).
-// let last_sysex = Array.from(new Uint8Array(39));
-
-// const saveLastSysEx = function(data) {
-//     last_sysex = data;
-// };
-
 export const SYSEX_INVALID = 0;
 export const SYSEX_IGNORE = 1;
 export const SYSEX_PRESET = 2;
@@ -105,27 +98,7 @@ const validate = function (data) {
             break;
     }
 
-/*
-    if ([SYSEX_CMD.globals_request, SYSEX_CMD.patch_write, SYSEX_CMD.preset_request].includes(cmd)) {
-        if (cmd === 0x28) {
-        } else {
-            log(`validate: sysex ignored (command: ${cmd.toString(16)})`);
-            return {
-                type: SYSEX_IGNORE,
-                // valid: false,
-                error: "ignored sysex command",
-                message: ""
-            };
-        }
-    }
-*/
-
     const last_byte = data[data.length - 1];
-    // for (let i = 0; i < data.length; i++) {
-    //     last_byte = data[i];
-    // }
-
-    // console.log("validate, last_byte", last_byte);
     if (last_byte === SYSEX_END) {
         log("validate: the sysex is valid");
         return {
@@ -229,29 +202,26 @@ const setDump = function (data) {
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
-            // saveLastSysEx(data);
+            log("setDump: sysex is preset data");
             decodeMeta(data);
             decodeControls(data, control);
             return {
                 type: SYSEX_PRESET,
-                // valid: true,
                 error: "",
                 message: ""
             };
         case SYSEX_GLOBALS:
+            log("setDump: sysex is globals data");
             decodeGlobals(data, global_conf);
             return {
                 type: SYSEX_GLOBALS,
-                // valid: true,
                 error: "",
                 message: ""
             };
         default:
+            log("setDump: sysex is not preset nor globals; probably an echo; ignored");
             return valid;
     }
-    // if (valid.error) {
-    //     return valid;
-    // }
 };
 
 /**

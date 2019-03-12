@@ -31,19 +31,6 @@ export function setMidiInputPort(port) {
     }
 }
 
-let suppress_sysex_echo = false;
-
-// export function setSuppressSysexEcho(v = true) {
-//     suppress_sysex_echo = v;
-// }
-/**
- * Set a flag to ignore the next incoming sysex only. The following sysex will not be ignored.
- * @param v
- */
-export function suppressSysexEcho(v = true) {
-    suppress_sysex_echo = true;
-}
-
 const monitors = new Array(127);
 
 function monitorCC(control_number) {
@@ -98,6 +85,16 @@ export function handleCC(msg) {
     updateModelAndUI("cc", cc, v);
 }
 
+let suppress_sysex_echo = false;
+
+/**
+ * Set a flag to ignore the next incoming sysex only. The following sysex will not be ignored.
+ * @param v
+ */
+export function suppressSysexEcho() {
+    suppress_sysex_echo = true;
+}
+
 export function handleSysex(data) {
 
     // suppress echo:
@@ -120,23 +117,17 @@ export function handleSysex(data) {
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
         case SYSEX_PRESET:
-            log("handleSysex: sysex is preset data");
             resetExp();
             updateUI();
             clearError();
-            // setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
             setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
-            // log("handleSysex: device updated with SysEx");
             break;
         case SYSEX_GLOBALS:
-            log("handleSysex: sysex is globals data");
             updateGlobalConfig();
             clearError();
             setStatus(`Global config settings received.`);
-            // log("handleSysex: device updated with SysEx");
             break;
         default:
-            log("handleSysex: sysex is not preset nor globals; probably an echo; ignored");
             appendErrorMessage(valid.message);
     }
 
