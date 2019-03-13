@@ -3,7 +3,7 @@ import {log} from "./debug";
 import {preferences} from "./preferences";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {setPresetClean} from "./ui_presets";
+import {setPresetClean, setPresetDirty} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
@@ -157,6 +157,14 @@ export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
     f();
 */
     sendSysex(MODEL.getPreset(false));
+
+    if (!getMidiInputPort() || !getMidiOutputPort()) {
+        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        setPresetDirty();
+    } else {
+        setPresetClean();
+    }
+
 }
 
 /**
@@ -188,6 +196,7 @@ export function sendPC(pc) {
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        setPresetDirty();
     }
 
     logOutgoingMidiMessage("PC", [pc]);
@@ -200,8 +209,13 @@ export function sendSysex(data) {
         showMidiOutActivity();
         suppressSysexEcho(data);
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+
+        // setPresetClean();
     } else {
         log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
+
+        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        // setPresetDirty();
     }
     logOutgoingMidiMessage("SysEx", data);
 }

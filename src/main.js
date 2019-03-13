@@ -97,7 +97,7 @@ function connectInputPort(input) {
     setMidiInStatus(true);
     clearError();
     // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
-    setStatus(`${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
+    setStatus(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
 
 }
 
@@ -108,8 +108,7 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         log("disconnectInputPort: midi_input does not listen anymore");
-        setStatus(`Device is disconnected.`);
-
+        setStatus(`Input disconnected.`);
         if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
     setMidiInStatus(false);
@@ -127,7 +126,7 @@ function connectInputDevice(id) {
         // the user select no device, disconnect.
         disconnectInputPort();
         clearStatus();
-        setStatusError(`Connect the Enzo or check the MIDI channel.`);
+        // setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
         return;
     }
@@ -171,6 +170,7 @@ function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
+    setStatus(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
 }
 
 function disconnectOutputPort() {
@@ -179,7 +179,7 @@ function disconnectOutputPort() {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
-
+        setStatus(`Output disconnected.`);
         if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
 }

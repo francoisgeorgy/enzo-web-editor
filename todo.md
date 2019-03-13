@@ -4,6 +4,9 @@
 - connection/disconnection
     - set preset dirty if no input or no output device connected
 
+- midi
+    - ignore PC echo
+
 - EXP
     - copy values
     - set exp value to 0 after loading a new preset         DONE
