@@ -27,8 +27,6 @@ export function loadPresetFromFile() {
  */
 export function readFile() {
 
-    // const SYSEX_END = 0xF7;
-
     let data = [];
     let f = this.files[0];
     log(`read file`, f);
@@ -48,7 +46,7 @@ export function readFile() {
                 log("file read OK");
                 if (lightbox) lightbox.close();
 
-                appendMessage("File read OK");
+                appendMessage(`File ${f.name} read OK`);
 
                 resetExp();
                 updateUI();

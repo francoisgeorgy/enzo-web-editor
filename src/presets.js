@@ -11,12 +11,9 @@ import {resetExp} from "./ui_sliders";
 export function init() {
     log("init()");
     MODEL.init();
-    // setPresetNumber(0);  // keep the preset number unchanged because this is still the active preset in Enzo
-    // dirtyPreset();
-    setPresetDirty();
-    // displayPreset();
     resetExp();
     updateUI();
+    setPresetDirty();   // must be done after updateUI()
     fullUpdateDevice(false, true);
     clearError();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
@@ -30,12 +27,9 @@ export function init() {
 export function randomize() {
     log("randomize");
     MODEL.randomize();
-    // setPresetNumber(0);  // keep the preset number unchanged because this is still the active preset in Enzo
-    // dirtyPreset();
-    setPresetDirty();
-    // displayPreset();
     resetExp();
     updateUI();
+    setPresetDirty();   // must be done after updateUI()
     fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
     clearError();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||

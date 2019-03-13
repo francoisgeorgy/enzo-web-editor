@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {showPreset, setPresetDirty, setupPresetSelectors} from "./ui_presets";
+import {showPreset, setPresetDirty, setupPresetSelectors, setPresetClean} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -38,7 +38,6 @@ export function handleUserAction(control_type, control_number, value) {
         sendPC(n);
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
-            // dirtyPreset();
             setPresetDirty();
         }
         updateDevice(control_type, n, value, inExpMode());
@@ -136,7 +135,7 @@ export function updateControls(onlyTwoValuesControls = false) {
  */
 function updateMeta() {
     if (MODEL.meta.preset_id.value) {
-        setPresetNumber(MODEL.meta.preset_id.value);
+        setPresetClean();
         showPreset();
     }
 }
