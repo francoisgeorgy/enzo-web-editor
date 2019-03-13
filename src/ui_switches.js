@@ -3,7 +3,6 @@ import {handleUserAction, updateControl} from "./ui";
 import {appendMessage} from "./ui_messages";
 import {updateDevice} from "./midi_out";
 import MODEL from "./model";
-import {WAVESHAPES} from "./model/constants";
 
 export function updateBypassSwitch(value) {
     log("updateBypassSwitch", value);
@@ -39,7 +38,7 @@ export function updateMomentaryStompswitch(id, value) {
 
 let tap_timestamp = 0;
 
-//TODO: compute tempo on a average on at least 3 values
+//TODO: compute tempo on an average of at least 3 values
 
 export function tapDown(id) {
     log(`tapDown(${id})`);
@@ -51,11 +50,9 @@ export function tapDown(id) {
     if (dt < 5000) {    // if more than 5 sec, reset
         const bpm = Math.round(60000 / dt);
         appendMessage(`TAP ${dt}ms ${bpm}bpm`);
-
         const cc_value = Math.min(dt / 10, 127);
         updateDevice("cc", MODEL.control_id.tempo, cc_value);
         updateControl("cc", MODEL.control_id.tempo, cc_value);
-
     } else {
         appendMessage("TAP");
     }
@@ -70,9 +67,7 @@ export function tapRelease(id) {
  *
  */
 export function setupSwitches(userActionCallback) {
-
-    // log("setupSwitches()");
-
+    log("setupSwitches()");
     // "radio button"-like behavior:
     $("div.bt").click(function() {
         // log(`click on ${this.id}`);
@@ -82,19 +77,21 @@ export function setupSwitches(userActionCallback) {
             userActionCallback(...this.id.split("-"));
         }
     });
-
     // toggle stompswitches:
     $(".sw").click(function() {
         this.classList.add("sw-off");
         $(this).siblings(".sw").removeClass("sw-off");
         userActionCallback(...this.id.split("-"));
     });
-
 }
 
 export function setupMomentarySwitches(tapDownCallback, releaseCallback) {
-
     // momentary stompswitches:
-    $(".swm").mousedown(function() { tapDownCallback(this.id) }).mouseup(function() { releaseCallback(this.id) });
-
+    $(".swm")
+        .mousedown(function() {
+            tapDownCallback(this.id)
+        })
+        .mouseup(function() {
+            releaseCallback(this.id)
+        });
 }

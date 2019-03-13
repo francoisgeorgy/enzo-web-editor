@@ -70,19 +70,6 @@ body {
     color: var(--running);
 }
 
-/*
-.options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.options .bt {
-    width: 80%;
-}
-*/
-
 .grid-2x1 {
     display: grid;
     grid-template-rows: auto auto;
@@ -104,10 +91,6 @@ body {
     margin-bottom: 0;
 }
 
-/*.grid-3x2 .bt:nth-child(2n+1) {*/
-    /*margin-right: 0;*/
-/*}*/
-
 .grid-3x3 {
     display: grid;
     grid-template-rows: auto auto auto;
@@ -119,13 +102,7 @@ body {
     grid-row-gap: 5px;
 }
 
-/*#wrapper {*/
-    /*margin: 10px auto 0 auto;*/
-    /*padding: 0 10px;*/
-/*}*/
-
 #main {
-    /*padding: 5px;*/
     justify-content: stretch;
     align-content: stretch;
     align-items: start;
@@ -159,7 +136,6 @@ body {
 #messages-list {
     position: relative;
     overflow-y: auto;
-    /*border: 1px solid var(--messages-border);*/
     color: var(--messages-color);
     background: var(--messages-bg)!important;
     box-shadow: inset 0 0 6px var(--inset-shadow-color);
@@ -174,7 +150,6 @@ body {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-    /*padding: 4px 4px 0 4px !important;*/
     display: flex;
     align-items: flex-end;
     color: var(--header-text);
@@ -284,12 +259,6 @@ div.controls-slider {
     color: var(--menu-text-hover)!important;
 }
 
-/*
-#tools {
-    color: var(--header-text);
-}
-*/
-
 #options {
     display: flex;
     flex-direction: row;
@@ -305,24 +274,6 @@ div.controls-slider {
     grid-row-gap: 2px;
     color: var(--header-text);
 }
-
-/*
-#presets .header {
-    text-align: left;
-}
-*/
-
-/*
-.knob-combo {
-    text-align: center;
-}
-*/
-
-/*
-.no-margin {
-    margin: 0;
-}
-*/
 
 .slider-combo {
     padding-top: 5px;
@@ -340,13 +291,6 @@ div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
     text-align: center;
 }
-
-/*
-.preset-selection {
-    display: flex;
-    margin: 5px 0 10px 0;
-}
-*/
 
 .preset {
     justify-self: stretch;
@@ -383,12 +327,13 @@ div.btc {   /* "checkbox"-like switches: */
     border: 1px solid var(--bt-on-border);
 }
 
-.preset.dirty {
-    /*background-color: var(--bt-on-bg-color);*/
+.preset.dirty,
+.preset.on.dirty {
+    background: transparent;
     color: var(--bt-on-bg-color)!important;
     text-shadow: none;
     box-shadow: inset 0 0 6px var(--inset-shadow-color);
-    /*border: 1px solid var(--bt-on-border);*/
+    border: 1px solid var(--bt-border);
 }
 
 .on {
@@ -452,16 +397,6 @@ h4 {
     color: var(--dialog-link);
 }
 
-/*
-.dialog-info {
-    margin: 1.5rem 0 0 0;
-    padding-top: 6px;
-    border-top: 1px solid #aaa;
-    font-size: 0.8rem;
-    color: #ddd;
-}
-*/
-
 .lity-container {
     vertical-align: top;
     margin-top: 60px;
@@ -494,34 +429,3 @@ h4 {
 .dialog h2, .dialog h3 {
     margin-top: 0;
 }
-
-/*
-.panel h2 span {
-    cursor: pointer;
-}
-
-.panel input,
-.panel select,
-.panel textarea {
-    background-color: #eee;
-    margin: 0.5vh 0;
-}
-
-select option {
-    background-color: #333;
-}
-
-.panel button {
-    font-size: 1rem;
-    border-radius: 6px;
-}
-*/
-
-/*
-#credits-dialog a,
-#credits-dialog a:active,
-#credits-dialog a:visited {
-    color: #8585FF!important;
-    text-decoration: none;
-}
-*/

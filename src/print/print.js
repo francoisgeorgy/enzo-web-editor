@@ -5,7 +5,7 @@ import {hexy} from "hexy";
 import "./print.css";
 import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
-import {SYSEX_PRESET} from "../model/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET} from "../model/sysex";
 
 function renderControlName(control_number) {
     return MODEL.control[control_number].name;
@@ -98,7 +98,7 @@ $(function () {
      */
     function readFile(f) {
 
-        const SYSEX_END = 0xF7;
+        // const SYSEX_END = 0xF7;
 
         let data = [];
         log(`read file`, f.name);
@@ -110,7 +110,7 @@ $(function () {
                 let view   = new Uint8Array(e.target.result);
                 for (let i=0; i<view.length; i++) {
                     data.push(view[i]);
-                    if (view[i] === SYSEX_END) break;
+                    if (view[i] === SYSEX_END_BYTE) break;
                 }
 
                 //FIXME: check data validity here and load error template in case of error

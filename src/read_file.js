@@ -4,7 +4,7 @@ import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
 import {appendMessage} from "./ui_messages";
-import {SYSEX_PRESET} from "./model/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_sliders";
 
 //==================================================================================================================
@@ -19,7 +19,7 @@ export function loadPresetFromFile() {
     $("#load-preset-error").empty();
     $("#preset-file").val("");
     lightbox = lity("#load-preset-dialog");
-    return false;   // disable the normal href behavior
+    return false;   // disable the normal href behavior when called from an onclick event
 }
 
 /**
@@ -27,7 +27,7 @@ export function loadPresetFromFile() {
  */
 export function readFile() {
 
-    const SYSEX_END = 0xF7;
+    // const SYSEX_END = 0xF7;
 
     let data = [];
     let f = this.files[0];
@@ -40,7 +40,7 @@ export function readFile() {
             let view   = new Uint8Array(e.target.result);
             for (let i=0; i<view.length; i++) {
                 data.push(view[i]);
-                if (view[i] === SYSEX_END) break;
+                if (view[i] === SYSEX_END_BYTE) break;
             }
             const valid = MODEL.setValuesFromSysEx(data);
             if (valid.type === SYSEX_PRESET) {
@@ -56,10 +56,7 @@ export function readFile() {
 
             } else {
                 log("unable to set value from file; file is not a preset sysex", valid);
-
                 $("#load-preset-error").show().text(valid.message);
-                // appendErrorMessage(valid.message);
-
             }
         };
         reader.readAsArrayBuffer(f);

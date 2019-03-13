@@ -4,7 +4,7 @@ import * as Utils from "./utils";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
-import {settings, SETTINGS_UPDATE_URL} from "./settings";
+import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {appendErrorMessage, appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_sliders";
@@ -74,7 +74,7 @@ export function updateBookmark(window_title = null) {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
     // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
-    const h = toHexString(MODEL.getSysex());
+    const h = toHexString(MODEL.getPreset());
     if (h !== window.location.hash.substring(1)) {      // update hash only when it changes
         log(`updateBookmark: set hash to ${h}`);
         hashUpdatedByAutomation = true;
@@ -86,7 +86,7 @@ export function updateBookmark(window_title = null) {
 let automationHandler = null;
 
 export function startBookmarkAutomation(force = false) {
-    if (force || (settings.update_URL === SETTINGS_UPDATE_URL.every_second)) {
+    if (force || (preferences.update_URL === SETTINGS_UPDATE_URL.every_second)) {
         log("startBookmarkAutomation");
         if (automationHandler) {
             // clear existing before re-starting

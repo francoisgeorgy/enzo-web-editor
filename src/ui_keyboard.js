@@ -2,15 +2,15 @@ import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {log} from "./debug";
 import {animateCC} from "./animate_cc";
-import {handleUserAction, showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
-import {sendPC, updateDevice} from "./midi_out";
+import {showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
+import {updateDevice} from "./midi_out";
 import MODEL from "./model";
-import {displayPreset, presetDec, presetInc, setPresetNumber} from "./ui_presets";
+import {presetDec, presetInc, presetSet} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
-import {closeSettingsPanel} from "./ui_global_settings";
+import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
 import {showExpValues, toggleExpEditMode} from "./exp";
@@ -117,17 +117,18 @@ function keyDown(code, alt, shift, meta) {
     log("keyDown", code, alt, shift, meta);
 
     if (code === 48) {   // 0
-        setPresetNumber(10);
-        sendPC(10);
-        displayPreset();
+        presetSet(10);
+        // sendPC(10);
+        // displayPreset();
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
-        let pc = code - 48;
-        setPresetNumber(code - 48);
-        sendPC(pc);
-        displayPreset();
+        // const n = code - 48;
+        presetSet(code - 48);
+        // setPresetNumber(code - 48);
+        // sendPC(pc);
+        // displayPreset();
         return;
     }
 
@@ -245,13 +246,13 @@ function keyDown(code, alt, shift, meta) {
                 animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 127);
                 break;
             case 39:                // Right arrow
-                presetInc(handleUserAction);
+                presetInc();
                 break;
             case 40:                // Down arrow
                 animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 0);
                 break;
             case 37:                // Left arrow
-                presetDec(handleUserAction);
+                presetDec();
                 break;
         }
     }
@@ -269,7 +270,7 @@ function keyUp(code, alt, shift, meta) {
             break;
         case 27:                // close all opened panel with ESC key
             closeAppPreferencesPanel();
-            closeSettingsPanel();
+            closeGlobalSettingsPanel();
             closeHelpPanel();
             showDefaultPanel();
             break;

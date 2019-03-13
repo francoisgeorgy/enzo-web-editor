@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {displayPreset, setPresetNumber} from "./ui_presets";
+import {showPreset, setPresetClean} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
@@ -13,7 +13,7 @@ import {
 } from "./ui_messages";
 import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
-import {updateGlobalConfig} from "./ui_global_settings";
+import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_sliders";
 
 let midi_input = null;
@@ -48,17 +48,14 @@ function monitorCC(control_number) {
  * @param msg
  */
 export function handlePC(msg) {
-
     log("handlePC", msg);
-
     if (msg.type !== "programchange") return;
-
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
-
     showMidiInActivity();
     logIncomingMidiMessage("PC", [msg.value]);
-    setPresetNumber(msg.value);
-    displayPreset();
+    MODEL.setPresetNumber(msg.value);
+    setPresetClean();
+    showPreset();
 }
 
 /**
@@ -124,7 +121,7 @@ export function handleSysex(data) {
             setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
             break;
         case SYSEX_GLOBALS:
-            updateGlobalConfig();
+            updateGlobalSettings();
             clearError();
             setStatus(`Global config settings received.`);
             break;

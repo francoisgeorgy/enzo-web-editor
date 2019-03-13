@@ -1,45 +1,47 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {dirtyPreset, displayPreset, setPresetNumber} from "./ui_presets";
+import {setPresetDirty} from "./ui_presets";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {clearError, setStatus} from "./ui_messages";
-import {updateBookmark} from "./hash";
-import {settings, SETTINGS_UPDATE_URL} from "./settings";
+import {updateBookmark} from "./url";
+import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {resetExp} from "./ui_sliders";
 
 export function init() {
     log("init()");
     MODEL.init();
     // setPresetNumber(0);  // keep the preset number unchanged because this is still the active preset in Enzo
-    dirtyPreset();
+    // dirtyPreset();
+    setPresetDirty();
     // displayPreset();
     resetExp();
     updateUI();
     fullUpdateDevice(false, true);
     clearError();
-    if ((settings.update_URL & SETTINGS_UPDATE_URL.on_init) ||
-        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
+    if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
+        (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
         updateBookmark("init");
     }
     setStatus("Enzo set to 'init' configuration.");
-    return false;   // disable the normal href behavior
+    return false;   // disable the normal href behavior when called from an onclick event
 }
 
 export function randomize() {
     log("randomize");
     MODEL.randomize();
     // setPresetNumber(0);  // keep the preset number unchanged because this is still the active preset in Enzo
-    dirtyPreset();
+    // dirtyPreset();
+    setPresetDirty();
     // displayPreset();
     resetExp();
     updateUI();
     fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
     clearError();
-    if ((settings.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
-        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
+    if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
+        (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
         updateBookmark();
     }
     setStatus("Enzo randomized.");
-    return false;   // disable the normal href behavior
+    return false;   // disable the normal href behavior when called from an onclick event
 }

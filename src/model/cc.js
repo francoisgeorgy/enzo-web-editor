@@ -415,7 +415,7 @@ function defineControls() {
 
         //FIXME: decide between value2 and value_exp name.
         if (obj.hasOwnProperty("sysex2")) {
-            obj.two_values = true;    // true for the controls that can have two values, avaialble with the EXP pedal
+            obj.two_values = true;    // true for the controls that can have two values, available with the EXP pedal
             obj.init_value2 = obj.init_value;
             obj.raw_value2 = obj.raw_value;
         } else {

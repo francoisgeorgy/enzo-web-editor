@@ -1,9 +1,9 @@
 import MODEL from "./model";
 import {log} from "./debug";
-import {settings} from "./settings";
+import {preferences} from "./preferences";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {cleanPreset, setPresetNumber} from "./ui_presets";
+import {setPresetClean} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
@@ -72,16 +72,16 @@ export function sendCC(control, monitor = true) {
     const v = inExpMode() ? MODEL.getControlValueExp(control) : MODEL.getControlValue(control);
 
     if (midi_output) {
-        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel}`);
+        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel}`);
 
         showMidiOutActivity();
 
         last_send_time = performance.now(); // for echo suppression
 
-        midi_output.sendControlChange(control.cc_number, v, settings.midi_channel);
+        midi_output.sendControlChange(control.cc_number, v, preferences.midi_channel);
 
     } else {
-        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel})`);
+        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel})`);
     }
 
     logOutgoingMidiMessage("CC", [control.cc_number, v]);
@@ -97,6 +97,7 @@ export function sendCC(control, monitor = true) {
  * @param control_type
  * @param control_number
  * @param value_float
+ * @param in_exp_mode
  */
 export function updateDevice(control_type, control_number, value_float, in_exp_mode = false) {
 
@@ -113,7 +114,6 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
         updateExpSlider(value);
         updateControls(true);
     }
-
 }
 
 // let fullUpdateRunning = false;
@@ -122,7 +122,7 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
  * Send all values to the connected device
  * Wait 40ms between each CC
  */
-export function fullUpdateDevice(onlyChanged = false, silent = false) {
+export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
 
     log(`fullUpdateDevice(${onlyChanged})`);
 /*
@@ -147,9 +147,8 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
             }
         } else {
             // log(`fullUpdateDevice: send CC ${i}`);
-            if (!onlyChanged || c[i].randomized) {
+            if (!onlyChanged) {
                 sendCC(c[i], false);
-                c[i].randomized = false;
             }
             setTimeout(f, 40);
         }
@@ -157,9 +156,7 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
 
     f();
 */
-
-    sendSysex(MODEL.getSysex(false));
-
+    sendSysex(MODEL.getPreset(false));
 }
 
 /**
@@ -169,13 +166,13 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
  * @param pc
  */
 export function sendPC(pc) {
-    setPresetNumber(pc);
+    // setPresetNumber(pc);
     appendMessage(`Preset ${pc} selected.`);
     MODEL.meta.preset_id.value = pc;
     if (midi_output) {
         log(`send program change ${pc}`);
         showMidiOutActivity();
-        midi_output.sendProgramChange(pc, settings.midi_channel);
+        midi_output.sendProgramChange(pc, preferences.midi_channel);
     } else {
         log(`(send program change ${pc})`);
     }
@@ -208,11 +205,12 @@ export function requestPreset() {
 export function savePreset() {
     log("savePreset");
     sendSysexCommand(SYSEX_CMD.preset_write);
-    cleanPreset();
+    // cleanPreset();
+    setPresetClean();
 }
 
-export function requestGlobalConfig() {
-    log("requestGlobalConfig");
+export function requestGlobalSettings() {
+    log("requestGlobalSettings");
     sendSysexCommand(SYSEX_CMD.globals_request);
 }
 

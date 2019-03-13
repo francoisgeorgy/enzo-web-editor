@@ -1,8 +1,7 @@
 import {control_id, control} from "./cc.js";
 import meta from "./meta.js";
-import sysex from "./sysex.js";
 import {global_conf, global_id} from "./global_conf";
-import {log} from "../debug";
+import * as sysex from "./sysex";
 
 /**
  *
@@ -13,28 +12,13 @@ const getControl = function (number) {
     return control[number];
 };
 
-/**
- *
- * @returns {number}
- * @param ctrl
- */
 const getControlValue = function (ctrl) {
-    return "raw_value" in ctrl ? ctrl.raw_value : 0;        //TODO: raw_value should always exist
+    return ctrl.raw_value;
 };
 
 const getMappedControlValue = function (ctrl) {
-    const v = "raw_value" in ctrl ? ctrl.raw_value : 0;     //TODO: raw_value should always exist
-    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
+    return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(ctrl.raw_value) : ctrl.raw_value;
 };
-
-// const getControlValue2 = function (ctrl) {
-//     return ctrl.two_values ? ctrl.raw_value2 : ctrl.raw_value;              //TODO: return null if not two_values?
-// };
-//
-// const getMappedControlValue2 = function (ctrl) {
-//     const v = ctrl.two_values in ctrl ? ctrl.raw_value2 : ctrl.raw_value;   //TODO: return null if not two_values?
-//     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
-// };
 
 const getControlValueInter = function (ctrl) {
     return ctrl.two_values ? ctrl.raw_value_inter : ctrl.raw_value;
@@ -58,6 +42,9 @@ const setControlValue = function () {
     // console.log("BS2.setControlValue", ...arguments);
     let c;
     if (arguments.length === 2) {
+
+        // args are control_object and value
+
         let value = arguments[1];
         const v = typeof value === "number" ? value : parseInt(value);
         c = arguments[0];
@@ -67,11 +54,12 @@ const setControlValue = function () {
             c.raw_value = v;
         }
     } else if (arguments.length >= 3) {
+
+        // args are control_type, control_number, value, and value2
+
         let ca; // controls array
         if (arguments[0] === "cc") {                // [0] is control type
             ca = control;
-        // } else if (arguments[0] === "nrpn") {
-        //     ca = nrpn;
         } else {
             console.error("setControlValue: invalid control_type", arguments);
             return null;
@@ -121,12 +109,11 @@ const interpolateExpValues = function (exp_value) {
         } else {
             c.raw_value_inter = Math.round((c.raw_value2 - c.raw_value) / 127 * exp_value) + c.raw_value;
         }
-        // log(`interpolateExpValues: CC ${i}: ${c.raw_value_exp} = f(${c.raw_value}, ${c.raw_value2}, ${exp_value})`);
     }
 };
 
 /**
- *
+ * Set convenient "default" values.
  */
 const init = function () {
     for (let i = 0; i < control.length; i++) {
@@ -141,7 +128,6 @@ const init = function () {
             c.raw_value2 = c.raw_value;
         }
     }
-    meta.preset_id.value = 0;
 };
 
 function getRandomValue(c) {
@@ -162,66 +148,32 @@ function getRandomValue(c) {
     return v;
 }
 
+/**
+ * Set random values for all controls.
+ */
 const randomize = function() {
-
     for (let i = 0; i < control.length; i++) {
-
         const c = control[i];
         if (typeof c === "undefined") continue;
-
         if (c.no_randomize) continue;
-
-/*
-        let v;
-        // if (c.hasOwnProperty("randomize")) {
-        //     v = c.randomize;
-        // } else {
-            if (c.on_off) {
-                v = Math.round(Math.random());
-            } else {
-                let min = Math.min(...c.cc_range);
-                v = Math.round(Math.random() * (Math.max(...c.cc_range) - min)) + min;  //TODO: step
-            }
-            if (c.hasOwnProperty("map_raw")) {
-                v = c.map_raw(v);
-            }
-        // }
-        c.raw_value = v;
-*/
         c.raw_value = getRandomValue(c);
-        c.randomized = true;
-
         if (c.two_values) {
             c.raw_value2 = getRandomValue(c);
         }
-
     }
-
-    meta.preset_id.value = 0;
-
 };
-
-/**
- * Only for CC, not for NRPN
- *
- * Returns an array of "midi messages" to send to update control to value
- * @param ctrl
- */
-/*
-const getMidiMessagesForCC = function (ctrl) {
-    if (ctrl.cc_type !== "cc") return [];
-    let CC = [];
-    let value = getControlValue(ctrl);
-    CC.push([ctrl.cc_number, value]);
-    return CC;
-};
-*/
 
 const setDeviceId = function (id) {
     meta.device_id.value = id;
 };
 
-//TODO: getHumanValue() or getValue()
+const getPresetNumber = function() {
+    return meta.preset_id.value;
+};
+
+const setPresetNumber = function(n) {
+    meta.preset_id.value = n;
+};
 
 export default {
     name: "Enzo",
@@ -230,19 +182,21 @@ export default {
     control,
     global_id,
     global_conf,
+    getPresetNumber,
+    setPresetNumber,
     init,
     randomize,
     setDeviceId,
     getControl,
-    getControlValue,
+    getControlValue,                        // default value
     getMappedControlValue,
-    setControlValue,
-    getControlValueExp,
-    getControlValueInter,
+    setControlValue,                        // default value
+    getControlValueExp,                     // second value (when EXP pedal fully closed)
+    getControlValueInter,                   // interpolated value (when using EXP)
     getMappedControlValueExp,
-    interpolateExpValues,
-    setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
-    getSysex: sysex.getDump,     // export all values as a SysEx dump
-    getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig,
-    validate: sysex.validate   // validate a SysEx dump
+    interpolateExpValues,                   // interpolate inter-value for controls that have two values
+    validate: sysex.validate,               // validate a SysEx
+    setValuesFromSysEx: sysex.decodeSysex,  // decode a sysex and update model's values
+    getPreset: sysex.getPreset,             // export all values as a SysEx dump
+    getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig
 };

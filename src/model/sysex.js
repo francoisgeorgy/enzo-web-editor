@@ -6,21 +6,22 @@ import {toHexString} from "../utils";
 import {SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
+export const SYSEX_START_BYTE = 0xF0;
+export const SYSEX_END_BYTE = 0xF7;
+
+// results of validate(...):
 export const SYSEX_INVALID = 0;
 export const SYSEX_IGNORE = 1;
 export const SYSEX_PRESET = 2;
 export const SYSEX_GLOBALS = 3;
 
-const validate = function (data) {
+export function validate(data) {
 
     log("validate", toHexString(data, ' '));
 
-    const SYSEX_START = 0xF0;
-    const SYSEX_END = 0xF7;
-
     let type = SYSEX_INVALID;   // default value
 
-    if (data[0] !== SYSEX_START) {
+    if (data[0] !== SYSEX_START_BYTE) {
         warn("validate: invalid start byte", data[0]);
         return {
             type: SYSEX_INVALID,
@@ -99,7 +100,7 @@ const validate = function (data) {
     }
 
     const last_byte = data[data.length - 1];
-    if (last_byte === SYSEX_END) {
+    if (last_byte === SYSEX_END_BYTE) {
         log("validate: the sysex is valid");
         return {
             type,
@@ -115,7 +116,7 @@ const validate = function (data) {
         }
     }
 
-};
+}
 
 /**
  *
@@ -198,7 +199,7 @@ function decodeGlobals(data, globals) {
  * @param data
  * @returns {*}
  */
-const setDump = function (data) {
+export function decodeSysex(data) {
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
@@ -222,14 +223,14 @@ const setDump = function (data) {
             log("setDump: sysex is not preset nor globals; probably an echo; ignored");
             return valid;
     }
-};
+}
 
 /**
  * Create a SysEx dump data structure
  * @param complete If false do not include the sysex header and footer bytes nor the manufacturer ID
  * @returns {Uint8Array}
  */
-const getDump = function (complete = true) {
+export function getPreset(complete = true) {
 
     // exemple of dump sent by the Enzo with all values set to 0:
     // 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00
@@ -294,9 +295,9 @@ const getDump = function (complete = true) {
     // log(data, meta.preset_id.value);
 
     return data;
-};
+}
 
-const getSysexDataForGlobalConfig = function(global_num, value) {
+export function getSysexDataForGlobalConfig(global_num, value) {
 
     // F0
     // 00 20 10    Meris ID	(different manufacturers have different IDs)
@@ -327,11 +328,4 @@ const getSysexDataForGlobalConfig = function(global_num, value) {
     // data[10] = 0xF7;   // end-of-sysex marker
 
     return data;
-};
-
-export default {
-    validate,
-    setDump,
-    getDump,
-    getSysexDataForGlobalConfig
 }

@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {dirtyPreset, displayPreset, setPresetNumber, setupPresetSelectors} from "./ui_presets";
+import {showPreset, setPresetDirty, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -17,9 +17,9 @@ import {loadPresetFromFile, readFile} from "./read_file";
 import {openCreditsDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
-import {settings} from "./settings";
-import {toggleBookmarkAutomation, updateBookmark} from "./hash";
-import {setupGlobalConfig, openSettingsPanel} from "./ui_global_settings";
+import {preferences} from "./preferences";
+import {toggleBookmarkAutomation, updateBookmark} from "./url";
+import {setupGlobalSettings, openGlobalSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
@@ -37,14 +37,17 @@ export function handleUserAction(control_type, control_number, value) {
     if (control_type === 'pc') {
         sendPC(n);
     } else {
-        if (n !== 4) dirtyPreset();        //FIXME: use MODEL control_id values instead of magic number
+        if (n !== MODEL.control_id.exp_pedal) {
+            // dirtyPreset();
+            setPresetDirty();
+        }
         updateDevice(control_type, n, value, inExpMode());
     }
 }
 
 /**
  *
- * @param control_type
+ * @param control_type "cc" or "nrpn"
  * @param control_number
  * @param value
  * @param mappedValue
@@ -65,12 +68,14 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         knobs[id].value = value;        //TODO: doesn't the knob update its value itself?
     } else {
 
-        if (/*control_type === "cc" &&*/ parseInt(control_number, 10) === 4) {    //TODO: replace this hack with better code
+        const num = parseInt(control_number, 10);
+
+        if (/*control_type === "cc" &&*/ num === 4) {    //TODO: replace this hack with better code
             updateExpSlider(value);                                                     //FIXME: use MODEL control_id values instead of magic number
             return;
         }
 
-        if (/*control_type === "cc" &&*/ parseInt(control_number, 10) === 14) {    //TODO: replace this hack with better code
+        if (/*control_type === "cc" &&*/ num === 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
             return;
         }
@@ -78,17 +83,17 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         let c = $(`#${id}`);
 
         if (c.length) { // jQuery trick to check if element was found
-            warn("updateControl: unsupported control (1): ", control_type, control_number, value);
+            warn("updateControl: unsupported control (1): ", control_type, num, value);
         } else {
             c = $(`#${id}-${mappedValue}`);
             if (c.length) {
                 if (c.is(".bt")) {
-                    log(`updateControl(${control_type}, ${control_number}, ${value}) .bt`);
+                    log(`updateControl(${control_type}, ${num}, ${value}) .bt`);
                     updateOptionSwitch(id + "-" + mappedValue, mappedValue);
                 // } else if (c.is(".sw")) {
                 //     //TODO: handle .sw controls
                 } else if (c.is(".swm")) {
-                    log(`updateControl(${control_type}, ${control_number}, ${value}) .swm`);
+                    log(`updateControl(${control_type}, ${num}, ${value}) .swm`);
                     updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
                     // log(typeof mappedValue, mappedValue === 0);
                     // if (mappedValue !== 0) {
@@ -96,7 +101,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
                         setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
                     // }
                 } else {
-                    warn("updateControl: unsupported control (2): ", control_type, control_number, value);
+                    warn("updateControl: unsupported control (2): ", control_type, num, value);
                 }
             } else {
                 log(`no control for ${id}-${mappedValue}`);
@@ -104,7 +109,6 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         }
 
     }
-
 }
 
 /**
@@ -115,8 +119,7 @@ export function updateControls(onlyTwoValuesControls = false) {
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
         const c = MODEL.control[i];
-        // if showExpValues then only update two-values controls
-        if (onlyTwoValuesControls) {
+        if (onlyTwoValuesControls) {    // if onlyTwoValuesControls then only update two-values controls
             if (c.two_values) {
                 log(`updateControls: update two_values ${i}`);
                 updateControl(c.cc_type, i, MODEL.getControlValueInter(c), MODEL.getMappedControlValueExp(c));
@@ -124,7 +127,6 @@ export function updateControls(onlyTwoValuesControls = false) {
         } else {
             updateControl(c.cc_type, i, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
         }
-        // updateControl(MODEL.control[i].cc_type, i, MODEL.getControlValue(MODEL.control[i]), MODEL.getMappedControlValue(MODEL.control[i]));
     }
     if (TRACE) console.groupEnd();
 } // updateControls()
@@ -135,7 +137,7 @@ export function updateControls(onlyTwoValuesControls = false) {
 function updateMeta() {
     if (MODEL.meta.preset_id.value) {
         setPresetNumber(MODEL.meta.preset_id.value);
-        displayPreset();
+        showPreset();
     }
 }
 
@@ -157,62 +159,45 @@ export function updateUI() {
  */
 export function updateModelAndUI(control_type, control_number, value) {
 
-    log("updateModelAndUI", control_type, control_number, value, "#" + control_type + "-" + control_number);
+    //FIXME: no need for control_type
+
+    log("updateModelAndUI", control_type, control_number, value);
 
     control_type = control_type.toLowerCase();
-    // if ((control_type !== "cc") && (control_type !== "nrpn")) {
     if (control_type !== "cc") {
         warn(`updateModelAndUI: unsupported control type: ${control_type}`);
         return;
     }
 
-    if (MODEL.control[control_number]) {
+    const num = parseInt(control_number, 10);
+
+    if (MODEL.control[num]) {
 
         // update the model:
-        MODEL.setControlValue(control_type, control_number, value);
+        MODEL.setControlValue(control_type, num, value);
 
         // update the UI:
-        updateControl(control_type, control_number, value);
+        updateControl(control_type, num, value);
 
-        if (control_number === MODEL.control_id.exp_pedal) {
+        if (num === MODEL.control_id.exp_pedal) {
             MODEL.interpolateExpValues(value);
             updateControls(true);
         }
 
     } else {
-        log(`the MODEL does not support this control: ${control_number}`)
+        log(`the MODEL does not support this control: ${num}`)
     }
 }
 
-/*
-function getCurrentPatchAsLink() {
-    // window.location.href.split("?")[0] is the current URL without the query-string if any
-    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
-    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
-    // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
-    const h = toHexString(MODEL.getSysEx());
-    log(`getCurrentPatchAsLink: set hash to ${h}`);
-    window.location.hash = h;
-}
-*/
-
-
 function reloadWithSysexParam() {
     updateBookmark();
-    // let url = getCurrentPatchAsLink();
-    // log(`reloadWithPatchUrl: url=${url}`);
-    // window.location.href = url;
-    return false;   // disable the normal href behavior
+    return false;   // disable the normal href behavior when called from an onclick event
 }
 
 function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
-    // $("#midi-channel").change((event) => setMidiChannel(event.target.value));
-    // $("#midi-channel").val(settings.midi_channel);
-    // $("#midi-input-device").change((event) => connectInputDevice(event.target.value));
-    // $("#midi-output-device").change((event) => connectOutputDevice(event.target.value));
     const c = $("#midi-channel");
     c.change((event) => channelSelectionCallback(event.target.value));
-    c.val(settings.midi_channel);
+    c.val(preferences.midi_channel);
     $("#midi-input-device").change((event) => inputSelectionCallback(event.target.value));
     $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
 }
@@ -229,7 +214,7 @@ function setupMenu() {
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-download-sysex").click(downloadLastSysEx);
     $("#menu-midi").click(openMidiWindow);
-    $("#menu-global").click(openSettingsPanel);
+    $("#menu-global").click(openGlobalSettingsPanel);
     $("#menu-prefs").click(openAppPreferencesPanel);
     $("#menu-help").click(openHelpPanel);
     $("#menu-about").click(openCreditsDialog);
@@ -237,8 +222,6 @@ function setupMenu() {
     $("#menu-zoom-out").click(zoomOut);
     $("#url-auto-toggle").click(toggleBookmarkAutomation);
     $("#preset-file").change(readFile);     // in load-preset-dialog
-    // in settings dialog:
-    // $("#midi-channel").change(setMidiChannel);
 }
 
 /**
@@ -250,7 +233,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
 
     $("span.version").text(VERSION);
 
-    initZoom(settings.zoom_level);
+    initZoom(preferences.zoom_level);
 
     setMidiInStatus(false);
     setupPresetSelectors(handleUserAction);
@@ -258,7 +241,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupSliders(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
-    setupGlobalConfig();
+    setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
     setupMenu();
