@@ -7,6 +7,8 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 
 [Open the editor](https://sysex.io/enzo/editor/)
 
+[Youtube demo](https://www.youtube.com/watch?v=lWIpPJFARDQ)
+
 
 Requirements
 ============
