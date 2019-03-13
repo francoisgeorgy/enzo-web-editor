@@ -3,7 +3,7 @@ import meta from "./meta.js";
 import {control_id} from "./cc";
 import {log, warn} from "../debug";
 import {toHexString} from "../utils";
-import {SYSEX_CMD} from "./constants";
+import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
 export const SYSEX_START_BYTE = 0xF0;
@@ -115,7 +115,6 @@ export function validate(data) {
             message: ""
         }
     }
-
 }
 
 /**
@@ -189,9 +188,7 @@ function decodeGlobals(data, globals) {
         if (!sysex.hasOwnProperty("mask")) continue;
 
         globals[i]["value"] = data[sysex.offset] & sysex.mask[0];
-
     }
-
 }
 
 /**
@@ -232,19 +229,12 @@ export function decodeSysex(data) {
  */
 export function getPreset(complete = true) {
 
-    // exemple of dump sent by the Enzo with all values set to 0:
-    // 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00
-    // 1  2  3  4  5  6  7  8  9  10                16          20          24
-
-
-    // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
-    // const data = Uint8Array.from(last_sysex);
     const data = new Uint8Array(complete ? 39 : 34);
 
     let i = 0;
 
     if (complete) {
-        data[i++] = 0xF0;                                           // 0
+        data[i++] = SYSEX_START_BYTE;                               // 0
         data[i++] = 0x00;
         data[i++] = 0x20;
         data[i++] = 0x10;
@@ -290,7 +280,7 @@ export function getPreset(complete = true) {
     data[i++] = control[control_id.filter_bandwidth].raw_value2;
     data[i++] = control[control_id.delay_feedback].raw_value2;      // 37
 
-    if (complete) data[i] = 0xF7;   // end-of-sysex marker          // 38
+    if (complete) data[i] = SYSEX_END_BYTE;                         // 38
 
     // log(data, meta.preset_id.value);
 
@@ -301,31 +291,26 @@ export function getSysexDataForGlobalConfig(global_num, value) {
 
     // F0
     // 00 20 10    Meris ID	(different manufacturers have different IDs)
+
     // 00          Prod ID 	(user definable, matches midi channel)
     // 01          Group ID    (01 = pedal series)
-    // 00          Model #	(00 = Ottobit Jr, 01 = Mercury7, 02 = Polymoon)
+    // 03          Model #	(00 = Ottobit Jr, 01 = Mercury7, 02 = Polymoon, 03 = Enzo)
     // 2A          Command (2A = global edit via sysex)
     // 00          Global Num (listed below, 0 is TRS input)
     // 7F          Value (00 = OFF, 7F = ON)
+
     // F7
 
     // 00 01 03 2a 02 7f
 
     let data = new Uint8Array(6);
 
-    // data[0] = 0xF0;
-    // data[1] = 0x00;
-    // data[2] = 0x20;
-    // data[3] = 0x10;
-
     data[0] = 0x00;
-    data[1] = 0x01;
-    data[2] = 0x03;
+    data[1] = GROUP_ID.pedal;
+    data[2] = MODEL_ID.enzo;
     data[3] = 0x2A;
     data[4] = global_num;
     data[5] = value;
-
-    // data[10] = 0xF7;   // end-of-sysex marker
 
     return data;
 }

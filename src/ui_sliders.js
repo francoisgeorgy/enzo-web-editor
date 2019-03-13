@@ -51,19 +51,9 @@ export function setupSliders(userActionCallback) {
     const slider_element = document.getElementById(id);
     sliders[id] = new Slider(slider_element, mixer_slider_scheme);
 
-    // const slider_value_element = document.getElementById(`${id}-value`);
-
-    // if (slider_value_element) {
-    //     slider_element.addEventListener("change", function(event) {
-    //         userActionCallback("cc", 4, event.detail);
-    //         const c = MODEL.control[MODEL.control_id.exp_pedal];
-    //         slider_value_element.innerText = c.human()
-    //     });
-    // } else {
-        slider_element.addEventListener("change", function(event) {
-            userActionCallback("cc", 4, event.detail);
-        });
-    // }
+    slider_element.addEventListener("change", function(event) {
+        userActionCallback("cc", 4, event.detail);
+    });
 
 }
 

@@ -118,17 +118,11 @@ function keyDown(code, alt, shift, meta) {
 
     if (code === 48) {   // 0
         presetSet(10);
-        // sendPC(10);
-        // displayPreset();
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
-        // const n = code - 48;
         presetSet(code - 48);
-        // setPresetNumber(code - 48);
-        // sendPC(pc);
-        // displayPreset();
         return;
     }
 
