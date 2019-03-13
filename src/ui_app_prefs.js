@@ -10,7 +10,9 @@ import {closeHelpPanel} from "./ui_help";
 const CONTAINER = "#app-preferences";
 
 function displayCurrentPreferences() {
+    // noinspection JSUnresolvedFunction
     const port_in = preferences.input_device_id ? WebMidi.getInputById(preferences.input_device_id) : null;
+    // noinspection JSUnresolvedFunction
     const port_out = preferences.output_device_id ? WebMidi.getOutputById(preferences.output_device_id) : null;
     $("#settings_midi_channel").text(preferences.midi_channel);
     $("#settings_input_device").text(port_in ? port_in.name : "-");
@@ -62,10 +64,12 @@ export function setupAppPreferences() {
     });
 
     $("#init_from_bookmark").on("change", function() {
+        // noinspection JSUnresolvedVariable
         saveSettings({init_from_bookmark: parseInt(event.target.value, 10)});
     });
 
     $("#update_URL").on("change", function() {
+        // noinspection JSUnresolvedVariable
         const v = parseInt(event.target.value, 10);
         saveSettings({update_URL: v});
         if (v === SETTINGS_UPDATE_URL.every_second) {
@@ -76,6 +80,7 @@ export function setupAppPreferences() {
     });
 
     $("#settings_zoom_level").on("change", function() {
+        // noinspection JSUnresolvedVariable
         const v = parseInt(event.target.value, 10);
         saveSettings({zoom_level: v});
     });

@@ -60,11 +60,13 @@ html {
     background: transparent;
 }
 
+/*noinspection CssUnusedSymbol*/
 .knob-bg {
     fill: url("#grad2");
     stroke: #000;
 }
 
+/*noinspection CssUnusedSymbol*/
 .knob-value {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
@@ -72,6 +74,7 @@ html {
     fill: var(--knob-value);
 }
 
+/*noinspection CssUnusedSymbol*/
 .knob-cursor {
     stroke-linecap: butt;
 }

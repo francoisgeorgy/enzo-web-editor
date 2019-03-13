@@ -113,6 +113,7 @@ body {
     display: none;
 }
 
+/*noinspection CssUnusedSymbol*/
 #main.settings-view .grid-default {
     display: none;
 }
@@ -397,11 +398,13 @@ h4 {
     color: var(--dialog-link);
 }
 
+/*noinspection CssUnusedSymbol*/
 .lity-container {
     vertical-align: top;
     margin-top: 60px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .lity-close {
     position: absolute!important;
     color: #aaa!important;

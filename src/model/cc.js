@@ -27,9 +27,11 @@ const _percent = function (v) {
     return Math.floor(v / 127 * 100 + 0.5) + '%';
 };
 
+/*
 const _off_when_zero = function (v) {
     return v === 0 ? 'OFF' : v;
 };
+*/
 
 const _off_when_zero_percent = function (v) {
     return v === 0 ? 'OFF' : _percent(v);
