@@ -11,7 +11,7 @@ import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_sliders";
 import {inExpMode} from "./exp";
-import {suppressSysexEcho} from "./midi_in";
+import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
 
@@ -167,15 +167,29 @@ export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
  */
 export function sendPC(pc) {
     // setPresetNumber(pc);
-    appendMessage(`Preset ${pc} selected.`);
+    // appendMessage(`Preset ${pc} selected.`);
+
     MODEL.meta.preset_id.value = pc;
     if (midi_output) {
         log(`send program change ${pc}`);
         showMidiOutActivity();
         midi_output.sendProgramChange(pc, preferences.midi_channel);
+
+        appendMessage(`Preset ${pc} selected.`);
+
+        if (!getMidiInputPort()) {
+            appendMessage("Unable to receive the preset from Enzo.");
+        }
+
     } else {
+        appendMessage(`Unable to send the PC command to Enzo.`);
         log(`(send program change ${pc})`);
     }
+
+    if (!getMidiInputPort() || !getMidiOutputPort()) {
+        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+    }
+
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }

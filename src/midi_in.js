@@ -118,7 +118,7 @@ export function handleSysex(data) {
             resetExp();
             updateUI();
             clearError();
-            setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
+            setStatus(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
             break;
         case SYSEX_GLOBALS:
             updateGlobalSettings();

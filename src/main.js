@@ -22,6 +22,7 @@ import "./css/main.css";
 import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
+import {setPresetDirty} from "./ui_presets";
 
 const browser = detect();
 
@@ -97,6 +98,7 @@ function connectInputPort(input) {
     clearError();
     // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
     setStatus(`${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
+
 }
 
 function disconnectInputPort() {
@@ -107,6 +109,8 @@ function disconnectInputPort() {
         setMidiInputPort(null);
         log("disconnectInputPort: midi_input does not listen anymore");
         setStatus(`Device is disconnected.`);
+
+        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
     setMidiInStatus(false);
 }
@@ -146,6 +150,13 @@ function connectInputDevice(id) {
     const port = WebMidi.getInputById(id);
     if (port) {
         connectInputPort(port);
+
+        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+            //TODO: init from URL if sysex present ?
+            setStatus("Request current preset");
+            requestPreset();
+        }
+
     } else {
         clearStatus();
         setStatusError(`Connect the Enzo or check the MIDI channel.`);
@@ -159,15 +170,17 @@ function connectInputDevice(id) {
 function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
-    log(`%cconnectOutputPort: ${output.name} can no be use to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
+    log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
 }
 
 function disconnectOutputPort() {
-    const p = getMidiOutputPort();  // we check the current output_port only for print better log messages
+    const p = getMidiOutputPort();
     if (p) {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
-        log("disconnectOutputPort: connectOutputPort: midi_output can not be use anymore");
+        log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
+
+        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
 }
 
@@ -207,6 +220,13 @@ function connectOutputDevice(id) {
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
+
+        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+            //TODO: init from URL if sysex present ?
+            setStatus("Request current preset");
+            requestPreset();
+        }
+
     } else {
         clearStatus();
         // setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -252,6 +272,8 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
+    if (MODEL.getPresetNumber() === 0) new_connection = true;
+
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync", preferences.init_from_bookmark);
 
@@ -268,7 +290,7 @@ function deviceConnected(info) {
             // }
         } else {
             // initFromDevice = true;
-            setStatus("Request current preset");
+            setStatus("Init from device, request current preset");
             requestPreset();
         }
 
