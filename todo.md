@@ -6,6 +6,8 @@
 
 - midi
     - ignore PC echo
+    - scan ports and channel until an Enzo is found
+    - check that the connected device (chosen by the user) is an Enzo
 
 - EXP
     - copy values
