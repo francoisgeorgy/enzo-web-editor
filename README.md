@@ -261,8 +261,8 @@ Menu commands
 |---|---|---|---|
 |   | Init | editor --> Enzo | Set convenient "default" values. |
 |   | Randomize  | editor --> Enzo | Set random values for all controls. |
-|   | Send  | editor --> Enzo | Send the current editor's values to Enzo (does _not_ save in Enzo's memory). |
-|   | Save  | editor --> Enzo | Tell the Enzo to save in memory the current settings (updates the current preset). |
+|   | Send  | editor --> Enzo | Send the editor's current values to Enzo (does not _save_ in Enzo's _memory_). |
+|   | Save  | editor --> Enzo | Tell the Enzo to save in its memory the editor's current values (updates the current preset). |
 |   | URL  | editor only | Update the editor's URL with the current values. This makes a "_bookmarkable preset_". |
 |   | Print  | editor only | Open a popup window with the currents settings displayed for printing (or saving as PDF). |
 |   | Load  | editor --> Enzo | Load a preset from a sysex file and send the values to the Enzo. |

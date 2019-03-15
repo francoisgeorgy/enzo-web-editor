@@ -2,12 +2,15 @@
     - doc about keyboard shortcuts
 
 - connection/disconnection
-    - set preset dirty if no input or no output device connected
+    - set preset dirty if no input or no output device connected    DONE
 
 - midi
     - ignore PC echo
     - scan ports and channel until an Enzo is found
     - check that the connected device (chosen by the user) is an Enzo
+
+- print
+    - add sysex as hash, not querystring
 
 - EXP
     - copy values
