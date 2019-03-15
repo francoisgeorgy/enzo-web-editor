@@ -136,9 +136,9 @@ The square buttons 1 to 16 on the top left of the editor allow you to directly s
 |   |   | 
 |---|---|
 | ![Preset clean](/images/screenshots/preset-sel-off-clean.jpg) | No communication with Enzo. Preset not modified since loaded. |
-| ![Preset clean](/images/screenshots/preset-sel-off-dirty.jpg) | No communication with Enzo. Preset modified since loaded. |
+| ![Preset clean](/images/screenshots/preset-sel-off-dirty.jpg) | No communication with Enzo. Preset has been modified since loaded. |
 | ![Preset clean](/images/screenshots/preset-sel-on-clean.jpg) | Communication with Enzo OK. Preset not modified since received. |
-| ![Preset clean](/images/screenshots/preset-sel-on-dirty.jpg) | Communication with Enzo OK. Preset modified since received. |
+| ![Preset clean](/images/screenshots/preset-sel-on-dirty.jpg) | Communication with Enzo OK. Preset has been modified since received. |
 
 A normal (or slightly dark) background indicates that the editor is _not_ able to communicate with the Enzo. 
 
