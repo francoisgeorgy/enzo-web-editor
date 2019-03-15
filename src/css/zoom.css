@@ -40,6 +40,10 @@
 .zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}
 .zoom-2 .preset {padding: 8px 0; font-size: 2rem;}
 
+.zoom-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}
+.zoom-1 .preset > span {right: 2px; top: -8px; font-size: 120%;}
+.zoom-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}
+
 .zoom-1 #messages { padding-bottom: 10px!important; }
 .zoom-1 #options { padding-bottom: 10px!important; }
 .zoom-1 #presets { padding-bottom: 10px!important; }

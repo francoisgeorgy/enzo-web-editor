@@ -183,6 +183,8 @@ export function updateModelAndUI(control_type, control_number, value) {
             updateControls(true);
         }
 
+        setPresetDirty();
+
     } else {
         log(`the MODEL does not support this control: ${num}`)
     }

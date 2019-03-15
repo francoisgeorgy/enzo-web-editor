@@ -41,6 +41,10 @@ body {
     cursor: pointer;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .on {
     color: var(--value)!important;
 }

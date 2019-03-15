@@ -15,12 +15,18 @@ import {getMidiInputPort} from "./midi_in";
 export function setPresetClean() {
     log("setPresetClean()");
     $(".preset-id").removeClass("dirty");
+    dirty_cache = false;
 }
 
+let dirty_cache = true;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
+
 export function setPresetDirty() {
-    log("setPresetDirty()");
-    $(".preset-id").removeClass("dirty");
-    $(`#pc-${MODEL.getPresetNumber()}`).addClass("dirty");
+    if (!dirty_cache) {
+        log("setPresetDirty()");
+        $(".preset-id").removeClass("dirty");
+        $(`#pc-${MODEL.getPresetNumber()}`).addClass("dirty");
+        dirty_cache = true;
+    }
 }
 
 /*

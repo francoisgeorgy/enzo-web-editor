@@ -139,13 +139,13 @@ function connectInputDevice(id) {
         clearStatus();
         // setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
-        return;
+        return false;
     }
 
     // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {
         log(`connectInputDevice(${id}): port is already connected`);
-        return;
+        return false;
     }
 
     // log(`connectInputDevice(${id}): will connect port ${id}`);
@@ -161,17 +161,28 @@ function connectInputDevice(id) {
     if (port) {
         connectInputPort(port);
 
+/*
         if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+        // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
             //TODO: init from URL if sysex present ?
             setStatus("Request current preset");
             requestPreset();
+        } else {
+            setPresetDirty();
+            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
         }
+*/
+        syncIfNoPreset();
+
+        return true;
 
     } else {
         clearStatus();
         setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
     }
+
+    return false;
 }
 
 //==================================================================================================================
@@ -202,6 +213,11 @@ function disconnectOutputPort() {
     }
 }
 
+/**
+ *
+ * @param id
+ * @returns {boolean} true if new connection has been setup, otherwise false
+ */
 function connectOutputDevice(id) {
 
     log(`connectOutputDevice(${id})`, preferences.output_device_id);
@@ -217,13 +233,13 @@ function connectOutputDevice(id) {
         disconnectOutputPort();
         clearStatus();
         // setStatusError(`Please connect your device or check the MIDI channel.`);
-        return;
+        return false;
     }
 
     // do nothing if already connected to the selected device:
     if (p && (p.id === id)) {   //TODO: make as a function in midi_out.js
         log(`setOutputDevice(${id}): port is already connected`);
-        return;
+        return false;
     }
 
     // log(`%cconnectOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
@@ -239,16 +255,27 @@ function connectOutputDevice(id) {
     if (port) {
         connectOutputPort(port);
 
+/*
         if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+        // if (getMidiInputPort() && getMidiOutputPort()) {     //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
             //TODO: init from URL if sysex present ?
-            setStatus("Request current preset");
+            appendMessage("Request current preset");
             requestPreset();
+        } else {
+            setPresetDirty();
+            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
         }
+*/
+        syncIfNoPreset();
+
+        return true;
 
     } else {
         clearStatus();
         // setStatusError(`Please connect your device or check the MIDI channel.`);
     }
+
+    return false;
 }
 
 //==================================================================================================================
@@ -268,12 +295,15 @@ function deviceConnected(info) {
 
     //FIXME: use autoConnect() method
 
-    let new_connection = false;
+    // let new_connection = false;
+
+    let input_connected = false;
+    let output_connected = false;
 
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
-            connectInputDevice(preferences.input_device_id);
-            new_connection = true;
+            input_connected = connectInputDevice(preferences.input_device_id);
+            // new_connection = true;
         } else {
             log("deviceConnected: input device ignored");
         }
@@ -281,8 +311,8 @@ function deviceConnected(info) {
 
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
-            connectOutputDevice(preferences.output_device_id);
-            new_connection = true;
+            output_connected = connectOutputDevice(preferences.output_device_id);
+            // new_connection = true;
         } else {
             log("deviceConnected: output device ignored");
         }
@@ -290,9 +320,9 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
-    if (MODEL.getPresetNumber() === 0) new_connection = true;
+    // if (MODEL.getPresetNumber() === 0) new_connection = true;
 
-    if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
+    if (input_connected && output_connected && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync", preferences.init_from_bookmark);
 
         // let initFromDevice = false;
@@ -308,8 +338,22 @@ function deviceConnected(info) {
             // }
         } else {
             // initFromDevice = true;
-            setStatus("Init from device, request current preset");
-            requestPreset();
+
+            // setStatus("Init from device, request current preset");
+            // requestPreset();
+
+/*
+            if (MODEL.getPresetNumber() === 0) {
+                // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
+                //TODO: init from URL if sysex present ?
+                setStatus("Request current preset");
+                requestPreset();
+            } else {
+                setPresetDirty();
+                appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
+            }
+*/
+
         }
 
         // if (initFromDevice) {
@@ -339,6 +383,29 @@ function deviceDisconnected(info) {
     }
     updateSelectDeviceList();
 }
+
+//==================================================================================================================
+
+/**
+ * If no preset select (preset is 0) then read the preset from Enzo, otherwise display a message to the user.
+ * Do not call this method from
+ */
+function syncIfNoPreset() {
+
+    if (getMidiInputPort() && getMidiOutputPort()) {
+        if (MODEL.getPresetNumber() === 0) {
+            // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
+            //TODO: init from URL if sysex present ?
+            setStatus("Request current preset");
+            requestPreset();
+        } else {
+            setPresetDirty();
+            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
+        }
+    }
+
+}
+
 
 //==================================================================================================================
 
