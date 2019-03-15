@@ -161,8 +161,8 @@ export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage("--- PLEASE CONNECT THE ENZO ---");
         setPresetDirty();
-    } else {
-        setPresetClean();
+    // } else {
+        // setPresetClean();
     }
 
 }
@@ -196,8 +196,12 @@ export function sendPC(pc) {
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage("--- PLEASE CONNECT THE ENZO ---");
-        setPresetDirty();
+        // setPresetDirty();
     }
+
+    // for debug
+    // setPresetClean();
+    // setPresetInSync();
 
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset

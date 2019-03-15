@@ -52,7 +52,7 @@ export function readFile() {
                 resetExp();
                 updateUI();
                 fullUpdateDevice();
-                // setPresetClean();
+                setPresetClean();
 
             } else {
                 log("unable to set value from file; file is not a preset sysex", valid);

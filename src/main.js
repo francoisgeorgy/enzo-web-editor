@@ -23,7 +23,7 @@ import "./css/main.css";
 import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
-import {setPresetDirty} from "./ui_presets";
+import {setPresetDirty, showPreset} from "./ui_presets";
 import * as Utils from "./utils";
 import {initZoom} from "./ui_zoom";
 
@@ -102,6 +102,11 @@ function connectInputPort(input) {
     // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
     setStatus(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
 
+    if (MODEL.getPresetNumber() !== 0) {
+        // setPresetDirty();
+        showPreset();
+    }
+
 }
 
 function disconnectInputPort() {
@@ -112,7 +117,10 @@ function disconnectInputPort() {
         setMidiInputPort(null);
         log("disconnectInputPort: midi_input does not listen anymore");
         setStatus(`Input disconnected.`);
-        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
+        if (MODEL.getPresetNumber() !== 0) {
+            // setPresetDirty();
+            showPreset();
+        }
     }
     setMidiInStatus(false);
 }
@@ -174,6 +182,10 @@ function connectOutputPort(output) {
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setStatus(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
+    if (MODEL.getPresetNumber() !== 0) {
+        // setPresetDirty();
+        showPreset();
+    }
 }
 
 function disconnectOutputPort() {
@@ -183,7 +195,10 @@ function disconnectOutputPort() {
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
         setStatus(`Output disconnected.`);
-        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
+        if (MODEL.getPresetNumber() !== 0) {
+            // setPresetDirty();
+            showPreset();
+        }
     }
 }
 

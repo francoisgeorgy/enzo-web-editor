@@ -1,20 +1,56 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {sendPC} from "./midi_out";
+import {getMidiOutputPort, sendPC} from "./midi_out";
+import {getMidiInputPort} from "./midi_in";
+
+/*
+    .preset :
+        .sel   : current preset number in MODEL
+        .on    : communication with Enzo is ON
+        .dirty : preset has been modified; does not correspond to the _saved_ preset any more.
+
+    The .dirty flag is cleared when we receive a preset (via sysex) or when we load a preset file.
+*/
 
 export function setPresetClean() {
+    log("setPresetClean()");
     $(".preset-id").removeClass("dirty");
 }
 
 export function setPresetDirty() {
+    log("setPresetDirty()");
     $(".preset-id").removeClass("dirty");
     $(`#pc-${MODEL.getPresetNumber()}`).addClass("dirty");
 }
 
+/*
+export function setPresetOutOfSync() {
+    log("setPresetOutOfSync()");
+    $(".preset-id").removeClass("sync");
+}
+
+export function setPresetInSync() {
+    log("setPresetInSync()");
+    $(".preset-id").removeClass("sync");
+    $(`#pc-${MODEL.getPresetNumber()}`).addClass("sync");
+}
+*/
+
 export function showPreset() {
     log("showPreset()");
-    $(".preset-id").removeClass("on");
-    $(`#pc-${MODEL.getPresetNumber()}`).addClass("on");
+    // $(".preset-id").removeClass("on dirty");
+    // $(`#pc-${MODEL.getPresetNumber()}`).addClass("on");
+
+    const n = MODEL.getPresetNumber();
+
+    $(".preset-id").removeClass("sel dirty");
+    $(`#pc-${n}`).addClass("sel");
+
+    if (getMidiInputPort() && getMidiOutputPort()) {
+        $(`#pc-${n}`).addClass("on");
+    } else {
+        $(".preset-id").removeClass("on");
+    }
 }
 
 /**
@@ -23,10 +59,15 @@ export function showPreset() {
  */
 export function presetSet(n) {
     log(`presetSet(${n})`);
+
     MODEL.setPresetNumber(n);
-    sendPC(n);
-    setPresetDirty();   // by default, dirty
+
     showPreset();
+    // setPresetDirty();
+
+    sendPC(n);
+    // setPresetOutOfSync();   // by default, dirty and out of sync
+    // showPreset();
 }
 
 export function presetInc() {

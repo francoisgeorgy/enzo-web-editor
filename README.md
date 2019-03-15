@@ -133,19 +133,26 @@ Preset selection
 
 The square buttons 1 to 16 on the top left of the editor allow you to directly select one of the sixteen editor settings.
 
-After you select a preset, its selector gets a yellow background:
+|   |   | 
+|---|---|
+| ![Preset clean](/images/screenshots/preset-sel-off-clean.jpg) | No communication with Enzo. Preset not modified since loaded. |
+| ![Preset clean](/images/screenshots/preset-sel-off-dirty.jpg) | No communication with Enzo. Preset modified since loaded. |
+| ![Preset clean](/images/screenshots/preset-sel-on-clean.jpg) | Communication with Enzo OK. Preset not modified since received. |
+| ![Preset clean](/images/screenshots/preset-sel-on-dirty.jpg) | Communication with Enzo OK. Preset modified since received. |
 
-![clean preset](/images/screenshots/preset-selected-clean.jpg)
+A normal (or slightly dark) background indicates that the editor is _not_ able to communicate with the Enzo. 
 
-Now, if you modify any value, the selector changes to:
+A yellow background indicates that the editor is able to communicate with the Enzo.
 
-![dirty preset](/images/screenshots/preset-selected-dirty.jpg)
+No dot in the preset selector means that the preset has not been modified since it has been loaded from a file or received from the Enzo.
 
-This reminds you that the currently selected _preset number_ is the one shown, but that the current settings differ from those
-stored in the Enzo's memory for this preset.
+A dot in the preset selector means that the preset has been modified since it has been loaded from a file or received from the Enzo. In that
+case the dot means that the values in the editor (and in Enzo when communication is working) are different from the values _stored_ in 
+Enzo memory (or saved in the preset file, when loaded from a file). 
 
-If you want to keep your current values and save them in the Enzo memory then you have to use the SAVE command from the menu. See next
+If you want to keep your current values and _store_ them in the Enzo _memory_ then you have to use the SAVE command from the menu. See next
 chapter.
+
 
 Saving presets
 --------------
