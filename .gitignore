@@ -1,6 +1,8 @@
 tmp/
 sandbox/
 enzo-web-editor.iml
+/sysex/PedalPresetsSysex/
+/src/favicons/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
