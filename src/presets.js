@@ -6,7 +6,7 @@ import {fullUpdateDevice} from "./midi_out";
 import {clearError, setStatus} from "./ui_messages";
 import {updateBookmark} from "./url";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
-import {resetExp} from "./ui_sliders";
+import {resetExp} from "./ui_exp";
 
 export function init() {
     log("init()");

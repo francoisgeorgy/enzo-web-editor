@@ -7,7 +7,7 @@ import {toHexString} from "./utils";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {appendErrorMessage, appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
-import {resetExp} from "./ui_sliders";
+import {resetExp} from "./ui_exp";
 
 export function setTitle(title = null) {
     let t;

@@ -13,7 +13,7 @@ import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
-import {showExpValues, toggleExpEditMode} from "./exp";
+import {showExpValues, toggleExpEditMode} from "./ui_exp";
 
 
 function toggleBypass() {
@@ -128,6 +128,7 @@ function keyDown(code, alt, shift, meta) {
 
     switch (code) {
         case 9:                 // TAB
+            log("TAB");
             toggleExpEditMode();
             break;
         case 16:                // Shift

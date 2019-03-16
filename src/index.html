@@ -12,7 +12,7 @@
     <meta property="og:url" content="https://sysex.io/enzo/editor/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image:alt" content="An editor for the Meris Enzo effect pedal.">
-    <title>Enzo Web Editor</title>
+    <title>Enzo Editor</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -101,7 +101,7 @@
                     </div>
                     <div>
                         <select id="midi-channel">
-                            <option value="all">all</option>
+                            <!--<option value="all">all</option>-->
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -371,12 +371,10 @@
                     <div id="exp-a2" class="slider-combo">
                         <svg id="cc-4" class="slider"></svg>
                     </div>
-                    <div id="exp-close" class="exp-switch">close</div>
-                    <!--<div id="exp-b1"></div>-->
-                    <div id="exp-open" class="exp-switch">open</div>
-                    <!--<div id="exp-c1"></div>-->
+                    <div id="exp-close" class="exp-switch"><div class="btx" id="exp-close-bt" title="Click to switch to edit the EXP (toe-down) values">close</div></div>
+                    <div id="exp-open">open</div>
                     <div id="cc-4-value" class="slider-value"></div>
-                    <!--<div id="exp-c3"></div>-->
+                    <div id="exp-copy" class="btx" title="Click to copy the toe-up (normal) values to the tow-down values.">copy</div>
                 </div>
             </div>
 
@@ -692,7 +690,7 @@
             <i class="fas fa-exclamation-triangle"></i>
             Still under active development. Feel free to log bugs/issues.
         </p>
-        <p>Enzo Web Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <p>Enzo Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/enzo-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
         <h1 style="margin-top:20px">Credits</h1>
         <p>This editor uses the following Open Source components:</p>
         <ul>

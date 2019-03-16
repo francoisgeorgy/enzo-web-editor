@@ -5,7 +5,7 @@ import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_END_BYTE, SYSEX_PRESET} from "./model/sysex";
-import {resetExp} from "./ui_sliders";
+import {resetExp} from "./ui_exp";
 import {setPresetClean} from "./ui_presets";
 
 //==================================================================================================================

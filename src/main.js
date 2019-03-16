@@ -50,7 +50,7 @@ if (browser) {
 
 function setupModel() {
     MODEL.init();
-    MODEL.setDeviceId(preferences.midi_channel);   // the device_id is the midi channel
+    MODEL.setDeviceId(preferences.midi_channel - 1);   // the device_id is the midi channel - 1
 }
 
 //==================================================================================================================
@@ -66,9 +66,12 @@ function setMidiChannel(midi_channel) {
 
     // Set new channel:
     log(`setMidiChannel(${midi_channel}): set new channel`);
-    saveSettings({midi_channel});
 
-    MODEL.setDeviceId(preferences.midi_channel);
+    const chan = parseInt(midi_channel, 10);
+
+    saveSettings({midi_channel: chan});
+
+    MODEL.setDeviceId(preferences.midi_channel - 1);    // device ID is midi channel - 1
 
     log(`setMidiChannel(${midi_channel}): reconnect input ${preferences.input_device_id}`);
     connectInputDevice(preferences.input_device_id);
@@ -137,7 +140,6 @@ function connectInputDevice(id) {
         // the user select no device, disconnect.
         disconnectInputPort();
         clearStatus();
-        // setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
         return false;
     }
@@ -163,7 +165,7 @@ function connectInputDevice(id) {
 
 /*
         if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
-        // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
+        // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to the pedal
             //TODO: init from URL if sysex present ?
             setStatus("Request current preset");
             requestPreset();
@@ -394,7 +396,7 @@ function syncIfNoPreset() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
         if (MODEL.getPresetNumber() === 0) {
-            // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
+            // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to the pedal
             //TODO: init from URL if sysex present ?
             setStatus("Request current preset");
             requestPreset();

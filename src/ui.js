@@ -25,8 +25,8 @@ import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
-import {setupSliders, updateExpSlider} from "./ui_sliders";
-import {inExpMode, setupExp} from "./exp";
+import {setupExp, updateExpSlider} from "./ui_exp";
+import {inExpMode} from "./ui_exp";
 
 /**
  * Handles a change made by the user in the UI.
@@ -239,14 +239,14 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setMidiInStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
-    setupSliders(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
+    setupExp(handleUserAction);
     setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
     setupMenu();
-    setupExp();
+    // setupExp();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
 

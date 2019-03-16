@@ -42,6 +42,9 @@ export function validate(data) {
         }
     }
 
+/*
+    FIXME: device id should match midi channel
+
     if ((data[meta.device_id.sysex.offset] > 0) && (data[meta.device_id.sysex.offset] !== meta.device_id.value)) {
         log(`validate: invalid device_id: ${data[meta.device_id.sysex.offset]}`);
         return {
@@ -50,6 +53,7 @@ export function validate(data) {
             message: "Invalid device ID"
         };
     }
+*/
 
     if (data[meta.group_id.sysex.offset] !== meta.group_id.value) {
         log(`validate: invalid group_id: ${data[meta.group_id.sysex.offset]}`);

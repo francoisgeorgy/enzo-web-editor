@@ -9,8 +9,8 @@ import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
-import {updateExpSlider} from "./ui_sliders";
-import {inExpMode} from "./exp";
+import {updateExpSlider} from "./ui_exp";
+import {inExpMode} from "./ui_exp";
 import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
@@ -226,7 +226,7 @@ export function sendSysex(data) {
 
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command, ' ')})`);
-    sendSysex([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
+    sendSysex([MODEL.meta.device_id.value, GROUP_ID.pedal, MODEL_ID.enzo, command]);
 }
 
 export function requestPreset() {

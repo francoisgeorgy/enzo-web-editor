@@ -163,6 +163,16 @@ const randomize = function() {
     }
 };
 
+const copyFirstToSecondValues = function() {
+    for (let i = 0; i < control.length; i++) {
+        const c = control[i];
+        if (typeof c === "undefined") continue;
+        if (c.two_values) {
+            c.raw_value2 = c.raw_value;
+        }
+    }
+}
+
 const setDeviceId = function (id) {
     meta.device_id.value = id;
 };
@@ -195,6 +205,7 @@ export default {
     getControlValueInter,                   // interpolated value (when using EXP)
     getMappedControlValueExp,
     interpolateExpValues,                   // interpolate inter-value for controls that have two values
+    copyFirstToSecondValues,
     validate: sysex.validate,               // validate a SysEx
     setValuesFromSysEx: sysex.decodeSysex,  // decode a sysex and update model's values
     getPreset: sysex.getPreset,             // export all values as a SysEx dump

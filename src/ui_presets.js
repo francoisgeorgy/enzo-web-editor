@@ -6,7 +6,7 @@ import {getMidiInputPort} from "./midi_in";
 /*
     .preset :
         .sel   : current preset number in MODEL
-        .on    : communication with Enzo is ON
+        .on    : communication with the pedal is ON
         .dirty : preset has been modified; does not correspond to the _saved_ preset any more.
 
     The .dirty flag is cleared when we receive a preset (via sysex) or when we load a preset file.
@@ -62,7 +62,7 @@ export function showPreset() {
 }
 
 /**
- * Send PC to change preset in Enzo and update the preset selectors in UI.
+ * Send PC to change preset and update the preset selectors in UI.
  * @param n
  */
 export function presetSet(n) {
