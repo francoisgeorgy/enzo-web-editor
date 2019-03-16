@@ -291,7 +291,7 @@ function connectOutputDevice(id) {
 function deviceConnected(info) {
 
     // log("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
-    if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
+    if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name, info.type, info);
 
     // Auto-connect if not already connected.
 
@@ -396,10 +396,10 @@ function syncIfNoPreset() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
         if (MODEL.getPresetNumber() === 0) {
-            // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to the pedal
-            //TODO: init from URL if sysex present ?
-            setStatus("Request current preset");
-            requestPreset();
+            // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
+            setStatus("Request current preset in 200ms");
+            log("syncIfNoPreset: will request preset in 200ms");
+            window.setTimeout(requestPreset, 200);
         } else {
             setPresetDirty();
             appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
@@ -407,21 +407,6 @@ function syncIfNoPreset() {
     }
 
 }
-
-
-//==================================================================================================================
-
-/*
-function autoConnect() {
-    if (settings) {
-        log(`autoConnect()`);
-        //AUTO CONNECT
-        connectInputDevice(settings.input_device_id);
-        connectOutputDevice(settings.output_device_id);
-        updateSelectDeviceList();
-    }
-}
-*/
 
 //==================================================================================================================
 // Main

@@ -3,8 +3,9 @@ import Slider from "svg-slider";
 import MODEL from "./model";
 import {control} from "./model/cc";
 import {knobs} from "./ui_knobs";
-import {updateDevice} from "./midi_out";
+import {fullUpdateDevice, updateDevice} from "./midi_out";
 import {appendMessage} from "./ui_messages";
+import {updateControls} from "./ui";
 
 export const sliders = {};
 
@@ -36,9 +37,9 @@ export function showExpValues(display_exp_values = false) {
 
 } // setupKnobs
 
-export function toggleExpEditMode(update_device = true) {
+export function toggleExpEditMode() {
 
-    log(`%ceditExpValues(${update_device})`, "color: yellow; font-weight: bold");
+    log(`%ceditExpValues()`, "color: yellow; font-weight: bold");
 
     if (inExpMode()) {
 
@@ -48,7 +49,7 @@ export function toggleExpEditMode(update_device = true) {
         $("#exp-copy").hide();
         $("#cc-4-value").show();
 
-        if (update_device) updateDevice("cc", MODEL.control_id.exp_pedal, 0);
+        updateDevice("cc", MODEL.control_id.exp_pedal, 0);
 
         showExpValues(false);
         appendMessage("You are now editing the normal values");
@@ -61,7 +62,7 @@ export function toggleExpEditMode(update_device = true) {
         $("#cc-4-value").hide();
         $("#exp-copy").show();
 
-        if (update_device) updateDevice("cc", MODEL.control_id.exp_pedal, 127);
+        updateDevice("cc", MODEL.control_id.exp_pedal, 127);
 
         showExpValues(true);
         appendMessage("You are now editing the EXP (tow-down) values", true);
@@ -130,6 +131,9 @@ export function setupExp(userActionCallback) {
     $("#exp-copy").mousedown(function() {
         this.classList.add("on");
         MODEL.copyFirstToSecondValues();
+        fullUpdateDevice();
+        MODEL.interpolateExpValues(MODEL.control[MODEL.control_id.exp_pedal].raw_value);
+        updateControls(true);
         appendMessage("EXP: toe-up values copied to toe-down.");
     });
 

@@ -162,10 +162,6 @@ function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
         human: _0_100
-        // sysex: {
-        //     offset: ,
-        //     mask: [0x7F]
-        // }
     };
     control[control_id.tempo] = { // 15,
         name: "Tempo",

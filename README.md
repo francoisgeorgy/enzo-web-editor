@@ -182,7 +182,7 @@ in the Enzo, then you need to store it, either by using the menu SAVE command of
 Expression pedal
 ================
 
-Press the Tab key on your keyboard or click "close" near the EXP slider in the editor to toggle between the two sets of values stored in a preset.
+Press the Tab key on your keyboard or click "down" near the EXP slider in the editor to toggle between the two sets of values stored in a preset.
 
 When you edit the second set of values, the control's name are written in _lowercase_. They are written in _uppercase_ when you edit the default set of value.
 
@@ -191,8 +191,27 @@ EXP slider
 
 The EXP slider allows you to simulate an expression pedal connected to the Enzo.
 
-* The slider's _open_ position (slider at 0) corresponds to a opened (toe-up) expression pedal.
-* The slider's _close_ position (slider at 127) corresponds to a closed (toe-down) expression pedal.
+* The slider's **toe up** position (slider at 0) corresponds to a opened (toe up) expression pedal.
+* The slider's **down** position (slider at 127) corresponds to a closed (toe down) expression pedal.
+
+The value displayed next to the slider is:
+
+* 0 : corresponds to an expression pedal in the _toe up_ position (default position)
+* 100 : corresponds to an expression pedal in the _toe down_ position.
+
+### How to set the values for the EXP pedal
+
+1. Set the _normal_ values, for the _toe up_ position of the pedal.
+2. Click the "**down**" button next to the EXP slider to enter the EXP edit mode
+3. Click the "copy" button next to the EXP slider (this button is only displayed when "**down**" is pressed)
+4. Set the _second_ values, those used for the _toe down_ position of the pedal.
+5. Click the "**down**"" button next to the EXP slider to quit the EXP edit mode
+
+Now, when you move the EXP slider you must see the controls' values morph between the normal and second values you set.
+
+Do not forget to save these values in Enzo preset memory if you like them. Use the menu SAVE command.
+
+### EXP in detail
 
 For each of its knobs, the Enzo stores two values: 
 - the first one is the default one and is used when the expression pedal is at 0 or when no expression pedal is connected. 
@@ -204,15 +223,15 @@ Please read the [Meris Enzo User Manual](https://www.meris.us/wp-content/uploads
 
 This editor lets you define the values for the two positions of the expression pedal.   
 
-By default, the first set of values is always used. To edit the second sets of values you have to click on EXP _close_:
+By default, the first set of values is always used. To edit the second sets of values you have to click on EXP **down** button:
 
 ![todo](/images/screenshots/exp_edit_mode.jpg)
 
-The _close_ text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second sets of values.
+The **down** text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second sets of values.
 
 Note: you can also use your keyboard TAB key to toggle between the two sets of values.
 
-To switch back to the default set of value, simply click _close_ again. The _close_ text must change back to black and the knobs names must change back to uppercase.
+To switch back to the default set of value, simply click **down** again. The **down** text must change back to black and the knobs names must change back to uppercase.
 
 You can now use the EXP slider to smoothly morph between the two sets of values. The editor will interpolate the values to show you what the Enzo is probably doing. 
 But there is no guarantee about that. The editor does a linear interpolation. Maybe Enzo does a different kind of interpolation.

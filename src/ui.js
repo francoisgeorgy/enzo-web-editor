@@ -114,7 +114,9 @@ export function updateControl(control_type, control_number, value, mappedValue) 
  * Set value of the controls (input and select) from the MODEL values
  */
 export function updateControls(onlyTwoValuesControls = false) {
+
     if (TRACE) console.groupCollapsed(`updateControls(${onlyTwoValuesControls})`);
+
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
         const c = MODEL.control[i];
@@ -208,7 +210,7 @@ function setupMenu() {
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     // $("#menu-read").click(() => requestPreset());       //TODO: create function
-    $("#menu-send").click(() => {fullUpdateDevice(false); return false});
+    $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
     $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-print-preset").click(printPreset);

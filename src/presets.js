@@ -14,7 +14,7 @@ export function init() {
     resetExp();
     updateUI();
     setPresetDirty();   // must be done after updateUI()
-    fullUpdateDevice(false, true);
+    fullUpdateDevice();
     clearError();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
@@ -30,7 +30,7 @@ export function randomize() {
     resetExp();
     updateUI();
     setPresetDirty();   // must be done after updateUI()
-    fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
+    fullUpdateDevice();
     clearError();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {

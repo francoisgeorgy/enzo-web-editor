@@ -1,6 +1,10 @@
 - bugs: 
     - bypass is not set after loading preset (check w/ preset 4)
 
+- keryboard
+    - remap keyboard by key-position, not key-value
+    - bug: shift is used for two functions
+
 - connection/disconnection
     - ~~set preset dirty if no input or no output device connected~~
 
@@ -12,6 +16,7 @@
 - preset
     - auto-save current preset before switching to another preset
     - auto-save current preset after ... seconds of no-change
+    - allow quick-access to preset not stored in enzo memory
 
 - print
     - add sysex as hash, not querystring

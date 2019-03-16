@@ -55,7 +55,7 @@ const setControlValue = function () {
         }
     } else if (arguments.length >= 3) {
 
-        // args are control_type, control_number, value, and value2
+        // args are control_type, control_number, value, and bool value2
 
         let ca; // controls array
         if (arguments[0] === "cc") {                // [0] is control type
@@ -70,6 +70,8 @@ const setControlValue = function () {
             c = ca[arguments[1]];
 
             const set_value2 = c.two_values && (arguments.length > 3) && arguments[3];
+
+            if (set_value2) console.log("set value 2");
 
             if (c.hasOwnProperty("map_raw")) {
                 c[set_value2 ? "raw_value2" : "raw_value"] = c.map_raw(v);
@@ -171,7 +173,7 @@ const copyFirstToSecondValues = function() {
             c.raw_value2 = c.raw_value;
         }
     }
-}
+};
 
 const setDeviceId = function (id) {
     meta.device_id.value = id;

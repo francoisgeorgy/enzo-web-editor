@@ -122,9 +122,9 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
  * Send all values to the connected device
  * Wait 40ms between each CC
  */
-export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
+export function fullUpdateDevice() {
 
-    log(`fullUpdateDevice(${onlyChanged})`);
+    log(`fullUpdateDevice()`);
 /*
     if (fullUpdateRunning) return;
 
@@ -161,8 +161,6 @@ export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage("--- PLEASE CONNECT THE ENZO ---");
         setPresetDirty();
-    // } else {
-        // setPresetClean();
     }
 
 }
