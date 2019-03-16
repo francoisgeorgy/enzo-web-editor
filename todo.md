@@ -58,6 +58,7 @@
     - logical (signal-flow)
 
 - doc
+    - update EXP screenshots
     - doc about keyboard shortcuts
     - state diagram for the ports connections/disconnections.
     - state diagram for the preset selection/save/dirty/...
