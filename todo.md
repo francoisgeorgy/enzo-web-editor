@@ -1,37 +1,60 @@
-- Documentation
-    - doc about keyboard shortcuts
+- bugs: 
+    - bypass is not set after loading preset (check w/ preset 4)
 
 - connection/disconnection
-    - set preset dirty if no input or no output device connected    DONE
+    - ~~set preset dirty if no input or no output device connected~~
 
 - midi
     - ignore PC echo
     - scan ports and channel until an Enzo is found
     - check that the connected device (chosen by the user) is an Enzo
 
+- preset
+    - auto-save current preset before switching to another preset
+    - auto-save current preset after ... seconds of no-change
+
 - print
     - add sysex as hash, not querystring
+    - better layout
+    - export as markdown / html
 
 - EXP
-    - copy values
-    - set exp value to 0 after loading a new preset         DONE
-    - set exp value to 0 after receiving a sysex preset     DONE
+    - ~~copy values~~                                          
+    - ~~set exp value to 0 after loading a new preset~~
+    - ~~set exp value to 0 after receiving a sysex preset~~
 
 - preferences
-    - display raw values or human values    DONE 
-    - display preference in the app         DONE
+    - ~~display raw values or human values~~ 
+    - ~~display preference in the app~~
+
+- presets management
+    - file selection panel
+    - re-open
+    - favorites
 
 - menu
-    - add WRITE command (save preset sysex) DONE
-    - add READ command (read preset sysex)
-        - better to do with a PRESET select (send PC)   DONE
+    - ~~add WRITE command (save preset sysex)~~
+    - ~~add READ command (read preset sysex)~~
+        - ~~better to do with a PRESET select (send PC)~~
+
+- init
+    - URL params to bypass preferences
+        - ~~URL param to force editor size~~
+        - URL param to force init from URL or from device
+        - URL param to force MIDI channel
+        - URL param to force MIDI device
 
 - keyboard
-    - ALT: show help keys               DONE
-    - ALT: show controls' raw values    DONE
+    - ~~ALT: show help keys~~
+    - ~~ALT: show controls' raw values~~
 
-- Offrir 2 layouts:
-    - pedal-like
-    - logic
+- 2 layouts:
+    - ~~pedal-like~~
+    - logical (signal-flow)
 
-Create a state diagram for the ports connections/disconnections.    
+- doc
+    - doc about keyboard shortcuts
+    - state diagram for the ports connections/disconnections.
+    - state diagram for the preset selection/save/dirty/...
+    
+

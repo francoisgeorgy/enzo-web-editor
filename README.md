@@ -1,5 +1,5 @@
-Enzo web editor
-===============
+Enzo editor
+===========
 
 Control your Meris Enzo pedal with your web browser. View all the pedal's settings at once.
 
@@ -16,8 +16,7 @@ Requirements
 - A browser that [supports](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility) the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, 
 only **Chrome** and **Opera** support this standard. 
 - A [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface.
-- A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, 
-a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
+- A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
 
 
 Setup
@@ -76,8 +75,6 @@ Once you have your Enzo connected to the MIDI I/O interface, you must configure 
 1. Select the input device 
 2. Select the output device
 3. Select the MIDI channel
-    * You can leave the channel set to "all" but this is not recommended as this will send every messages to all channels 
-    every time and this can perturb other MIDI devices which are connected to your computer. 
     
 The editor's preferences (settings) are saved in your browser's _Local Storage_.
 
@@ -302,9 +299,9 @@ The first time you access a web page that uses the WebMIDI API, the browser will
 
 ![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
-You need to click "Allow" to authorize the application to use the Web MIDI API.
+You need to click "Allow" to authorize the editor to use the Web MIDI API.
 
-If you refuse access, the application will display the following message:
+If you refuse access, the editor will display the following message:
 
 ![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
 
@@ -359,7 +356,7 @@ If you use a Mac, check out the tools available at https://www.snoize.com/.
 
 
 Limitations of this editor
-===============================
+==========================
 
 This editor will _not_ work in Firefox, Safari, IE or Edge because these browsers do not support the Web MIDI API. 
 
