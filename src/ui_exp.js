@@ -85,6 +85,9 @@ export function resetExp() {
     $("#exp-close-bt").removeClass("on");
     $("#exp-copy").hide();
     $("#cc-4-value").show();
+
+    showExpValues(false);
+
 }
 
 export function updateExpSlider(value) {

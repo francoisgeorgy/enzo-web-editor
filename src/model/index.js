@@ -71,8 +71,6 @@ const setControlValue = function () {
 
             const set_value2 = c.two_values && (arguments.length > 3) && arguments[3];
 
-            if (set_value2) console.log("set value 2");
-
             if (c.hasOwnProperty("map_raw")) {
                 c[set_value2 ? "raw_value2" : "raw_value"] = c.map_raw(v);
             } else {
