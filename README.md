@@ -45,7 +45,7 @@ If you can't get the MIDI communication working, check the following on the Enzo
 - The cable between the Enzo and the MIDI I/O interface is TRS (stereo).
 - The MIDI I/O interface is powered on.
 - The Enzo is powered on.
-- The TSR cable is connected between one of the 4 MIDI I/O jack and the Enzo's EXP/MIDI connecter.
+- The TSR cable is connected between one of the 4 MIDI I/O jack and the Enzo's EXP/MIDI connector.
 - The MIDI I/O interface is connected to your PC.
 - The MIDI editor uses the same channel as the Enzo's MIDI channel defined in the Global Settings.
 
