@@ -291,7 +291,7 @@ function connectOutputDevice(id) {
 function deviceConnected(info) {
 
     // log("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
-    if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name, info.type, info);
+    if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
 
     // Auto-connect if not already connected.
 
@@ -413,7 +413,7 @@ function syncIfNoPreset() {
 
 $(function () {
 
-    log(`Enzo Web Interface ${VERSION}`);
+    log(`Enzo editor ${VERSION}`);
 
     loadSettings();
 

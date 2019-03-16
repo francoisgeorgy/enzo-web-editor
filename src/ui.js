@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {showPreset, setPresetDirty, setupPresetSelectors, setPresetClean} from "./ui_presets";
+import {showPreset, setPresetDirty, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -137,7 +137,6 @@ export function updateControls(onlyTwoValuesControls = false) {
  */
 function updateMeta() {
     if (MODEL.meta.preset_id.value) {
-        // setPresetClean();
         showPreset();
     }
 }
