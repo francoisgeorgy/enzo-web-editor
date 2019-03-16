@@ -49,7 +49,9 @@ export function showPreset() {
 
     const n = MODEL.getPresetNumber();
 
-    $(".preset-id").removeClass("sel dirty");
+    $(".preset-id").removeClass("on sel dirty");
+    dirty_cache = false;    // because we removed .dirty
+
     $(`#pc-${n}`).addClass("sel");
 
     if (getMidiInputPort() && getMidiOutputPort()) {
