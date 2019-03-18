@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {showPreset, setPresetDirty, setupPresetSelectors} from "./ui_presets";
+import {updatePresetSelector, setPresetDirty, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -51,7 +51,7 @@ export function handleUserAction(control_type, control_number, value) {
  * @param value
  * @param mappedValue
  */
-export function updateControl(control_type, control_number, value, mappedValue) {   //TODO: check that control_number is always an int and not a string
+export function updateControl(control_type, control_number, value, mappedValue) {
 
     //FIXME: no need for control_type
 
@@ -67,6 +67,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         knobs[id].value = value;        //TODO: doesn't the knob update its value itself?
     } else {
 
+        //TODO: check that control_number is always an int and not a string
         const num = parseInt(control_number, 10);
 
         if (/*control_type === "cc" &&*/ num === 4) {    //TODO: replace this hack with better code
@@ -94,7 +95,6 @@ export function updateControl(control_type, control_number, value, mappedValue) 
                 } else if (c.is(".swm")) {
                     log(`updateControl(${control_type}, ${num}, ${value}) .swm`);
                     updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
-                    // log(typeof mappedValue, mappedValue === 0);
                     // if (mappedValue !== 0) {
                     //     log("will call updateMomentaryStompswitch in 200ms");
                         setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
@@ -131,17 +131,10 @@ export function updateControls(onlyTwoValuesControls = false) {
 } // updateControls()
 
 /**
- * Update the patch number and patch name displayed in the header.
- */
-function updateMeta() {
-    showPreset();
-}
-
-/**
  * Update the UI from the MODEL controls values.
  */
 export function updateUI() {
-    updateMeta();
+    updatePresetSelector();
     updateControls();
     log("updateUI done");
 }
@@ -243,7 +236,6 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupAppPreferences();
     setupHelpPanel();
     setupMenu();
-    // setupExp();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
 

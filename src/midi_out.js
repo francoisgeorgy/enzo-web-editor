@@ -143,7 +143,7 @@ export function fullUpdateDevice() {
             log(`fullUpdateDevice done`);
             fullUpdateRunning = false;
             if (!silent && midi_output) {
-                appendMessage("Current settings sent to Enzo.")
+                appendMessage("Current settings sent to the pedal.")
             }
         } else {
             // log(`fullUpdateDevice: send CC ${i}`);
@@ -184,11 +184,11 @@ export function sendPC(pc) {
         appendMessage(`Preset ${pc} selected.`);
 
         if (!getMidiInputPort()) {
-            appendMessage("Unable to receive the preset from Enzo.");
+            appendMessage("Unable to receive the preset from the pedal.");
         }
 
     } else {
-        appendMessage(`Unable to send the PC command to Enzo.`);
+        appendMessage(`Unable to send the PC command to the pedal.`);
         log(`(send program change ${pc})`);
     }
 

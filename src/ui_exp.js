@@ -52,7 +52,7 @@ export function toggleExpEditMode() {
         updateDevice("cc", MODEL.control_id.exp_pedal, 0);
 
         showExpValues(false);
-        appendMessage("You are now editing the normal values");
+        appendMessage("You are now editing the normal values", true);
 
     } else {
 
@@ -65,7 +65,7 @@ export function toggleExpEditMode() {
         updateDevice("cc", MODEL.control_id.exp_pedal, 127);
 
         showExpValues(true);
-        appendMessage("You are now editing the EXP (tow-down) values", true);
+        appendMessage("You are now editing the EXP (toe down) values", true);
 
     }
 }

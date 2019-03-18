@@ -35,11 +35,10 @@ MIDI IN:
         if SYSEX_PRESET:
             resetExp
             updateUI            
-                updateMeta
-                    showPreset
-                        setPresetClean
-                            add .sel if pc>0
-                            add .on if communication ok
+                updatePresetSelector
+                    setPresetClean
+                        add .sel if pc>0
+                        add .on if communication ok
                 updateControls
         if SYSEX_GLOBALS:
             updateGlobalSettings
@@ -61,10 +60,10 @@ MIDI DEVICE:
                 connectInputDevice
                     disconnectInputPort
                         remove listeners
-                        showPreset
+                        updatePresetSelector
                     connectInputPort
                         setMidiInputPort
-                        showPreset
+                        updatePresetSelector
                     syncIfNoPreset
                         if preset === 0
                             requestPreset
@@ -84,11 +83,10 @@ MIDI DEVICE:
                 initFromBookmark
                     resetExp
                     updateUI
-                        updateMeta
-                            showPreset
-                                setPresetClean
-                                    add .sel if pc>0
-                                    add .on if communication ok
+                        updatePresetSelector
+                            setPresetClean
+                                add .sel if pc>0
+                                add .on if communication ok
                         updateControls
                         
     on disconnected:
@@ -96,8 +94,8 @@ MIDI DEVICE:
         port is input:
             disconnectInputPort
                 remove listeners
-                showPreset
+                updatePresetSelector
         port is output:
             disconnectOutputPort
-                showPreset
+                updatePresetSelector
         updateSelectDeviceList            

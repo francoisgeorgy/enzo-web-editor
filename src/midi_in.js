@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {showPreset} from "./ui_presets";
+import {updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
@@ -55,7 +55,7 @@ export function handlePC(msg) {
     showMidiInActivity();
     logIncomingMidiMessage("PC", [msg.value]);
     MODEL.setPresetNumber(msg.value);
-    showPreset();
+    updatePresetSelector();
 }
 
 /**
