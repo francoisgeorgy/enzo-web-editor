@@ -146,7 +146,7 @@ function connectInputDevice(id) {
         syncIfNoPreset();
         return true;
     } else {
-        appendMessage(`Connect the Enzo or check the MIDI channel.`);
+        appendMessage(`Connect the ${MODEL.name} or check the MIDI channel.`);
         setCommunicationStatus(false);
     }
 
@@ -298,7 +298,7 @@ function syncIfNoPreset() {
             window.setTimeout(requestPreset, 200);
         } else {
             setPresetDirty();
-            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
+            appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
         }
     }
 
@@ -309,7 +309,7 @@ function syncIfNoPreset() {
 
 $(function () {
 
-    log(`Enzo editor ${VERSION}`);
+    log(`${MODEL.name} editor ${VERSION}`);
 
     loadPreferences();
 

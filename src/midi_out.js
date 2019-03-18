@@ -159,7 +159,7 @@ export function fullUpdateDevice() {
     sendSysex(MODEL.getPreset(false));
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
         setPresetDirty();
     }
 
@@ -193,8 +193,7 @@ export function sendPC(pc) {
     }
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
-        // setPresetDirty();
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
 
     logOutgoingMidiMessage("PC", [pc]);
@@ -211,9 +210,7 @@ export function sendSysex(data) {
         // setPresetClean();
     } else {
         log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
-
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
-        // setPresetDirty();
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
     logOutgoingMidiMessage("SysEx", data);
 }

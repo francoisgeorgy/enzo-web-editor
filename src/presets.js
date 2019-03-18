@@ -19,7 +19,7 @@ export function init() {
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
         updateBookmark("init");
     }
-    appendMessage("Enzo set to 'init' configuration.");
+    appendMessage(`${MODEL.name} set to 'init' configuration.`);
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
@@ -34,6 +34,6 @@ export function randomize() {
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
         updateBookmark();
     }
-    appendMessage("Enzo randomized.");
+    appendMessage(`${MODEL.name} randomized.`);
     return false;   // disable the normal href behavior when called from an onclick event
 }
