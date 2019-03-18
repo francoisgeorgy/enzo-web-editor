@@ -25,6 +25,10 @@ export let preferences = {
 export function loadPreferences() {
     const s = store.get(LOCAL_STORAGE_KEY);
     if (s) preferences = Object.assign(preferences, preferences, JSON.parse(s));
+    if (!Number.isInteger(preferences.midi_channel)) {
+        // because we changed the format of midi_channel in v0.93
+        preferences.midi_channel = 1;
+    }
 }
 
 export function savePreferences(options = {}) {

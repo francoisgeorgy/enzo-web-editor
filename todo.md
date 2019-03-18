@@ -1,10 +1,14 @@
 - bugs: 
     - bypass is not set after loading preset (check w/ preset 4)
+    - shift is used for two functions
 
 - keyboard
+    - ~~ALT: show help keys~~
+    - ~~ALT: show controls' raw values~~
     - remap keyboard by key-position, not key-value
-    - bug: shift is used for two functions
-
+        - use KeyboardEvent.code (see https://www.w3.org/TR/uievents-code/, https://keyshorts.com/blogs/blog/37615873-how-to-identify-macbook-keyboard-localization)
+            
+    
 - connection/disconnection
     - ~~set preset dirty if no input or no output device connected~~
 
@@ -48,10 +52,7 @@
         - URL param to force init from URL or from device
         - URL param to force MIDI channel
         - URL param to force MIDI device
-
-- keyboard
-    - ~~ALT: show help keys~~
-    - ~~ALT: show controls' raw values~~
+    
 
 - 2 layouts:
     - ~~pedal-like~~
