@@ -15,7 +15,12 @@
 - midi
     - ignore PC echo
     - scan ports and channel until an Enzo is found
+    - MUST HAVE: check that we can communicate with Enzo
     - check that the connected device (chosen by the user) is an Enzo
+
+- preferences
+    - use checkboxes to set URL update preferences
+        - choices: manually, on init, on randomize, on preset change, on preset received (sysex), on file load, auto
 
 - preset
     - auto-save current preset before switching to another preset
@@ -66,5 +71,7 @@
     - doc about keyboard shortcuts
     - state diagram for the ports connections/disconnections.
     - state diagram for the preset selection/save/dirty/...
+    - explain that sysex works even when the channel is invalid, because sysex messages are not channel-bounded.
+        - that's why we have MODEL and ID in the sysex message
     
 

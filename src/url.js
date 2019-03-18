@@ -65,7 +65,7 @@ export function initFromUrl(updateConnectedDevice = true) {
             log("initFromURL: sysex loaded in device");
             resetExp();
             updateUI();
-            appendMessage("Initialization from the URL.");
+            appendMessage("Initialization from the URL.", false, false);
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
         } else {
