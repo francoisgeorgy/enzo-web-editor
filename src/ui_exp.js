@@ -131,18 +131,18 @@ export function setupExp(userActionCallback) {
 
     $("#exp-close-bt").click(toggleExpEditMode);
 
-    $("#exp-copy").mousedown(function() {
-        this.classList.add("on");
-        MODEL.copyFirstToSecondValues();
-        fullUpdateDevice();
-        MODEL.interpolateExpValues(MODEL.control[MODEL.control_id.exp_pedal].raw_value);
-        updateControls(true);
-        appendMessage("EXP: toe-up values copied to toe-down.");
-    });
-
-    $("#exp-copy").mouseup(function() {
-        this.classList.remove("on");
-    });
+    $("#exp-copy")
+        .mousedown(function() {
+            this.classList.add("on");
+            MODEL.copyFirstToSecondValues();
+            fullUpdateDevice();
+            MODEL.interpolateExpValues(MODEL.control[MODEL.control_id.exp_pedal].raw_value);
+            updateControls(true);
+            appendMessage("EXP: toe-up values copied to toe-down.");
+        })
+        .mouseup(function() {
+            this.classList.remove("on");
+        });
 
     resetExp();
 }

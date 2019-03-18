@@ -197,10 +197,6 @@ export function sendPC(pc) {
         // setPresetDirty();
     }
 
-    // for debug
-    // setPresetClean();
-    // setPresetInSync();
-
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }

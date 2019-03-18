@@ -5,7 +5,7 @@ import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
-import {appendErrorMessage, appendMessage} from "./ui_messages";
+import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 
@@ -61,7 +61,7 @@ export function initFromBookmark(updateConnectedDevice = true) {
             return true;
         } else {
             log("initFromBookmark: hash value is not a preset sysex");
-            appendErrorMessage(valid.message);
+            appendMessage(valid.message);
         }
     }
     return false;

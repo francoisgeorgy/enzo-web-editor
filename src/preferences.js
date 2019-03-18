@@ -21,12 +21,12 @@ export let preferences = {
                                 // if 1 (YES), the app will init from the bookmark's sysex and update the device;
 };
 
-export function loadSettings() {
+export function loadPreferences() {
     const s = store.get(LOCAL_STORAGE_KEY);
     if (s) preferences = Object.assign(preferences, preferences, JSON.parse(s));
 }
 
-export function saveSettings(options = {}) {
+export function savePreferences(options = {}) {
     Object.assign(preferences, preferences, options);
     store(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
 }
