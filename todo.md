@@ -1,7 +1,7 @@
 - bugs: 
     - bypass is not set after loading preset (check w/ preset 4)
 
-- keryboard
+- keyboard
     - remap keyboard by key-position, not key-value
     - bug: shift is used for two functions
 

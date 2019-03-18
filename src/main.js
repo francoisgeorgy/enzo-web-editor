@@ -283,7 +283,7 @@ function deviceDisconnected(info) {
 //==================================================================================================================
 
 /**
- * If no preset select (preset is 0) then read the preset from Enzo, otherwise display a message to the user.
+ * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
  * Do not call this method from
  */
 function syncIfNoPreset() {

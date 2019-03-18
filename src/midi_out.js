@@ -6,7 +6,7 @@ import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetClean, setPresetDirty} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
-import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
+import {SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_exp";
@@ -217,7 +217,7 @@ export function sendSysex(data) {
 
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command, ' ')})`);
-    sendSysex([MODEL.meta.device_id.value, GROUP_ID.pedal, MODEL_ID.enzo, command]);
+    sendSysex([MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, command]);
 }
 
 export function requestPreset() {
