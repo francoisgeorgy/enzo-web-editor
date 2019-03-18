@@ -12,7 +12,7 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromURL, setupBookmarkSupport, startBookmarkAutomation} from "./url";
+import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
@@ -254,8 +254,8 @@ function deviceConnected(info) {
 
     if (input_connected && output_connected && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync; check if hash present");
-        if (hashSysexPresent() && preferences.init_from_bookmark === 1) {
-            initFromURL();
+        if (hashSysexPresent() && preferences.init_from_URL === 1) {
+            initFromUrl();
         }
     }
 
@@ -293,7 +293,7 @@ function syncIfNoPreset() {
             //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
             //TODO: init from URL if sysex present ?
             // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
-            appendMessage("Request current preset in 200ms");
+            appendMessage("Request current preset.");
             log("syncIfNoPreset: will request preset in 200ms");
             window.setTimeout(requestPreset, 200);
         } else {
@@ -340,8 +340,8 @@ $(function () {
         }
     }
 
-    setupBookmarkSupport();
-    startBookmarkAutomation();
+    setupUrlSupport();
+    startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
 
@@ -356,7 +356,7 @@ $(function () {
             appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromURL(false);
+            initFromUrl(false);
 
         } else {
 

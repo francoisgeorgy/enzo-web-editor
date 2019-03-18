@@ -7,7 +7,7 @@ export const SETTINGS_UPDATE_URL = {
     manually: 0,
     on_randomize: 1,
     on_init: 2,
-    on_randomize_and_init: 4,
+    on_randomize_init_load: 4,
     every_second: 8             // TODO: change to a open value
 };
 
@@ -17,9 +17,9 @@ export let preferences = {
     output_device_id: null,     // web midi port ID
     theme: "",                  // empty means default theme,
     zoom_level: 1,
-    update_URL: SETTINGS_UPDATE_URL.on_randomize_and_init,
-    init_from_bookmark: 0       // if 0 (NO), the app will init from the device and ignore the bookmark.
-                                // if 1 (YES), the app will init from the bookmark's sysex and update the device;
+    update_URL: SETTINGS_UPDATE_URL.on_randomize_init_load,
+    init_from_URL: 1       // if 0 (NO), the app will init from the device and ignore the URL.
+                           // if 1 (YES), the app will init from the URL's sysex and update the device.
 };
 
 export function loadPreferences() {

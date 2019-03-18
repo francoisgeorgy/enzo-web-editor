@@ -22,6 +22,9 @@
     - auto-save current preset after ... seconds of no-change
     - allow quick-access to preset not stored in enzo memory
 
+- URL and bookmarks
+    - add preset number in title when preset is clean
+
 - print
     - add sysex as hash, not querystring
     - better layout
