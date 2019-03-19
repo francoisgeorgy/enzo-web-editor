@@ -51,6 +51,52 @@ function setupModel() {
 //==================================================================================================================
 
 /**
+ * Check that we can communicate with the pedal
+ * @returns {boolean} true if communication OK, false otherwise
+ */
+/*
+function checkCommunication() {
+
+    const checkHandleCC = function (e) {
+        //
+        log(e.data);
+    };
+
+    const checkHandleSysex = function (e) {
+        //
+        log(e.data);
+    };
+
+    // noinspection JSUnresolvedFunction
+    const port = WebMidi.getInputById(preferences.input_device_id);
+    if (!port) {
+        return false;
+    }
+
+    // 1. Send a sysex. We must receive the sysex back as well as a response.
+    //    This check the input and output devices, not the MIDI channel, because sysex are not channel-bound.
+
+    // The sysex message will include the MODEL.meta.model_id.value which is the MIDI channel...
+
+    // We need to remove the current listeners to be able to use our own "check" listeners:
+    disconnectInputPort();
+
+    let channel = preferences.midi_channel;
+
+    // connect our own handlers for the test:
+    port.on("controlchange", channel, checkHandleCC).on("sysex", undefined, checkHandleSysex);
+
+
+    // Reconnect:
+    connectInputPort(port);
+
+    return false;
+}
+*/
+
+//==================================================================================================================
+
+/**
  * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
  */
 function sync() {
@@ -120,7 +166,7 @@ function connectInputPort(input) {
         .on("controlchange", preferences.midi_channel, function(e) {
             handleCC(e.data);
         })
-        .on("sysex", preferences.midi_channel, function(e) {
+        .on("sysex", preferences.midi_channel, function(e) {    //FIXME: use undefined for the channel
             handleSysex(e.data);
         });
 
