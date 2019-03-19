@@ -163,6 +163,25 @@ function defineControls() {
         name: "Exp pedal",
         human: _0_100
     };
+    control[control_id.envelope_type] = { // 9,
+        name: "Envelope type",
+        human: _env_type,
+        map_raw: _2_steps,
+        sysex: {
+            offset: 22,
+            mask: [0x7F]
+        }
+    };
+    control[control_id.bypass] = { // 14,
+        name: "Bypass",
+        no_init: true,
+        no_randomize: true,
+        map_raw: _2_steps,
+        sysex: {
+            offset: 21,
+            mask: [0x7F]
+        }
+    };
     control[control_id.tempo] = { // 15,
         name: "Tempo",
         human: _tempo,
@@ -320,24 +339,16 @@ function defineControls() {
             mask: [0x7F]
         }
     };
-    control[control_id.bypass] = { // 14,
-        name: "Bypass",
-        no_init: true,
+    control[control_id.tap] = { // 28,
+        name: "Tap",
+        // no_init: true,
+        init_value: 0,
         no_randomize: true,
-        map_raw: _2_steps,
-        sysex: {
-            offset: 21,
-            mask: [0x7F]
-        }
-    };
-    control[control_id.envelope_type] = { // 9,
-        name: "Envelope type",
-        human: _env_type,
-        map_raw: _2_steps,
-        sysex: {
-            offset: 22,
-            mask: [0x7F]
-        }
+        map_raw: () => 127,
+        // sysex: {
+        //     offset: 22,
+        //     mask: [0x7F]
+        // }
     };
     control[control_id.synth_mode] = { // 29,
         name: "Synth mode",
@@ -358,17 +369,6 @@ function defineControls() {
             offset: 24,
             mask: [0x7F]
         }
-    };
-    control[control_id.tap] = { // 28,
-        name: "Tap",
-        // no_init: true,
-        init_value: 0,
-        no_randomize: true,
-        map_raw: () => 127,
-        // sysex: {
-        //     offset: 22,
-        //     mask: [0x7F]
-        // }
     };
 
     // add the missing default properties

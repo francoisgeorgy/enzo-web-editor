@@ -11,7 +11,7 @@ import {
 import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
-import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
+import {getMidiOutputPort, requestPreset, sendSysex, setMidiOutputPort} from "./midi_out";
 import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
@@ -22,6 +22,8 @@ import "./css/grid-global-settings.css";
 import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 import * as Utils from "./utils";
 import {initZoom} from "./ui_zoom";
+import {SYSEX_CMD} from "./model/constants";
+import {SYSEX_PRESET, validate} from "./model/sysex";
 
 const browser = detect();
 
@@ -50,47 +52,138 @@ function setupModel() {
 
 //==================================================================================================================
 
+/*
+function asyncFunction() {
+    return 42;
+}
+
+async function f() {
+    console.log(await asyncFunction());
+}
+
+f();
+*/
+
 /**
  * Check that we can communicate with the pedal
  * @returns {boolean} true if communication OK, false otherwise
  */
 /*
-function checkCommunication() {
+async function checkCommunication() {
 
-    const checkHandleCC = function (e) {
-        //
-        log(e.data);
-    };
+    log("checkCommunication()");
 
-    const checkHandleSysex = function (e) {
-        //
-        log(e.data);
-    };
+    const wait = ms => new Promise(r => setTimeout(r, ms));
 
     // noinspection JSUnresolvedFunction
-    const port = WebMidi.getInputById(preferences.input_device_id);
-    if (!port) {
+    const input_port = WebMidi.getInputById(preferences.input_device_id);
+    if (!input_port) {
+        log("checkCommunication: no input port");
         return false;
     }
 
+    // noinspection JSUnresolvedFunction
+    const output_port = WebMidi.getOutputById(preferences.output_device_id);
+    if (!output_port) {
+        log("checkCommunication: no output port");
+        return false;
+    }
+
+    const checkHandleCC = function (e) {
+        // TODO: checkHandleCC
+        log("checkCommunication: CC received", e.data);
+    };
+
+    function isEcho(data, echo) {
+        for (let i=0; i < data.length; i++) {
+            if (echo[i+4] !== data[i]) return false;
+        }
+        return true;
+    }
+
+    const sysex_messages = [];
+
+    const checkHandleSysex = function (e) {
+        log("checkCommunication: sysex received", e.data);
+        sysex_messages.push(e.data);
+    };
+
     // 1. Send a sysex. We must receive the sysex back as well as a response.
     //    This check the input and output devices, not the MIDI channel, because sysex are not channel-bound.
+    //    The sysex message will include the MODEL.meta.model_id.value which is the MIDI channel...
+    //
+    async function test_sysex() {
 
-    // The sysex message will include the MODEL.meta.model_id.value which is the MIDI channel...
+        log("test_sysex: start");
+
+        await wait(100);
+
+        const data = [MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, SYSEX_CMD.preset_request];
+        output_port.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+
+        log("test_sysex: sysex sent");
+
+        await wait(100);
+
+        log("test_sysex: checks");
+
+        if (sysex_messages.length !== 2) {
+            log(`test_sysex: incorrect number of sysex messages received: ${sysex_messages.length}`);
+            return false;
+        }
+        let echo_index = (sysex_messages[0].length === data.length + 5) ? 0 : 1;
+        if (!isEcho(data, sysex_messages[echo_index])) {
+            log("test_sysex: invalid sysex echo");
+            return false;   // invalid echo; we should probably never come here.
+        }
+        const valid = validate(sysex_messages[(echo_index + 1) % 2]);
+        if (valid.type !== SYSEX_PRESET) {
+            log("test_sysex: invalid sysex preset");
+            return false;
+        }
+
+        log("test_sysex: test OK");
+        return true;
+    }
+
+    log("test_sysex: prepare");
 
     // We need to remove the current listeners to be able to use our own "check" listeners:
-    disconnectInputPort();
+    input_port.removeListener();    // remove all listeners for all channels
 
     let channel = preferences.midi_channel;
 
-    // connect our own handlers for the test:
-    port.on("controlchange", channel, checkHandleCC).on("sysex", undefined, checkHandleSysex);
+    //TODO: test for debug
+    if (channel !== (MODEL.meta.device_id.value + 1)) console.error("Device ID is not equal to MIDI channel.");
 
+    // connect our own handlers for the test:
+    input_port.on("controlchange", channel, checkHandleCC).on("sysex", undefined, checkHandleSysex);
+
+    let result = true;
+
+    // DO THE TESTS
+    try {
+        log("test_sysex: run the tests");
+        // noinspection JSIgnoredPromiseFromCall
+        let ok = false;
+        // test_sysex().then(r => {
+        //     log("then", r);
+        //     ok = r
+        // });
+        await ok = test_sysex();
+        log("test_sysex result is ", ok);
+        result = result && ok;
+    }
+    catch (e) {
+        console.warn(e);
+    }
+
+    log(`test_sysex: done; result is ${result}`);
 
     // Reconnect:
-    connectInputPort(port);
+    connectInputPort(input_port);
 
-    return false;
+    return result;
 }
 */
 
@@ -102,6 +195,8 @@ function checkCommunication() {
 function sync() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
+
+        // checkCommunication();
 
         if (hashSysexPresent() && preferences.init_from_URL === 1) {
             log("sync: init from URL");
