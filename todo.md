@@ -60,7 +60,7 @@
         - URL param to force init from URL or from device
         - URL param to force MIDI channel
         - URL param to force MIDI device
-    
+        - URL param to force page background color
 
 - 2 layouts:
     - ~~pedal-like~~
