@@ -28,7 +28,7 @@
     - allow quick-access to preset not stored in enzo memory
 
 - URL and bookmarks
-    - add preset number in title when preset is clean
+    - ~~add preset number in title when preset is clean~~
 
 - print
     - add sysex as hash, not querystring
@@ -46,7 +46,7 @@
 
 - presets management
     - file selection panel
-    - re-open
+    - re-open (last opened...)
     - favorites
 
 - menu
