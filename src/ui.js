@@ -211,6 +211,8 @@ function setupControlsHelp() {
             if (!preferences.display_infos) return;
             $("#control-infos").text("").hide();
             $("#messages-list > div").show();
+            const e = document.getElementById("messages-list");
+            e.scrollTop = e.scrollHeight;
         }
     );
 }
