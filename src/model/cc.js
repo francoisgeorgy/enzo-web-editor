@@ -161,7 +161,8 @@ const _tempo = function (v) {
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
-        human: _0_100
+        human: _0_100,
+        infos: "The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer knob values)."
     };
     control[control_id.envelope_type] = { // 9,
         name: "Envelope type",
@@ -170,7 +171,8 @@ function defineControls() {
         sysex: {
             offset: 22,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the Filter Envelope from Triggered Envelope to Envelope Follower."
     };
     control[control_id.bypass] = { // 14,
         name: "Bypass",
@@ -180,7 +182,8 @@ function defineControls() {
         sysex: {
             offset: 21,
             mask: [0x7F]
-        }
+        },
+        infos: "Disables processing and passes the input through to the output."
     };
     control[control_id.tempo] = { // 15,
         name: "Tempo",
@@ -188,7 +191,8 @@ function defineControls() {
         sysex: {
             offset: 25,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets the time for the delay line and arpeggiated Synth."
     };
     control[control_id.pitch] = { // 16,
         name: "Pitch",
@@ -202,7 +206,8 @@ function defineControls() {
         sysex2: {
             offset: 26,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the pitch of the Synth or Dry signal in half step increments."
     };
     control[control_id.filter] = { // 17,
         name: "Filter",
@@ -215,7 +220,8 @@ function defineControls() {
         sysex2: {
             offset: 27,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the cutoff frequency of the filter."
     };
     control[control_id.mix] = { // 18,
         name: "Mix",
@@ -228,7 +234,8 @@ function defineControls() {
         sysex2: {
             offset: 28,
             mask: [0x7F]
-        }
+        },
+        infos: "Adjusts the balance between Dry and Wet signals."
     };
     control[control_id.sustain] = { // 19,
         name: "Sustain",
@@ -240,10 +247,11 @@ function defineControls() {
         sysex2: {
             offset: 29,
             mask: [0x7F]
-        }
+        },
+        infos: "Increases the sustain of Synth notes (Compresses the input in Dry Mode)."
     };
     control[control_id.filter_envelope] = { // 20,
-        name: "Filter env",
+        name: "Filter envelope",
         human: _filter_env,
         sysex: {
             offset: 13,
@@ -252,7 +260,8 @@ function defineControls() {
         sysex2: {
             offset: 30,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets attack and decay rates for the Triggered Envelope; sets the direction and sensitivity for the Envelope Follower."
     };
     control[control_id.modulation] = { // 21,
         name: "Modulation",
@@ -264,7 +273,8 @@ function defineControls() {
         sysex2: {
             offset: 31,
             mask: [0x7F]
-        }
+        },
+        infos: "Detunes the oscillators of each Synth voice (Sets the amount of delay modulation in Dry mode)."
     };
     control[control_id.portamento] = { // 22,
         name: "Portamento",
@@ -276,7 +286,8 @@ function defineControls() {
         sysex2: {
             offset: 32,
             mask: [0x7F]
-        }
+        },
+        infos: "Smoothly glide from one Synth note to another (Bends the pitch using the filter envelope as a modifier in Dry Mode)."
     };
     control[control_id.filter_type] = { // 23,
         name: "Filter type",
@@ -289,7 +300,8 @@ function defineControls() {
         sysex2: {
             offset: 33,
             mask: [0x7F]
-        }
+        },
+        infos: "Select between 6 filter types (from Min to Max) : 1. Ladder Lowpass 2. Ladder Shelving Bandpass 3. Ladder Highpass 4. State Variable Lowpass 5. State Variable Bandpass 6. State Variable Highpass."
     };
     control[control_id.delay_level] = { // 24,
         name: "Delay level",
@@ -301,7 +313,8 @@ function defineControls() {
         sysex2: {
             offset: 34,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets the level of a single delay tap from Min to Mid. After the Midpoint, this control blends in a second stereo tap."
     };
     control[control_id.ring_modulation] = { //  25,
         name: "Ring modulation",
@@ -313,10 +326,11 @@ function defineControls() {
         sysex2: {
             offset: 35,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the frequency of a classic ring modulator. The filter envelope as a modifier."
     };
     control[control_id.filter_bandwidth] = { // 26,
-        name: "Filter Q",
+        name: "Filter Q (Resonance)",
         human: _percent,
         sysex: {
             offset: 19,
@@ -325,7 +339,8 @@ function defineControls() {
         sysex2: {
             offset: 36,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the filter from a wide bandwidth for gentle filtering to a narrow bandwidth for peaky filtering."
     };
     control[control_id.delay_feedback] = { // 27,
         name: "Delay feedback",
@@ -337,7 +352,8 @@ function defineControls() {
         sysex2: {
             offset: 37,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets the repeats for the delay line."
     };
     control[control_id.tap] = { // 28,
         name: "Tap",
@@ -345,6 +361,7 @@ function defineControls() {
         init_value: 0,
         no_randomize: true,
         map_raw: () => 127,
+        infos: "Sets the time for the delay line and arpeggiated Synth."
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]
@@ -358,7 +375,8 @@ function defineControls() {
         sysex: {
             offset: 23,
             mask: [0x7F]
-        }
+        },
+        infos: "Poly: Multi-Voice Synthesizer with polyphonic chord tracking Mono: Single Voice Dual Osc Synth w/monophonic tracking Arp: Turns your chords into se-  quenced patterns linked to the tap tempo Dry: Disables the Synth. Allows the filter, delay and pitch shift to be applied to the input signal."
     };
     control[control_id.synth_waveshape] = { // 30
         name: "Waveshape",
@@ -368,7 +386,8 @@ function defineControls() {
         sysex: {
             offset: 24,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes the Synth waveshape from Sawtooth to Square."
     };
 
     // add the missing default properties

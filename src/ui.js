@@ -193,6 +193,28 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
     $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
 }
 
+function setupControlsHelp() {
+    $(".header.infos").hover(
+        function() {
+            if (!preferences.display_infos) return;
+            const cc = parseInt($(this).attr("data-infos"), 10);
+            if (!Number.isInteger(cc)) {
+                log(`setupControlsHelp: invalid CC: ${cc}`);
+                return;
+            }
+            log(cc);
+            $("#messages-list > div").hide();
+            $("#control-infos").show().html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
+            // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
+        },
+        function() {
+            if (!preferences.display_infos) return;
+            $("#control-infos").text("").hide();
+            $("#messages-list > div").show();
+        }
+    );
+}
+
 function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
@@ -235,6 +257,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
+    setupControlsHelp();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();

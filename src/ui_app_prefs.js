@@ -6,6 +6,8 @@ import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
+import {sendSysex} from "./midi_out";
+import MODEL from "./model";
 
 const CONTAINER = "#app-preferences";
 
@@ -83,6 +85,13 @@ export function setupAppPreferences() {
         // noinspection JSUnresolvedVariable
         const v = parseInt(event.target.value, 10);     //TODO: check validity of value
         savePreferences({zoom_level: v});
+    });
+
+    $(`#display_description-${preferences.display_infos}`).prop('checked', true);
+
+    $("input[name='display_description']").on("change", function(){
+        const v = $("input[name='display_description']:checked").val();
+        savePreferences({display_infos: parseInt(v)})
     });
 
     return true;

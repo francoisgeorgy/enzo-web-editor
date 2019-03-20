@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,6 +70,12 @@
             <div id="messages">
                 <div id="messages-list">
                 </div>
+                <div id="control-infos" data-infos="18">
+                    yoiuyo iyoiu ofoijw eoierw ofgijrg<br />
+                    oijerg jerpiog jeiorjg<br />
+                    oijerg jerpiog jeiorjg<br />
+                    oijerg jerpiog jeiorjg<br />
+                </div>
             </div>
 
             <div id="options">
@@ -77,7 +83,7 @@
                     <div>
                         <div>MIDI</div>
                     </div>
-                    <div style="width:100%;text-align:right">
+                    <div style="width:100%;text-align:left">
                         <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
                     </div>
                     <div>
@@ -130,7 +136,7 @@
                 PITCH
             -->
             <div id="pitch" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="16">
                     <div class="header-shortcut hidden">[C,V]</div>
                     <div>pitch</div>
                 </div>
@@ -143,7 +149,7 @@
                 PORTAMENTO
             -->
             <div id="portamento" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="22">
                     <div class="header-shortcut hidden">[O]</div>
                     <div>portamento</div>
                 </div>
@@ -156,7 +162,7 @@
                 FILTER
             -->
             <div id="filter" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="17">
                     <div class="header-shortcut hidden">[F,G]</div>
                     <div>filter</div>
                 </div>
@@ -169,7 +175,7 @@
                 FILTER TYPE
             -->
             <div id="filter-type" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="23">
                     <div>filter type</div>
                 </div>
                 <div id="cc-23-options" class="grid-3x2 controls-options-grid">
@@ -186,7 +192,7 @@
                 MIX
             -->
             <div id="mix" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="18">
                     <div class="header-shortcut hidden">[Y,X]</div>
                     <div>mix</div>
                 </div>
@@ -199,7 +205,7 @@
                 DELAY LEVEL
             -->
             <div id="delay-level" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="24">
                     <div class="header-shortcut hidden">[K,L]</div>
                     <div>delay level</div>
                 </div>
@@ -212,7 +218,7 @@
                 SUSTAIN
             -->
             <div id="sustain" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="19">
                     <div class="header-shortcut hidden">[DEL,B,N]</div>
                     <div>sustain</div>
                 </div>
@@ -225,7 +231,7 @@
                 RING MODULATION
             -->
             <div id="ring-mod" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="25">
                     <div class="header-shortcut hidden">[Z,U]</div>
                     <div>ring mod</div>
                 </div>
@@ -238,7 +244,7 @@
                 FILTER ENVELOPE
             -->
             <div id="filter-env" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="20">
                     <div>filter env</div>
                 </div>
                 <div class="controls">
@@ -250,7 +256,7 @@
                 FILTER BANDWITDH
             -->
             <div id="filter-bandwidth" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="26">
                     <div class="header-shortcut hidden">[H,J]</div>
                     <div>filter Q</div>
                 </div>
@@ -263,7 +269,7 @@
                 MODULATION
             -->
             <div id="modulation" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="21">
                     <div class="header-shortcut hidden">[-,+]</div>
                     <div>modulation</div>
                 </div>
@@ -276,7 +282,7 @@
                 DELAY FEEDBACK
             -->
             <div id="delay-feedback" class="grid-default">
-                <div class="header exp">
+                <div class="header exp infos" data-infos="27">
                     <div>dly feedback</div>
                 </div>
                 <div class="controls">
@@ -288,7 +294,7 @@
                 TAP
             -->
             <div id="tap" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="28">
                     <div class="header-shortcut hidden">[T]</div>
                     <div>tap</div>
                 </div>
@@ -319,7 +325,7 @@
                 TEMPO
             -->
             <div id="tempo" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="15">
                     <div>tempo</div>
                 </div>
                 <div class="controls">
@@ -331,7 +337,7 @@
                 ENVELOPE TYPE
             -->
             <div id="env-type" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="9">
                     <div>env type</div>
                 </div>
                 <div id="cc-9-options" class="grid-2x1 controls-options-grid">
@@ -344,7 +350,7 @@
                 SYNTH MODE
             -->
             <div id="synth-mode" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="29">
                     <div>synth</div>
                 </div>
                 <div id="cc-29-options" class="synth-mode-grid controls-options-grid">
@@ -363,7 +369,7 @@
                 EXP
             -->
             <div id="exp-controler" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="4">
                     <div>EXP</div>
                 </div>
                 <div class="exp_wrapper">
@@ -382,7 +388,7 @@
                 BYPASS
             -->
             <div id="bypass" class="grid-default">
-                <div class="header">
+                <div class="header infos" data-infos="14">
                     <div class="header-shortcut hidden">[SPACE]</div>
                     <div>bypass</div>
                 </div>
@@ -529,73 +535,87 @@
                     EDITOR PREFERENCES
                 </div>
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        MIDI
-                    </div>
-                    <div></div>
-                    <div class="grid-3x3 grid-default-gap">
-                        <div>channel: </div>
-                        <div id="prefs_midi_channel"></div>
-                        <div><button id="prefs_clear_midi_channel">clear</button></div>
-                        <div>input device: </div>
-                        <div id="prefs_input_device"></div>
-                        <div><button id="prefs_clear_input_device">clear</button></div>
-                        <div>output device: </div>
-                        <div id="prefs_output_device"></div>
-                        <div><button id="prefs_clear_output_device">clear</button></div>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                <div class="settings-columns">
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        INITIALIZE FROM URL
-                    </div>
-                    <div></div>
-                    <div>
-                        <select id="init_from_URL">
-                            <option value="0">NO (init from the device and ignore URL)</option>
-                            <option value="1">YES (and send values to the pedal)</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                    <div class="settings-rows">
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        UPDATE URL
-                    </div>
-                    <div></div>
-                    <div>
-                        <select id="update_URL">
-                            <option value="0">manually (with the URL menu entry)</option>
-                            <option value="1">automatically after each randomization</option>
-                            <option value="2">automatically after each init</option>
-                            <option value="4">automatically after each randomization, init or preset load</option>
-                            <option value="8">automatically every 500ms</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                        <div class="g0">
+                            MIDI
+                        </div>
+                        <div></div>
+                        <div class="grid-3x3 grid-default-gap">
+                            <div>channel: </div>
+                            <div id="prefs_midi_channel"></div>
+                            <div><button id="prefs_clear_midi_channel">clear</button></div>
+                            <div>input device: </div>
+                            <div id="prefs_input_device"></div>
+                            <div><button id="prefs_clear_input_device">clear</button></div>
+                            <div>output device: </div>
+                            <div id="prefs_output_device"></div>
+                            <div><button id="prefs_clear_output_device">clear</button></div>
+                        </div>
+                        <div>
+                        </div>
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        EDITOR SIZE
+                        <div class="g0">
+                            INITIALIZE FROM URL
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="init_from_URL">
+                                <option value="0">NO (init from the device and ignore URL)</option>
+                                <option value="1">YES (and send values to the pedal)</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            UPDATE URL
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="update_URL">
+                                <option value="0">manually (with the URL menu entry)</option>
+                                <option value="1">automatically after each randomization</option>
+                                <option value="2">automatically after each init</option>
+                                <option value="4">automatically after each randomization, init or preset load</option>
+                                <option value="8">automatically every 500ms</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
+
+                </div>
+                <div class="settings-columns">
+
+                    <div class="settings-rows">
+                        <div class="g0">
+                            DISPLAY CONTROL DESCRIPTION
+                        </div>
+                        <div></div>
+                        <div>
+                            <input type="radio" name="display_description" id="display_description-1" value="1">Yes</input>
+                            <input type="radio" name="display_description" id="display_description-0" value="0">No</input>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            EDITOR SIZE
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="prefs_zoom_level">
+                                <option value="0">small</option>
+                                <option value="1">default</option>
+                                <option value="2">large</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
                     </div>
-                    <div></div>
-                    <div>
-                        <select id="prefs_zoom_level">
-                            <option value="0">small</option>
-                            <option value="1">default</option>
-                            <option value="2">large</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
+
                 </div>
 
             </div>

@@ -173,7 +173,6 @@ function decodeControls(data, controls) {
 
     }
 
-    // console.groupEnd();
 }
 
 function decodeGlobals(data, globals) {
