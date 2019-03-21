@@ -36,11 +36,6 @@ body {
     color: var(--header-shortcut-text);
 }
 
-.close-panel-action {
-    font-size: 1rem;
-    cursor: pointer;
-}
-
 .bold {
     font-weight: bold;
 }
@@ -414,6 +409,15 @@ div.btx {   /* EXP close button */
 
 .options-panel .header {
     color: var(--option-panel-header-color);
+    position: relative;
+}
+
+.close-panel-action {
+    font-size: 1rem;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 h4 {

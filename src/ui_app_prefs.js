@@ -38,6 +38,17 @@ export function closeAppPreferencesPanel() {
     return false;
 }
 
+export function toggleAppPreferencesPanel() {
+    if ($(CONTAINER).is(".closed")) {
+        openAppPreferencesPanel();
+    } else {
+        closeAppPreferencesPanel();
+        showDefaultPanel();
+        displayCurrentPreferences();
+    }
+    return false;
+}
+
 export function setupAppPreferences() {
     log("setupAppPreferences()");
 
