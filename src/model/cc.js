@@ -91,11 +91,11 @@ const _filter_type = function (v) {
     } else if (v < 60) {
         return "ladder HP";
     } else if (v < 88) {
-        return "state variable LP";
+        return "state var. LP";
     } else if (v < 116) {
-        return "state variable BP";
+        return "state var. BP";
     } else {
-        return "state variable HP";
+        return "state var. HP";
     }
 };
 
@@ -127,29 +127,29 @@ const _filter_env = function (v) {
 
 const _env_type = function (v) {
     if (v < 64) {
-        return "TRIGGERED";
+        return "triggered";
     } else {
-        return "FOLLOWER";
+        return "follower";
     }
 };
 
 const _synth_mode = function (v) {
     if (v < 32) {
-        return "DRY";
+        return "dry";
     } else if (v < 64) {
-        return "MONO";
+        return "mono";
     } else if (v < 96) {
-        return "ARP";
+        return "arp";
     } else {
-        return "POLY";
+        return "poly";
     }
 };
 
 const _waveshape = function (v) {
     if (v < 64) {
-        return "SAWTOOTH";
+        return "sawtooth";
     } else {
-        return "SQUARE";
+        return "square";
     }
 };
 
@@ -330,7 +330,7 @@ function defineControls() {
         infos: "Changes the frequency of a classic ring modulator. The filter envelope as a modifier."
     };
     control[control_id.filter_bandwidth] = { // 26,
-        name: "Filter Q (Resonance)",
+        name: "Filter Resonance",
         human: _percent,
         sysex: {
             offset: 19,
