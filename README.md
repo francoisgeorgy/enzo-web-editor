@@ -276,7 +276,7 @@ The editor can receive SysEx from the Enzo. You can use this possibility to upda
 You have two possibilities to synchronize the editor with the Enzo:
 
 1. Select a preset from the editor.
-2. Or, fFrom the Enzo, send the preset as Sysex Data (see _Enzo User Manual_ page 9). 
+2. Or, from the Enzo, send the preset as Sysex Data (see _Enzo User Manual_ page 9). 
 To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
 preset as SysEx.
 
@@ -398,7 +398,6 @@ Known issues
 
 - Filter Type does not follow EXP.
 - The TEMPO value is not accurate when set from the TAP switch.
-- There's still some issues with the preset loading from a bookmarked URL.
 - It is not possible to capture the press & hold of the TAP footswitch because the Enzo only sends a message for when 
 the footswitch is pressed, but not for when it is released.
 - Selecting a preset with EXP set to max in the editor does not reset EXP when the new setting is loaded.
