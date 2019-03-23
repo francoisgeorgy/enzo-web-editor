@@ -6,8 +6,6 @@ import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
-import {sendSysex} from "./midi_out";
-import MODEL from "./model";
 
 const CONTAINER = "#app-preferences";
 
@@ -16,9 +14,13 @@ function displayCurrentPreferences() {
     const port_in = preferences.input_device_id ? WebMidi.getInputById(preferences.input_device_id) : null;
     // noinspection JSUnresolvedFunction
     const port_out = preferences.output_device_id ? WebMidi.getOutputById(preferences.output_device_id) : null;
+    // noinspection JSUnresolvedFunction
+    const exp_port_in = preferences.exp_input_device_id ? WebMidi.getInputById(preferences.exp_input_device_id) : null;
     $("#prefs_midi_channel").text(preferences.midi_channel);
     $("#prefs_input_device").text(port_in ? port_in.name : "-");
     $("#prefs_output_device").text(port_out ? port_out.name : "-");
+    $("#prefs_exp_midi_channel").text(preferences.exp_midi_channel);
+    $("#prefs_exp_input_device").text(exp_port_in ? exp_port_in.name : "-");
     $("#update_URL").val(preferences.update_URL);
     $("#init_from_URL").val(preferences.init_from_URL);
     $("#prefs_zoom_level").val(preferences.zoom_level);
@@ -72,6 +74,18 @@ export function setupAppPreferences() {
 
     $("#prefs_clear_output_device").click(() => {
         savePreferences({output_device_id: null});
+        updateSelectDeviceList();
+        displayCurrentPreferences();
+    });
+
+    $("#prefs_clear_exp_midi_channel").click(() => {
+        savePreferences({exp_midi_channel: 1});
+        $("#exp_midi-channel").val(preferences.exp_midi_channel);
+        displayCurrentPreferences();
+    });
+
+    $("#prefs_clear_exp_input_device").click(() => {
+        savePreferences({exp_input_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
     });

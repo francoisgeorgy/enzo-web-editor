@@ -18,8 +18,14 @@ import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 
 let midi_input = null;
 
+let exp_midi_input = null;
+
 export function getMidiInputPort() {
     return midi_input;
+}
+
+export function getExpMidiInputPort() {
+    return exp_midi_input;
 }
 
 export function setMidiInputPort(port) {
@@ -28,6 +34,15 @@ export function setMidiInputPort(port) {
         log(`setMidiInputPort: midi_input assigned to "${port.name}"`);
     } else {
         log("setMidiInputPort: midi_input set to null");
+    }
+}
+
+export function setExpMidiInputPort(port) {
+    exp_midi_input = port;
+    if (port) {
+        log(`setExpMidiInputPort: exp_midi_input assigned to "${port.name}"`);
+    } else {
+        log("setExpMidiInputPort: exp_midi_input set to null");
     }
 }
 
@@ -47,14 +62,14 @@ function monitorCC(control_number) {
  * Handle Program Change messages
  * @param msg
  */
-export function handlePC(msg) {
+export function handlePC(msg, input_num = 1) {
 
     //TODO: almost always an echo that could be ignored
 
     log("handlePC", msg);
     if (msg.type !== "programchange") return;
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
-    showMidiInActivity();
+    showMidiInActivity(input_num);
     logIncomingMidiMessage("PC", [msg.value]);
     MODEL.setPresetNumber(msg.value);
     updatePresetSelector();
@@ -64,7 +79,7 @@ export function handlePC(msg) {
  * Handle all control change messages received
  * @param msg
  */
-export function handleCC(msg) {
+export function handleCC(msg, input_num = 1) {
 
     // suppress echo:
     const t = performance.now();
@@ -78,7 +93,7 @@ export function handleCC(msg) {
 
     log("handleCC", cc, v);
 
-    showMidiInActivity();
+    showMidiInActivity(input_num);
     monitorCC(cc);
     logIncomingMidiMessage("CC", [cc, v]);
     updateModelAndUI("cc", cc, v);
@@ -113,7 +128,7 @@ export function handleSysex(data) {
     }
 
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
-    showMidiInActivity();
+    showMidiInActivity(1);
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
         case SYSEX_PRESET:

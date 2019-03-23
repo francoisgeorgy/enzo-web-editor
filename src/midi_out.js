@@ -198,6 +198,9 @@ export function sendPC(pc) {
 
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
+
+    //TODO: after having received the preset, set BYPASS to 127 (ON)
+
 }
 
 export function sendSysex(data) {

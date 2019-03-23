@@ -185,12 +185,19 @@ function reloadWithSysexParam() {
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
-function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
+function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, expChannelSelectionCallback, expInputSelectionCallback) {
+
     const c = $("#midi-channel");
     c.change((event) => channelSelectionCallback(event.target.value));
     c.val(preferences.midi_channel);
     $("#midi-input-device").change((event) => inputSelectionCallback(event.target.value));
     $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
+
+    const exp_c = $("#exp-midi-channel");
+    exp_c.change((event) => expChannelSelectionCallback(event.target.value));
+    exp_c.val(preferences.exp_midi_channel);
+    $("#exp-midi-input-device").change((event) => expInputSelectionCallback(event.target.value));
+
 }
 
 function setupControlsHelp() {
@@ -202,7 +209,6 @@ function setupControlsHelp() {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
                 return;
             }
-            log(cc);
             $("#messages-list > div").hide();
             $("#control-infos").show().html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
             // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
@@ -243,7 +249,7 @@ function setupMenu() {
  * Initial setup of the UI.
  * Does a MODEL.init() too, but only the virtual MODEL; does not send any CC to the connected device.
  */
-export function setupUI(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
+export function setupUI(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, expChannelSelectionCallback, expInputSelectionCallback) {
     if (TRACE) console.groupCollapsed("setupUI");
 
     $("span.version").text(VERSION);
@@ -261,7 +267,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupHelpPanel();
     setupControlsHelp();
     setupMenu();
-    setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
+    setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, expChannelSelectionCallback, expInputSelectionCallback);
     setupKeyboard();
 
     if (TRACE) console.groupEnd();

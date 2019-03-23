@@ -29,4 +29,17 @@ export function updateSelectDeviceList() {
         })
     );
     s.val(present ? preferences.output_device_id : "");
+
+    present = false;
+    s = $("#exp-midi-input-device");
+    s.empty().append($("<option>").val("").text("- select -"));
+    // noinspection JSUnresolvedVariable
+    s.append(
+        WebMidi.inputs.map((port) => {
+            present = present || (port.id === preferences.exp_input_device_id);
+            return $("<option>").val(port.id).text(`${port.name}`);
+        })
+    );
+    s.val(present ? preferences.exp_input_device_id : "");
+
 }

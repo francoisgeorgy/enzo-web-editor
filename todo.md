@@ -1,5 +1,5 @@
 - bugs: 
-    - bypass is not set after loading preset (check w/ preset 4)
+    - bypass is not set after loading preset
     - shift is used for two functions
 
 - keyboard
@@ -7,8 +7,7 @@
     - ~~ALT: show controls' raw values~~
     - remap keyboard by key-position, not key-value
         - use KeyboardEvent.code (see https://www.w3.org/TR/uievents-code/, https://keyshorts.com/blogs/blog/37615873-how-to-identify-macbook-keyboard-localization)
-            
-    
+   
 - connection/disconnection
     - ~~set preset dirty if no input or no output device connected~~
 
@@ -17,6 +16,7 @@
     - scan ports and channel until an Enzo is found
     - MUST HAVE: check that we can communicate with Enzo
     - check that the connected device (chosen by the user) is an Enzo
+    - after changing the preset (send PC), bypass must be set to 127 (pedal ON)
 
 - preferences
     - use checkboxes to set URL update preferences
@@ -74,4 +74,6 @@
     - explain that sysex works even when the channel is invalid, because sysex messages are not channel-bounded.
         - that's why we have MODEL and ID in the sysex message
     
-
+- architecture
+    - use async functions for all MIDI interactions
+        - use RxJS ?

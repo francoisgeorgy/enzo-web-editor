@@ -70,44 +70,40 @@
             <div id="messages">
                 <div id="messages-list">
                 </div>
-                <div id="control-infos" data-infos="18">
-                    yoiuyo iyoiu ofoijw eoierw ofgijrg<br />
-                    oijerg jerpiog jeiorjg<br />
-                    oijerg jerpiog jeiorjg<br />
-                    oijerg jerpiog jeiorjg<br />
+                <div id="control-infos">
                 </div>
             </div>
 
             <div id="options">
                 <div id="options-col-1">
-                    <div>
-                        <div>MIDI</div>
-                    </div>
-                    <div style="width:100%;text-align:left">
-                        <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
-                    </div>
-                    <div>
+                    <div id="midi-in-led-1">
                         input:
                     </div>
                     <div>
                         <select id="midi-input-device">
                             <option>- select -</option>
                         </select>
+                        <!--<i id="midi-in-led" class="fas fa-arrow-circle-down"></i>-->
                     </div>
-                    <div>
+                    <div id="midi-out-led">
                         output:
                     </div>
                     <div>
                         <select id="midi-output-device">
                             <option>- select -</option>
                         </select>
+                        <!--<i id="midi-out-led" class="fas fa-arrow-circle-up"></i>-->
                     </div>
                     <div>
-                        channel:
+                        <div>channel:</div>
                     </div>
+                    <!--
+                                        <div style="width:100%;text-align:left">
+                                            <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
+                                        </div>
+                    -->
                     <div>
                         <select id="midi-channel">
-                            <!--<option value="all">all</option>-->
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -126,9 +122,62 @@
                             <option value="16">16</option>
                         </select>
                     </div>
+
+                    <div id="midi-in-led-2">
+                        input 2:
+                    </div>
+                    <div>
+                        <select id="exp-midi-input-device">
+                            <option>- select -</option>
+                        </select>
+                        ch:
+                        <select id="exp-midi-channel">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                    </div>
+<!--
+                    <div>
+                        channel:
+                    </div>
+                    <div>
+                        <select id="midi-channel">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                    </div>
+-->
                 </div>
                 <div id="options-col-2">
-                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms.">REC <i class="fas fa-circle"></i></div>
+                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms."><span id="REC-text">REC </span><i class="fas fa-circle"></i></div>
                 </div>
             </div>
 
@@ -553,6 +602,21 @@
                             <div>output device: </div>
                             <div id="prefs_output_device"></div>
                             <div><button id="prefs_clear_output_device">clear</button></div>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            EXP MIDI
+                        </div>
+                        <div></div>
+                        <div class="grid-3x3 grid-default-gap">
+                            <div>EXP channel: </div>
+                            <div id="prefs_exp_midi_channel"></div>
+                            <div><button id="prefs_clear_exp_midi_channel">clear</button></div>
+                            <div>EXP input device: </div>
+                            <div id="prefs_exp_input_device"></div>
+                            <div><button id="prefs_clear_exp_input_device">clear</button></div>
                         </div>
                         <div>
                         </div>

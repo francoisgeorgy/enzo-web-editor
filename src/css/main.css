@@ -48,12 +48,14 @@ body {
     color: red;
 }
 
-#midi-in-led,
+#midi-in-led-1,     /* TODO: change to class */
+#midi-in-led-2,
 #midi-out-led {
-    color: #999;
+    /*color: #999;*/
 }
 
-#midi-in-led.on,
+#midi-in-led-1.on,
+#midi-in-led-2.on,
 #midi-out-led.on {
     color: var(--midi-on)!important;
 }
