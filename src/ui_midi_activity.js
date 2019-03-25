@@ -2,11 +2,9 @@
 let activity_in = false;
 
 export function showMidiInActivity(input_num = 1) {
-    console.log("showmidiinactivity", input_num, `#midi-in-led-${input_num}`);
     if (!activity_in) {
         activity_in = true;
-        const led = $(`#midi-in-led-${input_num}`);
-        console.log(led);
+        const led = $(`#midi-in${input_num}-led`);
         led.addClass("on");
         let timeoutID = window.setTimeout(
             function () {

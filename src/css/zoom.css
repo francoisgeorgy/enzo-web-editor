@@ -36,9 +36,9 @@
 .zoom-1 #main select {font-size: 0.9rem;}
 .zoom-2 #main select {font-size: 1rem;}
 
-.zoom-0 #exp-midi-input-device {margin-right: 5px;}
-.zoom-1 #exp-midi-input-device {margin-right: 10px;}
-.zoom-2 #exp-midi-input-device {margin-right: 15px;}
+.zoom-0 #midi-input2-device {margin-right: 5px;}
+.zoom-1 #midi-input2-device {margin-right: 10px;}
+.zoom-2 #midi-input2-device {margin-right: 15px;}
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
 .zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}

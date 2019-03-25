@@ -72,7 +72,7 @@ export function sendCC(control, monitor = true) {
     const v = inExpMode() ? MODEL.getControlValueExp(control) : MODEL.getControlValue(control);
 
     if (midi_output) {
-        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel}`);
+        log(`send CC ${control.cc_number} ${v} (${control.name}) on channel ${preferences.midi_channel}`);
 
         showMidiOutActivity();
 
@@ -81,7 +81,7 @@ export function sendCC(control, monitor = true) {
         midi_output.sendControlChange(control.cc_number, v, preferences.midi_channel);
 
     } else {
-        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel})`);
+        log(`(send CC ${control.cc_number} ${v} (${control.name}) on channel ${preferences.midi_channel})`);
     }
 
     logOutgoingMidiMessage("CC", [control.cc_number, v]);

@@ -6,6 +6,8 @@ import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
+import {getMidiInput2Port, setMidiInput2Port} from "./midi_in";
+import {appendMessage} from "./ui_messages";
 
 const CONTAINER = "#app-preferences";
 
@@ -15,15 +17,25 @@ function displayCurrentPreferences() {
     // noinspection JSUnresolvedFunction
     const port_out = preferences.output_device_id ? WebMidi.getOutputById(preferences.output_device_id) : null;
     // noinspection JSUnresolvedFunction
-    const exp_port_in = preferences.exp_input_device_id ? WebMidi.getInputById(preferences.exp_input_device_id) : null;
+    const port_in2 = preferences.input2_device_id ? WebMidi.getInputById(preferences.input2_device_id) : null;
     $("#prefs_midi_channel").text(preferences.midi_channel);
     $("#prefs_input_device").text(port_in ? port_in.name : "-");
     $("#prefs_output_device").text(port_out ? port_out.name : "-");
-    $("#prefs_exp_midi_channel").text(preferences.exp_midi_channel);
-    $("#prefs_exp_input_device").text(exp_port_in ? exp_port_in.name : "-");
+    $("#prefs_input2_channel").text(preferences.input2_channel);
+    $("#prefs_input2_device").text(port_in2 ? port_in2.name : "-");
     $("#update_URL").val(preferences.update_URL);
     $("#init_from_URL").val(preferences.init_from_URL);
     $("#prefs_zoom_level").val(preferences.zoom_level);
+}
+
+export function showMidiInput2() {
+    $("#midi-in2-led").show();
+    $("#midi-in2").show();
+}
+
+export function hideMidiInput2() {
+    $("#midi-in2-led").hide();
+    $("#midi-in2").hide();
 }
 
 export function openAppPreferencesPanel() {
@@ -51,7 +63,7 @@ export function toggleAppPreferencesPanel() {
     return false;
 }
 
-export function setupAppPreferences() {
+export function setupAppPreferences(input2SelectionCallback) {
     log("setupAppPreferences()");
 
     $(".close-app-prefs-panel").click(() => {
@@ -78,16 +90,49 @@ export function setupAppPreferences() {
         displayCurrentPreferences();
     });
 
-    $("#prefs_clear_exp_midi_channel").click(() => {
-        savePreferences({exp_midi_channel: 1});
-        $("#exp_midi-channel").val(preferences.exp_midi_channel);
+/*
+TODO: app prefs clear input2 channel
+
+    $("#prefs_clear_input2_channel").click(() => {
+        savePreferences({input2_channel: 1});
+        $("#midi-input2-channel").val(preferences.input2_channel);
         displayCurrentPreferences();
     });
+*/
 
-    $("#prefs_clear_exp_input_device").click(() => {
-        savePreferences({exp_input_device_id: null});
+/*
+TODO: TODO: app prefs clear input2 device
+
+    $("#prefs_clear_input2_device").click(() => {
+        savePreferences({input2_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
+    });
+*/
+
+    $(`#enable-midi-in2-${preferences.enable_midi_in2}`).prop('checked', true);
+
+    $("input[name='enable-midi-in2']").on("change", function(){
+        const v = parseInt($("input[name='enable-midi-in2']:checked").val());
+        savePreferences({enable_midi_in2: v});
+        if (v) {
+            log("enable midi input2");
+            showMidiInput2();
+        } else {
+            log("disable midi input2");
+            // //FIXME: code to disconnected input2 is the same here and in main.js. This code must be moved in a dedicated file.
+            // const p = getMidiInput2Port();
+            // if (p) {
+            //     log("enable-midi-in2: disconnectInput2Port()", p);
+            //     p.removeListener();    // remove all listeners for all channels
+            //     setMidiInput2Port(null);
+            //     appendMessage(`Input 2 disconnected.`);
+            // }
+            savePreferences({input2_device_id: null});
+            updateSelectDeviceList();
+            hideMidiInput2();
+        }
+        input2SelectionCallback();
     });
 
     $("#init_from_URL").on("change", function() {

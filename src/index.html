@@ -76,7 +76,7 @@
 
             <div id="options">
                 <div id="options-col-1">
-                    <div id="midi-in-led-1">
+                    <div id="midi-in1-led">
                         input:
                     </div>
                     <div>
@@ -123,32 +123,36 @@
                         </select>
                     </div>
 
-                    <div id="midi-in-led-2">
-                        input 2:
+                    <div>
+                        <div id="midi-in2-led">
+                            input 2:
+                        </div>
                     </div>
                     <div>
-                        <select id="exp-midi-input-device">
-                            <option>- select -</option>
-                        </select>
-                        ch:
-                        <select id="exp-midi-channel">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                        </select>
+                        <div id="midi-in2">
+                            <select id="midi-input2-device">
+                                <option>- select -</option>
+                            </select>
+                            ch:
+                            <select id="midi-input2-channel">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
                     </div>
 <!--
                     <div>
@@ -607,19 +611,37 @@
                         </div>
 
                         <div class="g0">
-                            EXP MIDI
+                            ENABLE MIDI INPUT 2
                         </div>
                         <div></div>
-                        <div class="grid-3x3 grid-default-gap">
-                            <div>EXP channel: </div>
-                            <div id="prefs_exp_midi_channel"></div>
-                            <div><button id="prefs_clear_exp_midi_channel">clear</button></div>
-                            <div>EXP input device: </div>
-                            <div id="prefs_exp_input_device"></div>
-                            <div><button id="prefs_clear_exp_input_device">clear</button></div>
+                        <div>
+                            <input type="radio" name="enable-midi-in2" id="enable-midi-in2-1" value="1">Yes</input>
+                            <input type="radio" name="enable-midi-in2" id="enable-midi-in2-0" value="0">No</input>
                         </div>
                         <div>
                         </div>
+
+<!--
+                        <div class="g0">
+                            MIDI INPUT 2
+                        </div>
+                        <div></div>
+                        <div class="grid-3x3 grid-default-gap">
+                            <div>input 2 channel: </div>
+                            <div id="prefs_input2_channel"></div>
+                            <div><button id="prefs_clear_input2_channel">clear</button></div>
+                            <div>input 2 device: </div>
+                            <div id="prefs_input2_device"></div>
+                            <div><button id="prefs_clear_input2_device">clear</button></div>
+                        </div>
+                        <div>
+                        </div>
+-->
+
+                </div>
+                <div class="settings-columns">
+
+                    <div class="settings-rows">
 
                         <div class="g0">
                             INITIALIZE FROM URL
@@ -650,10 +672,6 @@
                         <div>
                         </div>
 
-                </div>
-                <div class="settings-columns">
-
-                    <div class="settings-rows">
                         <div class="g0">
                             DISPLAY CONTROL DESCRIPTION
                         </div>

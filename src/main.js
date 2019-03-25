@@ -11,12 +11,12 @@ import {
 import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {
-    getExpMidiInputPort,
+    getMidiInput2Port,
     getMidiInputPort,
     handleCC,
     handlePC,
     handleSysex,
-    setExpMidiInputPort,
+    setMidiInput2Port,
     setMidiInputPort
 } from "./midi_in";
 import {getMidiOutputPort, requestPreset, sendSysex, setMidiOutputPort} from "./midi_out";
@@ -276,29 +276,29 @@ function connectInputPort(input) {
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setCommunicationStatus(true);
     updatePresetSelector();
-    appendMessage(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
+    appendMessage(`Input ${input.name} connected on channel ${preferences.midi_channel}.`);
 }
 
-function connectExpInputPort(input) {
+function connectInput2Port(input) {
 
-    log(`connectExpInputPort(${input.id})`);
+    log(`connectInput2Port(${input.id})`);
 
     if (!input) return;
 
-    setExpMidiInputPort(input);
+    setMidiInput2Port(input);
 
     input
-        .on("programchange", preferences.exp_midi_channel, function(e) {
+        .on("programchange", preferences.input2_channel, function(e) {
             handlePC(e.data, 2);
         })
-        .on("controlchange", preferences.exp_midi_channel, function(e) {
+        .on("controlchange", preferences.input2_channel, function(e) {
             handleCC(e.data, 2);
         });
 
-    log(`%cconnectExpInputPort: ${input.name} is now listening on channel ${preferences.exp_midi_channel}`, "color: orange; font-weight: bold");
+    log(`%cconnectInput2Port: ${input.name} is now listening on channel ${preferences.input2_channel}`, "color: orange; font-weight: bold");
     // setCommunicationStatus(true);
     // updatePresetSelector();
-    appendMessage(`Input 2 ${input.name} connected on MIDI channel ${preferences.exp_midi_channel}.`);
+    appendMessage(`Input 2 ${input.name} connected on channel ${preferences.input2_channel}.`);
 }
 
 function disconnectInputPort() {
@@ -313,14 +313,12 @@ function disconnectInputPort() {
     }
 }
 
-function disconnectExpInputPort() {
-    const p = getExpMidiInputPort();
+function disconnectInput2Port() {
+    const p = getMidiInput2Port();
     if (p) {
-        log("disconnectExpInputPort()");
+        log("disconnectInput2Port()");
         p.removeListener();    // remove all listeners for all channels
-        setExpMidiInputPort(null);
-        // setCommunicationStatus(false);
-        // updatePresetSelector();
+        setMidiInput2Port(null);
         appendMessage(`Input 2 disconnected.`);
     }
 }
@@ -371,37 +369,37 @@ function connectInputDevice(id) {
     return false;
 }
 
-function connectExpInputDevice(id) {
+function connectInput2Device(id) {
 
-    log(`connectExpInputDevice(${id})`);
+    log(`connectInput2Device(${id})`);
 
-    const p = getExpMidiInputPort();
+    const p = getMidiInput2Port();
     if (!id && p) {
-        log(`connectExpInputDevice(): disconnect currently connected port`);
+        log(`connectInput2Device(): disconnect currently connected port`);
         // Update preferences for autoloading at next restart:
-        savePreferences({exp_input_device_id: null});
+        savePreferences({input2_device_id: null});
         // The user selected no device, disconnect.
-        disconnectExpInputPort();
+        disconnectInput2Port();
         // setCommunicationStatus(false);
         return false;
     }
 
     // Do nothing if already connected to the selected device:
     if (p && (p.id === id)) {
-        log(`connectExpInputDevice(${id}): port is already connected`);
+        log(`connectInput2Device(${id}): port is already connected`);
         return false;
     }
 
     // Update preferences for autoloading at next restart:
-    savePreferences({exp_input_device_id: id});
+    savePreferences({input2_device_id: id});
 
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
-    disconnectExpInputPort();
+    disconnectInput2Port();
 
     // noinspection JSUnresolvedFunction
     const port = WebMidi.getInputById(id);
     if (port) {
-        connectExpInputPort(port);
+        connectInput2Port(port);
         // sync();
         return true;
     // } else {
@@ -420,7 +418,7 @@ function connectOutputPort(output) {
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     updatePresetSelector();
-    appendMessage(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
+    appendMessage(`Output ${output.name} connected on channel ${preferences.midi_channel}.`);
 }
 
 function disconnectOutputPort() {
@@ -500,10 +498,13 @@ function deviceConnected(info) {
             log("deviceConnected: input device ignored");
         }
 
-        if ((getExpMidiInputPort() === null) && (info.port.id === preferences.exp_input_device_id)) {
-            connectExpInputDevice(preferences.exp_input_device_id);
-        } else {
-            log("deviceConnected: input device ignored (exp)");
+        if (preferences.enable_midi_in2) {
+            log("deviceConnected: enable input2");
+            if ((getMidiInput2Port() === null) && (info.port.id === preferences.input2_device_id)) {
+                connectInput2Device(preferences.input2_device_id);
+            } else {
+                log("deviceConnected: input2 device ignored or not defined by user");
+            }
         }
     }
 
@@ -511,7 +512,7 @@ function deviceConnected(info) {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
             /*output_connected =*/ connectOutputDevice(preferences.output_device_id);
         } else {
-            log("deviceConnected: output device ignored");
+            log("deviceConnected: output device ignored or not defined by user");
         }
     }
 
@@ -545,9 +546,9 @@ function deviceDisconnected(info) {
         disconnectOutputPort();
     }
 
-    const exp_p_in = getExpMidiInputPort();
+    const exp_p_in = getMidiInput2Port();
     if (exp_p_in && info.port.id === exp_p_in.id) {
-        disconnectExpInputPort();
+        disconnectInput2Port();
     }
 
     updateSelectDeviceList();
@@ -563,7 +564,7 @@ $(function () {
     loadPreferences();
 
     setupModel();
-    setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setExpMidiInputPort, connectExpInputDevice);
+    setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Port, connectInput2Device);
 
     const s = Utils.getParameterByName(URL_PARAM_SIZE);
     if (s) {

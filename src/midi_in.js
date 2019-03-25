@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime} from "./midi_out";
+import {getLastSendTime, sendCC, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -18,14 +18,14 @@ import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 
 let midi_input = null;
 
-let exp_midi_input = null;
+let midi_input2 = null;
 
 export function getMidiInputPort() {
     return midi_input;
 }
 
-export function getExpMidiInputPort() {
-    return exp_midi_input;
+export function getMidiInput2Port() {
+    return midi_input2;
 }
 
 export function setMidiInputPort(port) {
@@ -37,12 +37,12 @@ export function setMidiInputPort(port) {
     }
 }
 
-export function setExpMidiInputPort(port) {
-    exp_midi_input = port;
+export function setMidiInput2Port(port) {
+    midi_input2 = port;
     if (port) {
-        log(`setExpMidiInputPort: exp_midi_input assigned to "${port.name}"`);
+        log(`setMidiInput2Port: midi_input2 assigned to "${port.name}"`);
     } else {
-        log("setExpMidiInputPort: exp_midi_input set to null");
+        log("setMidiInput2Port: midi_input2 set to null");
     }
 }
 
@@ -91,12 +91,18 @@ export function handleCC(msg, input_num = 1) {
     const cc = msg[1];
     const v = msg[2];
 
-    log("handleCC", cc, v);
+    log(`handleCC input ${input_num}`, cc, v);
 
     showMidiInActivity(input_num);
     monitorCC(cc);
     logIncomingMidiMessage("CC", [cc, v]);
+
     updateModelAndUI("cc", cc, v);
+
+    if (input_num === 2) {
+        updateDevice("cc", cc, v);
+    }
+
 }
 
 let suppress_sysex_echo = null;
