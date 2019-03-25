@@ -48,7 +48,7 @@ body {
     color: red;
 }
 
-#midi-in-led-1,     /* TODO: change to class */
+#midi-in1-led,     /* TODO: change to class */
 #midi-in2-led,
 #midi-out-led {
     /*color: #999;*/
@@ -58,7 +58,7 @@ body {
     display: none;
 }
 
-#midi-in-led-1.on,
+#midi-in1-led.on,
 #midi-in2-led.on,
 #midi-out-led.on {
     color: var(--midi-on)!important;
