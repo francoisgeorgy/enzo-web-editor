@@ -72,10 +72,12 @@ body {
     cursor: pointer;
 }
 
-.paused {
+.paused,
+#url-auto-toggle i {
     color: var(--paused)!important;
 }
-.running {
+.running,
+#url-auto-toggle.running i {
     color: var(--running)!important;
 }
 
