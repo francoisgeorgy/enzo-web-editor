@@ -73,10 +73,10 @@ body {
 }
 
 .paused {
-    color: var(--paused);
+    color: var(--paused)!important;
 }
 .running {
-    color: var(--running);
+    color: var(--running)!important;
 }
 
 .grid-2x1 {

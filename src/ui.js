@@ -256,7 +256,15 @@ function setupControlsHelp() {
 function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
-    $("#menu-init").click(init);
+    // $("#menu-init").click(init);
+    $("#menu-init").click(function () {
+        console.log('resize');
+        window.resizeTo(1000, 800);
+        window.resizeTo(
+            width + (1000 - document.body.offsetWidth),
+            height + (800 - document.body.offsetHeight)
+        );
+    });
     // $("#menu-read").click(() => requestPreset());       //TODO: create function
     $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
@@ -311,3 +319,4 @@ export function showDefaultPanel() {
 export function hideDefaultPanel() {
     $("#main").removeClass("main-default").addClass("settings-view");
 }
+
