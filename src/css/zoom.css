@@ -77,6 +77,12 @@
 /*.zoom-2 .header {font-size: 1.5rem;}*/
 .zoom-2 .header {font-size: 3.5vmin;}
 
+.zoom-2 .options-panel {font-size: 3vmin;}
+
+.zoom-2 .close-panel-action {font-size: 3vmin;}
+
+.zoom-2 .options-panel button {font-size: 3vmin;}
+
 .zoom-0 .options-panel .header {font-size: 1.25rem;}
 .zoom-1 .options-panel .header {font-size: 2rem;}
 /*.zoom-2 .options-panel .header {font-size: 2.5rem;}*/
@@ -85,6 +91,10 @@
 .zoom-0 .close-panel-action { bottom: 0; }
 .zoom-1 .close-panel-action { bottom: 4px; }
 .zoom-2 .close-panel-action { bottom: 4px; }
+
+.zoom-2 .settings-rows {margin-bottom: 0;}
+
+.zoom-2 .g0 {margin: 2vh 0;}
 
 .zoom-0 #REC-text {display: none;}
 
