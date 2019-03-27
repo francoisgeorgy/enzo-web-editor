@@ -200,6 +200,19 @@ But there is no guarantee about that. The editor does a linear interpolation. Ma
 If you want to use this with a real expression pedal connected to the Enzo (and thus without MIDI), do not forget to save your preset with the menu's SAVE command. 
 
 
+MIDI Input 2
+============
+
+You can enable a second MIDI input in the editor's preferences. 
+
+When enabled, this second input can be very useful to test the pedal's configuration with an external MIDI controler. 
+
+All messages received by this second input are forwarded to the selected MIDI output if the message if supported by the pedal. 
+
+You can also use this second input to check the configuration of an external MIDI controler even without a pedal connected to the editor. 
+The received messages will update the editor's controls and thus you'll be able to check that your external controler send valid messages.
+  
+
 URL update
 ==========
 
