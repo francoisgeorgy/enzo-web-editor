@@ -327,7 +327,7 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
     - Chrome (Mac, Linux, Windows) 
     - Opera (Mac, Linux, Windows)
 
-    Web MIDI is not support under iOS (iPad, iPhone). It may work under Android but I did not test it.
+    Web MIDI is not supported under iOS (iPad, iPhone). It may work under Android but I did not test it.
 
 - The Web MIDI is not blocked by the browser. See below for information about this feature in Chrome.
 
