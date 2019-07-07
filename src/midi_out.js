@@ -176,6 +176,7 @@ export function sendPC(pc) {
     // appendMessage(`Preset ${pc} selected.`);
 
     MODEL.meta.preset_id.value = pc;
+
     if (midi_output) {
         log(`send program change ${pc}`);
 

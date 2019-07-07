@@ -77,15 +77,15 @@ export function handlePC(msg, input_num = 1) {
     }
 
     log("handlePC", msg, input_num);
-    // if (msg.type !== "programchange") return;
-    // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
+
     showMidiInActivity(input_num);
+
     const pc = msg[1];
+
     logIncomingMidiMessage("PC", [pc]);
 
     presetSet(pc)
-    // MODEL.setPresetNumber(pc);
-    // updatePresetSelector();
+
 }
 
 /**
