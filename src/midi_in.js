@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {updatePresetSelector} from "./ui_presets";
+import {presetSet, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
@@ -67,13 +67,25 @@ export function handlePC(msg, input_num = 1) {
 
     //TODO: almost always an echo that could be ignored
 
-    log("handlePC", msg);
-    if (msg.type !== "programchange") return;
+    // suppress echo for the input connected to the pedal):
+    if (input_num === 1) {
+        const t = performance.now();
+        if (t < (getLastSendTime() + 100)) {
+            log("handlePC: ignore PC echo");
+            return;
+        }
+    }
+
+    log("handlePC", msg, input_num);
+    // if (msg.type !== "programchange") return;
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
     showMidiInActivity(input_num);
-    logIncomingMidiMessage("PC", [msg.value]);
-    MODEL.setPresetNumber(msg.value);
-    updatePresetSelector();
+    const pc = msg[1];
+    logIncomingMidiMessage("PC", [pc]);
+
+    presetSet(pc)
+    // MODEL.setPresetNumber(pc);
+    // updatePresetSelector();
 }
 
 /**
