@@ -1,6 +1,6 @@
 {
     "name": "enzo-web-editor",
-    "version": "0.113.1",
+    "version": "0.114.0",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/enzo-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
