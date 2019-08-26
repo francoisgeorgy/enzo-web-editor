@@ -90,7 +90,7 @@ export function setupKeyboard() {
         if (e.type === "keydown") {
             keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
         } else if (e.type === "keyup") {
-            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
+            keyUp(e.keyCode);
         }
     });
 
@@ -106,10 +106,6 @@ function animateFromTo(cc, from, to) {
 
 function animateTo(cc, to) {
     animateFromTo(cc, MODEL.getControlValue(MODEL.getControl(cc)), to);
-    // animateCC(cc, MODEL.getControlValue(MODEL.getControl(cc)), to, function (v) {
-    //     dispatch("cc", cc, v);
-    //     updateDevice("cc", cc, v);
-    // });
 }
 
 function keyDown(code, alt, shift, meta, ctrl) {
@@ -141,6 +137,8 @@ function keyDown(code, alt, shift, meta, ctrl) {
     }
 
     //FIXME: map to key's position, not key's value (in order to be isolated from the keyboard layout)
+
+    const portamento = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
 
     if (!alt && !shift && !meta) {
         switch (code) {
@@ -204,8 +202,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
                 animateTo(MODEL.control_id.modulation, ctrl ? 63 : 127);
                 break;
             case 79:                // O
-                const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
-                animateFromTo(MODEL.control_id.portamento, v, ctrl ? 63 : (v < 63 ? 127 : 0));
+                animateFromTo(MODEL.control_id.portamento, portamento, ctrl ? 63 : (portamento < 63 ? 127 : 0));
                 break;
             case 82:                // R Randomize
                 randomize();
@@ -254,7 +251,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
 }
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code, alt, shift, meta, ctrl) {
+function keyUp(code) {
     switch (code) {
         case 16:                // Shift
             showExpValues(false);

@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const WebpackAutoInject = require('webpack-auto-inject-version');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackAutoInject = require("webpack-auto-inject-version");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -9,21 +9,25 @@ module.exports = {
         print_bundle: "./src/print/print.js"
     },
     module: {
-        rules: [{
-            test: /\.woff$/,
-            use: {
-                loader: "url-loader",
-                options: {
-                    limit: 50000,
-                },
+        rules: [
+            {
+                test: /\.woff$/,
+                use: {
+                    loader: "url-loader",
+                    options: {
+                        limit: 50000
+                    }
+                }
             },
-        },{
-             test: /\.css$/,
-             use: ["style-loader", "css-loader"]
-        }, {
-            test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-            loader: 'url-loader?limit=100000'
-        }]
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+                loader: "url-loader?limit=100000"
+            }
+        ]
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -38,28 +42,28 @@ module.exports = {
             }
         }),
         new CopyWebpackPlugin([
-            { from: "./src/midi.html" },
-            { from: "./src/print/preset-template.html", to: "templates"},
-            { from: "./src/css/midi.css", to: "css" },
+            {from: "./src/midi.html"},
+            {from: "./src/print/preset-template.html", to: "templates"},
+            {from: "./src/css/midi.css", to: "css"},
             // { from: "./src/css/enzo-logo*", to: "css" },
-            { from: "./src/img/favicon-16x16.png" },
-            { from: "./src/img/favicon-32x32.png" },
-            { from: "./src/img/favicon-96x96.png" },
-            { from: "./src/img/editor-0.94.jpg", to: "img" }
+            {from: "./src/img/favicon-16x16.png"},
+            {from: "./src/img/favicon-32x32.png"},
+            {from: "./src/img/favicon-96x96.png"},
+            {from: "./src/img/editor-0.94.jpg", to: "img"}
         ]),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
             hash: true,
-            inject: 'head',
-            template: './src/index.html',
-            filename: './index.html' //relative to root of the application
+            inject: "head",
+            template: "./src/index.html",
+            filename: "./index.html" //relative to root of the application
         }),
         new HtmlWebpackPlugin({
             chunks: ["print_bundle"],
             hash: true,
-            inject: 'head',
-            template: './src/print/print.html',
-            filename: './print.html' //relative to root of the application
+            inject: "head",
+            template: "./src/print/print.html",
+            filename: "./print.html" //relative to root of the application
         })
     ],
     performance: {

@@ -57,13 +57,6 @@ const _4_steps = function (v) {
     }
 };
 
-// half steps increments
-//
-// 0, 1,
-// 12, 16, 20, 24, ... 56
-// 72, 76, ... 116,
-// 127
-//
 const _pitch = function (v) {
     if (v === 0) {
         return "-2 oct";
@@ -82,7 +75,6 @@ const _pitch = function (v) {
     }
 };
 
-// human:
 const _filter_type = function (v) {
     if (v < 4) {
         return "ladder LP";
@@ -99,7 +91,6 @@ const _filter_type = function (v) {
     }
 };
 
-// map_raw:
 const _filter_type_values = function (v) {
     if (v < 4) {
         return 0;
@@ -154,7 +145,6 @@ const _waveshape = function (v) {
 };
 
 const _tempo = function (v) {
-    // const bpm = v > 0 ? Math.round(60000 / (v * 10)) : "inf ";
     return (v * 10) + "ms";
 };
 
@@ -421,7 +411,6 @@ function defineControls() {
 
         if (!obj.hasOwnProperty("init_value")) {
             if (obj.hasOwnProperty("cc_center")) {
-                // console.log(`cc-${obj.cc_number}: obj.init_value = obj.cc_center: ${obj.init_value}=${obj.cc_center}`);
                 obj.init_value = Array.isArray(obj.cc_center) ? obj.cc_center[0] : obj.cc_center;
             } else if ((Math.min(...obj.range) < 0) && (Math.max(...obj.range) > 0)) {
                 obj.init_value = (1 << (bits - 1)) - 1; // very simple rule: we take max/2 as default value
@@ -434,7 +423,6 @@ function defineControls() {
             obj.raw_value = obj.init_value;
         }
 
-        //FIXME: decide between value2 and value_exp name.
         if (obj.hasOwnProperty("sysex2")) {
             obj.two_values = true;    // true for the controls that can have two values, available with the EXP pedal
             obj.init_value2 = obj.init_value;
