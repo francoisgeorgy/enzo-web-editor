@@ -1,7 +1,9 @@
 const webpack = require("webpack");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const WebpackAutoInject = require("webpack-auto-inject-version");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ZipPlugin = require('zip-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -30,6 +32,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
@@ -64,6 +67,9 @@ module.exports = {
             inject: "head",
             template: "./src/print/print.html",
             filename: "./print.html" //relative to root of the application
+        }),
+        new ZipPlugin({
+            filename: 'enzo_editor.zip',
         })
     ],
     performance: {
