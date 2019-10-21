@@ -5,7 +5,7 @@ Control your Meris Enzo pedal with your web browser. View all the pedal's settin
 
 ![Enzo Editor screenshot](/images/screenshots/enzo-editor-0.80.2-480px.jpg "Enzo Editor screenshot")
 
-[Open the editor](https://sysex.io/enzo/editor/)
+[Open the editor](https://studiocode.dev/enzo/editor/)
 
 [Youtube demo](https://www.youtube.com/watch?v=lWIpPJFARDQ)
 
@@ -27,7 +27,7 @@ Setup
 3. Set the Enzo's MIDI PORT.
 4. Connect the Enzo with the MIDI I/O interface. Use a stereo (TRS) jack cable.
 5. Connect the MIDI I/O interface to your computer.
-6. Open https://sysex.io/enzo/editor 
+6. Open https://studiocode.dev/enzo/editor/ 
 7. Allow the browser to access your MIDI devices.
 8. In the top-right of the editor, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Enzo MIDI port setting.
 9. Move a knob on your Enzo, the corresponding control in the editor must react accordingly.
