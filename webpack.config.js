@@ -44,7 +44,8 @@ module.exports = {
                 AutoIncreaseVersion: false
             }
         }),
-        new CopyWebpackPlugin([
+        new CopyWebpackPlugin({
+            patterns: [
             {from: "./src/midi.html"},
             {from: "./src/print/preset-template.html", to: "templates"},
             {from: "./src/css/midi.css", to: "css"},
@@ -53,7 +54,7 @@ module.exports = {
             {from: "./src/img/favicon-32x32.png"},
             {from: "./src/img/favicon-96x96.png"},
             {from: "./src/img/editor-0.94.jpg", to: "img"}
-        ]),
+        ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
             hash: true,
