@@ -10,6 +10,14 @@ html {
     grid-template-columns: repeat(6, 1fr);
 }
 
+.span-6 {
+    grid-column: span 6;
+}
+
+.grid-panel {
+    border-top: 2px solid black;
+}
+
 #title {
     grid-column: 1 / span 6;
     grid-row: 1;

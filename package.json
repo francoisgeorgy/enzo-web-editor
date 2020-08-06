@@ -31,6 +31,7 @@
     "dependencies": {
         "detect-browser": "^5.1.1",
         "hexy": "^0.3.0",
+        "html-loader": "^1.1.0",
         "jquery-ui": "^1.12.1",
         "lity": "^2.4.1",
         "lz-string": "^1.4.4",
