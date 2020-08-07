@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <meta name="viewport" content="initial-scale=1, maximum-scale=1">-->
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<div id="wrapper">
+    <div id="main" class="main-default">
+
+        <div id="title" class="padding-0">
+            <div>menu line 1</div>
+            <div>menu line 2</div>
+        </div>
+
+        <div id="app-preferences" class="padding-0">
+            <div class="flex-row">
+                APP PREFERENCES
+                <div id="open-preferences" class="bt">open</div>
+                <div id="close-preferences" class="bt">close</div>
+            </div>
+            <div id="app-preferences-content" class="panel-content closed">
+                CONTENT
+            </div>
+        </div>
+
+        <div id="presets">
+            presets
+        </div>
+
+        <div id="messages">
+            messages
+        </div>
+
+        <div id="options">
+            options
+        </div>
+
+        <div id="pitch" class="grid-default">
+        </div>
+
+        <div id="portamento" class="grid-default">
+        </div>
+
+        <div id="filter" class="grid-default">
+        </div>
+
+        <div id="filter-type" class="grid-default">
+        </div>
+
+        <div id="mix" class="grid-default">
+        </div>
+
+        <div id="delay-level" class="grid-default">
+        </div>
+
+        <div id="sustain" class="grid-default">
+        </div>
+
+        <div id="ring-mod" class="grid-default">
+        </div>
+
+        <div id="filter-env" class="grid-default">
+        </div>
+
+        <div id="filter-bandwidth" class="grid-default">
+        </div>
+
+        <div id="modulation" class="grid-default">
+        </div>
+
+        <div id="delay-feedback" class="grid-default">
+        </div>
+
+        <div id="tap" class="grid-default">
+        </div>
+
+        <div id="tempo" class="grid-default">
+        </div>
+
+        <div id="env-type" class="grid-default">
+        </div>
+
+        <div id="synth-mode" class="grid-default">
+        </div>
+
+        <div id="exp-controler" class="grid-default">
+        </div>
+
+        <div id="bypass" class="grid-default">
+        </div>
+
+        <div id="global-settings" class="padding-0">
+            <div class="flex-row">
+                GLOBAL SETTINGS
+                <div id="open-global" class="bt">open</div>
+                <div id="close-global" class="bt">close</div>
+            </div>
+            <div id="global-settings-content" class="panel-content closed">
+                CONTENT
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    function init() {
+        document.getElementById("open-global").onclick = function () {
+            document.getElementById("global-settings-content").classList.remove('closed');
+        };
+        document.getElementById("close-global").onclick = function () {
+            document.getElementById("global-settings-content").classList.add('closed');
+        };
+        document.getElementById("open-preferences").onclick = function () {
+            document.getElementById("app-preferences-content").classList.remove('closed');
+        };
+        document.getElementById("close-preferences").onclick = function () {
+            document.getElementById("app-preferences-content").classList.add('closed');
+        };
+    }
+
+    function whenReadyDo(callback) {
+        if (document.readyState !== "loading") {
+            callback();
+        } else {
+            document.addEventListener("DOMContentLoaded", callback);
+        }
+    }
+
+    whenReadyDo(init);
+
+</script>
+</body>
+</html>

@@ -4,6 +4,7 @@
 #main.main-default > div {
     border: 1px solid black;
     padding: 40px;
+    background-color: #e0e0e0;
 }
 #main.main-default {
     grid-gap: 2px;
@@ -28,18 +29,70 @@ body {
 /*.zoom-1 #main > div { padding-bottom: 5px; }*/
 
 html {
-    --controls-row-start: 3;
+    --controls-row-start: 4;
     --controls-col-start: 1;
 }
 
+#wrapper {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*min-height: 100vh;*/
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background-color: lightgoldenrodyellow;
+}
+
+#main {
+    flex-grow: 1;
+}
+
+@media (min-width: 640px) {
+    #wrapper {
+        width: 100%;
+        margin: 0 0 0 0;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    #wrapper {
+        width: 700px;
+        margin: 10px auto 0 auto;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    #wrapper {
+        width: 900px;
+        margin: 10px auto 0 auto;
+        /*padding: 0 10px 10px 10px;*/
+        border-radius: 3px;
+    }
+}
+
+@media (min-width: 1280px) {
+    #wrapper {
+        width: 1040px;
+        margin: 10px auto 0 auto;
+        /*padding: 0 10px 10px 10px;*/
+        border-radius: 3px;
+    }
+}
+
 #main.main-default {
-
     /*height: 100vh;*/
-
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-
-    grid-template-rows: auto 1fr 1fr 1fr 1fr auto auto;
+    grid-template-rows:
+            auto    /* #title */
+            auto    /* #app-preferences */
+            1fr 1fr 1fr 1fr
+            auto;   /* #global-settings */
     align-content: center;
 }
 
@@ -50,22 +103,29 @@ html {
 .grid-panel {
     border-top: 2px solid black;
 }
+
 #title {
-    grid-column: 1 / span 6;
     grid-row: 1;
+    grid-column: 1 / span 6;
 }
-#messages {
+
+#app-preferences {
     grid-row: 2;
+    grid-column: 1 / span 6;
+}
+
+#messages {
+    grid-row: 3;
     grid-column: 3 / span 2;
 }
 
 #options {
-    grid-row: 2;
+    grid-row: 3;
     grid-column: 5 / span 2;
 }
 
 #presets {
-    grid-row: 2;
+    grid-row: 3;
     grid-column: 1 / span 2;
 }
 
@@ -160,29 +220,36 @@ html {
 }
 
 #global-settings {
-    grid-column: 1 / span 6;
-    grid-row: 6;
-}
-#app-preferences {
-    grid-column: 1 / span 6;
     grid-row: 7;
+    grid-column: 1 / span 6;
 }
-
-
 
 #global-settings,
 #app-preferences {
-    padding: 30px 0;
+    /*padding: 30px 0;*/
+}
+
+.padding-0 {
+    padding: 0!important;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.closed {
+    display: none;
 }
 
 
-/*
-        .options-panel {
-            margin-top: 10px;
-            grid-row: 3 / span 4;
-            grid-column: 1 / span 6;
-            color: var(--header-text);
-        }
-*/
 
+.panel-content {
+    padding: 40px;
+}
 
+.bt {
+    margin-left: 10px;
+    color: blue;
+    cursor: pointer;
+}
