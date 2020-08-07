@@ -1,0 +1,188 @@
+
+/*-DEBUG-----------*/
+
+#main.main-default > div {
+    border: 1px solid black;
+    padding: 40px;
+}
+#main.main-default {
+    grid-gap: 2px;
+}
+
+/*-----------------*/
+
+body {
+    margin: 0;
+    /*margin: auto 0;*/
+    padding: 0;
+}
+
+#wrapper.zoom-1 {
+    /*width: 1040px;*/
+    /*margin: 20px auto 0 auto;*/
+    /*padding: 0 10px 10px 10px;*/
+    /*border-radius: 3px;*/
+}
+
+/*.zoom-1 #main {font-size: 1rem; padding: 3px;}*/
+/*.zoom-1 #main > div { padding-bottom: 5px; }*/
+
+html {
+    --controls-row-start: 3;
+    --controls-col-start: 1;
+}
+
+#main.main-default {
+
+    /*height: 100vh;*/
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+
+    grid-template-rows: auto 1fr 1fr 1fr 1fr auto auto;
+    align-content: center;
+}
+
+.span-6 {
+    grid-column: span 6;
+}
+
+.grid-panel {
+    border-top: 2px solid black;
+}
+#title {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+}
+#messages {
+    grid-row: 2;
+    grid-column: 3 / span 2;
+}
+
+#options {
+    grid-row: 2;
+    grid-column: 5 / span 2;
+}
+
+#presets {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+}
+
+#pitch {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#portamento {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-type {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#mix {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-level {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#sustain {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#ring-mod {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter-env {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-bandwidth {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#modulation {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-feedback {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#tap {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#tempo {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#env-type {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#synth-mode {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#exp-controler {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#bypass {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#global-settings {
+    grid-column: 1 / span 6;
+    grid-row: 6;
+}
+#app-preferences {
+    grid-column: 1 / span 6;
+    grid-row: 7;
+}
+
+
+
+#global-settings,
+#app-preferences {
+    padding: 30px 0;
+}
+
+
+/*
+        .options-panel {
+            margin-top: 10px;
+            grid-row: 3 / span 4;
+            grid-column: 1 / span 6;
+            color: var(--header-text);
+        }
+*/
+
+
