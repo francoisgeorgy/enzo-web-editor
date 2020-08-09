@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <meta name="viewport" content="initial-scale=1, maximum-scale=1">-->
+    <link rel="stylesheet" href="layout-2.css">
+</head>
+<body>
+<div id="wrapper">
+    <div id="main-grid" class="main-default">
+
+        <div class="bl top-row border-bottom"></div>
+        <div id="title" class=" top-row span-6 padding-0 border-bottom">
+            <div>menu line 1</div>
+            <div>menu line 2</div>
+        </div>
+        <div class="br top-row border-bottom"></div>
+
+        <div class="bl border-top border-bottom"></div>
+        <div id="app-preferences" class="span-6 padding-0 border-top border-bottom">
+            <div class="flex-row">
+                APP PREFERENCES
+                <div id="open-preferences" class="btn">open</div>
+                <div id="close-preferences" class="btn">close</div>
+            </div>
+            <div id="app-preferences-content" class="panel-content closed">
+                CONTENT
+            </div>
+        </div>
+        <div class="br border-top border-bottom"></div>
+
+        <div class="bl border-top border-bottom"></div>
+        <div id="presets" class="span-2 border-top border-bottom">
+            presets
+        </div>
+        <div id="messages" class="span-2 border-top border-bottom">
+            messages
+        </div>
+        <div id="options" class="span-2 border-top border-bottom">
+            options
+        </div>
+        <div class="br border-top border-bottom"></div>
+
+        <div class="bl border-top border-bottom"></div>
+        <div id="global-settings" class="padding-0 border-top border-bottom span-6">
+            <div class="flex-row">
+                GLOBAL SETTINGS
+                <div id="open-global" class="btn">open</div>
+                <div id="close-global" class="btn">close</div>
+            </div>
+            <div id="global-settings-content" class="panel-content closed">
+                GLOBAL SETTINGS CONTENT
+            </div>
+        </div>
+        <div class="br border-top border-bottom"></div>
+
+        <div class="bl border-top"></div>
+        <div id="pitch" class="grid-default border-top control-cell">
+            pitch
+        </div>
+        <div id="portamento" class="grid-default border-top control-cell">
+            portamento
+        </div>
+        <div id="filter" class="grid-default border-top control-cell">
+            filter
+        </div>
+        <div id="filter-type" class="grid-default border-top control-cell">
+            filter type
+        </div>
+        <div id="mix" class="grid-default border-top control-cell">
+            mic
+        </div>
+        <div id="delay-level" class="grid-default border-top control-cell">
+            dly level
+        </div>
+        <div class="br border-top"></div>
+
+        <div class="bl"></div>
+        <div id="sustain" class="grid-default control-cell">
+            sustain
+        </div>
+        <div id="ring-mod" class="grid-default control-cell">
+            ring mod
+        </div>
+        <div id="filter-env" class="grid-default control-cell">
+            filter env
+        </div>
+        <div id="filter-bandwidth" class="grid-default control-cell">
+            filter q
+        </div>
+        <div id="modulation" class="grid-default control-cell">
+            mod
+        </div>
+        <div id="delay-feedback" class="grid-default control-cell">
+            dly fback
+        </div>
+        <div class="br"></div>
+
+        <div class="bl last-row"></div>
+        <div id="tap" class="grid-default last-row control-cell">
+            tap
+        </div>
+        <div id="tempo" class="grid-default last-row control-cell">
+            tempo
+        </div>
+        <div id="env-type" class="grid-default last-row control-cell">
+            env type
+        </div>
+        <div id="synth-mode" class="grid-default last-row control-cell">
+            synth mode
+        </div>
+        <div id="exp-controler" class="grid-default last-row control-cell">
+            exp
+        </div>
+        <div id="bypass" class="grid-default last-row control-cell">
+            bypass
+        </div>
+        <div class="br last-row"></div>
+
+    </div>
+</div>
+<script>
+
+    function init() {
+        document.getElementById("open-global").onclick = function () {
+            document.getElementById("global-settings-content").classList.remove('closed');
+        };
+        document.getElementById("close-global").onclick = function () {
+            document.getElementById("global-settings-content").classList.add('closed');
+        };
+        document.getElementById("open-preferences").onclick = function () {
+            document.getElementById("app-preferences-content").classList.remove('closed');
+        };
+        document.getElementById("close-preferences").onclick = function () {
+            document.getElementById("app-preferences-content").classList.add('closed');
+        };
+    }
+
+    function whenReadyDo(callback) {
+        if (document.readyState !== "loading") {
+            callback();
+        } else {
+            document.addEventListener("DOMContentLoaded", callback);
+        }
+    }
+
+    whenReadyDo(init);
+
+</script>
+</body>
+</html>

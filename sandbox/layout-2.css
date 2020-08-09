@@ -1,0 +1,303 @@
+
+/*-DEBUG-----------*/
+
+/*
+#main.main-default > div {
+    border: 1px solid black;
+    padding: 40px;
+    background-color: #e0e0e0;
+}
+#main.main-default {
+    grid-gap: 2px;
+}
+*/
+
+.control-cell {
+    padding: 40px;
+}
+
+/*-----------------*/
+
+body {
+    margin: 0;
+    /*margin: auto 0;*/
+    padding: 0;
+    background-color: #111111;
+}
+
+#wrapper.zoom-1 {
+    /*width: 1040px;*/
+    /*margin: 20px auto 0 auto;*/
+    /*padding: 0 10px 10px 10px;*/
+    /*border-radius: 3px;*/
+}
+
+/*.zoom-1 #main {font-size: 1rem; padding: 3px;}*/
+/*.zoom-1 #main > div { padding-bottom: 5px; }*/
+
+html {
+    --controls-row-start: 4;
+    --controls-col-start: 1;
+}
+
+#wrapper {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*min-height: 100vh;*/
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background-color: lightgoldenrodyellow;
+}
+
+#main-grid {
+    flex-grow: 1;
+}
+
+@media (min-width: 640px) {
+    #wrapper {
+        width: 100%;
+        margin: 0 0 0 0;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    #wrapper {
+        width: 700px;
+        margin: 10px auto 0 auto;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    #wrapper {
+        width: 900px;
+        margin: 10px auto 0 auto;
+        /*padding: 0 10px 10px 10px;*/
+        border-radius: 3px;
+    }
+}
+
+@media (min-width: 1280px) {
+    #wrapper {
+        width: 1040px;
+        margin: 10px auto 0 auto;
+        /*padding: 0 10px 10px 10px;*/
+        border-radius: 3px;
+    }
+}
+
+#main-grid.main-default {
+    /*height: 100vh;*/
+    display: grid;
+    grid-template-columns: 20px repeat(6, 1fr) 20px;
+    /*
+    grid-template-rows:
+            auto    !* #title *!
+            auto    !* #app-preferences *!
+            auto   !* #global-settings *!
+            1fr 1fr 1fr 1fr;
+    */
+    align-content: center;
+
+    background-color: lightgoldenrodyellow;
+    background-image: url("bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#main-grid > div {
+    background: transparent;
+}
+
+.bl.first-row {
+    border-radius: 10px 0 0 0;
+}
+.br.first-row {
+    border-radius: 0 10px 0 0;
+}
+
+.bl.last-row {
+    border-radius: 0 0 0 10px;
+}
+.br.last-row {
+    border-radius: 0 0 10px 0;
+}
+
+.border-top {
+    border-top: 1px solid #f1d09c;
+}
+.border-bottom {
+    border-bottom: 1px solid #bc9b65;
+}
+
+
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.span-6 {
+    grid-column: span 6;
+}
+
+.grid-panel {
+    border-top: 2px solid black;
+}
+
+/*
+#title {
+    grid-row: 1;
+    grid-column: 1 / span 6;
+}
+
+#app-preferences {
+    grid-row: 2;
+    grid-column: 1 / span 6;
+}
+
+#messages {
+    grid-row: 3;
+    grid-column: 3 / span 2;
+}
+
+#options {
+    grid-row: 3;
+    grid-column: 5 / span 2;
+}
+
+#presets {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+}
+
+#pitch {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#portamento {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-type {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#mix {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-level {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#sustain {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#ring-mod {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter-env {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-bandwidth {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#modulation {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-feedback {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#tap {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#tempo {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#env-type {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#synth-mode {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#exp-controler {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#bypass {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#global-settings {
+    grid-row: 7;
+    grid-column: 1 / span 6;
+}
+*/
+
+#global-settings,
+#app-preferences {
+    /*padding: 30px 0;*/
+}
+
+.padding-0 {
+    padding: 0!important;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.closed {
+    display: none;
+}
+
+
+
+.panel-content {
+    padding: 40px;
+}
+
+.btn {
+    margin-left: 10px;
+    color: blue;
+    cursor: pointer;
+}
