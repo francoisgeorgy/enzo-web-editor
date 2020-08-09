@@ -13,7 +13,7 @@
 */
 
 .control-cell {
-    padding: 40px;
+    padding: 40px 20px;
 }
 
 /*-----------------*/
@@ -47,7 +47,7 @@ html {
     /*min-height: 100vh;*/
     margin: 0;
     padding: 0;
-    border-radius: 0;
+    /*border-radius: 0;*/
     background-color: lightgoldenrodyellow;
 }
 
@@ -60,7 +60,7 @@ html {
         width: 100%;
         margin: 0 0 0 0;
         padding: 0;
-        border-radius: 0;
+        /*border-radius: 0;*/
     }
 }
 
@@ -69,7 +69,7 @@ html {
         width: 700px;
         margin: 10px auto 0 auto;
         padding: 0;
-        border-radius: 0;
+        /*border-radius: 0;*/
     }
 }
 
@@ -78,7 +78,7 @@ html {
         width: 900px;
         margin: 10px auto 0 auto;
         /*padding: 0 10px 10px 10px;*/
-        border-radius: 3px;
+        /*border-radius: 3px;*/
     }
 }
 
@@ -87,9 +87,18 @@ html {
         width: 1040px;
         margin: 10px auto 0 auto;
         /*padding: 0 10px 10px 10px;*/
-        border-radius: 3px;
+        /*border-radius: 3px;*/
     }
 }
+
+/*
+@media (min-width: 1600px) {
+    #wrapper {
+        width: 100%;
+        margin: 10px 0 0 0;
+    }
+}
+*/
 
 #main-grid.main-default {
     /*height: 100vh;*/
@@ -300,4 +309,16 @@ html {
     margin-left: 10px;
     color: blue;
     cursor: pointer;
+}
+
+
+#presets-lib {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 2px;
+    padding: 5px 0;
+}
+
+#presets-lib > div {
+    border: 1px solid #777;
 }
