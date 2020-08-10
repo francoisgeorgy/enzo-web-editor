@@ -53,23 +53,15 @@ html {
 
 }
 
-#main-grid {
-    background-color: lightgoldenrodyellow;
+#wrapper {
     background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
 
-#main-grid > div {
+#main > div {
     background: transparent;
-}
-
-.mg-row-border-top {
-    border-top: 1px solid #f1d09c;
-}
-.mg-row-border-bottom {
-    border-bottom: 1px solid #bc9b65;
 }
 
 /*noinspection CssUnusedSymbol*/

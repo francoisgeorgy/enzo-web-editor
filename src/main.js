@@ -21,12 +21,16 @@ import {
 } from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
 import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
-import "./css/lity.min.css";    // CSS files order is important
+
+// import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
-import "./css/grid-default.css";
-import "./css/grid-global-settings.css";
+import "./css/controls.css";
+import "./css/buttons.css";
+// import "./css/grid-default.css";
+// import "./css/grid-global-settings.css";
+
 import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 import * as Utils from "./utils";
 import {initZoom} from "./ui_zoom";

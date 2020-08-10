@@ -10,67 +10,8 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 400;
-    background: var(--body-bg-color);
+    background-color: #111111;
 }
-
-/*--- utils: ---*/
-
-.hidden {
-    display: none;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.on {
-    color: var(--value)!important;
-}
-
-.error {
-    color: red;
-}
-.grid-2x1 {
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr;
-    justify-items: center;
-}
-
-.grid-2x1 .bt {
-    width: 75%;
-}
-
-.grid-3x2 {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr 1fr;
-}
-
-.grid-3x2 .bt {
-    margin-bottom: 0;
-}
-
-.grid-3x3 {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto auto;
-}
-
-.glow {
-    color: #ddf6ff!important;
-    text-shadow: 0 0 12px #ffffff;
-}
-
-.lowercase {
-    text-transform: lowercase;
-}
-
-/*--- MENU ---*/
-
-/*--- MAIN GRID ---*/
 
 #wrapper {
     /*display: flex;*/
@@ -129,16 +70,16 @@ body {
     display: grid;
     grid-template-columns: 20px repeat(6, 1fr) 20px;
     align-content: center;
-    /*background-color: lightgoldenrodyellow;*/
-    /*background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: center;*/
-    /*background-size: contain;*/
+    background-color: lightgoldenrodyellow;
+    background-image: url("bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
-/*#main-grid > div {*/
-/*    background: transparent;*/
-/*}*/
+#main-grid > div {
+    background: transparent;
+}
 
 .mg-border-left.mg-top-row {
     border-radius: 10px 0 0 0;
@@ -152,6 +93,13 @@ body {
 }
 .mg-border-right.mg-last-row {
     border-radius: 0 0 10px 0;
+}
+
+.mg-row-border-top {
+    border-top: 1px solid #f1d09c;
+}
+.mg-row-border-bottom {
+    border-bottom: 1px solid #bc9b65;
 }
 
 .span-2 {
@@ -206,7 +154,3 @@ body {
 #presets-lib > div {
     border: 1px solid #777;
 }
-
-
-
-

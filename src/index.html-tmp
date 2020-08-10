@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <div id="wrapper" class="zoom-1">
+    <div id="wrapper" class="Xzoom-1">
 
         <div id="main-grid" class="main-default">
 
@@ -39,7 +39,18 @@
 
     </div>
 
+<!--
+            <%= require('html-loader!./partials/presets.html') %>
+            <%= require('html-loader!./partials/messages.html') %>
+            <%= require('html-loader!./partials/options.html') %>
+                <%= require('html-loader!./partials/global-settings.html') %>
+                <%= require('html-loader!./partials/app-preferences.html') %>
+                <%= require('html-loader!./partials/help.html') %>
+
+    <%= require('html-loader!./partials/load-preset-dialog.html') %>
+    <%= require('html-loader!./partials/credits-dialog.html') %>
     <%= require('html-loader!./partials/svg-gradients.html') %>
+-->
 
 </body>
 </html>
