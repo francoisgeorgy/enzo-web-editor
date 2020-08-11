@@ -31,6 +31,7 @@ import "./css/config.css";
 import "./css/presets.css";
 import "./css/controls.css";
 import "./css/buttons.css";
+import "./css/global-settings.css";
 // import "./css/grid-default.css";
 // import "./css/grid-global-settings.css";
 

@@ -25,18 +25,53 @@ export function closeGlobalSettingsPanel() {
 }
 
 export function toggleGlobalSettingsPanel() {
+
+/*
     if ($(CONTAINER).is(".closed")) {
         openGlobalSettingsPanel();
     } else {
         closeGlobalSettingsPanel();
         showDefaultPanel();
     }
+*/
     return false;
 }
 
 export function setupGlobalSettings() {
     warn("setupGlobalSettings: TODO: v1.5");
-/*
+
+
+    $('#toggle-global-lock').click(() => {
+        log('#toggle-global-lock click');
+        const unlock = $("#global-lock-opened");
+        const lock = $("#global-lock-closed");
+        if (unlock.is(".closed")) {
+            log('unlock is closed');
+            lock.addClass("closed");
+            unlock.removeClass("closed");
+
+            $('.global-setting-toggle').addClass('enabled');
+
+        } else {
+            log('unlock is NOT closed');
+            unlock.addClass("closed");
+            lock.removeClass("closed");
+
+            $('.global-setting-toggle').removeClass('enabled');
+
+        }
+    });
+
+    $(".global-setting-toggle").click((e) => {
+        console.log(e.currentTarget.id);
+
+        if ($("#global-lock-opened").is('.closed')) {
+            log("locked, ignore");
+        }
+
+    });
+
+    /*
 
     log("setupGlobalSettings()");
 

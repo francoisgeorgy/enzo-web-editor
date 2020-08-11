@@ -1,7 +1,12 @@
 
 .icon-btn {
+    width: 20px;
     color: blue;
     cursor: pointer;
+}
+
+#global-settings .icon-btn {
+    margin-left: 5px;
 }
 
 div.bt,     /* "radio button"-like switches */

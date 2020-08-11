@@ -3,16 +3,36 @@
 
     <div class="panel-closed flex-row space-between">
         <div class="panel-title">
-            <i class="fas fa-lock-open icon-btn" aria-hidden="true"></i>
-            <i class="fas fa-lock icon-btn" aria-hidden="true"></i>
             Global settings
+            <a href="#" id="toggle-global-lock">
+                <i id="global-lock-opened" class="fas fa-lock-open icon-btn closed" aria-hidden="true"></i>
+                <i id="global-lock-closed" class="fas fa-lock icon-btn" aria-hidden="true"></i>
+            </a>
         </div>
-        <div>stereo in</div>
-        <div>instrument level</div>
-        <div>buffered bypass</div>
-        <div>dry active</div>
-        <div>trail off</div>
-        <div>global tempo</div>
+        <div id="global-0" class="global-setting-toggle">
+            <span class="value-0 hidden">mono in</span>
+            <span class="value-127">stereo in</span>
+        </div>
+        <div id="global-1" class="global-setting-toggle">
+            <span class="value-0 hidden">instrument level</span>
+            <span class="value-127">instrument level</span>
+        </div>
+        <div id="global-2" class="global-setting-toggle">
+            <span class="value-0 hidden">buffered bypass</span>
+            <span class="value-127">buffered bypass</span>
+        </div>
+        <div id="global-3" class="global-setting-toggle">
+            <span class="value-0 hidden">dry active</span>
+            <span class="value-127">dry active</span>
+        </div>
+        <div id="global-4" class="global-setting-toggle">
+            <span class="value-0 hidden">trail off</span>
+            <span class="value-127">trail off</span>
+        </div>
+        <div id="global-5" class="global-setting-toggle">
+            <span class="value-0 hidden">global tempo</span>
+            <span class="value-127">global tempo</span>
+        </div>
     </div>
 
 <!--
