@@ -17,6 +17,10 @@ body {
 
 /*--- utils: ---*/
 
+a {
+    text-decoration: none;
+}
+
 .hidden {
     display: none;
 }
@@ -66,6 +70,11 @@ body {
 
 .lowercase {
     text-transform: lowercase;
+}
+
+.py-5 {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 /*--- MENU ---*/
@@ -140,6 +149,7 @@ body {
 /*    background: transparent;*/
 /*}*/
 
+/*
 .mg-border-left.mg-top-row {
     border-radius: 10px 0 0 0;
 }
@@ -153,6 +163,7 @@ body {
 .mg-border-right.mg-last-row {
     border-radius: 0 0 10px 0;
 }
+*/
 
 .span-2 {
     grid-column: span 2;
@@ -173,6 +184,10 @@ body {
     /*padding: 30px 0;*/
 }
 
+.panel-title {
+    font-weight: bold;
+}
+
 .padding-0 {
     padding: 0!important;
 }
@@ -180,6 +195,10 @@ body {
 .flex-row {
     display: flex;
     flex-direction: row;
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
 .closed {
@@ -195,18 +214,3 @@ body {
     color: blue;
     cursor: pointer;
 }
-
-#presets-lib {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-gap: 2px;
-    padding: 5px 0;
-}
-
-#presets-lib > div {
-    border: 1px solid #777;
-}
-
-
-
-

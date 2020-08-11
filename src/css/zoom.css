@@ -48,11 +48,13 @@
 .zoom-1 #midi-input2-device {margin-right: 10px;}
 /*.zoom-2 #midi-input2-device {margin-right: 15px;}*/
 .zoom-2 #midi-input2-device {margin-right: 1vw;}
+/*
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
 .zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}
-/*.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}*/
+!*.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}*!
 .zoom-2 .preset {font-size: 3.5vmin;}
+*/
 
 .zoom-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}
 .zoom-1 .preset > span {right: 2px; top: -8px; font-size: 120%;}

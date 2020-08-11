@@ -1,0 +1,30 @@
+
+#presets-lib {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 2px;
+    /*padding: 5px 0;*/
+}
+
+#presets-lib > div {
+    border: 1px solid #777;
+}
+
+#presets-menu {
+    display: flex;
+    /*justify-content: space-between;*/
+}
+
+#presets-menu .menu-entry {
+    margin-right: 20px;
+}
+
+
+.zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
+.zoom-1 .preset {
+    padding: 2px 6px;
+    font-size: 1.25rem;
+}
+/*.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}*/
+.zoom-2 .preset {font-size: 3.5vmin;}
+

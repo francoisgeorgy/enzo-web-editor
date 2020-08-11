@@ -1,4 +1,9 @@
 
+.icon-btn {
+    color: blue;
+    cursor: pointer;
+}
+
 div.bt,     /* "radio button"-like switches */
 div.btc,    /* "checkbox"-like switches: */
 div.btx {   /* EXP close button */

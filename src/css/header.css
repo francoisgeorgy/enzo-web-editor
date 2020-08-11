@@ -1,0 +1,57 @@
+#header {
+    /*background: transparent !important;*/
+    /*border-top-color: transparent !important;*/
+    /*border-left-color: transparent !important;*/
+    /*border-right-color: transparent !important;*/
+
+    display: flex;
+    /*align-items: flex-end;*/
+    justify-content: space-between;
+    color: var(--header-text);
+    padding-top: 7px;
+}
+
+/*
+#header h1 {
+    font-weight: 300;
+    color: var(--title-text);
+    padding: 0;
+    margin: 0;
+}
+*/
+
+/*
+.by-studiocode {
+    margin-left: 5px;
+}
+*/
+
+/*
+#header > div.neon,
+#header > div.menu {
+    flex-grow: 2;
+    margin-bottom: 0.25rem;
+    align-self: start!important;
+}
+*/
+
+.neon {
+    /*font-family: Roboto, sans-serif;*/
+    font-weight: bold;
+}
+
+#header > div.menu {
+    text-align: center;
+}
+
+.menu.middle {
+    flex-grow: 2;
+}
+
+.menu.middle > span {
+    margin: 0 20px;
+}
+
+.menu.right {
+
+}

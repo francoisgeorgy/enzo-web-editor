@@ -25,7 +25,9 @@ import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from
 // import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
+import "./css/header.css";
 import "./css/zoom.css";
+import "./css/presets.css";
 import "./css/controls.css";
 import "./css/buttons.css";
 // import "./css/grid-default.css";

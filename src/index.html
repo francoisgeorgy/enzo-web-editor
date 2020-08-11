@@ -26,14 +26,22 @@
 
         <div id="main-grid" class="main-default">
 
-            <div class="mg-border-left mg-top-row mg-row-border-bottom"></div>
-            <div id="title" class="span-6 mg-top-row padding-0 mg-row-border-bottom">
-                <div class="neon">ENZO</div>
+            <div class="mg-border-left mg-top-row mg-row-border-bottom py-5"></div>
+            <div id="header" class="span-6 mg-top-row py-5 mg-row-border-bottom">
+                <div class="flex-row">
+                    <div>
+                        <span class="neon">ENZO Editor</span>
+                        by StudioCode.dev
+                    </div>
+                </div>
                 <%= require('html-loader!./partials/menu.html') %>
             </div>
-            <div class="mg-border-right mg-top-row mg-row-border-bottom"></div>
+            <div class="mg-border-right mg-top-row mg-row-border-bottom py-5"></div>
 
+            <%= require('html-loader!./partials/app-preferences.html') %>
+            <%= require('html-loader!./partials/presets.html') %>
             <%= require('html-loader!./partials/controls.html') %>
+            <%= require('html-loader!./partials/global-settings.html') %>
 
         </div>
 
