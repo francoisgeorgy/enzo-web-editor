@@ -1,4 +1,4 @@
-import {log} from "./debug";
+import {log, warn} from "./debug";
 import MODEL from "./model";
 import {requestGlobalSettings, sendSysex} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
@@ -35,6 +35,9 @@ export function toggleGlobalSettingsPanel() {
 }
 
 export function setupGlobalSettings() {
+    warn("setupGlobalSettings: TODO: v1.5");
+/*
+
     log("setupGlobalSettings()");
 
     $(".close-settings-panel").click(() => {
@@ -56,6 +59,7 @@ export function setupGlobalSettings() {
         log(`setupGlobalSettings: ${setting_number}=${value}`);
         sendSysex(MODEL.getSysexDataForGlobalConfig(setting_number, value));
     });
+*/
     return true;
 }
 

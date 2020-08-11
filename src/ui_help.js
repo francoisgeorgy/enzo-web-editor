@@ -1,6 +1,7 @@
 import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
+import {warn} from "./debug";
 
 const CONTAINER = "#help-panel";
 
@@ -18,9 +19,13 @@ export function closeHelpPanel() {
 }
 
 export function setupHelpPanel() {
-    $(".close-help-panel").click(() => {
-        closeHelpPanel();
-        showDefaultPanel();
-    });
+    warn("setupHelpPanel: TODO: v1.5");
+
+    /*
+        $(".close-help-panel").click(() => {
+            closeHelpPanel();
+            showDefaultPanel();
+        });
+    */
     return true;
 }

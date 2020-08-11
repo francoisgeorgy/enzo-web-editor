@@ -1,4 +1,4 @@
-import {log} from "./debug";
+import {log, warn} from "./debug";
 import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {savePreferences, preferences, SETTINGS_UPDATE_URL} from "./preferences";
@@ -27,12 +27,12 @@ function displayCurrentPreferences() {
 }
 
 export function showMidiInput2() {
-    $("#midi-in2-led").show();
+    // $("#midi-in2-led").show();
     $("#midi-in2").show();
 }
 
 export function hideMidiInput2() {
-    $("#midi-in2-led").hide();
+    // $("#midi-in2-led").hide();
     $("#midi-in2").hide();
 }
 
@@ -62,6 +62,9 @@ export function toggleAppPreferencesPanel() {
 }
 
 export function setupAppPreferences(input2SelectionCallback) {
+    warn("setupAppPreferences: TODO: v1.5");
+
+/*
     log("setupAppPreferences()");
 
     $(".close-app-prefs-panel").click(() => {
@@ -88,25 +91,21 @@ export function setupAppPreferences(input2SelectionCallback) {
         displayCurrentPreferences();
     });
 
-/*
-TODO: app prefs clear input2 channel
+    // TODO: app prefs clear input2 channel
 
-    $("#prefs_clear_input2_channel").click(() => {
-        savePreferences({input2_channel: 1});
-        $("#midi-input2-channel").val(preferences.input2_channel);
-        displayCurrentPreferences();
-    });
-*/
+    // $("#prefs_clear_input2_channel").click(() => {
+    //     savePreferences({input2_channel: 1});
+    //     $("#midi-input2-channel").val(preferences.input2_channel);
+    //     displayCurrentPreferences();
+    // });
 
-/*
-TODO: TODO: app prefs clear input2 device
+    //TODO: TODO: app prefs clear input2 device
 
-    $("#prefs_clear_input2_device").click(() => {
-        savePreferences({input2_device_id: null});
-        updateSelectDeviceList();
-        displayCurrentPreferences();
-    });
-*/
+    // $("#prefs_clear_input2_device").click(() => {
+    //     savePreferences({input2_device_id: null});
+    //     updateSelectDeviceList();
+    //     displayCurrentPreferences();
+    // });
 
     $(`#enable-midi-in2-${preferences.enable_midi_in2}`).prop('checked', true);
 
@@ -162,5 +161,6 @@ TODO: TODO: app prefs clear input2 device
         savePreferences({display_infos: parseInt(v)})
     });
 
+*/
     return true;
 }

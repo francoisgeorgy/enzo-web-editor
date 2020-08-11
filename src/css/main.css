@@ -63,11 +63,6 @@ a {
     grid-template-columns: auto auto auto;
 }
 
-.glow {
-    color: #ddf6ff!important;
-    text-shadow: 0 0 12px #ffffff;
-}
-
 .lowercase {
     text-transform: lowercase;
 }

@@ -231,6 +231,8 @@ function setupMidiInput2() {
 }
 
 function setupControlsHelp() {
+    warn("setupControlsHelp: TODO: v1.5");
+    /*
     $(".header.infos").hover(
         function() {
             if (!preferences.display_infos) return;
@@ -251,9 +253,12 @@ function setupControlsHelp() {
             e.scrollTop = e.scrollHeight;
         }
     );
+     */
 }
 
 function setupMenu() {
+    warn("setupMenu: TODO: v1.5");
+/*
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
@@ -281,6 +286,7 @@ function setupMenu() {
     $("#menu-zoom-out").click(zoomOut);
     $("#url-auto-toggle").click(toggleUrlAutomation);
     $("#preset-file").change(readFile);     // in load-preset-dialog
+*/
 }
 
 /**
@@ -294,7 +300,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
 
     initZoom(preferences.zoom_level);
 
-    setupMidiInput2();
+    //setupMidiInput2();    //v1.5: always shown
     setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);

@@ -53,6 +53,12 @@ html {
 
 }
 
+.glow {
+    color: #ddf6ff!important;
+    /*color: #f9d000!important;*/
+    text-shadow: 0 0 12px #ffffff;
+}
+
 #main-grid {
     background-color: lightgoldenrodyellow;
     background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
