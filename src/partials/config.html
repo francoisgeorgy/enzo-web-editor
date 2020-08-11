@@ -1,7 +1,84 @@
 <div class="mg-border-left mg-row-border-top mg-row-border-bottom py-5"></div>
-<div id="app-preferences" class="span-6 py-5 options-panel mg-row-border-top mg-row-border-bottom Xclosed">
-    <div>
-        App preferences
+<div id="config" class="config span-6 py-5 options-panel mg-row-border-top mg-row-border-bottom Xclosed">
+
+    <div class="panel-closed flex-row">
+
+        <div class="panel-title">
+            MIDI
+        </div>
+
+        <div id="midi-in1-led" class="label">
+            in:
+        </div>
+        <select id="midi-input-device">
+            <option>- select -</option>
+        </select>
+
+        <div id="midi-out-led" class="label">
+            out:
+        </div>
+        <select id="midi-output-device" class="device">
+            <option>- select -</option>
+        </select>
+
+        <div class="label">
+            <div>ch:</div>
+        </div>
+        <select id="midi-channel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+        </select>
+
+        <div class="label midi-in2">
+            in 2:
+        </div>
+        <select id="midi-input2-device" class="device">
+            <option>not used</option>
+        </select>
+        <div class="label">
+            ch 2:
+        </div>
+        <select id="midi-input2-channel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+
+        <div class="flex-grow align-right">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+        </div>
+
+    </div>
+
+    <div class="panel-opened closed">
+
     </div>
 <!--
     <div class="header options-panel">

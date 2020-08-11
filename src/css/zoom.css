@@ -22,18 +22,6 @@
 /*.zoom-2 #title .neon {font-size: 2.5vh;}*/
 .zoom-2 #title .neon {font-size: 2.4vmin;}
 
-.zoom-0 .menu {font-size: 0.85rem;}
-.zoom-1 .menu {font-size: 1rem;}
-/*.zoom-2 .menu {font-size: 1.25rem;}*/
-/*.zoom-2 .menu {font-size: 2.5vh;}*/
-.zoom-2 .menu {font-size: calc(6px + 1.0vw);}
-
-.zoom-0 .menu span.menu-entry {margin-left: 10px;}
-.zoom-1 .menu span.menu-entry {margin-left: 5px;}
-.zoom-2 .menu span.menu-entry {margin-left: 10px;}
-
-.zoom-0 .menu span.menu-text {display: none;}
-
 .zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}
 /*.zoom-2 #options {font-size: 1.5rem;}*/
@@ -44,10 +32,6 @@
 /*.zoom-2 #main select {font-size: 1rem;}*/
 .zoom-2 #main select {font-size: 2vmin;}
 
-.zoom-0 #midi-input2-device {margin-right: 5px;}
-.zoom-1 #midi-input2-device {margin-right: 10px;}
-/*.zoom-2 #midi-input2-device {margin-right: 15px;}*/
-.zoom-2 #midi-input2-device {margin-right: 1vw;}
 /*
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}

@@ -27,6 +27,7 @@ import "./css/themes.css";
 import "./css/main.css";
 import "./css/header.css";
 import "./css/zoom.css";
+import "./css/config.css";
 import "./css/presets.css";
 import "./css/controls.css";
 import "./css/buttons.css";

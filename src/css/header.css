@@ -40,18 +40,36 @@
     font-weight: bold;
 }
 
-#header > div.menu {
-    text-align: center;
+#header > .menu {
+    /*text-align: center;*/
 }
 
 .menu.middle {
     flex-grow: 2;
+    display: flex;
+    justify-content: center;
 }
 
-.menu.middle > span {
+.menu.middle > div {
     margin: 0 20px;
 }
 
 .menu.right {
-
+    display: flex;
 }
+
+.menu-bold {
+    font-weight: 600;
+}
+
+.zoom-0 .menu {font-size: 0.85rem;}
+.zoom-1 .menu {font-size: 1rem;}
+/*.zoom-2 .menu {font-size: 1.25rem;}*/
+/*.zoom-2 .menu {font-size: 2.5vh;}*/
+.zoom-2 .menu {font-size: calc(6px + 1.0vw);}
+
+.zoom-0 .menu .menu-entry {margin-left: 10px;}
+.zoom-1 .menu .menu-entry {margin-left: 5px;}
+.zoom-2 .menu .menu-entry {margin-left: 10px;}
+
+.zoom-0 .menu .menu-text {display: none;}

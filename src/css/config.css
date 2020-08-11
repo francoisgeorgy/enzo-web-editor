@@ -1,0 +1,25 @@
+.config {
+
+}
+
+.config .panel-closed .label {
+    margin-left: 10px;
+}
+.config .panel-closed select {
+    margin-left: 5px;
+    background-color: lightgoldenrodyellow;
+}
+
+.config .panel-closed select.device {
+    width: 5rem;
+}
+
+.config .panel-closed .label.midi-in2 {
+    margin-left: 20px;
+}
+
+/*
+.zoom-0 #midi-input2-device {margin-right: 5px;}
+.zoom-1 #midi-input2-device {margin-right: 10px;}
+.zoom-2 #midi-input2-device {margin-right: 1vw;}
+*/

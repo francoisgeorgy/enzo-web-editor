@@ -7,7 +7,7 @@ import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
 
-const CONTAINER = "#app-preferences";
+// const CONTAINER = "#app-preferences";
 
 function displayCurrentPreferences() {
     // noinspection JSUnresolvedFunction
@@ -37,27 +37,27 @@ export function hideMidiInput2() {
 }
 
 export function openAppPreferencesPanel() {
-    hideDefaultPanel();
-    closeGlobalSettingsPanel();
-    closeHelpPanel();
-    $(CONTAINER).removeClass("closed");
-    displayCurrentPreferences();
+    // hideDefaultPanel();
+    // closeGlobalSettingsPanel();
+    // closeHelpPanel();
+    // $(CONTAINER).removeClass("closed");
+    // displayCurrentPreferences();
     return false;
 }
 
 export function closeAppPreferencesPanel() {
-    $(CONTAINER).addClass("closed");
+    // $(CONTAINER).addClass("closed");
     return false;
 }
 
 export function toggleAppPreferencesPanel() {
-    if ($(CONTAINER).is(".closed")) {
-        openAppPreferencesPanel();
-    } else {
-        closeAppPreferencesPanel();
-        showDefaultPanel();
-        displayCurrentPreferences();
-    }
+    // if ($(CONTAINER).is(".closed")) {
+    //     openAppPreferencesPanel();
+    // } else {
+    //     closeAppPreferencesPanel();
+    //     showDefaultPanel();
+    //     displayCurrentPreferences();
+    // }
     return false;
 }
 
