@@ -6,6 +6,7 @@ import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {appendMessage} from "./ui_messages";
 import {closeHelpPanel} from "./ui_help";
 
+/*
 const CONTAINER = "#global-settings";
 
 export function openGlobalSettingsPanel() {
@@ -23,23 +24,28 @@ export function closeGlobalSettingsPanel() {
     $(CONTAINER).addClass("closed");
     return false;
 }
-
-export function toggleGlobalSettingsPanel() {
+*/
 
 /*
+export function toggleGlobalSettingsPanel() {
     if ($(CONTAINER).is(".closed")) {
         openGlobalSettingsPanel();
     } else {
         closeGlobalSettingsPanel();
         showDefaultPanel();
     }
-*/
     return false;
 }
+*/
 
 export function setupGlobalSettings() {
-    warn("setupGlobalSettings: TODO: v1.5");
+    // warn("setupGlobalSettings: TODO: v1.5");
 
+
+    $('#refresh-global-settings').click(() => {
+        requestGlobalSettings();
+        return false;
+    });
 
     $('#toggle-global-lock').click(() => {
         log('#toggle-global-lock click');
@@ -70,21 +76,30 @@ export function setupGlobalSettings() {
             return false;
         }
 
-        console.log(e.currentTarget.id);
+        const setting_number = parseInt(e.currentTarget.id.split("-")[1]);
+
+        // console.log(e.currentTarget.id, setting_number);
 
         const c = $(e.currentTarget).children('.value-127');
         const off = c.is('.hidden');
-        console.log(c, off);
+        // console.log(c, off);
 
+        let value;
         if (off) {
+            value = 127;
             console.log("make on");
             $(e.currentTarget).children('.value-0').addClass('hidden');
             $(e.currentTarget).children('.value-127').removeClass('hidden');
         } else {
+            value = 0;
             console.log("make off");
             $(e.currentTarget).children('.value-0').removeClass('hidden');
             $(e.currentTarget).children('.value-127').addClass('hidden');
         }
+
+        log(`setupGlobalSettings: ${setting_number}=${value}`);
+        sendSysex(MODEL.getSysexDataForGlobalConfig(setting_number, value));
+
         return false;
     });
 
@@ -119,10 +134,27 @@ export function setupGlobalSettings() {
  * Update the UI from the MODEL controls values.
  */
 export function updateGlobalSettings() {
+
     log("updateGlobalSettings()");
+
     for (let i=0; i < MODEL.global_conf.length; i++) {
         const g = MODEL.global_conf[i];
-        $(`#global-${g.id}-${g.value}`).prop('checked', true);
+
+        if (g.value) {
+            $(`#global-${g.id} span.value-0`).addClass('hidden');
+            $(`#global-${g.id} span.value-127`).removeClass('hidden');
+        } else {
+            $(`#global-${g.id} span.value-0`).removeClass('hidden');
+            $(`#global-${g.id} span.value-127`).addClass('hidden');
+        }
+
     }
+
+    // for (let i=0; i < MODEL.global_conf.length; i++) {
+    //     const g = MODEL.global_conf[i];
+    //     $(`#global-${g.id}-${g.value}`).prop('checked', true);
+    // }
+
     log("updateGlobalSettings done");
+
 }

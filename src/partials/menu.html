@@ -1,33 +1,41 @@
 <div class="menu middle">
     <!--    <span id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms."><span id="REC-text">REC </span><i class="fas fa-circle"></i></span>-->
     <div class="menu-entry">
-        <a id="menu-init" href="#" title="Set convenient 'default' values. (I)">
+        <a id="menu-init" href="#">
             <i class="fa fa-bolt" aria-hidden="true"></i>
             <span class="menu-text menu-bold">INIT</span>
         </a>
+        <div class="tooltip hidden">
+            Reset all controls to predefined default values. (I)<br />
+            &nbsp;<br />
+            Ctrl+click to set current values as INIT default.
+        </div>
     </div>
     <div class="menu-entry">
-        <a id="menu-randomize" href="#" title="Set random values for all controls. (R)">
+        <a id="menu-randomize" href="#">
             <i class="fa fa-random" aria-hidden="true"></i>
             <span class="menu-text menu-bold">RANDOMIZE</span>
         </a>
+        <div class="tooltip hidden">
+            Set random values for all controls. (R)
+        </div>
     </div>
     <div class="menu-entry">
-        <a id="TOTOTOTO" href="#">
+        <a id="menu-save" href="#">
             <i class="fa fa-save" aria-hidden="true"></i>
             <span class="menu-text menu-bold">SAVE</span>
         </a>
         <div class="tooltip hidden">
-            Save the current settings in Enzo current preset.
+            Tell the Enzo to save in its memory the editor's current values (updates the current stored preset).
         </div>
     </div>
     <div class="menu-entry">
-        <a id="TOTOTOTO" href="#">
+        <a id="menu-print-preset" href="#">
             <i class="fa fa-print" aria-hidden="true"></i>
             <span class="menu-text menu-bold">PRINT</span>
         </a>
         <div class="tooltip hidden">
-            Open a pop-up window with the current settings displayed for printing.
+            Open a popup window with the currents settings displayed for printing (or saving as PDF).
         </div>
     </div>
 </div>
@@ -54,7 +62,8 @@
     </div>
 -->
     <div class="menu-entry">
-        <a id="menu-help" href="#" title="Display a summary of the editor usage.">
+        <a id="menu-help" href="https://studiocode.dev/doc/enzo-editor/" target="_blank" rel="noopener"
+           title="Display a summary of the editor usage.">
 <!--            <i class="fas fa-question" aria-hidden="true"></i>-->
 <!--            <span class="menu-text">Help</span>-->
             <span class="menu-text">Documentation</span>

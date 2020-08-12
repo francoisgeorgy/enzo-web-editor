@@ -9,8 +9,8 @@ import {presetDec, presetInc, presetSet} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
-import {closeAppPreferencesPanel} from "./ui_app_prefs";
-import {closeGlobalSettingsPanel} from "./ui_global_settings";
+// import {closeAppPreferencesPanel} from "./ui_app_prefs";
+// import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
 import {showExpValues, toggleExpEditMode} from "./ui_exp";
@@ -265,10 +265,10 @@ function keyUp(code) {
             switchKnobsDisplay(false);
             break;
         case 27:                // close all opened panel with ESC key
-            closeAppPreferencesPanel();
-            closeGlobalSettingsPanel();
-            closeHelpPanel();
-            showDefaultPanel();
+            // closeAppPreferencesPanel();
+            // closeGlobalSettingsPanel();
+            // closeHelpPanel();
+            // showDefaultPanel();
             break;
         case 84:                // T            tap
             tapRelease("cc-28-127");

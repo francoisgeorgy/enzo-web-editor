@@ -19,16 +19,16 @@ import {
     setMidiInput2Port,
     setMidiInputPort
 } from "./midi_in";
-import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
+import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
 import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
 
-// import "./css/lity.min.css";    // CSS files order is important
+import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/header.css";
 import "./css/zoom.css";
 import "./css/config.css";
-import "./css/messages.css";
+import "./css/info-panel.css";
 import "./css/presets.css";
 import "./css/controls.css";
 import "./css/buttons.css";
@@ -213,6 +213,9 @@ function sync() {
 
         // checkCommunication();
 
+        appendMessage("Request global settings.");
+        window.setTimeout(requestGlobalSettings, 200);
+
         if (hashSysexPresent() && preferences.init_from_URL === 1) {
             log("sync: init from URL");
 
@@ -223,7 +226,7 @@ function sync() {
                 log("sync: no preset yet, will request preset in 200ms");
                 // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
                 appendMessage("Request current preset.");
-                window.setTimeout(requestPreset, 200);
+                window.setTimeout(requestPreset, 300);
             } else {
                 log("sync: preset is > 0, set preset dirty");
                 setPresetDirty();

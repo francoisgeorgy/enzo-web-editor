@@ -4,11 +4,9 @@ import * as Utils from "./utils";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
-import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-// import {isPresetClean} from "./ui_presets";
 
 /**
  * Update the window title to get a nice bookmark
@@ -92,6 +90,7 @@ export function updateUrl(window_title = null) {
     }
 }
 
+/*
 let automationHandler = null;
 
 export function startUrlAutomation(force = false) {
@@ -123,6 +122,7 @@ export function toggleUrlAutomation() {
         startUrlAutomation(true);
     }
 }
+*/
 
 export function locationHashChanged(e) {
     if (TRACE) {
@@ -132,7 +132,7 @@ export function locationHashChanged(e) {
     }
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.
-        stopUrlAutomation();
+        // stopUrlAutomation();
         initFromUrl();
     }
     hashUpdatedByAutomation = false;

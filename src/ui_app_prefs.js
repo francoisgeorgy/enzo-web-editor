@@ -1,14 +1,12 @@
 import {log, warn} from "./debug";
-import {closeGlobalSettingsPanel} from "./ui_global_settings";
-import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {savePreferences, preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
-import {closeHelpPanel} from "./ui_help";
 
 // const CONTAINER = "#app-preferences";
 
+/*
 function displayCurrentPreferences() {
     // noinspection JSUnresolvedFunction
     const port_in = preferences.input_device_id ? WebMidi.getInputById(preferences.input_device_id) : null;
@@ -25,6 +23,7 @@ function displayCurrentPreferences() {
     $("#init_from_URL").val(preferences.init_from_URL);
     $("#prefs_zoom_level").val(preferences.zoom_level);
 }
+*/
 
 export function showMidiInput2() {
     // $("#midi-in2-led").show();
@@ -36,30 +35,32 @@ export function hideMidiInput2() {
     $("#midi-in2").hide();
 }
 
+/*
 export function openAppPreferencesPanel() {
-    // hideDefaultPanel();
-    // closeGlobalSettingsPanel();
-    // closeHelpPanel();
-    // $(CONTAINER).removeClass("closed");
-    // displayCurrentPreferences();
+    hideDefaultPanel();
+    closeGlobalSettingsPanel();
+    closeHelpPanel();
+    $(CONTAINER).removeClass("closed");
+    displayCurrentPreferences();
     return false;
 }
 
 export function closeAppPreferencesPanel() {
-    // $(CONTAINER).addClass("closed");
+    $(CONTAINER).addClass("closed");
     return false;
 }
 
 export function toggleAppPreferencesPanel() {
-    // if ($(CONTAINER).is(".closed")) {
-    //     openAppPreferencesPanel();
-    // } else {
-    //     closeAppPreferencesPanel();
-    //     showDefaultPanel();
-    //     displayCurrentPreferences();
-    // }
+    if ($(CONTAINER).is(".closed")) {
+        openAppPreferencesPanel();
+    } else {
+        closeAppPreferencesPanel();
+        showDefaultPanel();
+        displayCurrentPreferences();
+    }
     return false;
 }
+*/
 
 export function setupAppPreferences(input2SelectionCallback) {
     warn("setupAppPreferences: TODO: v1.5");

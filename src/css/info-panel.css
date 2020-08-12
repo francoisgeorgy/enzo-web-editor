@@ -1,4 +1,4 @@
-#messages {
+#info-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 20px;
@@ -41,7 +41,7 @@
 
 /*
 
-.zoom-1 #messages { padding-bottom: 10px!important; }
+.zoom-1 #info-panel { padding-bottom: 10px!important; }
 .zoom-1 #options { padding-bottom: 10px!important; }
 .zoom-1 #presets { padding-bottom: 10px!important; }
 

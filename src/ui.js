@@ -14,22 +14,21 @@ import {setCommunicationStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {loadPresetFromFile, readFile} from "./read_file";
-import {openCreditsDialog, printPreset} from "./ui_dialogs";
-import {openMidiWindow} from "./ui_midi_window";
+// import {openCreditsDialog, printPreset} from "./ui_dialogs";
+// import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {preferences} from "./preferences";
-import {toggleUrlAutomation, updateUrl} from "./url";
-import {setupGlobalSettings, toggleGlobalSettingsPanel} from "./ui_global_settings";
+import {updateUrl} from "./url";
+import {setupGlobalSettings} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {
     setupAppPreferences,
-    toggleAppPreferencesPanel,
     hideMidiInput2,
     showMidiInput2
 } from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
-import {openHelpPanel, setupHelpPanel} from "./ui_help";
+import {setupHelpPanel} from "./ui_help";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {setupLibrary} from "./ui_library";
@@ -232,43 +231,53 @@ function setupMidiInput2() {
 }
 
 function setupControlsHelp() {
-    warn("setupControlsHelp: TODO: v1.5");
-    /*
+    // warn("setupControlsHelp: TODO: v1.5");
+
     $(".header.infos").hover(
         function() {
-            if (!preferences.display_infos) return;
+
+            if ($('#info-panel').is('.closed')) return;
+
+            // if (!preferences.display_infos) return;
             const cc = parseInt($(this).attr("data-infos"), 10);
             if (!Number.isInteger(cc)) {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
                 return;
             }
-            $("#messages-list > div").hide();
-            $("#control-infos").show().html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
+            // $("#messages-list > div").hide();
+            // $("#control-infos").show().html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
+            $("#control-infos").html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
             // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
         },
         function() {
-            if (!preferences.display_infos) return;
-            $("#control-infos").text("").hide();
-            $("#messages-list > div").show();
-            const e = document.getElementById("messages-list");
-            e.scrollTop = e.scrollHeight;
+            // if (!preferences.display_infos) return;
+            if ($('#info-panel').is('.closed')) return;
+            $("#control-infos").text("");   //.hide();
+            // $("#messages-list > div").show();
+            // const e = document.getElementById("messages-list");
+            // e.scrollTop = e.scrollHeight;
         }
     );
-     */
+
 }
 
 function setupMenu() {
+
     warn("setupMenu: TODO: v1.5");
+    log("setupMenu()");
 
     $('.menu-entry')
         .mouseenter((e) => $(e.currentTarget).children('.tooltip').first().removeClass('hidden'))
         .mouseleave((e) => $(e.currentTarget).children('.tooltip').first().addClass('hidden'));
 
-
-/*
-    log("setupMenu()");
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
+    $("#menu-send").click(() => {fullUpdateDevice(); return false});
+    $("#menu-save").click(savePreset);
+    $("#menu-print-preset").click(printPreset);
+    $("#menu-load-preset").click(loadPresetFromFile);
+    $("#menu-download-sysex").click(downloadLastSysEx);
+
     // $("#menu-init").click(function () {  //DEBUG
     //     console.log('resize');
     //     window.resizeTo(1000, 800);
@@ -278,22 +287,15 @@ function setupMenu() {
     //     );
     // });
     // $("#menu-read").click(() => requestPreset());       //TODO: create function
-    $("#menu-send").click(() => {fullUpdateDevice(); return false});
-    $("#menu-save").click(savePreset);
-    $("#menu-get-url").click(reloadWithSysexParam);
-    $("#menu-print-preset").click(printPreset);
-    $("#menu-load-preset").click(loadPresetFromFile);
-    $("#menu-download-sysex").click(downloadLastSysEx);
-    $("#menu-midi").click(openMidiWindow);
-    $("#menu-global").click(toggleGlobalSettingsPanel);
-    $("#menu-prefs").click(toggleAppPreferencesPanel);
-    $("#menu-help").click(openHelpPanel);
-    $("#menu-about").click(openCreditsDialog);
-    $("#menu-zoom-in").click(zoomIn);
-    $("#menu-zoom-out").click(zoomOut);
-    $("#url-auto-toggle").click(toggleUrlAutomation);
+    // $("#menu-get-url").click(reloadWithSysexParam);
+    // $("#menu-midi").click(openMidiWindow);
+    // $("#menu-prefs").click(toggleAppPreferencesPanel);
+    // $("#menu-help").click(openHelpPanel);
+    // $("#menu-about").click(openCreditsDialog);
+    // $("#menu-zoom-in").click(zoomIn);
+    // $("#menu-zoom-out").click(zoomOut);
+    // $("#url-auto-toggle").click(toggleUrlAutomation);
     $("#preset-file").change(readFile);     // in load-preset-dialog
-*/
 }
 
 /**

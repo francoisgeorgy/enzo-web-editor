@@ -20,9 +20,10 @@ const MAX_MESSAGE_DISPLAYED = 200;
 let last_message = "";  // used to ignore duplicates
 
 export function appendMessage(msg, bold = false, ignore_duplicates = true) {
-    warn("appendMessage: TODO: v1.5");
+    // warn("appendMessage: TODO: v1.5");
 
-/*
+    if ($('#info-panel').is('.closed')) return;
+
     if (!msg) return;
     if (ignore_duplicates && (msg === last_message)) return;
 
@@ -36,12 +37,11 @@ export function appendMessage(msg, bold = false, ignore_duplicates = true) {
     const e = document.getElementById("messages-list");
     e.scrollTop = e.scrollHeight;
     messages++;
-*/
+
 }
 
 export function monitorMessage(control_number, raw_value) {
-    warn("monitorMessage: TODO: v1.5");
-    /*
+    // warn("monitorMessage: TODO: v1.5");
     const c = MODEL.control[control_number];
     if (!c) {
         warn(`monitorMessage: unknown control ${control_number}`);
@@ -56,5 +56,4 @@ export function monitorMessage(control_number, raw_value) {
         const v = c.human(raw_value);
         appendMessage(`${c.name} set to ${v}`);
     }
-*/
 }
