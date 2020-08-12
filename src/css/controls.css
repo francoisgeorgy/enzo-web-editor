@@ -10,6 +10,7 @@ div.controls {
     color: var(--header-text);
     text-align: center;
     text-transform: uppercase;
+    position: relative;
 }
 
 .header-shortcut {
@@ -17,6 +18,16 @@ div.controls {
     font-size: 80%;
     padding-top: 3px;
     color: var(--header-shortcut-text);
+}
+
+/*.control-label {*/
+/*    position: relative;*/
+/*}*/
+
+.control-lock {
+    position: absolute;
+    bottom: 4px;
+    right: 0;
 }
 
 div.exp_wrapper {

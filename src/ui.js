@@ -236,10 +236,15 @@ function setupControlsHelp() {
     $(".header.infos").hover(
         function() {
 
+            const cc = parseInt($(this).attr("data-infos"), 10);
+
+            $(`.control-lock.control-${cc}`).removeClass('hidden');
+
+
             if ($('#info-panel').is('.closed')) return;
 
             // if (!preferences.display_infos) return;
-            const cc = parseInt($(this).attr("data-infos"), 10);
+            // const cc = parseInt($(this).attr("data-infos"), 10);
             if (!Number.isInteger(cc)) {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
                 return;
@@ -250,6 +255,9 @@ function setupControlsHelp() {
             // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
         },
         function() {
+
+            $('.control-lock').addClass('hidden');
+
             // if (!preferences.display_infos) return;
             if ($('#info-panel').is('.closed')) return;
             $("#control-infos").text("");   //.hide();
@@ -260,6 +268,22 @@ function setupControlsHelp() {
     );
 
 }
+
+/*
+function setupControlsLocks() {
+
+    $(".header.infos").hover(
+        function() {
+            $('.control-lock').removeClass('hidden');
+        },
+        function() {
+            $('.control-lock').addClass('hidden');
+        }
+    );
+
+}
+*/
+
 
 function setupMenu() {
 
