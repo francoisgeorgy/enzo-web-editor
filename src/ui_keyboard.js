@@ -118,7 +118,11 @@ function keyDown(code, alt, shift, meta, ctrl) {
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
-        presetSet(code - 48);
+        if (shift && code <= 54) {
+            presetSet(code - 48 + 10);
+        } else {
+            presetSet(code - 48);
+        }
         return;
     }
 

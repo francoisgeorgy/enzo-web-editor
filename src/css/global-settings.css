@@ -1,3 +1,9 @@
+.globals-grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
 .global-setting-toggle.enabled {
     color: blue;
     cursor: pointer;

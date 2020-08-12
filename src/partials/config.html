@@ -1,5 +1,5 @@
-<div class="mg-border-left mg-row-border-top mg-row-border-bottom py-5"></div>
-<div id="config" class="config span-6 py-5 options-panel mg-row-border-top mg-row-border-bottom Xclosed">
+<div class="mg-border-left mg-row-border-top mg-row-border-bottom py-10"></div>
+<div id="config" class="config span-6 py-10 options-panel mg-row-border-top mg-row-border-bottom">
 
     <div class="panel-closed flex-row">
 
@@ -53,6 +53,7 @@
             ch 2:
         </div>
         <select id="midi-input2-channel">
+                    <option value="0"></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -71,10 +72,25 @@
                     <option value="16">16</option>
                 </select>
 
+        <div class="midi-sync">
+            <div class="menu-entry">
+                <a href="#"><i class="fas fa-download"></i></a>
+                <div class="tooltip hidden">
+                    Send the current settings to Enzo.
+                </div>
+            </div>
+            <div class="menu-entry">
+                <a href="#"><a href="#"><i class="fas fa-upload"></i></a></a>
+                <div class="tooltip hidden">
+                    Read Enzo and update the editor.
+                </div>
+            </div>
+
+        </div>
+
         <div class="flex-grow align-right">
-            Messages on/off
-            Description on/off
-            <i class="fas fa-cog" aria-hidden="true"></i>
+            <a href="#" id="toggle-log-descr">Hide History &amp; Description</a>
+<!--            <i class="fas fa-cog" aria-hidden="true"></i>-->
         </div>
 
     </div>
@@ -179,4 +195,4 @@
 
 -->
 </div>
-<div class="mg-border-right mg-row-border-top mg-row-border-bottom py-5"></div>
+<div class="mg-border-right mg-row-border-top mg-row-border-bottom py-10"></div>

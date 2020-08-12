@@ -19,6 +19,16 @@
     margin-left: 20px;
 }
 
+.config .midi-sync {
+    display: flex;
+}
+.config .midi-sync {
+    margin-left: 20px;
+}
+.config .midi-sync .menu-entry {
+    margin-right: 10px;
+}
+
 /*
 .zoom-0 #midi-input2-device {margin-right: 5px;}
 .zoom-1 #midi-input2-device {margin-right: 10px;}

@@ -60,15 +60,32 @@ export function setupGlobalSettings() {
             $('.global-setting-toggle').removeClass('enabled');
 
         }
+        return false;
     });
 
     $(".global-setting-toggle").click((e) => {
-        console.log(e.currentTarget.id);
 
         if ($("#global-lock-opened").is('.closed')) {
             log("locked, ignore");
+            return false;
         }
 
+        console.log(e.currentTarget.id);
+
+        const c = $(e.currentTarget).children('.value-127');
+        const off = c.is('.hidden');
+        console.log(c, off);
+
+        if (off) {
+            console.log("make on");
+            $(e.currentTarget).children('.value-0').addClass('hidden');
+            $(e.currentTarget).children('.value-127').removeClass('hidden');
+        } else {
+            console.log("make off");
+            $(e.currentTarget).children('.value-0').removeClass('hidden');
+            $(e.currentTarget).children('.value-127').addClass('hidden');
+        }
+        return false;
     });
 
     /*
@@ -95,7 +112,7 @@ export function setupGlobalSettings() {
         sendSysex(MODEL.getSysexDataForGlobalConfig(setting_number, value));
     });
 */
-    return true;
+    // return true;
 }
 
 /**

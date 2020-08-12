@@ -1,5 +1,5 @@
-<div class="mg-border-left mg-row-border-top mg-row-border-bottom py-5"></div>
-<div id="presets" class="span-6 mg-row-border-top mg-row-border-bottom py-5">
+<div class="mg-border-left mg-row-border-top mg-row-border-bottom py-10"></div>
+<div id="presets" class="span-6 mg-row-border-top mg-row-border-bottom py-10">
 
     <div class="flex-row">
 
@@ -45,7 +45,8 @@
         <div class="presets-menu">
 
             <div class="preset-menu-wrapper">
-                <a href=""><i class="fas fa-bars"></i> ENZO preset</a>
+<!--                <a href=""><i class="fas fa-bars"></i> ENZO preset</a>-->
+                <a href="#" id="library-toggle"><i class="fas fa-bars"></i> <span id="library-toggle-label">Open library</span></a>
             </div>
 
 
@@ -96,95 +97,120 @@
 
     </div>
 
-    <div class="flex-row mt-10">
+    <div id="library" class="library closed">
 
-        <div class="presets-lib flex-grow">
-            <div class="preset preset-id"><span class="preset-name">abcde fghik</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
-            <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+        <div class="flex-row mt-10">
+
+            <div class="presets-lib flex-grow">
+                <div class="preset preset-id"><span class="preset-name">abcde fghik</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+                <div class="preset preset-id"><span class="preset-name">&nbsp;</span></div>
+            </div>
+
+            <div class="presets-menu">
+
+                <div class="preset-menu-wrapper">
+<!--                    <a href=""><i class="fas fa-bars"></i> Editor presets</a>-->
+                    <div class="menu-entry">
+                        <a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset).">
+<!--                            <i class="fas fa-folder-open" aria-hidden="true"></i>-->
+                            <span class="menu-text">Import sysex</span>
+                        </a>
+                    </div>
+                    <div class="menu-entry">
+                        <a id="menu-download-sysex" href="#" title="Download the current editor's values as a sysex file.">
+<!--                            <i class="fas fa-file-download" aria-hidden="true"></i>-->
+                            <span class="menu-text">Export sysex</span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <!--
+                            <div class="menu-entry">
+                                <a id="menu-send" href="#" title="Send the editor's current values to Enzo (does not save in Enzo's memory).">
+                                    <i class="fas fa-arrow-alt-circle-down" aria-hidden="true"></i>
+                                    <span class="menu-text">Send to Enzo</span></a>
+                            </div>
+                -->
+
+    <!--
+                <div class="menu-entry">
+                    <a id="menu-save" href="#" title="Tell the Enzo to save in its memory the editor's current values (updates the current stored preset).">
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        <span class="menu-text">Save in Enzo</span></a>
+                </div>
+    -->
+
+    <!--
+                <div class="menu-entry">
+                    <a id="menu-print-preset" href="#" title="Open a popup window with the currents settings displayed for printing (or saving as PDF).">
+                        <i class="fas fa-print" aria-hidden="true"></i>
+                        <span class="menu-text">Print</span></a>
+                </div>
+    -->
+    <!--
+                <div class="menu-entry">
+                    <a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset).">
+                        <i class="fas fa-folder-open" aria-hidden="true"></i>
+                        <span class="menu-text">Import</span></a>
+                </div>
+                <div class="menu-entry">
+                    <a id="menu-download-sysex" href="#" title="Download the current editor's values as a sysex file.">
+                        <i class="fas fa-file-download" aria-hidden="true"></i>
+                        <span class="menu-text">Export</span></a>
+                </div>
+    -->
+
+
+                <!--
+                        presets
+                        import
+                        download all
+                        clear all
+                        load factory
+                -->
+            </div>
+
         </div>
 
-        <div class="presets-menu">
-
-            <div class="preset-menu-wrapper">
-                <a href=""><i class="fas fa-bars"></i> Editor presets</a>
-            </div>
-
-
-            <!--
-                        <div class="menu-entry">
-                            <a id="menu-send" href="#" title="Send the editor's current values to Enzo (does not save in Enzo's memory).">
-                                <i class="fas fa-arrow-alt-circle-down" aria-hidden="true"></i>
-                                <span class="menu-text">Send to Enzo</span></a>
-                        </div>
-            -->
-
 <!--
-            <div class="menu-entry">
-                <a id="menu-save" href="#" title="Tell the Enzo to save in its memory the editor's current values (updates the current stored preset).">
-                    <i class="fas fa-download" aria-hidden="true"></i>
-                    <span class="menu-text">Save in Enzo</span></a>
-            </div>
--->
+        <div>
+            Current settings: Send to Enzo - Save in Enzo
 
-<!--
-            <div class="menu-entry">
-                <a id="menu-print-preset" href="#" title="Open a popup window with the currents settings displayed for printing (or saving as PDF).">
-                    <i class="fas fa-print" aria-hidden="true"></i>
-                    <span class="menu-text">Print</span></a>
-            </div>
--->
-<!--
-            <div class="menu-entry">
-                <a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset).">
-                    <i class="fas fa-folder-open" aria-hidden="true"></i>
-                    <span class="menu-text">Import</span></a>
-            </div>
-            <div class="menu-entry">
-                <a id="menu-download-sysex" href="#" title="Download the current editor's values as a sysex file.">
-                    <i class="fas fa-file-download" aria-hidden="true"></i>
-                    <span class="menu-text">Export</span></a>
-            </div>
--->
-
-
-            <!--
-                    presets
-                    import
-                    download all
-                    clear all
-                    load factory
-            -->
+            Presets: Export Import
         </div>
+-->
 
     </div>
+
 </div>
-<div class="mg-border-right mg-row-border-top mg-row-border-bottom py-5"></div>
+<div class="mg-border-right mg-row-border-top mg-row-border-bottom py-10"></div>

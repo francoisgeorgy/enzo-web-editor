@@ -40,20 +40,6 @@
 .zoom-2 .preset {font-size: 3.5vmin;}
 */
 
-.zoom-1 #messages { padding-bottom: 10px!important; }
-.zoom-1 #options { padding-bottom: 10px!important; }
-.zoom-1 #presets { padding-bottom: 10px!important; }
-
-.zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.75rem; }
-.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
-/*.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }*/
-.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 2.4vmin; }
-
-.zoom-0 #control-infos { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.75rem; }
-.zoom-1 #control-infos { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
-/*.zoom-2 #control-infos { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }*/
-.zoom-2 #control-infos { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 2.4vmin; }
-
 .zoom-0 .header {font-size: 0.9rem;}
 .zoom-1 .header {font-size: 1.25rem;}
 /*.zoom-2 .header {font-size: 1.5rem;}*/
@@ -130,6 +116,8 @@
 .zoom-1 .knob-value {font-size: 125%;}
 .zoom-2 .knob-value {font-size: 125%;}
 
+
+/*
 @media screen and (max-height: 700px) {
     .zoom-2 #options-col-1 {
         grid-column-gap: 2px;
@@ -155,3 +143,4 @@
         padding-top: 0;
     }
 }
+*/

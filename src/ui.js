@@ -32,6 +32,7 @@ import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
+import {setupLibrary} from "./ui_library";
 
 /**
  * Handles a change made by the user in the UI.
@@ -258,6 +259,12 @@ function setupControlsHelp() {
 
 function setupMenu() {
     warn("setupMenu: TODO: v1.5");
+
+    $('.menu-entry')
+        .mouseenter((e) => $(e.currentTarget).children('.tooltip').first().removeClass('hidden'))
+        .mouseleave((e) => $(e.currentTarget).children('.tooltip').first().addClass('hidden'));
+
+
 /*
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
@@ -303,6 +310,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     //setupMidiInput2();    //v1.5: always shown
     setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
+    setupLibrary(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
