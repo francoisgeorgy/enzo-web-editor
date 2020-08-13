@@ -2,6 +2,7 @@ import {log} from "./debug";
 import MODEL from "./model";
 import {getMidiOutputPort, sendPC} from "./midi_out";
 import {getMidiInputPort} from "./midi_in";
+import {updateUrl} from "./url";
 
 /*
     .preset :
@@ -98,4 +99,38 @@ export function setupPresetSelectors() {
         const n = parseInt(c[1], 10);  //TODO: check if error
         presetSet(n);
     });
+}
+
+/* editor presets (library) */
+
+const library = [];
+
+export function addPresetToLibrary() {
+    const h = updateUrl();
+    library.push({
+        h: h,
+        name: 'no name'
+    });
+    console.log(library);
+
+    let i = 0;
+    let done = false;
+    $('.presets-lib .preset-editor').each(function(index, element) {
+        i++;
+        let t = $(this).text().trim();
+        // console.log(index + ": " + $(this).text(), t, typeof t, t === '', !!t, JSON.stringify(t), element);
+        if (t === '') {
+            // console.log('add', $(element));
+            $(element).html(`<span class="preset-name">no name</span>`);
+            done = true;
+            return false;   // returning false stop the iteration
+        }
+    });
+    // console.log(i, done);
+    if (!done) {
+        // console.log("add",4 - (i % 4), "slots");
+        $('.presets-lib').first().append(`<div class="preset preset-editor"><span class="preset-name">yolo</span></div>`);
+    }
+
+
 }

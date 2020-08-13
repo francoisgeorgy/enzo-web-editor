@@ -88,6 +88,7 @@ export function updateUrl(window_title = null) {
         window.location.hash = h;   // this will trigger a window.onhashchange event
         setTitle(window_title);
     }
+    return h;
 }
 
 /*

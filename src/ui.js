@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {updatePresetSelector, setPresetDirty, setupPresetSelectors} from "./ui_presets";
+import {updatePresetSelector, setPresetDirty, setupPresetSelectors, addPresetToLibrary} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -21,11 +21,11 @@ import {preferences} from "./preferences";
 import {updateUrl} from "./url";
 import {setupGlobalSettings} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
-import {
-    setupAppPreferences,
-    hideMidiInput2,
-    showMidiInput2
-} from "./ui_app_prefs";
+// import {
+//     setupAppPreferences,
+//     hideMidiInput2,
+//     showMidiInput2
+// } from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {setupHelpPanel} from "./ui_help";
@@ -289,7 +289,6 @@ function setupControlsLocks() {
 
 function setupMenu() {
 
-    warn("setupMenu: TODO: v1.5");
     log("setupMenu()");
 
     $('.menu-entry')
@@ -303,6 +302,7 @@ function setupMenu() {
     $("#menu-print-preset").click(printPreset);
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-download-sysex").click(downloadLastSysEx);
+    $("#menu-add-preset").click(addPresetToLibrary);
 
     // $("#menu-init").click(function () {  //DEBUG
     //     console.log('resize');
@@ -345,7 +345,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupExp(handleUserAction);
     setupGlobalSettings();
     // setupAppPreferences(input2SelectionCallback);
-    setupHelpPanel();
+    // setupHelpPanel();
     setupControlsHelp();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);

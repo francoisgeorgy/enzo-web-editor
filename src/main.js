@@ -67,18 +67,6 @@ function setupModel() {
 
 //==================================================================================================================
 
-/*
-function asyncFunction() {
-    return 42;
-}
-
-async function f() {
-    console.log(await asyncFunction());
-}
-
-f();
-*/
-
 /**
  * Check that we can communicate with the pedal
  * @returns {boolean} true if communication OK, false otherwise

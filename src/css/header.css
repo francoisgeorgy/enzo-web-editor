@@ -37,12 +37,16 @@
 
 .neon {
     /*font-family: Roboto, sans-serif;*/
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 #header > .menu {
     /*text-align: center;*/
 }
+
+/*#header a {*/
+/*    color: var(--menu-link);*/
+/*}*/
 
 .menu.middle {
     flex-grow: 2;

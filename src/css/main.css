@@ -124,6 +124,11 @@ a {
     z-index: 100;
 }
 
+.size-2 .tooltip {
+    font-size: 1.7vw;
+    width: 16vw;
+}
+
 /*--- MAIN GRID ---*/
 
 #wrapper {

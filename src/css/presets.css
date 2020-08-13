@@ -5,19 +5,54 @@
     grid-gap: 3px;
 }
 
-.presets-selectors > div {
+/*.presets-selectors > div {*/
+.preset-id {
     text-align: center;
+    position: relative;
+}
+
+.dirty-dot {
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: -6px;
+    font-size: 120%;
+}
+
+.preset.dirty .dirty-dot {
+    display: block;
 }
 
 .presets-lib {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    /*grid-template-columns: repeat(8, 1fr);*/
     grid-gap: 3px;
     /*padding: 5px 0;*/
+    align-content: center;
 }
 
-.presets-selectors > div,
-.presets-lib > div {
+.preset-editor {
+    text-align: left;
+    flex-direction: row!important;
+}
+
+.preset-editor .preset-name {
+    flex-grow: 1;
+}
+
+.preset-editor:hover > i {
+    display: block;
+}
+.preset-editor > i {
+    /*float: right;*/
+    display: none;
+    font-size: 87.5%;
+}
+
+/*.presets-selectors > div,*/
+/*.presets-lib > div {*/
+.preset {
     border: 1px solid #777;
     overflow-x: hidden;
     white-space: nowrap;
@@ -65,19 +100,6 @@
     font-size: 1.7vw;
 }
 
-/*
-.preset > span {
-    position: absolute;
-    right: 2px;
-    top: -8px;
-    font-size: 120%;
-}
-
-.preset.dirty > span {
-    display: block;
-}
-*/
-
 .presets-selectors > div {
     /*background-color: #e4e474;*/
     background-color: rgba(255, 251, 177, 0.25);
@@ -97,7 +119,7 @@
     margin-bottom: 5px;
 }
 
-.preset-id {
+.preset {
     display: flex;
     flex-direction: column;
     justify-content: center;

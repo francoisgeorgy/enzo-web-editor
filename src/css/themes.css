@@ -24,6 +24,8 @@ html {
     --menu-text: #333;
     --menu-text-hover: #000;
 
+    --menu-link: #761ec6;
+
     --bt-color: #333;
     --bt-border: #333;
     --bt-hover-color: #000;
@@ -53,11 +55,16 @@ html {
 
 }
 
+a {
+    color: var(--menu-link);
+}
+
 .glow {
-    color: #ddf6ff!important;
+    /*color: #ddf6ff!important;*/
+    color: yellow!important;
     /*color: #f9d000!important;*/
-    /*text-shadow: 0 0 12px #ffffff;*/
-    text-shadow: 0 0 8px #798c0e;
+    text-shadow: 0 0 12px lightyellow;
+    /*text-shadow: 0 0 8px #798c0e;*/
 }
 
 #main-grid {
