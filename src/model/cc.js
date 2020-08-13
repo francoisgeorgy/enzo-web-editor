@@ -264,7 +264,7 @@ function defineControls() {
             offset: 31,
             mask: [0x7F]
         },
-        infos: "Detunes the oscillators of each Synth voice (Sets the amount of delay modulation in Dry mode)."
+        infos: "Detunes the oscillators of each Synth voice<br/>(Sets <span style='font-size: small'>the amount</span> of delay modulation in Dry mode)."
     };
     control[control_id.portamento] = { // 22,
         name: "Portamento",

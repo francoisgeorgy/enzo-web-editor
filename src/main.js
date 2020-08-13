@@ -20,13 +20,13 @@ import {
     setMidiInputPort
 } from "./midi_in";
 import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
+import {hashSysexPresent, initFromUrl, setupUrlSupport} from "./url";
 
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/header.css";
-import "./css/zoom.css";
+import "./css/size.css";
 import "./css/config.css";
 import "./css/info-panel.css";
 import "./css/presets.css";
@@ -38,7 +38,7 @@ import "./css/global-settings.css";
 
 import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 import * as Utils from "./utils";
-import {initZoom} from "./ui_zoom";
+import {initSize} from "./ui_size";
 
 const browser = detect();
 
@@ -610,7 +610,7 @@ $(function () {
                 z = 2; break;
         }
         if (z !== preferences.zoom_level) {
-            initZoom(z);
+            initSize(z);
         }
     }
 
@@ -621,7 +621,7 @@ $(function () {
     }
 
     setupUrlSupport();
-    startUrlAutomation();
+    // startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
 

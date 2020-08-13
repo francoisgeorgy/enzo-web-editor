@@ -14,9 +14,9 @@ import {setCommunicationStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {loadPresetFromFile, readFile} from "./read_file";
-// import {openCreditsDialog, printPreset} from "./ui_dialogs";
+import {printPreset} from "./ui_dialogs";
 // import {openMidiWindow} from "./ui_midi_window";
-import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
+import {initSize, zoomIn, zoomOut} from "./ui_size";
 import {preferences} from "./preferences";
 import {updateUrl} from "./url";
 import {setupGlobalSettings} from "./ui_global_settings";
@@ -316,8 +316,8 @@ function setupMenu() {
     // $("#menu-prefs").click(toggleAppPreferencesPanel);
     // $("#menu-help").click(openHelpPanel);
     // $("#menu-about").click(openCreditsDialog);
-    // $("#menu-zoom-in").click(zoomIn);
-    // $("#menu-zoom-out").click(zoomOut);
+    $("#menu-size-in").click(zoomIn);
+    $("#menu-size-out").click(zoomOut);
     // $("#url-auto-toggle").click(toggleUrlAutomation);
     $("#preset-file").change(readFile);     // in load-preset-dialog
 }
@@ -331,7 +331,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
 
     $("span.version").text(VERSION);
 
-    initZoom(preferences.zoom_level);
+    initSize(preferences.zoom_level);
 
     //setupMidiInput2();    //v1.5: always shown
     setCommunicationStatus(false);

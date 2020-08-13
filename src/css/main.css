@@ -135,46 +135,6 @@ a {
 #main-grid {
     /*flex-grow: 1;*/
 }
-
-@media (min-width: 640px) {
-    #wrapper {
-        width: 100%;
-        margin: 0 0 0 0;
-        padding: 0;
-    }
-}
-
-@media (min-width: 768px) {
-    #wrapper {
-        width: 700px;
-        margin: 10px auto 0 auto;
-        padding: 0;
-    }
-}
-
-@media (min-width: 1024px) {
-    #wrapper {
-        width: 900px;
-        margin: 10px auto 0 auto;
-    }
-}
-
-@media (min-width: 1280px) {
-    #wrapper {
-        width: 1040px;
-        margin: 10px auto 0 auto;
-    }
-}
-
-/*
-@media (min-width: 1600px) {
-    #wrapper {
-        width: 100%;
-        margin: 10px 0 0 0;
-    }
-}
-*/
-
 #main-grid {
     display: grid;
     grid-template-columns: 20px repeat(6, 1fr) 20px;

@@ -30,6 +30,14 @@
     /*justify-content: space-between;*/
 }
 
+.size-0 .presets-menu {
+    width: 100px;
+}
+
+.size-2 .presets-menu {
+    width: 14vw;
+}
+
 .presets-menu .menu-entry {
     /*margin-right: 20px;*/
 }
@@ -45,6 +53,16 @@
 
 .presets-lib .preset-name {
     margin-left: 0;
+}
+
+.size-0 .preset-name {
+    margin: 0px 0 0px 3px;
+    font-size: 0.875rem;
+}
+
+.size-2 .preset-name {
+    margin: 2px 0 2px 5px;
+    font-size: 1.7vw;
 }
 
 /*
@@ -68,34 +86,54 @@
 .preset-menu-wrapper {
     margin-top: 5px;
 }
+.size-0 .preset-menu-wrapper {
+    margin-top: 3px;
+}
+.size-2 .preset-menu-wrapper {
+    margin-top: 0;
+}
 
 .preset-menu-wrapper .menu-entry {
     margin-bottom: 5px;
 }
 
-.zoom-0 .preset {
+.preset-id {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.size-0 .preset {
     padding: 2px 0;
     font-size: 1rem;
 }
-.zoom-1 .preset {
+.size-1 .preset {
     padding: 2px 4px;
     font-size: 1.25rem;
 }
 
-/*.zoom-1 .presets-lib .preset {*/
+/*.size-1 .presets-lib .preset {*/
 /*    padding: 2px 4px;*/
 /*}*/
 
-/*.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}*/
-.zoom-2 .preset {font-size: 3.5vmin;}
+/*.size-2 .preset {padding: 8px 0; font-size: 2rem;}*/
+/*.size-2 .preset {font-size: 3.5vmin;}*/
+.size-0 .preset,
+.size-0 .presets-menu {
+    font-size: 0.875rem;
+}
 
+.size-2 .preset,
+.size-2 .presets-menu {
+    font-size: 2vw;
+}
 
-/*.zoom-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}*/
+/*.size-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}*/
 /*
-.zoom-1 .preset > span {
+.size-1 .preset > span {
     right: 2px;
     top: -8px;
     font-size: 120%;
 }
 */
-/*.zoom-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
+/*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/

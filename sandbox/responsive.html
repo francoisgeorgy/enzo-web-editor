@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        #box {
+            width: 200px;
+            border: 2px solid black;
+            margin: 10px;
+            background-color: white;
+        }
+
+        @media (min-width: 640px) {
+            #box {
+                width: 100%;
+                margin: 0 0 0 0;
+                padding: 0;
+                background-color: yellow;
+            }
+        }
+
+        @media (min-width: 768px) {
+            #box {
+                width: 700px;
+                margin: 10px auto 0 auto;
+                padding: 0;
+                background-color: red;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #box {
+                width: 900px;
+                margin: 10px auto 0 auto;
+                background-color: blue;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #box {
+                width: 1040px;
+                margin: 10px auto 0 auto;
+                background-color: gray;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        BOX
+    </div>
+    <pre>
+        #box {
+            width: 200px;
+            border: 2px solid black;
+            background-color: white;
+        }
+
+        @media (min-width: 640px) {
+            #box {
+                width: 100%;
+                background-color: yellow;
+            }
+        }
+
+        @media (min-width: 768px) {
+            #box {
+                width: 700px;
+                background-color: red;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #box {
+                width: 900px;
+                background-color: blue;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #box {
+                width: 1040px;
+                background-color: gray;
+            }
+        }
+    </pre>
+</body>
+</html>

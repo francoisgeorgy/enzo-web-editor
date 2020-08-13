@@ -20,15 +20,15 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
-<body>
+<body class="size-1">
 
-    <div id="wrapper" class="zoom-1">
+    <div id="wrapper">
 
         <div id="main-grid" class="main-default">
 
             <div class="mg-border-left mg-top-row mg-row-border-bottom py-5"></div>
             <div id="header" class="span-6 mg-top-row py-5 mg-row-border-bottom">
-                <div class="flex-row">
+                <div class="flex-row app-title">
                     <div>
                         <span class="neon">ENZO Editor</span>
                         by StudioCode.dev
@@ -39,7 +39,7 @@
             <div class="mg-border-right mg-top-row mg-row-border-bottom py-5"></div>
 
             <%= require('html-loader!./partials/config.html') %>
-            <%= require('html-loader!./partials/info-panel.html') %>
+<!--            <%= require('html-loader!./partials/info-panel.html') %>-->
             <%= require('html-loader!./partials/presets.html') %>
             <%= require('html-loader!./partials/controls.html') %>
             <%= require('html-loader!./partials/global-settings.html') %>

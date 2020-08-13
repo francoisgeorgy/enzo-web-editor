@@ -12,7 +12,19 @@
 }
 
 .config .panel-closed select.device {
-    width: 5rem;
+    width: 150px;
+}
+
+.size-0 .config .panel-closed select.device {
+    width: 80px;
+}
+
+.size-1 .config .panel-closed select.device {
+    width: 150px;
+}
+
+.size-2 .config .panel-closed select.device {
+    width: 12vw;
 }
 
 .config .panel-closed .label.midi-in2 {
@@ -30,7 +42,7 @@
 }
 
 /*
-.zoom-0 #midi-input2-device {margin-right: 5px;}
-.zoom-1 #midi-input2-device {margin-right: 10px;}
-.zoom-2 #midi-input2-device {margin-right: 1vw;}
+.size-0 #midi-input2-device {margin-right: 5px;}
+.size-1 #midi-input2-device {margin-right: 10px;}
+.size-2 #midi-input2-device {margin-right: 1vw;}
 */

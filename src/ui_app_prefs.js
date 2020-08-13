@@ -2,7 +2,7 @@ import {log, warn} from "./debug";
 import {savePreferences, preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
-import {startUrlAutomation, stopUrlAutomation} from "./url";
+// import {startUrlAutomation, stopUrlAutomation} from "./url";
 
 // const CONTAINER = "#app-preferences";
 
