@@ -125,44 +125,13 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
 export function fullUpdateDevice() {
 
     log(`fullUpdateDevice()`);
-/*
-    if (fullUpdateRunning) return;
 
-    fullUpdateRunning = true;
-
-    const c = MODEL.control;
-
-    let i = -1;
-    function f() {
-        i = i + 1;
-        // skip undefined entries:
-        while (i < c.length && typeof c[i] === "undefined") {
-            i = i + 1;
-        }
-        if (i >= c.length) {
-            log(`fullUpdateDevice done`);
-            fullUpdateRunning = false;
-            if (!silent && midi_output) {
-                appendMessage("Current settings sent to the pedal.")
-            }
-        } else {
-            // log(`fullUpdateDevice: send CC ${i}`);
-            if (!onlyChanged) {
-                sendCC(c[i], false);
-            }
-            setTimeout(f, 40);
-        }
-    }
-
-    f();
-*/
     sendSysex(MODEL.getPreset(false));
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
         // setPresetDirty();    //FIXME: why call setPresetDirty here?
     }
-
 }
 
 /**

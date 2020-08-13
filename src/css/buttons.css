@@ -59,6 +59,10 @@ div.btx {   /* EXP close button */
     color: var(--on-color)!important;
 }
 
+.led-on {
+    color: var(--midi-on)!important;
+}
+
 .sw-off {
     display: none;
 }

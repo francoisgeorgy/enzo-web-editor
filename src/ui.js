@@ -344,7 +344,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupMomentarySwitches(tapDown, tapRelease);
     setupExp(handleUserAction);
     setupGlobalSettings();
-    setupAppPreferences(input2SelectionCallback);
+    // setupAppPreferences(input2SelectionCallback);
     setupHelpPanel();
     setupControlsHelp();
     setupMenu();
