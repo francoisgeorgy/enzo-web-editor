@@ -25,15 +25,15 @@ function displayCurrentPreferences() {
 }
 */
 
+/*
 export function showMidiInput2() {
-    // $("#midi-in2-led").show();
     $("#midi-in2").show();
 }
 
 export function hideMidiInput2() {
-    // $("#midi-in2-led").hide();
     $("#midi-in2").hide();
 }
+*/
 
 /*
 export function openAppPreferencesPanel() {

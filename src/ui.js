@@ -231,7 +231,6 @@ function setupMidiInput2() {
 }
 
 function setupControlsHelp() {
-    // warn("setupControlsHelp: TODO: v1.5");
 
     $(".header.infos").hover(
         function() {
@@ -240,6 +239,8 @@ function setupControlsHelp() {
 
             $(`.control-lock.control-${cc}`).removeClass('hidden');
 
+/*
+ * TODO: enable #info-panel
 
             if ($('#info-panel').is('.closed')) return;
 
@@ -249,21 +250,22 @@ function setupControlsHelp() {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
                 return;
             }
-            // $("#messages-list > div").hide();
-            // $("#control-infos").show().html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
             $("#control-infos").html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
-            // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
+*/
+
         },
         function() {
 
             $('.control-lock').addClass('hidden');
 
+/*
+ * TODO: enable #info-panel
+
             // if (!preferences.display_infos) return;
             if ($('#info-panel').is('.closed')) return;
             $("#control-infos").text("");   //.hide();
-            // $("#messages-list > div").show();
-            // const e = document.getElementById("messages-list");
-            // e.scrollTop = e.scrollHeight;
+*/
+
         }
     );
 
