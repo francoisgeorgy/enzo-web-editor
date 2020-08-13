@@ -22,6 +22,7 @@ let last_message = "";  // used to ignore duplicates
 export function appendMessage(msg, bold = false, ignore_duplicates = true) {
     // warn("appendMessage: TODO: v1.5");
 
+/*
     if ($('#info-panel').is('.closed')) return;
 
     if (!msg) return;
@@ -37,7 +38,7 @@ export function appendMessage(msg, bold = false, ignore_duplicates = true) {
     const e = document.getElementById("messages-list");
     e.scrollTop = e.scrollHeight;
     messages++;
-
+*/
 }
 
 export function monitorMessage(control_number, raw_value) {

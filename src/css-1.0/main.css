@@ -10,17 +10,6 @@ html {
     height: 100%;
 }
 
-body {
-    margin: 0;
-    padding: 0 0 0 0;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 400;
-    background: var(--body-bg-color);
-}
-
-.hidden {
-    display: none;
-}
 
 .header {
     margin: 3px 3px 0 3px;
@@ -36,17 +25,6 @@ body {
     color: var(--header-shortcut-text);
 }
 
-.bold {
-    font-weight: bold;
-}
-
-.on {
-    color: var(--value)!important;
-}
-
-.error {
-    color: red;
-}
 
 #midi-in1-led,     /* TODO: change to class */
 #midi-in2-led,
@@ -81,32 +59,6 @@ body {
     color: var(--running)!important;
 }
 
-.grid-2x1 {
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr;
-    justify-items: center;
-}
-
-.grid-2x1 .bt {
-    width: 75%;
-}
-
-.grid-3x2 {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr 1fr;
-}
-
-.grid-3x2 .bt {
-    margin-bottom: 0;
-}
-
-.grid-3x3 {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto auto;
-}
 
 .grid-default-gap {
     grid-column-gap: 20px;
@@ -445,39 +397,7 @@ h4 {
     color: var(--panel-link);
 }
 
-.dialog {
-    overflow:auto;
-    background-color: rgba(40, 40, 40, 0.90);
-    border: 2px solid #222;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
-    border-radius:4px;
-    padding:15px;
-    min-width: 45vw;
-    max-width: 80vw;
-    color: #ddd;
-    line-height: 140%;
-}
 
-.dialog a {
-    color: var(--dialog-link);
-}
-
-/*noinspection CssUnusedSymbol*/
-.lity-container {
-    vertical-align: top;
-    margin-top: 60px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.lity-close {
-    position: absolute!important;
-    color: #aaa!important;
-    text-shadow: none!important;
-}
-
-.lity {
-    background: rgba(0, 0, 0, 0.80);
-}
 
 .dialog h2, .dialog h3,
 .panel h2, .panel h3 {

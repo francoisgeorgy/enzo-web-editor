@@ -128,7 +128,7 @@ export function locationHashChanged(e) {
     if (TRACE) {
         const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
         const b = e.newURL.substring(e.newURL.indexOf('#')+1);
-        console.log(`locationHashChanged from ${a} to ${b}`);
+        // console.log(`locationHashChanged from ${a} to ${b}`);
     }
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.

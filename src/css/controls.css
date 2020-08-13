@@ -49,15 +49,18 @@ div.exp_wrapper {
     grid-column: 3;
     justify-self: left;
 }
+/*
 #exp-b1 {
     grid-row: 2;
     grid-column: 1;
 }
+*/
 #exp-open {
     grid-row: 3;
     grid-column: 3;
     align-self: end;
 }
+/*
 #exp-c1 {
     grid-row: 3;
     grid-column: 1;
@@ -70,6 +73,7 @@ div.exp_wrapper {
     grid-row: 3;
     grid-column: 3;
 }
+*/
 #exp-copy {           /* slider "click to copy" */
     grid-row: 2;
     grid-column: 3;
@@ -84,11 +88,13 @@ div.exp_wrapper {
     justify-self: left;
 }
 
+/*
 div.controls-slider {
     display: flex;
     justify-content: center;
     align-items: stretch;
 }
+*/
 
 .stompswitch {
     font-size: 5rem;

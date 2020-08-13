@@ -10,14 +10,12 @@
 }
 
 div.bt,     /* "radio button"-like switches */
-div.btc,    /* "checkbox"-like switches: */
 div.btx {   /* EXP close button */
     text-align: center;
 }
 
 .preset,
 .bt,
-.btc,
 .btx {
     cursor: pointer;
     color: var(--bt-color);
@@ -27,7 +25,6 @@ div.btx {   /* EXP close button */
 
 .preset:hover,
 .bt:hover,
-.btc:hover,
 .btx:hover {
     color: var(--bt-hover-color);
     border: 1px solid var(--bt-hover-color);
@@ -35,8 +32,7 @@ div.btx {   /* EXP close button */
 }
 
 .bt.on,
-.btx.on,
-.btc.on {
+.btx.on {
     background-color: var(--bt-on-bg-color)!important;
     color: var(--bt-on-color)!important;
     text-shadow: none;

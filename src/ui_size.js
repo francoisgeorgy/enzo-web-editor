@@ -10,7 +10,6 @@ function applyZoom() {
 export function zoomIn() {
     if (zoom_level === 2) return;
     zoom_level++;
-    console.log("zoom in", zoom_level);
     savePreferences({zoom_level});
     applyZoom();
     return false;
@@ -19,7 +18,6 @@ export function zoomIn() {
 export function zoomOut() {
     if (zoom_level === 0) return;
     zoom_level--;
-    console.log("zoom out", zoom_level);
     savePreferences({zoom_level});
     applyZoom();
     return false;

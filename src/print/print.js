@@ -3,7 +3,7 @@ import * as Utils from "../utils.js";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
 import "./print.css";
-import {URL_PARAM_SYSEX} from "./../constants";
+import {URL_PARAM_SYSEX} from "../constants";
 import {log} from "../debug";
 import {SYSEX_END_BYTE, SYSEX_PRESET} from "../model/sysex";
 

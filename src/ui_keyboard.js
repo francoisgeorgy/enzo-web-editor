@@ -2,17 +2,14 @@ import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {log} from "./debug";
 import {animateCC} from "./animate_cc";
-import {showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
+import {updateControl, updateModelAndUI} from "./ui";
 import {updateDevice} from "./midi_out";
 import MODEL from "./model";
 import {presetDec, presetInc, presetSet} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
-// import {closeAppPreferencesPanel} from "./ui_app_prefs";
-// import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
-import {closeHelpPanel} from "./ui_help";
 import {showExpValues, toggleExpEditMode} from "./ui_exp";
 
 

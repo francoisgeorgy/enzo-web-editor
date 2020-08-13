@@ -87,12 +87,12 @@ export function setupGlobalSettings() {
         let value;
         if (off) {
             value = 127;
-            console.log("make on");
+            // console.log("make on");
             $(e.currentTarget).children('.value-0').addClass('hidden');
             $(e.currentTarget).children('.value-127').removeClass('hidden');
         } else {
             value = 0;
-            console.log("make off");
+            // console.log("make off");
             $(e.currentTarget).children('.value-0').removeClass('hidden');
             $(e.currentTarget).children('.value-127').addClass('hidden');
         }
