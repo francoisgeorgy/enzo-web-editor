@@ -107,20 +107,21 @@ export function setupPresetSelectors() {
 const library = {};
 
 export function initPresetsLibrary() {
+
     $("#menu-add-preset").click(addPresetToLibrary);
 
     //TODO: display: cut preset name after 16 char and add '...' if preset name longer than 16 chars
 
     // $(".preset-edit").click(function(){editPreset($(this).children('.preset-name').first())});
-    $(".preset-edit").click(function(){editPreset($(this))});
+    // $(".preset-edit").click(function(){editPreset($(this))});
 
-    $(".preset-delete").click(
-        function(){
-            console.log("preset delete", this);
-            const parent = $(this).parent('.preset-editor');
-            parent.remove();
-        }
-    );
+    // $(".preset-delete").click(
+    //     function(){
+    //         console.log("preset delete", this);
+    //         const parent = $(this).parent('.preset-editor');
+    //         parent.remove();
+    //     }
+    // );
 
 /*
     $(".preset-name").on('input keydown keyup keypress',
@@ -150,38 +151,39 @@ export function initPresetsLibrary() {
 
 }
 
-function editPreset(elem) {
+function editPreset(key) {
 
-    console.log(elem);
+    console.log(`editPreset(${key})`);
 
-    const p = elem.parents('.preset-editor').first();
-    const n = elem.siblings('.preset-name').first();
+    // const p = elem.parents('.preset-editor').first();
+    // const n = elem.siblings('.preset-name').first();
 
-    console.log(p.attr('id'), n.text());
+    // console.log(p.attr('id'), n.text());
     // console.log(elem.children('.preset-name').first());
 
-    $('#edit-preset-dialog-input').val(n.text());
+    if (key in library) {
 
-    let lightbox = lity("#edit-preset-dialog");
+        $('#edit-preset-dialog-input').val(library[key].name);
 
-    // var a = "contenteditable";
-    // elem.attr(a) === 'true' ? elem.attr(a,'false') : elem.attr(a, 'true');
+        let lightbox = lity("#edit-preset-dialog");
 
-    // elem.attr('contenteditable',!elem.attr('contenteditable'));
+        // var a = "contenteditable";
+        // elem.attr(a) === 'true' ? elem.attr(a,'false') : elem.attr(a, 'true');
 
+        // elem.attr('contenteditable',!elem.attr('contenteditable'));
+
+    }
+    return false;
 }
+
+function deletePreset(key) {
+    console.log(`deletePreset(${key})`);
+    return false;
+}
+
 
 function addPresetToLibrary() {
 
-/*
-    <div class="preset preset-editor" id="p0">
-        <div class="preset-name-wrapper">
-            <div class="preset-name">1QqGgJj;_0123456</div>
-            <i class="fas fa-pen preset-edit" aria-hidden="true"></i>
-        </div>
-        <i class="fa fa-times preset-delete" aria-hidden="true"></i>
-    </div>
-*/
     let name = window.prompt("Preset name");
 
     //TODO: use timestamp as key
@@ -197,11 +199,9 @@ function addPresetToLibrary() {
         dt.getSeconds().toString().padStart(2, '0')}`;
 
     const id = Date.now();
-
     const h = updateUrl();
-    // library.push({id, name, h});
-    library[id] = {id, name, h};    // JS automatically convert the key to string type
-    console.log(library);
+    const preset = {id, name, h};
+    library[id] = preset;    // JS automatically convert the key to string type
 
     //TODO:
     // 1. get name
@@ -210,33 +210,20 @@ function addPresetToLibrary() {
     // When edit:
     // - get name from local storage
 
-    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(function(){console.log("new preset edit", this)});
-    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(function(){console.log("new preset remove", this)});
-
-    const p =
-        $(`<div/>`, {id: id, "class": 'preset preset-editor'})
-            .append($('<div class="preset-name-wrapper">')
-                .append($(`<div class="preset-name"></div>`).text(name))
-                .append(preset_edit))
-            .append(preset_delete);
+    const p = createPresetDOM(preset);
 
     let i = 0;
     let done = false;
     $('.presets-lib .preset-editor').each(function(index, element) {
         i++;
         let t = $(this).text().trim();
-        // console.log(index + ": " + $(this).text(), t, typeof t, t === '', !!t, JSON.stringify(t), element);
         if (t === '') {
-            // console.log('add', $(element));
-            // $(element).html(`<span class="preset-name">no name</span>`);
             $(element).replaceWith(p);
             done = true;
             return false;   // returning false stop the iteration
         }
     });
-    // console.log(i, done);
     if (!done) {
-        // console.log("add",4 - (i % 4), "slots");
         $('.presets-lib').first().append(p);
     }
 
@@ -244,46 +231,43 @@ function addPresetToLibrary() {
 }
 
 function createPresetDOM(preset) {
-    // if (key in library === false) {
-    //     return null;
-    // }
-    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(function(){console.log("new preset edit", this)});
-    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(function(){console.log("new preset remove", this)});
+    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(() => editPreset(preset.id));
+    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(() => deletePreset(preset.id));
     const p =
         $(`<div/>`, {id: preset.id, "class": 'preset preset-editor'})
             .append($('<div class="preset-name-wrapper">')
                 .append($(`<div class="preset-name"></div>`).text(preset.name))
                 .append(preset_edit))
             .append(preset_delete);
-
     return p;
 }
 
-function createPresetPlaceholderDOM(preset) {
+function createPresetPlaceholderDOM() {
     const p =
         $(`<div/>`, {"class": 'preset preset-editor'})
             .append($('<div class="preset-name-wrapper">')
-                .append($(`<div class="preset-name"></div>`).text(' '))
+                .append($(`<div class="preset-name"></div>`).html('&nbsp;'))
         );
     return p;
 }
 
+/**
+ * rebuild the html presets library
+ */
 function displayPresets() {
-    //rebuild the html presets library
+
     const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow"});
-    // for(var key in obj){
-    //     if (obj.hasOwnProperty(key)){
-    //         arr.push(key);
-    //     }
-    // }
+
     let i = 0;
     for (const [key, value] of Object.entries(library)) {
         i++;
-        // console.log('library:', `${key}: ${value}`);
         lib.append(createPresetDOM(value));
     }
+
+    for (;i < 16; i++) {
+        lib.append(createPresetPlaceholderDOM());
+    }
+
     $('#presets-lib').replaceWith(lib);
-
-
 
 }
