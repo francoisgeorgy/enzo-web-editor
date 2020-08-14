@@ -29,25 +29,53 @@
     /*grid-template-columns: repeat(8, 1fr);*/
     grid-gap: 3px;
     /*padding: 5px 0;*/
-    align-content: center;
+    align-content: start;
+    align-items: stretch;
 }
 
 .preset-editor {
+    display: flex;
     text-align: left;
     flex-direction: row!important;
+    padding: 2px 4px;
 }
 
-.preset-editor .preset-name {
+.size-0 .preset-editor {
+    padding: 2px 2px;
+    /*font-size: 0.6rem;*/
+}
+.size-1 .preset-editor {
+    padding: 2px 4px;
+    /*font-size: 1rem;*/
+}
+
+.preset-editor .preset-name-wrapper {
     flex-grow: 1;
+    display: flex;
+}
+
+.preset-name {
+    max-width: 80%;
+    overflow-x: hidden;
 }
 
 .preset-editor:hover > i {
     display: block;
 }
-.preset-editor > i {
+.preset-editor i {
     /*float: right;*/
-    display: none;
+    /*display: none;*/
     font-size: 87.5%;
+    margin-top: 2px;
+    margin-left: 3px;
+}
+
+i.preset-delete {
+    margin-top: 3px;
+}
+
+.size-2 i.preset-delete {
+    margin-top: 5px;
 }
 
 /*.presets-selectors > div,*/
@@ -81,24 +109,35 @@
     /*font-weight: bold;*/
 }
 
-.preset-name {
+.preset-name-wrapper {
     margin-left: 5px;
     font-size: 1rem;
 }
 
-.presets-lib .preset-name {
+.presets-lib .preset-name-wrapper {
     margin-left: 0;
 }
 
-.size-0 .preset-name {
-    margin: 0px 0 0px 3px;
-    font-size: 0.875rem;
+.size-0 .preset-name-wrapper {
+    margin: 2px 0 0px 2px;
+    font-size: 0.75rem;
 }
 
-.size-2 .preset-name {
+.size-2 .preset-name-wrapper {
+    /*margin: 2px 0 2px 5px;*/
+    font-size: 1rem;
+}
+
+.size-2 .preset-name-wrapper {
     margin: 2px 0 2px 5px;
     font-size: 1.7vw;
 }
+
+.size-0 .preset-delete {
+    margin-left: 0;
+    /*margin-right: 2px;*/
+}
+
 
 .presets-selectors > div {
     /*background-color: #e4e474;*/
@@ -119,20 +158,21 @@
     margin-bottom: 5px;
 }
 
-.preset {
+.preset-id {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.size-0 .preset {
+.size-0 .preset-id {
     padding: 2px 0;
     font-size: 1rem;
 }
-.size-1 .preset {
+.size-1 .preset-id {
     padding: 2px 4px;
     font-size: 1.25rem;
 }
+
 
 /*.size-1 .presets-lib .preset {*/
 /*    padding: 2px 4px;*/
@@ -159,3 +199,9 @@
 }
 */
 /*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
+
+#edit-preset-dialog input {
+    font-size: 1.5rem;
+    padding: 5px;
+    width: 100%;
+}

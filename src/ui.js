@@ -1,5 +1,10 @@
 import MODEL from "./model";
-import {updatePresetSelector, setPresetDirty, setupPresetSelectors, addPresetToLibrary} from "./ui_presets";
+import {
+    updatePresetSelector,
+    setPresetDirty,
+    setupPresetSelectors,
+    initPresetsLibrary
+} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -302,7 +307,6 @@ function setupMenu() {
     $("#menu-print-preset").click(printPreset);
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-download-sysex").click(downloadLastSysEx);
-    $("#menu-add-preset").click(addPresetToLibrary);
 
     // $("#menu-init").click(function () {  //DEBUG
     //     console.log('resize');
@@ -348,6 +352,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     // setupHelpPanel();
     setupControlsHelp();
     setupMenu();
+    initPresetsLibrary();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
 
