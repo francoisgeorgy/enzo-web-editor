@@ -12,6 +12,14 @@ import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {showExpValues, toggleExpEditMode} from "./ui_exp";
 
+let kb_enabled = true;
+
+export function disableKeyboard() {
+    kb_enabled = false;
+}
+export function enableKeyboard() {
+    kb_enabled = true;
+}
 
 function toggleBypass() {
     const c = MODEL.control[MODEL.control_id.bypass];
@@ -106,6 +114,8 @@ function animateTo(cc, to) {
 }
 
 function keyDown(code, alt, shift, meta, ctrl) {
+
+    if (!kb_enabled) return;
 
     log("keyDown", code, alt, shift, meta);
 
@@ -253,6 +263,9 @@ function keyDown(code, alt, shift, meta, ctrl) {
 
 // noinspection JSUnusedLocalSymbols
 function keyUp(code) {
+
+    if (!kb_enabled) return;
+
     switch (code) {
         case 16:                // Shift
             showExpValues(false);

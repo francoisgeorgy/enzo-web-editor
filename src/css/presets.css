@@ -61,19 +61,24 @@
     overflow-x: hidden;
 }
 
-.preset-editor:hover > i {
+.preset-editor:hover i {
     display: block;
 }
 .preset-editor i {
     /*float: right;*/
-    /*display: none;*/
+    display: none;
     font-size: 87.5%;
     margin-top: 2px;
-    margin-left: 3px;
+    /*margin-left: 3px;*/
+}
+
+i.preset-edit {
+    padding: 0 5px 0 5px;
 }
 
 i.preset-delete {
     margin-top: 3px;
+    padding: 0 1px 0 3px;
 }
 
 .size-2 i.preset-delete {
@@ -201,9 +206,3 @@ i.preset-delete {
 }
 */
 /*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
-
-#edit-preset-dialog input {
-    font-size: 1.5rem;
-    padding: 5px;
-    width: 100%;
-}

@@ -2,6 +2,10 @@ import {savePreferences} from "./preferences";
 
 let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 
+export function getCurrentZoomLevel() {
+    return zoom_level;
+}
+
 function applyZoom() {
     // $("#wrapper").removeClass("size-0 size-1 size-2").addClass(`size-${zoom_level}`)
     $("body").removeClass("size-0 size-1 size-2").addClass(`size-${zoom_level}`)

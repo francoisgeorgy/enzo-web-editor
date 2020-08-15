@@ -2,8 +2,7 @@ import MODEL from "./model";
 import {
     updatePresetSelector,
     setPresetDirty,
-    setupPresetSelectors,
-    initPresetsLibrary
+    setupPresetSelectors
 } from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
@@ -16,7 +15,7 @@ import {
 import {fullUpdateDevice, savePreset, sendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
-import {setupKeyboard} from "./ui_keyboard";
+import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {loadPresetFromFile, readFile} from "./read_file";
 import {printPreset} from "./ui_dialogs";
@@ -37,6 +36,7 @@ import {setupHelpPanel} from "./ui_help";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {setupLibrary} from "./ui_library";
+import {initPresetsLibrary} from "./preset_library";
 
 /**
  * Handles a change made by the user in the UI.
@@ -296,6 +296,11 @@ function setupMenu() {
 
     log("setupMenu()");
 
+    $(document).on('lity:close', function(event, instance) {
+        console.log('Lightbox closed');
+        enableKeyboard();
+    });
+
     $('.menu-entry')
         .mouseenter((e) => $(e.currentTarget).children('.tooltip').first().removeClass('hidden'))
         .mouseleave((e) => $(e.currentTarget).children('.tooltip').first().addClass('hidden'));
@@ -342,7 +347,6 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     //setupMidiInput2();    //v1.5: always shown
     setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
-    setupLibrary(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);

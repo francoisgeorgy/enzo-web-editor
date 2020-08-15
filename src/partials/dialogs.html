@@ -3,7 +3,7 @@
     <div id="import-dialog-instructions">
         Select a file containing an Enzo preset (.syx file):
     </div>
-    <div style="margin:10px 0;">
+    <div>
         <input type="file" id="preset-file" placeholder="preset file" />
     </div>
     <div id="load-preset-error" style="margin:10px 0;color:red">
@@ -11,11 +11,17 @@
 </div>
 
 <div id="edit-preset-dialog" class="dialog lity-hide">
-    <h2>Preset name</h2>
-    <div style="margin:10px 0;">
+    <input type="hidden" id="edit-preset-dialog-id" value="" />
+    <h2>Preset name:</h2>
+    <div>
         <input type="text" id="edit-preset-dialog-input" />
     </div>
+    <h2>Description:</h2>
+    <div>
+        <textarea id="edit-preset-dialog-description" rows="5">
+        </textarea>
+    </div>
     <div style="text-align: right">
-        <button type="button">Save</button>
+        <button type="button" id="edit-preset-save-button">Save</button>
     </div>
 </div>

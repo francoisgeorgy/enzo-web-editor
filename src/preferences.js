@@ -1,7 +1,8 @@
 import store from "storejs";
 import MODEL from "./model";
 
-const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
+// const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
+const LOCAL_STORAGE_KEY = "studiocode.enzo-editor.preferences";
 
 export const SETTINGS_UPDATE_URL = {
     manually: 0,

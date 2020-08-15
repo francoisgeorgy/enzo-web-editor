@@ -249,37 +249,3 @@ a {
 }
 
 
-
-.dialog {
-    overflow:auto;
-    background-color: rgba(40, 40, 40, 0.90);
-    border: 2px solid #222;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
-    border-radius:4px;
-    padding:15px;
-    min-width: 45vw;
-    max-width: 80vw;
-    color: #ddd;
-    line-height: 140%;
-}
-
-.dialog a {
-    color: var(--dialog-link);
-}
-
-/*noinspection CssUnusedSymbol*/
-.lity-container {
-    vertical-align: top;
-    margin-top: 60px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.lity-close {
-    position: absolute!important;
-    color: #aaa!important;
-    text-shadow: none!important;
-}
-
-.lity {
-    background: rgba(0, 0, 0, 0.80);
-}
