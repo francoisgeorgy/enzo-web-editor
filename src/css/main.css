@@ -127,6 +127,7 @@ a {
 .size-2 .tooltip {
     font-size: 1.7vw;
     width: 16vw;
+    top: 44px;
 }
 
 /*--- MAIN GRID ---*/
@@ -153,6 +154,18 @@ a {
     /*background-repeat: no-repeat;*/
     /*background-position: center;*/
     /*background-size: contain;*/
+}
+
+.controls-row {
+    padding-top: 10px;
+}
+
+.size-0 .controls-row {
+    padding-top: 5px;
+}
+
+.size-2 .controls-row {
+    padding-top: 15px;
 }
 
 /*#main-grid > div {*/
