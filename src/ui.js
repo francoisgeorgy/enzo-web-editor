@@ -17,7 +17,6 @@ import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
 import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
-import {loadPresetFromFile, readFile} from "./read_file";
 import {printPreset} from "./ui_dialogs";
 // import {openMidiWindow} from "./ui_midi_window";
 import {initSize, zoomIn, zoomOut} from "./ui_size";
@@ -31,12 +30,9 @@ import "webpack-jquery-ui/effects";
 //     showMidiInput2
 // } from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
-import {downloadLastSysEx} from "./download";
-import {setupHelpPanel} from "./ui_help";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
-import {setupLibrary} from "./ui_library";
-import {initPresetsLibrary} from "./preset_library";
+import {setupPresetsLibrary} from "./preset_library";
 
 /**
  * Handles a change made by the user in the UI.
@@ -310,8 +306,6 @@ function setupMenu() {
     $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
     $("#menu-print-preset").click(printPreset);
-    $("#menu-load-preset").click(loadPresetFromFile);
-    $("#menu-download-sysex").click(downloadLastSysEx);
 
     // $("#menu-init").click(function () {  //DEBUG
     //     console.log('resize');
@@ -330,7 +324,6 @@ function setupMenu() {
     $("#menu-size-in").click(zoomIn);
     $("#menu-size-out").click(zoomOut);
     // $("#url-auto-toggle").click(toggleUrlAutomation);
-    $("#preset-file").change(readFile);     // in load-preset-dialog
 }
 
 /**
@@ -356,7 +349,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     // setupHelpPanel();
     setupControlsHelp();
     setupMenu();
-    initPresetsLibrary();
+    setupPresetsLibrary();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
 

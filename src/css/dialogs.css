@@ -25,6 +25,9 @@
     max-width: 50vw;
 }
 
+.dialog-instructions {
+    margin: 10px 0;
+}
 
 .dialog a {
     /*color: var(--dialog-link);*/

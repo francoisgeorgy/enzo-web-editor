@@ -5,12 +5,14 @@ import {updateUrl} from "./url";
 import store from "storejs";
 import MODEL from "./model";
 import * as Utils from "./utils";
-import {SYSEX_PRESET} from "./model/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateUI} from "./ui";
 import {appendMessage} from "./ui_messages";
 import {fullUpdateDevice} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
+import {downloadLastSysEx} from "./download";
+import {toHexString} from "./utils";
 /* editor presets (library) */
 
 const LOCAL_STORAGE_KEY = "studiocode.enzo-editor.library";
@@ -29,7 +31,13 @@ export function updateStorage() {
     store(LOCAL_STORAGE_KEY, JSON.stringify(library));
 }
 
-export function initPresetsLibrary() {
+export function setupPresetsLibrary() {
+
+    $("#menu-download-sysex").click(downloadLastSysEx);
+    $("#menu-load-preset").click(loadPresetFromFile);
+    $("#preset-file").change((event) => {
+        readFiles(event.target.files);
+    });     // in load-preset-dialog
 
     readStorage();
 
@@ -48,7 +56,8 @@ export function initPresetsLibrary() {
 
     $('#edit-preset-save-button').click(updatePreset);
 
-    $("#menu-add-preset").click(addPresetToLibrary);
+    $("#menu-bookmark").click(addCurrentSettingsAsPresetToLibrary);
+    $("#menu-add-preset").click(addCurrentSettingsAsPresetToLibrary);
 
     displayPresets();
 
@@ -149,6 +158,7 @@ function editPreset(key) {
 
 function deletePreset(id) {
     console.log(`deletePreset(#preset-${id})`);
+    if (!window.confirm(`Delete library preset ${library[id].name} ?`)) return;
     if (id) {
         // $(`#preset-${id}`).remove();
         delete(library[id]);
@@ -158,9 +168,10 @@ function deletePreset(id) {
     return false;
 }
 
-function addPresetToLibrary() {
+function addCurrentSettingsAsPresetToLibrary() {
 
     let name = window.prompt("Preset name");
+    if (name === null) return;
 
     //TODO: use timestamp as key
     //TODO: display sorted by key (timestamp)
@@ -175,9 +186,15 @@ function addPresetToLibrary() {
         dt.getSeconds().toString().padStart(2, '0')}`;
 
     const id = Date.now();
-    const h = updateUrl();
-    const preset = {id, name, h};
-    library[id] = preset;    // JS automatically convert the key to string type
+    // const h = updateUrl();
+    const h = toHexString(MODEL.getPreset());
+
+    addPresetToLibrary({id, name, h});
+}
+
+function addPresetToLibrary(preset) {
+
+    library[preset.id] = preset;    // JS automatically convert the key to string type
 
     updateStorage();
 
@@ -217,8 +234,17 @@ function createPresetDOM(preset) {
     }
     let name = preset.name;
     if (name.length > limit) name = name.substring(0, limit) + '...';
-    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(() => editPreset(preset.id));
-    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(() => deletePreset(preset.id));
+    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(
+        (e) => {
+            editPreset(preset.id);
+            e.stopPropagation();
+        }
+    );
+    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(
+        (e) => {
+            deletePreset(preset.id)
+            e.stopPropagation();
+        });
     const p =
         $(`<div/>`, {id: `preset-${preset.id}`, "class": 'preset preset-editor'}).click(() => usePreset(preset.id))
             .append($('<div class="preset-name-wrapper">')
@@ -283,3 +309,74 @@ function usePreset(id) {
 
 }
 
+
+//==================================================================================================================
+// Preset file handling
+
+let lightbox = null;    // lity dialog
+
+/**
+ *
+ */
+function loadPresetFromFile() {
+    $("#load-preset-error").empty();
+    $("#preset-file").val("");
+    lightbox = lity("#load-preset-dialog");
+    return false;   // disable the normal href behavior when called from an onclick event
+}
+
+/**
+ * Handler for the #preset-file file input element in #load-preset
+ */
+function readFiles(files) {
+
+    // console.log(files, typeof files);
+    // return;
+
+    for (const f of files) {
+        let data = [];
+        // let f = files[0];
+        log(`read file`, f);
+
+        if (f) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // noinspection JSUnresolvedVariable
+                let view = new Uint8Array(e.target.result);
+                for (let i = 0; i < view.length; i++) {
+                    data.push(view[i]);
+                    if (view[i] === SYSEX_END_BYTE) break;
+                }
+
+                // const valid = MODEL.setValuesFromSysEx(data);
+                const valid = validate(data);
+                if (valid.type === SYSEX_PRESET) {
+
+                    appendMessage(`File ${f.name} read OK`);
+
+                    /*
+                                    resetExp();
+                                    updateUI();
+                                    fullUpdateDevice();
+                                    // setPresetClean();
+                                    // noinspection JSBitwiseOperatorUsage
+                                    if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                                        updateUrl();
+                                    }
+                    */
+
+                    addPresetToLibrary({id: f.name, name: f.name, h: toHexString(data)})
+
+                } else {
+                    log("unable to set value from file; file is not a preset sysex", valid);
+                    $("#load-preset-error").show().text(valid.message);
+                }
+            };
+            reader.readAsArrayBuffer(f);
+        }
+    }
+
+    log("file read OK");
+    if (lightbox) lightbox.close();
+
+}
