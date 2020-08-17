@@ -7,12 +7,13 @@ import MODEL from "./model";
 import * as Utils from "./utils";
 import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {updateUI} from "./ui";
+import {updateControls, updateUI} from "./ui";
 import {appendMessage} from "./ui_messages";
 import {fullUpdateDevice} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {downloadLastSysEx} from "./download";
 import {toHexString} from "./utils";
+import {setPresetDirty} from "./ui_presets";
 /* editor presets (library) */
 
 const LOCAL_STORAGE_KEY = "studiocode.enzo-editor.library";
@@ -248,7 +249,7 @@ function createPresetDOM(preset) {
     const p =
         $(`<div/>`, {id: `preset-${preset.id}`, "class": 'preset preset-editor'}).click(() => usePreset(preset.id))
             .append($('<div class="preset-name-wrapper">')
-                .append($(`<div/>`, {id: `name-${preset.id}`, "class": preset-name}).text(name))
+                .append($(`<div/>`, {id: `name-${preset.id}`, "class": "preset-name"}).text(name))
                 .append(preset_edit))
             .append(preset_delete);
     return p;
@@ -292,21 +293,35 @@ function usePreset(id) {
         return;
     }
 
-    const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[id].h));
+    const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[id].h), true);
 
     if (valid.type === SYSEX_PRESET) {
         log("usePreset: sysex loaded in device");
+        setPresetDirty(true);   // must be done after updateUI()
         resetExp();
-        updateUI();
+        // updateUI();
+        updateControls();
         appendMessage("library preset loaded.", false, false);
         // if (updateConnectedDevice)
         fullUpdateDevice();
+
+        markPresetAsSelected(id);
+
         return true;
     } else {
         log("usePreset: hash value is not a preset sysex");
         appendMessage(valid.message);
     }
 
+}
+
+function markPresetAsSelected(id) {
+    markAllPresetsAsUnselected();
+    $(`#preset-${$.escapeSelector(id)}`).addClass("on sel");
+}
+
+function markAllPresetsAsUnselected() {
+    $('.preset-editor').removeClass('sel on');
 }
 
 
@@ -365,7 +380,17 @@ function readFiles(files) {
                                     }
                     */
 
-                    addPresetToLibrary({id: f.name, name: f.name, h: toHexString(data)})
+                    // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
+                    data[4] = 0;
+                    data[8] = 0;
+
+                    let n = f.name.substring(0, f.name.lastIndexOf('.')) || f.name;
+                    addPresetToLibrary({
+                        // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                        id: n,
+                        name: n,
+                        h: toHexString(data)
+                    })
 
                 } else {
                     log("unable to set value from file; file is not a preset sysex", valid);

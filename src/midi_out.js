@@ -126,12 +126,12 @@ export function fullUpdateDevice() {
 
     log(`fullUpdateDevice()`);
 
-    sendSysex(MODEL.getPreset(false));
+    // if (!getMidiInputPort() || !getMidiOutputPort()) {
+    //     appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
+    //     // setPresetDirty();    //FIXME: why call setPresetDirty here?
+    // }
 
-    if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
-        // setPresetDirty();    //FIXME: why call setPresetDirty here?
-    }
+    sendSysex(MODEL.getPreset(false));
 }
 
 /**

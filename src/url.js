@@ -7,6 +7,7 @@ import {toHexString} from "./utils";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
+import {setPresetDirty} from "./ui_presets";
 
 /**
  * Update the window title to get a nice bookmark
@@ -58,9 +59,10 @@ export function initFromUrl(updateConnectedDevice = true) {
     log(`initFromURL(${updateConnectedDevice})`);
     if (hashSysexPresent()) {
         const s = window.location.hash.substring(1);
-        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
+        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s), true);
         if (valid.type === SYSEX_PRESET) {
             log("initFromURL: sysex loaded in device");
+            setPresetDirty(true);   // must be done after updateUI()
             resetExp();
             updateUI();
             appendMessage("Initialization from the URL.", false, false);

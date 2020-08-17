@@ -5,7 +5,7 @@ import {animateCC} from "./animate_cc";
 import {updateControl, updateModelAndUI} from "./ui";
 import {updateDevice} from "./midi_out";
 import MODEL from "./model";
-import {presetDec, presetInc, presetSet} from "./ui_presets";
+import {presetDec, presetInc, selectPreset} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
@@ -120,15 +120,15 @@ function keyDown(code, alt, shift, meta, ctrl) {
     log("keyDown", code, alt, shift, meta);
 
     if (code === 48) {   // 0
-        presetSet(10);
+        selectPreset(10);
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
         if (shift && code <= 54) {
-            presetSet(code - 48 + 10);
+            selectPreset(code - 48 + 10);
         } else {
-            presetSet(code - 48);
+            selectPreset(code - 48);
         }
         return;
     }

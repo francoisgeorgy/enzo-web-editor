@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {presetSet} from "./ui_presets";
+import {selectPreset} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
@@ -84,7 +84,7 @@ export function handlePC(msg, input_num = 1) {
 
     logIncomingMidiMessage("PC", [pc]);
 
-    presetSet(pc)
+    selectPreset(pc)
 
 }
 

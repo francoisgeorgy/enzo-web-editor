@@ -41,9 +41,9 @@ export function setPresetClean() {
 /**
  * Show the dirty indicator on the current preset selector
  */
-export function setPresetDirty() {
-    if (!dirty_cache) {
-        log("setPresetDirty()");
+export function setPresetDirty(force = false) {
+    if (!dirty_cache || force) {
+        log("setPresetDirty()", MODEL.getPresetNumber());
         $(".preset-id").removeClass("dirty");
         $(`#pc-${MODEL.getPresetNumber()}`).addClass("dirty");
         dirty_cache = true;
@@ -73,7 +73,7 @@ export function updatePresetSelector() {
  * Send PC to change preset and update the preset selectors in UI.
  * @param n
  */
-export function presetSet(n) {
+export function selectPreset(n) {
     log(`presetSet(${n})`);
     MODEL.setPresetNumber(n);
     updatePresetSelector();
@@ -82,13 +82,13 @@ export function presetSet(n) {
 
 export function presetInc() {
     log("presetInc");
-    presetSet((MODEL.getPresetNumber() % 16) + 1)
+    selectPreset((MODEL.getPresetNumber() % 16) + 1)
 }
 
 export function presetDec() {
     log("presetDec");
     const n = MODEL.getPresetNumber() - 1;
-    presetSet(n < 1 ? 16 : n);
+    selectPreset(n < 1 ? 16 : n);
 }
 
 export function setupPresetSelectors() {
@@ -96,7 +96,7 @@ export function setupPresetSelectors() {
         log(`setupPresetSelectors: click on ${this.id}`);
         const c = this.id.split("-");
         const n = parseInt(c[1], 10);  //TODO: check if error
-        presetSet(n);
+        selectPreset(n);
     });
 }
 

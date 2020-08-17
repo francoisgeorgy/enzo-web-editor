@@ -51,6 +51,9 @@
     /*font-size: 1rem;*/
 }
 
+/*.preset-editor.sel {*/
+/*}*/
+
 .preset-editor .preset-name-wrapper {
     flex-grow: 1;
     display: flex;
@@ -206,3 +209,4 @@ i.preset-delete {
 }
 */
 /*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
+
