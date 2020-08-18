@@ -210,3 +210,12 @@ i.preset-delete {
 */
 /*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
 
+[draggable] {
+    user-select: none;
+}
+
+.preset-editor.over {
+    /*border: 3px dotted #666;*/
+    border-style: dotted;
+    background-color: white;
+}

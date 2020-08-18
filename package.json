@@ -30,9 +30,11 @@
     },
     "dependencies": {
         "detect-browser": "^5.1.1",
+        "file-saver": "^2.0.2",
         "hexy": "^0.3.0",
         "html-loader": "^1.1.0",
         "jquery-ui": "^1.12.1",
+        "jszip": "^3.5.0",
         "lity": "^2.4.1",
         "lz-string": "^1.4.4",
         "mustache": "^4.0.1",

@@ -16,6 +16,8 @@ Enzo Editor Presets Management
 | 11 | Bookmark Preset in the Editor         | \-                            | \-                            | \-             | \-             | \-                              |
 | 12 | Save Preset from the Editor           | \-                            | set clean                     | \-             | \-             | saved in Enzo memory            |
 
+TODO: preset from URL
+
 - means "not changed/not affected".
 
 ### Editor startup with no Enzo connected: 
