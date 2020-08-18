@@ -216,6 +216,8 @@ i.preset-delete {
 
 .preset-editor.over {
     /*border: 3px dotted #666;*/
-    border-style: dotted;
+    border-style: dashed;
     background-color: white;
 }
+
+

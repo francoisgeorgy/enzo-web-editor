@@ -24,26 +24,22 @@ let edit_preset_dialog = null;
 
 let library = [];
 
-export function readStorage() {
-    const s = store.get(LOCAL_STORAGE_KEY);
-    if (s) library = JSON.parse(s);
-}
-
-export function updateStorage() {
-    // Object.assign(preferences, preferences, options);
-    store(LOCAL_STORAGE_KEY, JSON.stringify(library));
-}
-
 export function setupPresetsLibrary() {
 
     // $("#menu-download-sysex").click(downloadLastSysEx);
+    $("#menu-compact-library").click(compactTheLibrary);
+    $("#menu-delete-presets").click(deleteAllPresets);
     $("#menu-download-sysex").click(() => exportSysex(Object.values(library)));
     $("#menu-load-preset").click(loadPresetFromFile);
+    $("#menu-import-enzo").click(importFromEnzo);
+    $("#menu-copy-to-enzo").click(copyToEnzo);
     $("#preset-file").change((event) => {
         readFiles(event.target.files);
     });     // in load-preset-dialog
 
-    readStorage();
+    library.fill(null, 0, 15);
+
+    readPresetsFromLocalStorage();
 
     $('#library-toggle').click(() => {
         const library = $("#library");
@@ -64,49 +60,45 @@ export function setupPresetsLibrary() {
     $("#menu-add-preset").click(addCurrentSettingsAsPresetToLibrary);
 
     displayPresets();
-
-    //TODO: display: cut preset name after 16 char and add '...' if preset name longer than 16 chars
-
-    // $(".preset-edit").click(function(){editPreset($(this).children('.preset-name').first())});
-    // $(".preset-edit").click(function(){editPreset($(this))});
-
-    // $(".preset-delete").click(
-    //     function(){
-    //         console.log("preset delete", this);
-    //         const parent = $(this).parent('.preset-editor');
-    //         parent.remove();
-    //     }
-    // );
-
-    /*
-        $(".preset-name").on('input keydown keyup keypress',
-            function(){
-                console.log("preset input", this);
-                // return false;
-            }
-        );
-    */
-
-    /*
-        $('body')
-            .on('focus', '[contenteditable]', function() {
-                console.log("focus contenteditable");
-                const $this = $(this);
-                $this.data('before', $this.html());
-            })
-            .on('blur keyup paste input', '[contenteditable]', function() {
-                const $this = $(this);
-                if ($this.data('before') !== $this.html()) {
-                    $this.data('before', $this.html());
-                    console.log("contenteditable changed");
-                    $this.trigger('change');
-                }
-            });
-    */
-
 }
 
-export function updatePreset() {
+function readPresetsFromLocalStorage() {
+    const s = store.get(LOCAL_STORAGE_KEY);
+    log(s);
+    library = s ? JSON.parse(s) : Array(16).fill(null) ;
+    // log(library);
+}
+
+function savePresetsInLocalStorage() {
+    // Object.assign(preferences, preferences, options);
+    store(LOCAL_STORAGE_KEY, JSON.stringify(library));
+}
+
+function deleteAllPresets() {
+    if (!window.confirm(`Delete all library presets ?`)) return;
+    library = Array(16).fill(null);
+    savePresetsInLocalStorage();
+    displayPresets();
+}
+
+function compactTheLibrary() {
+    library = library.filter(e => e);
+    for (let i = library.length; i < 16; i++) {
+        library.push(null);
+    }
+    savePresetsInLocalStorage();
+    displayPresets();
+}
+
+function importFromEnzo() {
+    // TODO
+}
+
+function copyToEnzo() {
+    // TODO
+}
+
+function updatePreset() {
 
     const id = $('#edit-preset-dialog-id').val();
 
@@ -122,7 +114,7 @@ export function updatePreset() {
 
         $(`#name-${id}`).text(name);
 
-        updateStorage();
+        savePresetsInLocalStorage();
     }
 
     if (edit_preset_dialog) edit_preset_dialog.close();
@@ -134,6 +126,8 @@ export function updatePreset() {
 function editPreset(index) {
 
     log(`editPreset(${index})`);
+
+    //TODO: allow empty slots in library
 
     // const p = elem.parents('.preset-editor').first();
     // const n = elem.siblings('.preset-name').first();
@@ -168,7 +162,7 @@ function deletePreset(index) {
         if (index) {
             // $(`#preset-${id}`).remove();
             delete (library[index]);
-            updateStorage();
+            savePresetsInLocalStorage();
             displayPresets();
         }
     }
@@ -201,79 +195,58 @@ function addCurrentSettingsAsPresetToLibrary() {
 
 function addPresetToLibrary(preset) {
 
-    // library[preset.id] = preset;    // JS automatically convert the key to string type
-    library.push(preset);
-
-    updateStorage();
-
-    //TODO:
-    // 1. get name
-    // 2. save name and sysex in local storage
-    // 3. format for display (cut if > 16 chars)
-    // When edit:
-    // - get name from local storage
-
-/*
-    const p = createPresetDOM(preset);
-
-    let i = 0;
-    let done = false;
-    $('.presets-lib .preset-editor').each(function(index, element) {
-        i++;
-        let t = $(this).text().trim();
-        if (t === '') {
-            $(element).replaceWith(p);
-            done = true;
-            return false;   // returning false stop the iteration
-        }
-    });
-    if (!done) {
-        $('.presets-lib').first().append(p);
+    // add into first empty slot
+    const i = library.findIndex(e => (e === null) || (typeof e === 'undefined'));
+    if (i >= 0) {
+        library[i] = preset;
+    } else {
+        library.push(preset);
     }
-*/
 
+    savePresetsInLocalStorage();
     displayPresets();
 }
 
 function createPresetDOM(preset, index) {
 
+    // preset can be null or undefined because empty slots are OK
+
     // log("createPresetDOM", index, preset);
 
-    let displayLength;
-    switch (getCurrentZoomLevel()) {
-        case 1: displayLength = 18; break;
-        case 2: displayLength = 20; break;
-        default: displayLength = 16;
-    }
-    let name = preset.name;
-    if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
-    const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(
-        (e) => {
-            editPreset(index);
-            e.stopPropagation();
-        }
-    );
-    const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(
-        (e) => {
-            deletePreset(index)
-            e.stopPropagation();
-        });
-    const p =
-        $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(preset.id))
-            .append($('<div class="preset-name-wrapper">')
-                .append($(`<div/>`, {id: `name-${preset.id}`, "class": "preset-name"}).text(name))
-                .append(preset_edit))
-            .append(preset_delete);
-    return p;
-}
+    let dom;
 
-function createPresetPlaceholderDOM(index) {
-    const p =
-        $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
-            .append($('<div class="preset-name-wrapper">')
-                .append($(`<div class="preset-name"></div>`).html('&nbsp;'))
-            );
-    return p;
+    if (preset) {
+        let displayLength;
+        switch (getCurrentZoomLevel()) {
+            case 1: displayLength = 18; break;
+            case 2: displayLength = 20; break;
+            default: displayLength = 16;
+        }
+        let name = preset.name;
+        if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
+        const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(
+            (e) => {
+                editPreset(index);
+                e.stopPropagation();
+            }
+        );
+        const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(
+            (e) => {
+                deletePreset(index)
+                e.stopPropagation();
+            });
+        dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(preset.id))
+                .append($('<div class="preset-name-wrapper">')
+                    .append($(`<div/>`, {id: `name-${preset.id}`, "class": "preset-name"}).text(name))
+                    .append(preset_edit))
+                .append(preset_delete);
+    } else {
+        dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
+                .append($('<div class="preset-name-wrapper">')
+                    .append($(`<div class="preset-name"></div>`).html('&nbsp;')));
+    }
+
+    return dom;
 }
 
 /**
@@ -281,39 +254,25 @@ function createPresetPlaceholderDOM(index) {
  */
 function displayPresets() {
 
-    log("displayPresets");
+    log("displayPresets", library);
 
     const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow"});
 
-    // let i = 0;
-    // for (const [key, value] of Object.entries(library)) {
-    //     i++;
-    //     lib.append(createPresetDOM(value));
-    // }
-    // for (let preset of library) {
-    //     i++;
-    //     lib.append(createPresetDOM(preset));
-    // }
-
     library.forEach((preset, index) => lib.append(createPresetDOM(preset, index)));
 
-    for (let i = library.length; i < 16; i++) {
-        lib.append(createPresetPlaceholderDOM(i));
-    }
+    // display at least 16 slots:
+    // for (let i = library.length; i < 16; i++) {
+    //     lib.append(createPresetDOM(null, i));
+    // }
 
     $('#presets-lib').replaceWith(lib);
-
-    // DnD
-
-    // setupDnD( document.getElementById('presets-lib'), function (item) {
-    //     log("dnd item", item);
-    // });
 
     setupDnD();
 }
 
 
 function usePreset(id) {
+
     log(`usePreset(${id})`);
 
     // if (id in library === false) {
@@ -489,7 +448,8 @@ let dragOverId = null;
 let dragId = null;
 
 function handleDragStart(e) {
-    log("handleDragStart", this, this.id);
+
+    // log("drag start", this.id);
 
     dragId = this.id;
 
@@ -498,10 +458,9 @@ function handleDragStart(e) {
     dragSrcEl = this;
 
     const index = this.id.split('-')[1];
-    log("handleDragStart index", index);
+    // log("handleDragStart index", index);
 
     e.dataTransfer.effectAllowed = 'move';
-    // e.dataTransfer.setData('text/html', this.innerHTML);
     e.dataTransfer.setData('text', `${index}`);
 }
 
@@ -509,45 +468,35 @@ function handleDragOver(e) {
 
     // log("handleDragOver", this, this.classList.contains('preset-editor'));
 
-
-
-    // if (!this.classList.contains('preset-editor')) {
-    //     // e.stopPropagation();
-    //     e.preventDefault();
-    // }
-
     // In order to have the drop event occur on a div element, you must cancel the ondragenter and ondragover events.
-
     e.preventDefault();
 
-
-    // if (e.preventDefault) {
-    //     e.preventDefault();
-    // }
-
     e.dataTransfer.dropEffect = 'move';
-
     return false;
 }
 
 function handleDragEnter(e) {
 
-    dragCounter++;
+    // log('drag enter', this.id, dragId, e.target.classList.contains('preset-editor'))
 
+    dragCounter++;
 
     // log("HANDLEDRAGENTER", dragCounter, this.id, dragOverId, JSON.stringify(e.target.classList));
 
-    // if (e.preventDefault) {
-        e.preventDefault();
-    // }
-    if ((this.id !== dragId) && e.target.classList.contains('preset-editor')) {
+    // In order to have the drop event occur on a div element, you must cancel the ondragenter and ondragover events.
+    e.preventDefault();
 
-        log("ENTER", this.id, dragCounter, dragId, dragOverId, JSON.stringify(e.target.classList));
+    // if ((this.id !== dragId) && e.target.classList.contains('preset-editor')) {
+    if (this.id !== dragId) {
 
-        if (dragOverId) document.getElementById(dragOverId).classList.remove('over');
+        // log("ENTER", this.id, dragCounter, dragId, dragOverId, JSON.stringify(e.target.classList));
+        // log("enter", this.id);
 
+        // if (dragOverId) document.getElementById(dragOverId).classList.remove('over');
+
+        $('#presets-lib .preset-editor').removeClass('over');
         this.classList.add('over');
-        log("add .over", this.id);
+        // log("add .over", this.id);
         dragOverId = this.id;
     }
 
@@ -556,45 +505,47 @@ function handleDragEnter(e) {
 function handleDragLeave(e) {
 
     dragCounter--;
+    // log("leave", this.id);
 
     // log("handleDragLeave", dragCounter, this.id, dragOverId, JSON.stringify(e.target.classList));
     // log("handleDragLeave", e, this.id, this.classList.contains('preset-editor'));
 
-    if ((this.id !== dragId) && dragCounter === 0 && e.target.classList.contains('preset-editor')) {
+    if ((this.id !== dragId) && dragCounter === 0) {    // && e.target.classList.contains('preset-editor')) {
 
-        log("leave", this.id, dragCounter, dragId, dragOverId, JSON.stringify(e.target.classList));
+        // log("leave", this.id);  //, dragCounter, dragId, dragOverId, JSON.stringify(e.target.classList));
 
-        log("remove .over", this.id);
+        // log("remove .over", this.id);
         this.classList.remove('over');
     }
 }
 
 function handleDrop(e) {
 
-    log("handleDrop", this.id, library);
+    // log("drop", this.id); //, library);
 
     // log("handleDrop", dragSrcEl);
 
     if (e.stopPropagation) {
-        e.stopPropagation(); // stops the browser from redirecting.
+        e.stopPropagation();
     }
 
-    if (dragSrcEl != this) {
+    if (dragSrcEl !== this) {
 
         const indexTarget = this.id.split('-')[1];
-        log("handleDrop id, index", this.id, indexTarget);
+        // log("handleDrop id, index", this.id, indexTarget);
 
         // dragSrcEl.innerHTML = this.innerHTML;
         // this.innerHTML = e.dataTransfer.getData('text/html');
         const indexSource = e.dataTransfer.getData('text');
 
-        log("handleDrop swap", indexSource, indexTarget);
-
+        // log("handleDrop swap", indexSource, indexTarget);
 
         [library[indexSource], library[indexTarget]] = [library[indexTarget], library[indexSource]];
 
-        log("handleDrop result", library);
+        // log("handleDrop result", library);
 
+    } else {
+        log('ignore drop');
     }
 
     return false;
@@ -602,7 +553,7 @@ function handleDrop(e) {
 
 function handleDragEnd(e) {
 
-    log("handleDragEnd");
+    // log("drag end");
 
     this.style.opacity = '1';
 
@@ -610,7 +561,7 @@ function handleDragEnd(e) {
         item.classList.remove('over');
     });
 
-    //RTODO: save presets in local storage
+    savePresetsInLocalStorage();
 
     displayPresets();
 }
@@ -629,176 +580,5 @@ function setupDnD() {
         item.addEventListener('dragend', handleDragEnd, false);
     });
 }
-
-/* ------------- */
-
-/*
-function dragStart(ev) {
-    ev.target.classList.add('dragging')
-    ev.dataTransfer.setData("text/plain", ev.target.id);
-    ev.dataTransfer.dropEffect = "copy";
-}
-function drop(ev) {
-    ev.preventDefault();
-    var draggableId = ev.dataTransfer.getData("text");
-    var droppable = ev.currentTarget;
-    var draggable = document.getElementById(draggableId)
-    draggable.classList.remove('dragging')
-    var droppableArea = window.getComputedStyle(droppable).gridArea;
-    var draggableArea = window.getComputedStyle(draggable).gridArea;
-    draggable.style.gridArea = droppableArea;
-    droppable.style.gridArea = draggableArea;
-    console.log(draggable.id, '====>', droppableArea)
-    console.log(droppable.id, '====>', draggableArea)
-}
-function dragover(ev) {
-    ev.preventDefault();
-}
-
-function setupDnD() {
-    var els = document.getElementsByClassName("preset-editor");
-    var c = 1;
-    Array.prototype.forEach.call(els, function (e) {
-        e.draggable = true
-        e.ondragstart = dragStart
-        e.ondrop = drop
-        e.ondragover = dragover
-        // if(e.id == "") {
-        //     e.id = "_editable_" + c;
-        //     c++
-        // }
-    })
-}
-
-// setup()
-*/
-
-/*
-function setupDnD(section, onUpdate){
-
-    var dragEl, nextEl, newPos, dragGhost;
-
-    let oldPos = [...section.children].map(item => {
-        item.draggable = true
-        let pos = document.getElementById(item.id).getBoundingClientRect();
-        return pos;
-    });
-
-    function _onDragOver(e) {
-
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-
-        var target = e.target;
-
-        // console.log("target", target);
-
-        if( target && target !== dragEl && target.nodeName == 'DIV' ){
-            if(!target.classList.contains('preset-editor')) {
-                e.stopPropagation();
-            } else {
-                //getBoundinClientRect contains location-info about the element (relative to the viewport)
-                let targetPos = target.getBoundingClientRect();
-
-                //checking that dragEl is dragged over half the target y-axis or x-axis. (therefor the .5)
-                let next = (e.clientY - targetPos.top) / (targetPos.bottom - targetPos.top) > .5 || (e.clientX - targetPos.left) / (targetPos.right - targetPos.left) > .5;
-
-                // console.log("target over: next", next);
-                console.log("target", target);
-                console.log("nextSibling", target.nextSibling);
-
-                section.insertBefore(dragEl, next && target.nextSibling || target);
-
-                /!*  console.log("oldPos:" + JSON.stringify(oldPos));
-                 console.log("newPos:" + JSON.stringify(newPos)); *!/
-                // console.log(newPos.top === oldPos.top ? 'They are the same' : 'Not the same');
-
-                // console.log("oldPos", oldPos);
-            }
-        }
-    }
-
-    function _onDragEnd(evt){
-        evt.preventDefault();
-        newPos = [...section.children].map(child => {
-            let pos = document.getElementById(child.id).getBoundingClientRect();
-            return pos;
-        });
-        // console.log(newPos);
-        dragEl.classList.remove('ghost');
-        section.removeEventListener('dragover', _onDragOver, false);
-        section.removeEventListener('dragend', _onDragEnd, false);
-
-        nextEl !== dragEl.nextSibling ? onUpdate(dragEl) : false;
-    }
-
-    // section.addEventListener('dragstart', function(e) {
-
-    const els = document.getElementsByClassName("preset-editor");
-    Array.prototype.forEach.call(els, function (e) {
-
-        e.addEventListener('dragstart', function(e){
-
-            // console.log("dragStart", e.target, e);
-
-            dragEl = e.target;
-            nextEl = dragEl.nextSibling;
-
-            /!* dragGhost = dragEl.cloneNode(true);
-            dragGhost.classList.add('hidden-drag-ghost'); *!/
-
-            /!*  document.body.appendChild(dragGhost);
-             e.dataTransfer.setDragImage(dragGhost, 0, 0); *!/
-
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('Text', dragEl.textContent);
-
-            section.addEventListener('dragover', _onDragOver, false);
-            section.addEventListener('dragend', _onDragEnd, false);
-
-            setTimeout(function () {dragEl.classList.add('ghost');}, 0);
-
-        });
-
-
-        //     e.draggable = true
-        // e.ondragstart = dragStart
-        // e.ondrop = drop
-        // e.ondragover = dragover
-        // // if(e.id == "") {
-        // //     e.id = "_editable_" + c;
-        // //     c++
-        // // }
-    })
-
-/!*
-    $('.preset-editor').on('dragstart', function(e) {
-
-        console.log("dragStart", e.target, e);
-
-        dragEl = e.target;
-        nextEl = dragEl.nextSibling;
-
-        /!* dragGhost = dragEl.cloneNode(true);
-        dragGhost.classList.add('hidden-drag-ghost'); *!/
-
-        /!*  document.body.appendChild(dragGhost);
-         e.dataTransfer.setDragImage(dragGhost, 0, 0); *!/
-
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('Text', dragEl.textContent);
-
-        section.addEventListener('dragover', _onDragOver, false);
-        section.addEventListener('dragend', _onDragEnd, false);
-
-        setTimeout(function (){
-            dragEl.classList.add('ghost');
-        }, 0)
-
-    });
-*!/
-
-}
-*/
 
 
