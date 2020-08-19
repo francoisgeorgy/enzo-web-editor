@@ -238,7 +238,8 @@ function setupControlsHelp() {
 
             const cc = parseInt($(this).attr("data-infos"), 10);
 
-            $(`.control-lock.control-${cc}`).removeClass('hidden');
+            //TODO: lock for randomizer
+            //$(`.control-lock.control-${cc}`).removeClass('hidden');
 
 /*
  * TODO: enable #info-panel
@@ -257,6 +258,7 @@ function setupControlsHelp() {
         },
         function() {
 
+            //TODO: lock for randomizer
             $('.control-lock').addClass('hidden');
 
 /*
