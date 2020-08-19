@@ -12,7 +12,7 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, savePreset, sendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, savePreset, setAndSendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
 import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
@@ -41,7 +41,7 @@ export function handleUserAction(control_type, control_number, value) {
     log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
     const n = parseInt(control_number, 10);
     if (control_type === 'pc') {
-        sendPC(n);
+        setAndSendPC(n);
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
             setPresetDirty();

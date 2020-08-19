@@ -3,7 +3,7 @@ import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operator
 import {log} from "./debug";
 import {animateCC} from "./animate_cc";
 import {updateControl, updateModelAndUI} from "./ui";
-import {sendPC, updateDevice} from "./midi_out";
+import {setAndSendPC, updateDevice} from "./midi_out";
 import MODEL from "./model";
 import {presetDec, presetInc, selectPreset} from "./ui_presets";
 import {init, randomize} from "./presets";
@@ -121,7 +121,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
 
     if (code === 48) {   // 0
         selectPreset(10);
-        sendPC(10);
+        setAndSendPC(10);
         return;
     }
 
@@ -133,7 +133,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
             pc = code - 48;
         }
         selectPreset(pc);
-        sendPC(pc);
+        setAndSendPC(pc);
         return;
     }
 

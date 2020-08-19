@@ -1,3 +1,6 @@
+- sysex:
+    - set device ID before sending preset data
+
 - bugs: 
     - bypass is not set after loading preset
     - shift is used for two functions

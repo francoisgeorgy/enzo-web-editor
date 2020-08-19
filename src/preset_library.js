@@ -9,12 +9,13 @@ import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateControls, updateUI} from "./ui";
 import {appendMessage} from "./ui_messages";
-import {fullReadInProgress, fullUpdateDevice, requestAllPresets} from "./midi_out";
+import {fullReadInProgress, fullUpdateDevice, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
 import {setPresetDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
+import {preferences} from "./preferences";
 
 /* editor presets (library) */
 
@@ -128,6 +129,8 @@ function compactTheLibrary() {
     displayPresets();
 }
 
+//=============================================================================
+
 export function updateImportPresetsProgress(min, max, progress) {
     const p = progress / (max - min + 1) * 100;
     $('#read-presets-progress')
@@ -155,6 +158,28 @@ async function importPresetsFromEnzo() {
     $('#read-presets-close-button').show();
 }
 
+//=============================================================================
+
+let copyToEnzoFrom;
+let copyToEnzoTo;
+
+function updateCopyToEnzoSummary() {
+
+    copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
+    copyToEnzoTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
+
+    const summary = $('#copy-presets-summary');
+    summary.empty();
+    let enzoId = 1;
+    for (let index=copyToEnzoFrom; index <= copyToEnzoTo; index++) {
+        if (library[index] && library[index].h) {
+            summary.append(`<div>Lib #${index + 1}: ${library[index].name} ---> Enzo preset #${enzoId}</div>`);
+            enzoId++;
+        }
+    }
+
+}
+
 function openCopyToEnzoDialog() {
     // if (!window.confirm(`Read all presets from Enzo?`)) return;
     // TODO
@@ -162,45 +187,57 @@ function openCopyToEnzoDialog() {
     $("#copy-to-id option").remove();
     $('#copy-presets-go-button').show();
     $('#copy-presets-close-button').hide();
-    $('#copy-presets-progress').empty();
+    // $('#copy-presets-progress').empty();
+
+    $('#copy-presets-dialog select').on('change', updateCopyToEnzoSummary);
 
     const sf = $('#copy-from-id');
     const st = $('#copy-to-id');
-    for (let index=0; index<library.length; index++) {
-        sf.append(`<option value="${index}">[${index+1}] ${library[index].name}</option>`);
-        st.append(`<option value="${index}">[${index+1}] ${library[index].name}</option>`);
+    for (let index=0; index < library.length; index++) {
+        if (library[index] && library[index].h) {
+            sf.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
+            st.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
+        }
     }
+
+    updateCopyToEnzoSummary();
 
     copy_presets_dialog = lity("#copy-presets-dialog");
 }
 
 function closeCopyToEnzoDialog() {
     if (copy_presets_dialog) {
+        $("#copy-from-id option").remove();
         $("#copy-to-id option").remove();
         copy_presets_dialog.close();
     }
 }
 
-function copyToEnzo() {
+async function copyToEnzo() {
 
     // console.log($('#copy-from-id').children("option:selected").val());
 
-    const copyFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
-    const copyTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
+    // copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
+    // copyToEnzoTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
 
-    if (!isNaN(copyFrom) && !isNaN(copyTo) && (copyFrom >= 0) && (copyTo >= 0)) {
-        log(`copyToEnzo from ${copyFrom} to ${copyTo}`);
+    if (!isNaN(copyToEnzoFrom) && !isNaN(copyToEnzoTo) && (copyToEnzoFrom >= 0) && (copyToEnzoTo >= 0)) {
+
+        log(`copyToEnzoToEnzo from ${copyToEnzoFrom} to ${copyToEnzoTo}`);
 
         const progress = $('#copy-presets-progress');
 
-        let enzoId = 0;
-        for (let index = copyFrom; index <= copyTo; index++) {
-            if (enzoId >= 16) {
+        let enzoId = 1;
+        for (let index = copyToEnzoFrom; index <= copyToEnzoTo; index++) {
+            if (enzoId > 16) {
                 progress.append($('<div/>').text(`${index} : ${library[index].name} --- skipped, Enzo is full.`));
             } else {
                 if (library[index]) {
                     log(`copy ${index}`, library[index]);
-                    progress.append($('<div/>').text(`${index} : ${library[index].name} --> Enzo preset #${enzoId + 1}`));
+                    progress.append($('<div/>').text(`${index} : ${library[index].name} --> Enzo preset #${enzoId}`));
+                    let data = Utils.fromHexString(library[index].h);
+                    data[4] = preferences.midi_channel;     // set device ID
+                    data[8] = enzoId;                       // set preset number
+                    await writePreset(enzoId, data);
                     enzoId++;
                 }
             }
@@ -210,6 +247,8 @@ function copyToEnzo() {
     $('#copy-presets-go-button').hide();
     $('#copy-presets-close-button').show();
 }
+
+//=============================================================================
 
 function updatePreset() {
 
@@ -410,7 +449,7 @@ function markAllPresetsAsUnselected() {
 }
 
 
-//==================================================================================================================
+//=============================================================================
 // Preset file handling
 
 let lightbox = null;    // lity dialog
@@ -539,7 +578,7 @@ function downloadLastSysEx() {
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
-/* ------------- */
+//=============================================================================
 
 let dragSrcEl = null;
 let dragCounter = 0;

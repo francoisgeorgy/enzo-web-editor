@@ -1,6 +1,6 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {getMidiOutputPort, sendPC} from "./midi_out";
+import {getMidiOutputPort, setAndSendPC} from "./midi_out";
 import {getMidiInputPort} from "./midi_in";
 
 /*
@@ -84,7 +84,7 @@ export function presetInc() {
     log("presetInc");
     const pc = (MODEL.getPresetNumber() % 16) + 1;
     selectPreset(pc)
-    sendPC(pc);
+    setAndSendPC(pc);
 }
 
 export function presetDec() {
@@ -92,7 +92,7 @@ export function presetDec() {
     const n = MODEL.getPresetNumber() - 1;
     const pc = n < 1 ? 16 : n;
     selectPreset(pc);
-    sendPC(pc);
+    setAndSendPC(pc);
 }
 
 export function setupPresetSelectors() {
@@ -101,7 +101,7 @@ export function setupPresetSelectors() {
         const c = this.id.split("-");
         const n = parseInt(c[1], 10);  //TODO: check if error
         selectPreset(n);
-        sendPC(n);
+        setAndSendPC(n);
     });
 }
 

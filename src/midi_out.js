@@ -13,6 +13,9 @@ import {updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
 import {updateImportPresetsProgress} from "./preset_library";
+import {SYSEX_START_BYTE} from "./model/sysex";
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
 
 let midi_output = null;
 
@@ -135,21 +138,46 @@ export function fullUpdateDevice() {
     sendSysex(MODEL.getPreset(false));
 }
 
+function sendPC(number) {
+
+    if (midi_output) {
+        log(`send program change ${number}`);
+
+        showMidiOutActivity();
+
+        last_send_time = performance.now(); // for echo suppression
+
+        midi_output.sendProgramChange(number, preferences.midi_channel);
+
+        // appendMessage(`Preset ${number} selected.`);
+
+        // if (!getMidiInputPort()) {
+        //     appendMessage("Unable to receive the preset from the pedal.");
+        // }
+
+    } else {
+        appendMessage(`Unable to send the PC command to the pedal.`);
+        log(`(send program change ${number})`);
+    }
+}
+
 /**
  * 1. Send a PC command
  * 2. Wait 50 ms
  * 3. Read the preset (send sysex read preset command)
- * @param pc
+ * @param number
  */
-export function sendPC(pc) {
+export function setAndSendPC(number) {
 
-    log(`sendPC(${pc})`);
+    log(`sendPC(${number})`);
 
     // setPresetNumber(pc);
     // appendMessage(`Preset ${pc} selected.`);
 
-    MODEL.meta.preset_id.value = pc;
+    MODEL.meta.preset_id.value = number;
 
+    sendPC(number);
+/*
     if (midi_output) {
         log(`send program change ${pc}`);
 
@@ -169,12 +197,14 @@ export function sendPC(pc) {
         appendMessage(`Unable to send the PC command to the pedal.`);
         log(`(send program change ${pc})`);
     }
+*/
+    appendMessage(`Preset ${number} selected.`);
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
 
-    logOutgoingMidiMessage("PC", [pc]);
+    logOutgoingMidiMessage("PC", [number]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 
     //TODO: after having received the preset, set BYPASS to 127 (ON)
@@ -184,9 +214,17 @@ export function sendPC(pc) {
 export function sendSysex(data) {
     if (midi_output) {
         log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
+
+        let dataArray;
+        if (data[0] === SYSEX_START_BYTE) {
+            dataArray = Array.from(data).slice(1 + MODEL.meta.signature.sysex.value.length, -1);
+        } else {
+            dataArray = Array.from(data);
+        }
+
         showMidiOutActivity();
         suppressSysexEcho(data);
-        midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+        midi_output.sendSysex(MODEL.meta.signature.sysex.value, dataArray);
 
         // setPresetClean();
     } else {
@@ -218,6 +256,15 @@ export function requestGlobalSettings() {
     sendSysexCommand(SYSEX_CMD.globals_request);
 }
 
+export async function writePreset(number, data) {
+    log("writePreset");
+    sendPC(number);
+    await wait(50);
+    sendSysex(data);
+    await wait(100);
+    sendSysexCommand(SYSEX_CMD.preset_write);
+    await wait(100);
+}
 
 /*
     typical timings:
@@ -249,7 +296,6 @@ export async function requestAllPresets() {
 
     fullReadInProgress = true;
 
-    const wait = ms => new Promise(r => setTimeout(r, ms));
     for (let i=FROM; i<=TO; i++) {
         log(`requestAllPresets: PC ${i}`);
         updateImportPresetsProgress(FROM, TO, i);
@@ -261,6 +307,4 @@ export async function requestAllPresets() {
 
     log("requestAllPresets done");
     fullReadInProgress = false;
-
-
 }
