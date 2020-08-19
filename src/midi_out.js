@@ -136,6 +136,8 @@ export function fullUpdateDevice() {
     // }
 
     sendSysex(MODEL.getPreset(false));
+
+    return false;   // if used in a href onclick
 }
 
 function sendPC(number) {
@@ -242,6 +244,7 @@ function sendSysexCommand(command) {
 export function requestPreset() {
     log("requestPreset");
     sendSysexCommand(SYSEX_CMD.preset_request);
+    return false;   // if used in a href onclick
 }
 
 export function savePreset() {

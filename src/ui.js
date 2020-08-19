@@ -12,23 +12,17 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, savePreset, setAndSendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, requestPreset, savePreset, setAndSendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
 import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {printPreset} from "./ui_dialogs";
-// import {openMidiWindow} from "./ui_midi_window";
 import {initSize, zoomIn, zoomOut} from "./ui_size";
 import {preferences} from "./preferences";
 import {updateUrl} from "./url";
 import {setupGlobalSettings} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
-// import {
-//     setupAppPreferences,
-//     hideMidiInput2,
-//     showMidiInput2
-// } from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
@@ -305,9 +299,11 @@ function setupMenu() {
 
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
     $("#menu-print-preset").click(printPreset);
+
+    $("#menu-send").click(fullUpdateDevice);
+    // $("#menu-read").click(requestPreset);    // useless as the device can only send "saved" data, not the current live ones
 
     // $("#menu-init").click(function () {  //DEBUG
     //     console.log('resize');
@@ -317,7 +313,6 @@ function setupMenu() {
     //         height + (800 - document.body.offsetHeight)
     //     );
     // });
-    // $("#menu-read").click(() => requestPreset());       //TODO: create function
     // $("#menu-get-url").click(reloadWithSysexParam);
     // $("#menu-midi").click(openMidiWindow);
     // $("#menu-prefs").click(toggleAppPreferencesPanel);
