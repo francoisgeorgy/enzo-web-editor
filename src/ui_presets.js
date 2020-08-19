@@ -77,18 +77,22 @@ export function selectPreset(n) {
     log(`presetSet(${n})`);
     MODEL.setPresetNumber(n);
     updatePresetSelector();
-    sendPC(n);
+    // sendPC(n);
 }
 
 export function presetInc() {
     log("presetInc");
-    selectPreset((MODEL.getPresetNumber() % 16) + 1)
+    const pc = (MODEL.getPresetNumber() % 16) + 1;
+    selectPreset(pc)
+    sendPC(pc);
 }
 
 export function presetDec() {
     log("presetDec");
     const n = MODEL.getPresetNumber() - 1;
-    selectPreset(n < 1 ? 16 : n);
+    const pc = n < 1 ? 16 : n;
+    selectPreset(pc);
+    sendPC(pc);
 }
 
 export function setupPresetSelectors() {
@@ -97,6 +101,7 @@ export function setupPresetSelectors() {
         const c = this.id.split("-");
         const n = parseInt(c[1], 10);  //TODO: check if error
         selectPreset(n);
+        sendPC(n);
     });
 }
 

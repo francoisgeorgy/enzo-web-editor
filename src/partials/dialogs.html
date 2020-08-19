@@ -13,7 +13,7 @@
 <div id="edit-preset-dialog" class="dialog lity-hide">
     <input type="hidden" id="edit-preset-dialog-id" value="" />
     <h2>Preset name:</h2>
-    <div>
+    <div class="mt-10">
         <input type="text" id="edit-preset-dialog-input" />
     </div>
     <h2>Description:</h2>
@@ -23,5 +23,33 @@
     </div>
     <div style="text-align: right">
         <button type="button" id="edit-preset-save-button">Save</button>
+    </div>
+</div>
+
+<div id="copy-presets-dialog" class="dialog lity-hide">
+    <h2>Copy presets to Enzo</h2>
+    <div class="mt-10">
+        Copy from
+        <select id="copy-from-id">
+        </select>
+        to
+        <select id="copy-to-id">
+        </select>
+    </div>
+    <div id="copy-presets-progress" class="mt-10">
+    </div>
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="copy-presets-go-button">Copy</button>
+        <button type="button" id="copy-presets-close-button" class="hidden">Close</button>
+    </div>
+</div>
+
+<div id="read-presets-dialog" class="dialog lity-hide">
+    <h2>Read all presets from Enzo</h2>
+    <div id="read-presets-progress" class="mt-10 progress-bar"></div>
+<!--    <progress max="100" value="0"></progress>-->
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="read-presets-go-button">Read</button>
+        <button type="button" id="read-presets-close-button" class="hidden">Close</button>
     </div>
 </div>

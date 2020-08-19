@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {selectPreset} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime, updateDevice} from "./midi_out";
+import {fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -10,11 +10,12 @@ import {
     monitorMessage
 } from "./ui_messages";
 import {toHexString} from "./utils";
-import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
+import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_exp";
 import {updateUrl} from "./url";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
+import {addPresetToLibrary} from "./preset_library";
 
 let midi_input = null;
 
@@ -81,11 +82,11 @@ export function handlePC(msg, input_num = 1) {
     showMidiInActivity(input_num);
 
     const pc = msg[1];
-
     logIncomingMidiMessage("PC", [pc]);
 
-    selectPreset(pc)
-
+    if (!fullReadInProgress) {
+        selectPreset(pc)
+    }
 }
 
 /**
@@ -154,24 +155,50 @@ export function handleSysex(data) {
 
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity(1);
-    const valid = MODEL.setValuesFromSysEx(data);
-    switch (valid.type) {
-        case SYSEX_PRESET:
-            resetExp();
-            updateUI();
-            // noinspection JSBitwiseOperatorUsage
-            if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
-                updateUrl();
-            }
-            // setPresetClean();
-            appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
-            break;
-        case SYSEX_GLOBALS:
-            updateGlobalSettings();
-            appendMessage(`Global config settings received.`);
-            break;
-        default:
-            appendMessage(valid.message);
+
+    if (fullReadInProgress) {
+
+        log("fullReadInProgress");
+
+        const valid = validate(data);
+        if (valid.type === SYSEX_PRESET) {
+
+            let id = data[8];
+
+            data[4] = 0;
+            data[8] = 0;
+
+            let n = `Enzo ${id}`;
+            addPresetToLibrary({
+                // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                id: n,
+                name: n,
+                h: toHexString(data)
+            })
+        }
+
+    } else {
+
+        const valid = MODEL.setValuesFromSysEx(data);
+        switch (valid.type) {
+            case SYSEX_PRESET:
+                resetExp();
+                updateUI();
+                // noinspection JSBitwiseOperatorUsage
+                if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                    updateUrl();
+                }
+                // setPresetClean();
+                appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
+                break;
+            case SYSEX_GLOBALS:
+                updateGlobalSettings();
+                appendMessage(`Global config settings received.`);
+                break;
+            default:
+                appendMessage(valid.message);
+        }
+
     }
 
 }

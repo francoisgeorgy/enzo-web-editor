@@ -9,7 +9,7 @@ import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateControls, updateUI} from "./ui";
 import {appendMessage} from "./ui_messages";
-import {fullUpdateDevice} from "./midi_out";
+import {fullReadInProgress, fullUpdateDevice, requestAllPresets} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
 import {setPresetDirty} from "./ui_presets";
@@ -20,19 +20,22 @@ import { saveAs } from 'file-saver';
 
 const LOCAL_STORAGE_KEY = "studiocode.enzo-editor.library";
 
+let read_presets_dialog = null;
 let edit_preset_dialog = null;
+let copy_presets_dialog = null;
 
 let library = [];
 
 export function setupPresetsLibrary() {
 
     // $("#menu-download-sysex").click(downloadLastSysEx);
+    $('#library-toggle-scroll').click(toggleScroll);
+
     $("#menu-compact-library").click(compactTheLibrary);
     $("#menu-delete-presets").click(deleteAllPresets);
     $("#menu-download-sysex").click(() => exportSysex(Object.values(library)));
     $("#menu-load-preset").click(loadPresetFromFile);
-    $("#menu-import-enzo").click(importFromEnzo);
-    $("#menu-copy-to-enzo").click(copyToEnzo);
+    $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
     $("#preset-file").change((event) => {
         readFiles(event.target.files);
     });     // in load-preset-dialog
@@ -47,18 +50,53 @@ export function setupPresetsLibrary() {
         if (library.is(".closed")) {
             library.removeClass("closed");
             label.text("Close library");
+            $('#library-toggle-scroll').show();
         } else {
             library.addClass("closed");
             label.text("Open library");
+            $('#library-toggle-scroll').hide();
         }
         return false;
     });
 
     $('#edit-preset-save-button').click(updatePreset);
 
+    $('#copy-presets-go-button').click(copyToEnzo);
+    $('#copy-presets-close-button').click(closeCopyToEnzoDialog);
+
+    $("#menu-import-enzo").click(openImportFromEnzoDialog);
+    $('#read-presets-go-button').click(importPresetsFromEnzo);
+    $('#read-presets-close-button').click(closeImportPresetsDialog);
+
     $("#menu-bookmark").click(addCurrentSettingsAsPresetToLibrary);
     $("#menu-add-preset").click(addCurrentSettingsAsPresetToLibrary);
 
+    displayPresets();
+}
+
+function toggleScroll() {
+    const lib = $('#presets-lib');
+    const toggle = $('#library-toggle-scroll');
+    if (lib.is('.scrollable')) {
+        lib.removeClass('scrollable');
+        toggle.addClass('inactive');
+    } else {
+        lib.addClass('scrollable');
+        toggle.removeClass('inactive');
+    }
+}
+
+export function addPresetToLibrary(preset) {
+
+    // add into first empty slot
+    const i = library.findIndex(e => (e === null) || (typeof e === 'undefined'));
+    if (i >= 0) {
+        library[i] = preset;
+    } else {
+        library.push(preset);
+    }
+
+    savePresetsInLocalStorage();
     displayPresets();
 }
 
@@ -90,12 +128,87 @@ function compactTheLibrary() {
     displayPresets();
 }
 
-function importFromEnzo() {
+export function updateImportPresetsProgress(min, max, progress) {
+    const p = progress / (max - min + 1) * 100;
+    $('#read-presets-progress')
+        .css('background', `linear-gradient(to right, #eeeea1 ${p}%, #111111 ${p}%)`)
+        .text(`${Math.round(p)}%`);  //.text(`${min} ${max} ${progress}`);
+}
+
+function openImportFromEnzoDialog() {
+    $('#read-presets-progress').text('Click READ button to start');
+    $('#read-presets-go-button').show();
+    $('#read-presets-close-button').hide();
+    read_presets_dialog = lity("#read-presets-dialog");
+}
+
+function closeImportPresetsDialog() {
+    if (read_presets_dialog) {
+        read_presets_dialog.close();
+    }
+}
+
+async function importPresetsFromEnzo() {
+    if (fullReadInProgress) return;
+    await requestAllPresets();
+    $('#read-presets-go-button').hide();
+    $('#read-presets-close-button').show();
+}
+
+function openCopyToEnzoDialog() {
+    // if (!window.confirm(`Read all presets from Enzo?`)) return;
     // TODO
+
+    $("#copy-to-id option").remove();
+    $('#copy-presets-go-button').show();
+    $('#copy-presets-close-button').hide();
+    $('#copy-presets-progress').empty();
+
+    const sf = $('#copy-from-id');
+    const st = $('#copy-to-id');
+    for (let index=0; index<library.length; index++) {
+        sf.append(`<option value="${index}">[${index+1}] ${library[index].name}</option>`);
+        st.append(`<option value="${index}">[${index+1}] ${library[index].name}</option>`);
+    }
+
+    copy_presets_dialog = lity("#copy-presets-dialog");
+}
+
+function closeCopyToEnzoDialog() {
+    if (copy_presets_dialog) {
+        $("#copy-to-id option").remove();
+        copy_presets_dialog.close();
+    }
 }
 
 function copyToEnzo() {
-    // TODO
+
+    // console.log($('#copy-from-id').children("option:selected").val());
+
+    const copyFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
+    const copyTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
+
+    if (!isNaN(copyFrom) && !isNaN(copyTo) && (copyFrom >= 0) && (copyTo >= 0)) {
+        log(`copyToEnzo from ${copyFrom} to ${copyTo}`);
+
+        const progress = $('#copy-presets-progress');
+
+        let enzoId = 0;
+        for (let index = copyFrom; index <= copyTo; index++) {
+            if (enzoId >= 16) {
+                progress.append($('<div/>').text(`${index} : ${library[index].name} --- skipped, Enzo is full.`));
+            } else {
+                if (library[index]) {
+                    log(`copy ${index}`, library[index]);
+                    progress.append($('<div/>').text(`${index} : ${library[index].name} --> Enzo preset #${enzoId + 1}`));
+                    enzoId++;
+                }
+            }
+        }
+    }
+
+    $('#copy-presets-go-button').hide();
+    $('#copy-presets-close-button').show();
 }
 
 function updatePreset() {
@@ -193,20 +306,6 @@ function addCurrentSettingsAsPresetToLibrary() {
     addPresetToLibrary({id, name, h});
 }
 
-function addPresetToLibrary(preset) {
-
-    // add into first empty slot
-    const i = library.findIndex(e => (e === null) || (typeof e === 'undefined'));
-    if (i >= 0) {
-        library[i] = preset;
-    } else {
-        library.push(preset);
-    }
-
-    savePresetsInLocalStorage();
-    displayPresets();
-}
-
 function createPresetDOM(preset, index) {
 
     // preset can be null or undefined because empty slots are OK
@@ -235,7 +334,7 @@ function createPresetDOM(preset, index) {
                 deletePreset(index)
                 e.stopPropagation();
             });
-        dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(preset.id))
+        dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
                 .append($('<div class="preset-name-wrapper">')
                     .append($(`<div/>`, {id: `name-${preset.id}`, "class": "preset-name"}).text(name))
                     .append(preset_edit))
@@ -256,7 +355,7 @@ function displayPresets() {
 
     log("displayPresets", library);
 
-    const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow"});
+    const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow scrollable"});
 
     library.forEach((preset, index) => lib.append(createPresetDOM(preset, index)));
 
@@ -271,15 +370,15 @@ function displayPresets() {
 }
 
 
-function usePreset(id) {
+function usePreset(index) {
 
-    log(`usePreset(${id})`);
+    log(`usePreset(${index})`);
 
     // if (id in library === false) {
     //     return;
     // }
 
-    const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[id].h), true);
+    const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[index].h), true);
 
     if (valid.type === SYSEX_PRESET) {
         log("usePreset: sysex loaded in device");
@@ -291,7 +390,7 @@ function usePreset(id) {
         // if (updateConnectedDevice)
         fullUpdateDevice();
 
-        markPresetAsSelected(id);
+        markPresetAsSelected(index);
 
         return true;
     } else {

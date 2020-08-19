@@ -71,3 +71,7 @@ div.btx {   /* EXP close button */
     text-shadow: 0 0 8px var(--sw-on-shadow-color);
     color: var(--sw-on-color);
 }
+
+.inactive {
+    opacity: 0.5;
+}

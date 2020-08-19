@@ -12,6 +12,7 @@ import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
+import {updateImportPresetsProgress} from "./preset_library";
 
 let midi_output = null;
 
@@ -141,6 +142,9 @@ export function fullUpdateDevice() {
  * @param pc
  */
 export function sendPC(pc) {
+
+    log(`sendPC(${pc})`);
+
     // setPresetNumber(pc);
     // appendMessage(`Preset ${pc} selected.`);
 
@@ -215,4 +219,48 @@ export function requestGlobalSettings() {
 }
 
 
+/*
+    typical timings:
 
+    08:29:12.802	To Scarlett 18i20 USB	Program	2	2
+    08:29:12.805	From Scarlett 18i20 USB	Program	2	2
+    08:29:12.853	To Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:12.872	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 26 bytes	F0 00 20 10 01 01 03 26 02 7F 7F 79 2A 00 3F 41 00 00 00 00 00 7F 7F 7F 00 F7
+    08:29:12.880	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:12.953	To Scarlett 18i20 USB	Program	2	3
+    08:29:12.958	From Scarlett 18i20 USB	Program	2	3
+    08:29:13.008	To Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:13.026	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 39 bytes	F0 00 20 10 01 01 03 26 03 40 6A 7F 7F 00 1C 00 00 34 00 00 57 7F 00 5F 7F 16 00 7B 7F 7F 3F 00…
+    08:29:13.038	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+*/
+
+export let fullReadInProgress = false;
+
+export async function requestAllPresets() {
+
+    const FROM = 1;
+    const TO = 16;
+
+    log("requestAllPresets");
+
+    if (!midi_output) {
+        return;
+    }
+
+    fullReadInProgress = true;
+
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (let i=FROM; i<=TO; i++) {
+        log(`requestAllPresets: PC ${i}`);
+        updateImportPresetsProgress(FROM, TO, i);
+        midi_output.sendProgramChange(i, preferences.midi_channel);
+        await wait(50);
+        requestPreset()
+        await wait(200);
+    }
+
+    log("requestAllPresets done");
+    fullReadInProgress = false;
+
+
+}

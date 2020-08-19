@@ -31,26 +31,46 @@
     /*padding: 5px 0;*/
     align-content: start;
     align-items: stretch;
+}
+
+.size-0 .presets-lib.scrollable {
+    max-height: 150px;
+}
+
+.size-2 .presets-lib.scrollable {
+    max-height: 400px;
+}
+
+.scrollable {
     max-height: 200px;
+    /*overflow-y: auto;*/
     overflow-y: auto;
 }
 
 .preset-editor {
     display: flex;
+    align-items: center;
+    min-height: 1.25rem;
     text-align: left;
     flex-direction: row!important;
-    padding: 2px 4px;
+    /*padding: 2px 4px;*/
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .size-0 .preset-editor {
-    padding: 2px 2px;
+    /*padding: 2px 2px;*/
+    padding-left: 2px;
+    padding-right: 2px;
     /*font-size: 0.6rem;*/
 }
 .size-1 .preset-editor {
-    padding: 2px 4px;
+    /*padding: 2px 4px;*/
     /*font-size: 1rem;*/
 }
-
+.size-2 .preset-editor {
+    min-height: 2.4vw;
+}
 /*.preset-editor.sel {*/
 /*}*/
 
@@ -220,4 +240,11 @@ i.preset-delete {
     background-color: white;
 }
 
-
+.progress-bar {
+    /*min-height: 20px;*/
+    padding: 4px 8px;
+    width: 100%;
+    border: 1px solid black;
+    background-color: #f1d09c;
+    font-weight: bold;
+}
