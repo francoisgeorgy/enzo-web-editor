@@ -258,11 +258,11 @@ export function requestGlobalSettings() {
 
 export async function writePreset(number, data) {
     log("writePreset");
-    sendPC(number);
+    // sendPC(number);
     await wait(50);
-    sendSysex(data);
+    // sendSysex(data);
     await wait(100);
-    sendSysexCommand(SYSEX_CMD.preset_write);
+    // sendSysexCommand(SYSEX_CMD.preset_write);
     await wait(100);
 }
 

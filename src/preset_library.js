@@ -36,7 +36,7 @@ export function setupPresetsLibrary() {
     $("#menu-delete-presets").click(deleteAllPresets);
     $("#menu-download-sysex").click(() => exportSysex(Object.values(library)));
     $("#menu-load-preset").click(loadPresetFromFile);
-    $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
+
     $("#preset-file").change((event) => {
         readFiles(event.target.files);
     });     // in load-preset-dialog
@@ -62,6 +62,7 @@ export function setupPresetsLibrary() {
 
     $('#edit-preset-save-button').click(updatePreset);
 
+    $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
     $('#copy-presets-go-button').click(copyToEnzo);
     $('#copy-presets-close-button').click(closeCopyToEnzoDialog);
 
@@ -160,8 +161,57 @@ async function importPresetsFromEnzo() {
 
 //=============================================================================
 
+function openCopyToEnzoDialog() {
+
+    $("#copy-from-id option").remove();
+    $("#copy-to-id option").remove();
+    $('#copy-presets-go-button').show();
+    $('#copy-presets-close-button').hide();
+    $('#copy-presets-dialog select').on('change', updateCopyToEnzoSummary);
+
+    const sf = $('#copy-from-id');
+    const st = $('#copy-to-id');
+    let c = 0;
+    for (let index=0; index < library.length; index++) {
+        if (library[index] && library[index].h) {
+            c = index;
+            sf.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
+            st.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
+        }
+    }
+
+    st.val(c);
+
+    updateCopyToEnzoSummary();
+
+    // lity dialog without close when clicking outside. Need to close with ESC or with the close button
+    // https://github.com/jsor/lity/issues/132
+    copy_presets_dialog = lity("#copy-presets-dialog", {
+        template: '<div class="lity" role="dialog" aria-label="Dialog Window (Press escape to close)" tabindex="-1"><div class="lity-wrap" role="document"><div class="lity-loader" aria-hidden="true">Loading...</div><div class="lity-container"><div class="lity-content"></div><button class="lity-close" type="button" aria-label="Close (Press escape to close)" data-lity-close>&times;</button></div></div></div>'
+    });
+
+    // original template:
+    // template: '<div class="lity" role="dialog" aria-label="Dialog Window (Press escape to close)" tabindex="-1">
+    //  <div class="lity-wrap" data-lity-close role="document">
+    //      <div class="lity-loader" aria-hidden="true">Loading...</div>
+    //      <div class="lity-container">
+    //          <div class="lity-content"></div>
+    //          <button class="lity-close" type="button" aria-label="Close (Press escape to close)" data-lity-close>&times;</button>
+    //      </div>
+    //  </div></div>'
+}
+
 let copyToEnzoFrom;
 let copyToEnzoTo;
+let copyInProgress = false;
+
+function closeCopyToEnzoDialog() {
+    if (copy_presets_dialog) {
+        $("#copy-from-id option").remove();
+        $("#copy-to-id option").remove();
+        copy_presets_dialog.close();
+    }
+}
 
 function updateCopyToEnzoSummary() {
 
@@ -172,44 +222,10 @@ function updateCopyToEnzoSummary() {
     summary.empty();
     let enzoId = 1;
     for (let index=copyToEnzoFrom; index <= copyToEnzoTo; index++) {
-        if (library[index] && library[index].h) {
-            summary.append(`<div>Lib #${index + 1}: ${library[index].name} ---> Enzo preset #${enzoId}</div>`);
+        if (enzoId <= 16 && library[index] && library[index].h) {
+            summary.append(`<div>Lib #${index + 1}: ${library[index].name} ---> Enzo preset #${enzoId} <span id="copy-presets-done-${index}"></span></div>`);
             enzoId++;
         }
-    }
-
-}
-
-function openCopyToEnzoDialog() {
-    // if (!window.confirm(`Read all presets from Enzo?`)) return;
-    // TODO
-
-    $("#copy-to-id option").remove();
-    $('#copy-presets-go-button').show();
-    $('#copy-presets-close-button').hide();
-    // $('#copy-presets-progress').empty();
-
-    $('#copy-presets-dialog select').on('change', updateCopyToEnzoSummary);
-
-    const sf = $('#copy-from-id');
-    const st = $('#copy-to-id');
-    for (let index=0; index < library.length; index++) {
-        if (library[index] && library[index].h) {
-            sf.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
-            st.append(`<option value="${index}">Lib #${index + 1}: ${library[index].name}</option>`);
-        }
-    }
-
-    updateCopyToEnzoSummary();
-
-    copy_presets_dialog = lity("#copy-presets-dialog");
-}
-
-function closeCopyToEnzoDialog() {
-    if (copy_presets_dialog) {
-        $("#copy-from-id option").remove();
-        $("#copy-to-id option").remove();
-        copy_presets_dialog.close();
     }
 }
 
@@ -220,11 +236,15 @@ async function copyToEnzo() {
     // copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
     // copyToEnzoTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
 
+    if (copyInProgress) return;
+
     if (!isNaN(copyToEnzoFrom) && !isNaN(copyToEnzoTo) && (copyToEnzoFrom >= 0) && (copyToEnzoTo >= 0)) {
 
         log(`copyToEnzoToEnzo from ${copyToEnzoFrom} to ${copyToEnzoTo}`);
 
-        const progress = $('#copy-presets-progress');
+        // const progress = $('#copy-presets-progress');
+
+        copyInProgress = true;
 
         let enzoId = 1;
         for (let index = copyToEnzoFrom; index <= copyToEnzoTo; index++) {
@@ -233,7 +253,7 @@ async function copyToEnzo() {
             } else {
                 if (library[index]) {
                     log(`copy ${index}`, library[index]);
-                    progress.append($('<div/>').text(`${index} : ${library[index].name} --> Enzo preset #${enzoId}`));
+                    $(`#copy-presets-done-${index}`).html(' - copied &#x2714;');
                     let data = Utils.fromHexString(library[index].h);
                     data[4] = preferences.midi_channel;     // set device ID
                     data[8] = enzoId;                       // set preset number
@@ -242,6 +262,9 @@ async function copyToEnzo() {
                 }
             }
         }
+
+        copyInProgress = false;
+
     }
 
     $('#copy-presets-go-button').hide();
@@ -313,7 +336,8 @@ function deletePreset(index) {
         if (!window.confirm(`Delete library preset ${library[index].name} ?`)) return;
         if (index) {
             // $(`#preset-${id}`).remove();
-            delete (library[index]);
+            // delete (library[index]);
+            library[index] = null;
             savePresetsInLocalStorage();
             displayPresets();
         }
