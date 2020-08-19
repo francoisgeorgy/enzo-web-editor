@@ -7,11 +7,13 @@ import MODEL from "./model";
  * @param status
  */
 export function setCommunicationStatus(status) {
+/*
     if (status) {
         $(".neon").addClass("glow");
     } else {
         $(".neon").removeClass("glow");
     }
+*/
 }
 
 let messages = 0;
