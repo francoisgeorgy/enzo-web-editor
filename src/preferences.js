@@ -24,8 +24,9 @@ export let preferences = {
     update_URL: SETTINGS_UPDATE_URL.on_randomize_init_load,
     init_from_URL: 1,       // if 0 (NO), the app will init from the device and ignore the URL.
                             // if 1 (YES), the app will init from the URL's sysex and update the device.
-    display_infos: 1        // if 0 (NO), the controls' description is never displayed
+    display_infos: 1,       // if 0 (NO), the controls' description is never displayed
                             // if 1 (YES), the controls' description is displayed when the mouse if over the control's name
+    library_open: 0         // 0 = close, 1 = open
 };
 
 export function loadPreferences() {

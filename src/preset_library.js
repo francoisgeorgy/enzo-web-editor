@@ -15,7 +15,7 @@ import {toHexString} from "./utils";
 import {setPresetDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
-import {preferences} from "./preferences";
+import {preferences, savePreferences} from "./preferences";
 
 /* editor presets (library) */
 
@@ -45,17 +45,17 @@ export function setupPresetsLibrary() {
 
     readPresetsFromLocalStorage();
 
+    if (preferences.library_open) {
+        openLibrary();
+    } else {
+        closeLibrary();
+    }
+
     $('#library-toggle').click(() => {
-        const library = $("#library");
-        const label = $("#library-toggle-label");
-        if (library.is(".closed")) {
-            library.removeClass("closed");
-            label.text("Close library");
-            $('#library-toggle-scroll').show();
+        if ($("#library").is(".closed")) {
+            openLibrary()
         } else {
-            library.addClass("closed");
-            label.text("Open library");
-            $('#library-toggle-scroll').hide();
+            closeLibrary();
         }
         return false;
     });
@@ -74,6 +74,20 @@ export function setupPresetsLibrary() {
     $("#menu-add-preset").click(addCurrentSettingsAsPresetToLibrary);
 
     displayPresets();
+}
+
+function closeLibrary() {
+    $("#library").addClass("closed");
+    $("#library-toggle-label").text("Open library");
+    $('#library-toggle-scroll').hide();
+    savePreferences({library_open: 0});
+}
+
+function openLibrary() {
+    $("#library").removeClass("closed");
+    $("#library-toggle-label").text("Close library");
+    $('#library-toggle-scroll').show();
+    savePreferences({library_open: 1});
 }
 
 function toggleScroll() {
