@@ -188,6 +188,11 @@ i.preset-delete {
     margin-bottom: 5px;
 }
 
+.lib-menu-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .preset-id {
     display: flex;
     flex-direction: column;

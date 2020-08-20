@@ -9,13 +9,14 @@ import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateControls, updateUI} from "./ui";
 import {appendMessage} from "./ui_messages";
-import {fullReadInProgress, fullUpdateDevice, requestAllPresets, writePreset} from "./midi_out";
+import {fullReadInProgress, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
 import {setPresetDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import {preferences, savePreferences} from "./preferences";
+import {getMidiInputPort} from "./midi_in";
 
 /* editor presets (library) */
 
@@ -24,6 +25,7 @@ const LOCAL_STORAGE_KEY = "studiocode.enzo-editor.library";
 let read_presets_dialog = null;
 let edit_preset_dialog = null;
 let copy_presets_dialog = null;
+let please_connect_dialog = null;
 
 let library = [];
 
@@ -31,6 +33,8 @@ export function setupPresetsLibrary() {
 
     // $("#menu-download-sysex").click(downloadLastSysEx);
     $('#library-toggle-scroll').click(toggleScroll);
+
+    $("#please-connect-close-button").click(closePleaseConnectDialog);
 
     $("#menu-compact-library").click(compactTheLibrary);
     $("#menu-delete-presets").click(deleteAllPresets);
@@ -74,6 +78,14 @@ export function setupPresetsLibrary() {
     $("#menu-add-preset").click(addCurrentSettingsAsPresetToLibrary);
 
     displayPresets();
+}
+
+function openPleaseConnectDialog() {
+    please_connect_dialog = lity("#please-connect-dialog");
+}
+
+function closePleaseConnectDialog() {
+    if (please_connect_dialog) please_connect_dialog.close();
 }
 
 function closeLibrary() {
@@ -154,6 +166,12 @@ export function updateImportPresetsProgress(min, max, progress) {
 }
 
 function openImportFromEnzoDialog() {
+
+    if (!getMidiOutputPort()) {
+        openPleaseConnectDialog();
+        return;
+    }
+
     $('#read-presets-progress').text('Click READ button to start');
     $('#read-presets-go-button').show();
     $('#read-presets-close-button').hide();
@@ -176,6 +194,11 @@ async function importPresetsFromEnzo() {
 //=============================================================================
 
 function openCopyToEnzoDialog() {
+
+    if (!getMidiOutputPort()) {
+        openPleaseConnectDialog();
+        return;
+    }
 
     $("#copy-from-id option").remove();
     $("#copy-to-id option").remove();
@@ -245,6 +268,8 @@ function updateCopyToEnzoSummary() {
 
 async function copyToEnzo() {
 
+    // if (!getMidiInputPort() || !getMidiOutputPort()) {
+    // console.log("copyToEnzo", getMidiOutputPort());
     // console.log($('#copy-from-id').children("option:selected").val());
 
     // copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
@@ -570,10 +595,14 @@ function readFiles(files) {
 
 function exportSysex(presets) {
 
+    console.log("exportSysex");
+
     const zip = new JSZip();
 
     for (const preset of presets) {
-        zip.file(`${preset.name}.syx`, Utils.fromHexString(preset.h));     // will work, JSZip accepts ArrayBuffer
+        if (preset) {
+            zip.file(`${preset.name}.syx`, Utils.fromHexString(preset.h));     // will work, JSZip accepts ArrayBuffer
+        }
     }
 
     zip.generateAsync({type:"blob"})

@@ -2,6 +2,15 @@
 
 }
 
+.config select {
+    /*color: var(--select-color);*/
+    /*background-color: var(--select-bg);*/
+    /*border-color: var(--select-border);*/
+    border-radius: 3px;
+    padding: 1px;
+    font-size: 0.9em;
+}
+
 .config .panel-closed .label {
     margin-left: 10px;
 }

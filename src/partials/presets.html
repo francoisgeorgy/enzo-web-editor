@@ -128,30 +128,50 @@
             </div>
 
             <div class="presets-menu">
-                <div class="preset-menu-wrapper">
+                <div class="preset-menu-wrapper lib-menu-grid">
 <!--                    <a href=""><i class="fas fa-bars"></i> Editor presets</a>-->
-                    <div class="menu-entry">
+                    <div class="menu-entry span-2">
                         <a id="menu-compact-library" href="#" title="Remove the empty slots between presets.">
                             <span class="menu-text">Compact</span>
                         </a>
+                        <div class="tooltip hidden">
+                            Compact the Library by removing the empty slots.
+                        </div>
                     </div>
-                    <div class="menu-entry">
+                    <div class="menu-entry span-2">
                         <a id="menu-delete-presets" href="#" title="Delete all presets.">
                             <span class="menu-text">Delete all</span>
                         </a>
+                        <div class="tooltip hidden">
+                            Delete all the presets from the Library.
+                        </div>
                     </div>
                     <div class="menu-entry">
-                        <a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Enzo (send as CC messages, not SysEx preset).">
-<!--                            <i class="fas fa-folder-open" aria-hidden="true"></i>-->
-                            <span class="menu-text">Import sysex</span>
+                        <a id="menu-load-preset" href="#" title="">
+                            <i class="fas fa-arrow-left"></i>
+                            <span class="menu-text">SysEx</span>
                         </a>
+                        <div class="tooltip hidden">
+                            Load preset(s) from SysEx file(s) and add them to the library.
+                        </div>
                     </div>
+                    <div class="menu-entry">
+                        <a id="menu-download-sysex" href="#">
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="menu-text">SysEx</span>
+                        </a>
+                        <div class="tooltip hidden">
+                            Download the Library Presets as SysEx files (as one single zip-file).
+                        </div>
+                    </div>
+<!--
                     <div class="menu-entry">
                         <a id="menu-download-sysex" href="#" title="Download the current editor's values as a sysex file.">
-<!--                            <i class="fas fa-file-download" aria-hidden="true"></i>-->
-                            <span class="menu-text">Export sysex</span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="menu-text">sysex</span>
                         </a>
                     </div>
+-->
 <!--
                     <div class="menu-entry">
                         <a id="menu-add-preset" href="#" title="Keep the current preset in the editor storage">
@@ -160,15 +180,28 @@
                     </div>
 -->
                     <div class="menu-entry">
-                        <a id="menu-import-enzo" href="#" title="Read all Enzo presets and add them to the Library">
-                            <span class="menu-text">Import from Enzo</span>
+                        <a id="menu-import-enzo" href="#">
+                            <i class="fas fa-arrow-left"></i>
+                            <span class="menu-text">Enzo</span>
                         </a>
+                        <div class="tooltip hidden">
+                            Read all Enzo presets and add them to the Library
+                        </div>
                     </div>
                     <div class="menu-entry">
-                        <a id="menu-copy-to-enzo" href="#" title="Write the first 16 presets in Enzo memory">
-                            <span class="menu-text">Copy to Enzo</span>
+                        <a id="menu-copy-to-enzo" href="#">
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="menu-text">Enzo</span>
                         </a>
+                        <div class="tooltip hidden">
+                            Write Library Presets in Enzo memory
+                        </div>
                     </div>
+<!--                    <div class="menu-entry">-->
+<!--                        <a id="menu-copy-to-enzo" href="#" title="Write the first 16 presets in Enzo memory">-->
+<!--                            <span class="menu-text">&#x21e8;Enzo</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
                 </div>
             </div>
 

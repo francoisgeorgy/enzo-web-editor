@@ -1,10 +1,6 @@
 import {log, warn} from "./debug";
 import MODEL from "./model";
 import {requestGlobalSettings, sendSysex} from "./midi_out";
-import {hideDefaultPanel, showDefaultPanel} from "./ui";
-import {closeAppPreferencesPanel} from "./ui_app_prefs";
-import {appendMessage} from "./ui_messages";
-import {closeHelpPanel} from "./ui_help";
 
 /*
 const CONTAINER = "#global-settings";

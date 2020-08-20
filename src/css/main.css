@@ -9,6 +9,10 @@
 
 /*-----------------*/
 
+*:focus {
+    outline: none;
+}
+
 html {
     user-select: none;
 }
@@ -114,7 +118,7 @@ a {
 .tooltip {
     position: absolute;
     top: 20px;
-    left: 0;
+    left: 30px;
     width: 160px;
     background-color: lightgoldenrodyellow;
     opacity: 90%;
