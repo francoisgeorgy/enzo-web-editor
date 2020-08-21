@@ -52,11 +52,31 @@
 .menu.middle {
     flex-grow: 2;
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
+    justify-content: space-evenly;
+    margin: 0 40px;
 }
 
+/*
 .menu.middle > div {
-    margin: 0 20px;
+    margin: 0;
+}
+*/
+
+.size-2 .menu.middle {
+    margin: 0;
+}
+
+@media (min-width: 1024px) {
+    .size-2 .menu.middle {
+        margin: 0 10px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .size-2 .menu.middle {
+        margin: 0 20px;
+    }
 }
 
 .menu.right {
