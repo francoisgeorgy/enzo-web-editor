@@ -44,8 +44,20 @@
 .scrollable {
     max-height: 200px;
     /*overflow-y: auto;*/
-    overflow-y: auto;
+    overflow-y: scroll;
 }
+
+/*https://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar : */
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
 
 .preset-editor {
     display: flex;
@@ -243,5 +255,5 @@ i.preset-delete {
     width: 100%;
     border: 1px solid black;
     background-color: #f1d09c;
-    font-weight: bold;
+    font-weight: 400;
 }
