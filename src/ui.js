@@ -27,6 +27,8 @@ import {log, TRACE, warn} from "./debug";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {setupPresetsLibrary} from "./preset_library";
+import {setupTooltips} from "./tooltips";
+
 
 /**
  * Handles a change made by the user in the UI.
@@ -293,9 +295,6 @@ function setupMenu() {
         enableKeyboard();
     });
 
-    $('.menu-entry')
-        .mouseenter((e) => $(e.currentTarget).children('.tooltip').first().removeClass('hidden'))
-        .mouseleave((e) => $(e.currentTarget).children('.tooltip').first().addClass('hidden'));
 
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
@@ -346,6 +345,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     // setupHelpPanel();
     setupControlsHelp();
     setupMenu();
+    setupTooltips();
     setupPresetsLibrary();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();

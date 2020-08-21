@@ -16,7 +16,6 @@ import {setPresetDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import {preferences, savePreferences} from "./preferences";
-import {getMidiInputPort} from "./midi_in";
 
 /* editor presets (library) */
 
@@ -91,14 +90,16 @@ function closePleaseConnectDialog() {
 function closeLibrary() {
     $("#library").addClass("closed");
     $("#library-toggle-label").text("Open library");
-    $('#library-toggle-scroll').hide();
+    // $('#library-toggle-scroll').hide();
+    $('#library-toggle-scroll-wrapper').addClass("hidden");
     savePreferences({library_open: 0});
 }
 
 function openLibrary() {
     $("#library").removeClass("closed");
     $("#library-toggle-label").text("Close library");
-    $('#library-toggle-scroll').show();
+    // $('#library-toggle-scroll').show();
+    $('#library-toggle-scroll-wrapper').removeClass("hidden");
     savePreferences({library_open: 1});
 }
 
@@ -130,7 +131,7 @@ export function addPresetToLibrary(preset) {
 
 function readPresetsFromLocalStorage() {
     const s = store.get(LOCAL_STORAGE_KEY);
-    log(s);
+    // log(s);
     library = s ? JSON.parse(s) : Array(16).fill(null) ;
     // log(library);
 }
@@ -455,7 +456,7 @@ function createPresetDOM(preset, index) {
  */
 function displayPresets() {
 
-    log("displayPresets", library);
+    log("displayPresets");
 
     const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow scrollable"});
 

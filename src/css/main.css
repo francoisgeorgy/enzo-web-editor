@@ -109,6 +109,10 @@ a {
     margin-top: 10px;
 }
 
+.mr-10 {
+    margin-right: 10px;
+}
+
 /*--- MENU ---*/
 
 .menu-entry {
@@ -117,8 +121,9 @@ a {
 
 .tooltip {
     position: absolute;
-    top: 20px;
-    left: 30px;
+    top: 22px;
+    /*left: 30px;*/
+    left: 0;
     width: 160px;
     background-color: lightgoldenrodyellow;
     opacity: 90%;
@@ -128,10 +133,29 @@ a {
     z-index: 100;
 }
 
+.tooltip-center {
+    left: -80px;    /* tooltip width / 2 */
+}
+
+.tooltip-left {
+    left: -150px;
+}
+
+.tooltip-right-0 {
+    left: initial;
+    right: 0;
+}
+
 .size-2 .tooltip {
     font-size: 1.7vw;
     width: 16vw;
     top: 44px;
+}
+
+.size-2 .tooltip-left {
+    left: initial;
+    top: 2.1vw;
+    right: 66%;
 }
 
 /*--- MAIN GRID ---*/
