@@ -1,6 +1,5 @@
 import MODEL from "./model";
 import {
-    updatePresetSelector,
     setPresetDirty,
     setupPresetSelectors
 } from "./ui_presets";
@@ -12,7 +11,7 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, requestPreset, savePreset, setAndSendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, savePreset, setAndSendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
 import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
@@ -135,11 +134,13 @@ export function updateControls(onlyTwoValuesControls = false) {
 /**
  * Update the UI from the MODEL controls values.
  */
+/*
 export function updateUI() {
     updatePresetSelector();
     updateControls();
     log("updateUI done");
 }
+*/
 
 /**
  * Update MODEL and associated on-screen control from CC value.
@@ -354,6 +355,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     if (TRACE) console.groupEnd();
 }
 
+/*
 export function showDefaultPanel() {
     $("#main").removeClass("settings-view").addClass("main-default");
 }
@@ -361,4 +363,5 @@ export function showDefaultPanel() {
 export function hideDefaultPanel() {
     $("#main").removeClass("main-default").addClass("settings-view");
 }
+*/
 

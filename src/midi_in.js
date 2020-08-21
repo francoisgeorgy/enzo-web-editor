@@ -1,8 +1,8 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {selectPreset} from "./ui_presets";
+import {selectPreset, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
-import {updateModelAndUI, updateUI} from "./ui";
+import {updateControls, updateModelAndUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
 import {
@@ -183,7 +183,9 @@ export function handleSysex(data) {
         switch (valid.type) {
             case SYSEX_PRESET:
                 resetExp();
-                updateUI();
+                // updateUI();
+                updatePresetSelector();
+                updateControls();
                 // noinspection JSBitwiseOperatorUsage
                 if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
                     updateUrl();

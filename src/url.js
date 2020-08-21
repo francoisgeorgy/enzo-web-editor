@@ -1,13 +1,13 @@
 import {log, TRACE} from "./debug";
 import MODEL from "./model";
 import * as Utils from "./utils";
-import {updateUI} from "./ui";
+import {updateControls} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {setPresetDirty} from "./ui_presets";
+import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 
 const ENABLE_URL_PRESET = false;
 
@@ -75,7 +75,9 @@ export function initFromUrl(updateConnectedDevice = true) {
             log("initFromURL: sysex loaded in device");
             setPresetDirty(true);   // must be done after updateUI()
             resetExp();
-            updateUI();
+            // updateUI();
+            updatePresetSelector();
+            updateControls();
             appendMessage("Initialization from the URL.", false, false);
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
@@ -142,11 +144,11 @@ export function toggleUrlAutomation() {
 */
 
 function locationHashChanged(e) {
-    if (TRACE) {
-        const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
-        const b = e.newURL.substring(e.newURL.indexOf('#')+1);
-        // console.log(`locationHashChanged from ${a} to ${b}`);
-    }
+    // if (TRACE) {
+    //     const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
+    //     const b = e.newURL.substring(e.newURL.indexOf('#')+1);
+    //     // console.log(`locationHashChanged from ${a} to ${b}`);
+    // }
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.
         // stopUrlAutomation();

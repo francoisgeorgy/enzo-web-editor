@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {setPresetDirty} from "./ui_presets";
-import {updateUI} from "./ui";
+import {setPresetDirty, updatePresetSelector} from "./ui_presets";
+import {updateControls} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {appendMessage} from "./ui_messages";
 import {updateUrl} from "./url";
@@ -12,7 +12,9 @@ export function init() {
     log("init()");
     MODEL.init();
     resetExp();
-    updateUI();
+    // updateUI();
+    updatePresetSelector();
+    updateControls();
     setPresetDirty();   // must be done after updateUI()
     fullUpdateDevice();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
@@ -27,7 +29,9 @@ export function randomize() {
     log("randomize");
     MODEL.randomize();
     resetExp();
-    updateUI();
+    // updateUI();
+    updatePresetSelector();
+    updateControls();
     setPresetDirty();   // must be done after updateUI()
     fullUpdateDevice();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||

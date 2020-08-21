@@ -1,13 +1,12 @@
-import {log, TRACE, warn} from "./debug";
+import {log} from "./debug";
 import {disableKeyboard} from "./ui_keyboard";
 import * as lity from "lity";
-// import {updateUrl} from "./url";
 import store from "storejs";
 import MODEL from "./model";
 import * as Utils from "./utils";
 import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {updateControls, updateUI} from "./ui";
+import {updateControls} from "./ui";
 import {appendMessage} from "./ui_messages";
 import {fullReadInProgress, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
@@ -374,13 +373,13 @@ function deletePreset(index) {
     log(`deletePreset(#preset-${index})`);
     if (library[index]) {
         if (!window.confirm(`Delete library preset ${library[index].name} ?`)) return;
-        if (index) {
-            // $(`#preset-${id}`).remove();
-            // delete (library[index]);
-            library[index] = null;
-            savePresetsInLocalStorage();
-            displayPresets();
-        }
+        // $(`#preset-${id}`).remove();
+        // delete (library[index]);
+        console.log(library);
+        library[index] = null;
+        console.log(library);
+        savePresetsInLocalStorage();
+        displayPresets();
     }
     return false;
 }
@@ -477,17 +476,12 @@ function usePreset(index) {
 
     log(`usePreset(${index})`);
 
-    // if (id in library === false) {
-    //     return;
-    // }
-
     const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[index].h), true);
 
     if (valid.type === SYSEX_PRESET) {
         log("usePreset: sysex loaded in device");
         setPresetDirty(true);   // must be done after updateUI()
         resetExp();
-        // updateUI();
         updateControls();
         appendMessage("library preset loaded.", false, false);
         // if (updateConnectedDevice)
@@ -709,25 +703,13 @@ function handleDragEnter(e) {
 }
 
 function handleDragLeave(e) {
-
     dragCounter--;
-    // log("leave", this.id);
-
-    // log("handleDragLeave", dragCounter, this.id, dragOverId, JSON.stringify(e.target.classList));
-    // log("handleDragLeave", e, this.id, this.classList.contains('preset-editor'));
-
     if ((this.id !== dragId) && dragCounter === 0) {    // && e.target.classList.contains('preset-editor')) {
-
-        // log("leave", this.id);  //, dragCounter, dragId, dragOverId, JSON.stringify(e.target.classList));
-
-        // log("remove .over", this.id);
         this.classList.remove('over');
     }
 }
 
 function handleDrop(e) {
-
-    // log("drop", this.id); //, library);
 
     // log("handleDrop", dragSrcEl);
 
@@ -744,11 +726,7 @@ function handleDrop(e) {
         // this.innerHTML = e.dataTransfer.getData('text/html');
         const indexSource = e.dataTransfer.getData('text');
 
-        // log("handleDrop swap", indexSource, indexTarget);
-
         [library[indexSource], library[indexTarget]] = [library[indexTarget], library[indexSource]];
-
-        // log("handleDrop result", library);
 
     } else {
         log('ignore drop');

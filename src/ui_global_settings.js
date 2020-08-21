@@ -1,4 +1,4 @@
-import {log, warn} from "./debug";
+import {log} from "./debug";
 import MODEL from "./model";
 import {requestGlobalSettings, sendSysex} from "./midi_out";
 
