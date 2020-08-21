@@ -1,11 +1,22 @@
+import {preferences, savePreferences} from "./preferences";
+
 export function setupTooltips() {
 
-    $('#menu-toggle-tooltip').click(() => {
+    const t = $('#menu-toggle-tooltip');
+    if (preferences.tooltips) {
+        t.removeClass('inactive');
+    } else {
+        t.addClass('inactive');
+    }
+
+    t.click(() => {
         const e = $('#menu-toggle-tooltip');
         if (e.is('.inactive')) {
             e.removeClass('inactive');
+            savePreferences({tooltips: 1});
         } else {
             e.addClass('inactive');
+            savePreferences({tooltips: 0});
         }
     })
 

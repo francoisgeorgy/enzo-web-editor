@@ -158,6 +158,11 @@ a {
     right: 66%;
 }
 
+.tooltip-top {
+    top: initial;
+    bottom: 22px;
+}
+
 /*--- MAIN GRID ---*/
 
 #wrapper {
@@ -237,7 +242,7 @@ a {
 }
 */
 
-.panel-title {
+.panel-title span {
     font-weight: bold;
 }
 

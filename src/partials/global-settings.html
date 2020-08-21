@@ -1,12 +1,17 @@
 <div class="mg-border-left mg-row-border-top mg-bottom-row"></div>
 <div id="global-settings" class="options-panel span-6 mg-row-border-top mg-bottom-row">
     <div class="panel-closed flex-row globals-grid">
-        <div class="panel-title">
-            Global settings
-            <a href="#" id="toggle-global-lock">
-                <i id="global-lock-opened" class="fas fa-lock-open icon-btn closed" aria-hidden="true"></i>
-                <i id="global-lock-closed" class="fas fa-lock icon-btn" aria-hidden="true"></i>
-            </a>
+        <div class="panel-title flex-row">
+            <span>Global settings</span>
+            <div class="menu-entry">
+                <a href="#" id="toggle-global-lock">
+                    <i id="global-lock-opened" class="fas fa-lock-open icon-btn closed" aria-hidden="true"></i>
+                    <i id="global-lock-closed" class="fas fa-lock icon-btn" aria-hidden="true"></i>
+                </a>
+                <div class="tooltip tooltip-top hidden">
+                    Lock/Unlock the global settings editing.<br />They are locked by default to prevent any unwanted change.
+                </div>
+            </div>
         </div>
         <div id="global-0" class="global-setting-toggle">
             <span class="value-0 hidden">mono in</span>
@@ -32,9 +37,14 @@
             <span class="value-0 hidden">global tempo</span>
             <span class="value-127">preset tempo</span>
         </div>
-        <a href="#" id="refresh-global-settings" title="Read the global settings from Enzo">
-            <i class="fas fa-sync-alt"></i>
-        </a>
+        <div class="menu-entry">
+            <a href="#" id="refresh-global-settings" title="Read the global settings from Enzo">
+                <i class="fas fa-sync-alt"></i>
+            </a>
+            <div class="tooltip tooltip-top tooltip-left hidden">
+                Refresh the Global Settings by reading them from the Enzo.
+            </div>
+        </div>
     </div>
 </div>
 <div class="mg-border-right mg-row-border-top mg-bottom-row"></div>
