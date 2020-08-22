@@ -129,7 +129,7 @@ a {
     opacity: 90%;
     padding: 8px;
     border-radius: 4px;
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     z-index: 100;
 }
 
