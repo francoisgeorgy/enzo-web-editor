@@ -69,6 +69,9 @@ export function updatePresetSelector() {
         }
 */
     }
+
+    $('.preset-editor').removeClass('sel');
+
 }
 
 /**

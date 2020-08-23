@@ -186,6 +186,11 @@ function connectInput2Port(input) {
 
     if (!input) return;
 
+    if (!preferences.input2_channel) {
+        log(`connectInput2Port(${input.id}): abort because channel if not defined`);
+        return;
+    }
+
     setMidiInput2Port(input);
 
     input

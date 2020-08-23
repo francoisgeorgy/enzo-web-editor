@@ -66,10 +66,12 @@ export function setupPresetsLibrary() {
 
     $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
     $('#copy-presets-go-button').click(copyToEnzo);
+    $('#copy-presets-cancel-button').click(closeCopyToEnzoDialog);
     $('#copy-presets-close-button').click(closeCopyToEnzoDialog);
 
     $("#menu-import-enzo").click(openImportFromEnzoDialog);
     $('#read-presets-go-button').click(importPresetsFromEnzo);
+    $('#read-presets-cancel-button').click(closeImportPresetsDialog);
     $('#read-presets-close-button').click(closeImportPresetsDialog);
 
     $("#menu-bookmark").click(addCurrentSettingsAsPresetToLibrary);
@@ -186,6 +188,7 @@ function closeImportPresetsDialog() {
 
 async function importPresetsFromEnzo() {
     if (fullReadInProgress) return;
+    $('#read-presets-cancel-button').hide();
     await requestAllPresets();
     $('#read-presets-go-button').hide();
     $('#read-presets-close-button').show();

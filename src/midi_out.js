@@ -309,6 +309,8 @@ export async function requestAllPresets() {
         await wait(200);
     }
 
+    wasPresetReceived();
+
     log("requestAllPresets done");
     fullReadInProgress = false;
 }
@@ -327,9 +329,9 @@ export function confirmPresetReceived() {
 function wasPresetReceived() {
     log('wasPresetReceived?', presetReceived);
     if (presetReceived) {
-        $('.presets-selectors .preset-id').addClass("comm-ok");
+        $('.preset').addClass("comm-ok");
     } else {
-        $('.presets-selectors .preset-id').removeClass("comm-ok");
+        $('.preset').removeClass("comm-ok");
     }
 }
 
