@@ -37,7 +37,7 @@ import "./css/global-settings.css";
 // import "./css/grid-default.css";
 // import "./css/grid-global-settings.css";
 
-import {setPresetDirty, updatePresetSelector} from "./ui_presets";
+import {setPresetDirty} from "./ui_presets";
 import * as Utils from "./utils";
 import {initSize} from "./ui_size";
 
@@ -69,138 +69,13 @@ function setupModel() {
 //==================================================================================================================
 
 /**
- * Check that we can communicate with the pedal
- * @returns {boolean} true if communication OK, false otherwise
- */
-/*
-async function checkCommunication() {
-
-    log("checkCommunication()");
-
-    const wait = ms => new Promise(r => setTimeout(r, ms));
-
-    // noinspection JSUnresolvedFunction
-    const input_port = WebMidi.getInputById(preferences.input_device_id);
-    if (!input_port) {
-        log("checkCommunication: no input port");
-        return false;
-    }
-
-    // noinspection JSUnresolvedFunction
-    const output_port = WebMidi.getOutputById(preferences.output_device_id);
-    if (!output_port) {
-        log("checkCommunication: no output port");
-        return false;
-    }
-
-    const checkHandleCC = function (e) {
-        // TODO: checkHandleCC
-        log("checkCommunication: CC received", e.data);
-    };
-
-    function isEcho(data, echo) {
-        for (let i=0; i < data.length; i++) {
-            if (echo[i+4] !== data[i]) return false;
-        }
-        return true;
-    }
-
-    const sysex_messages = [];
-
-    const checkHandleSysex = function (e) {
-        log("checkCommunication: sysex received", e.data);
-        sysex_messages.push(e.data);
-    };
-
-    // 1. Send a sysex. We must receive the sysex back as well as a response.
-    //    This check the input and output devices, not the MIDI channel, because sysex are not channel-bound.
-    //    The sysex message will include the MODEL.meta.model_id.value which is the MIDI channel...
-    //
-    async function test_sysex() {
-
-        log("test_sysex: start");
-
-        await wait(100);
-
-        const data = [MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, SYSEX_CMD.preset_request];
-        output_port.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
-
-        log("test_sysex: sysex sent");
-
-        await wait(100);
-
-        log("test_sysex: checks");
-
-        if (sysex_messages.length !== 2) {
-            log(`test_sysex: incorrect number of sysex messages received: ${sysex_messages.length}`);
-            return false;
-        }
-        let echo_index = (sysex_messages[0].length === data.length + 5) ? 0 : 1;
-        if (!isEcho(data, sysex_messages[echo_index])) {
-            log("test_sysex: invalid sysex echo");
-            return false;   // invalid echo; we should probably never come here.
-        }
-        const valid = validate(sysex_messages[(echo_index + 1) % 2]);
-        if (valid.type !== SYSEX_PRESET) {
-            log("test_sysex: invalid sysex preset");
-            return false;
-        }
-
-        log("test_sysex: test OK");
-        return true;
-    }
-
-    log("test_sysex: prepare");
-
-    // We need to remove the current listeners to be able to use our own "check" listeners:
-    input_port.removeListener();    // remove all listeners for all channels
-
-    let channel = preferences.midi_channel;
-
-    //TODO: test for debug
-    if (channel !== (MODEL.meta.device_id.value + 1)) console.error("Device ID is not equal to MIDI channel.");
-
-    // connect our own handlers for the test:
-    input_port.on("controlchange", channel, checkHandleCC).on("sysex", undefined, checkHandleSysex);
-
-    let result = true;
-
-    // DO THE TESTS
-    try {
-        log("test_sysex: run the tests");
-        // noinspection JSIgnoredPromiseFromCall
-        let ok = false;
-        // test_sysex().then(r => {
-        //     log("then", r);
-        //     ok = r
-        // });
-        await ok = test_sysex();
-        log("test_sysex result is ", ok);
-        result = result && ok;
-    }
-    catch (e) {
-        console.warn(e);
-    }
-
-    log(`test_sysex: done; result is ${result}`);
-
-    // Reconnect:
-    connectInputPort(input_port);
-
-    return result;
-}
-*/
-
-//==================================================================================================================
-
-/**
  * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
  */
 function sync() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
 
-        // checkCommunication();
+        log('sync()');
 
         appendMessage("Request global settings.");
         window.setTimeout(requestGlobalSettings, 200);
@@ -211,16 +86,29 @@ function sync() {
             initFromUrl();
 
         } else {
+
+            appendMessage("Request current preset.");
+            window.setTimeout(() => {
+                log("sync: requestPreset(true)");
+                requestPreset(true);
+            }, 300);
+
+
+/*
             if (MODEL.getPresetNumber() === 0) {
                 log("sync: no preset yet, will request preset in 200ms");
                 // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
                 appendMessage("Request current preset.");
-                window.setTimeout(requestPreset, 300);
+                window.setTimeout(() => {
+                    log("sync: requestPreset(true)");
+                    requestPreset(true);
+                }, 300);
             } else {
                 log("sync: preset is > 0, set preset dirty");
                 setPresetDirty();
                 appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
             }
+*/
         }
     }
 
@@ -288,7 +176,7 @@ function connectInputPort(input) {
 
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setCommunicationStatus(true);
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Input ${input.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -321,7 +209,7 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         setCommunicationStatus(false);
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Input disconnected.`);
     }
 }
@@ -430,7 +318,7 @@ function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Output ${output.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -440,7 +328,7 @@ function disconnectOutputPort() {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Output disconnected.`);
     }
 }

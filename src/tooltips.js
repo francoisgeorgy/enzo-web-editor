@@ -23,7 +23,7 @@ export function setupTooltips() {
     $('.menu-entry')
         .mouseenter((e) => {
             const c = $(e.currentTarget).children('.tooltip').first();
-            console.log(e, c);
+            // console.log(e, c);
             if (tooltipsEnabled() || c.is('.tooltip-always')) c.removeClass('hidden')
         })
         .mouseleave((e) => {

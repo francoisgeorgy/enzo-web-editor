@@ -292,7 +292,7 @@ function setupMenu() {
     log("setupMenu()");
 
     $(document).on('lity:close', function(event, instance) {
-        console.log('Lightbox closed');
+        // console.log('Lightbox closed');
         enableKeyboard();
     });
 

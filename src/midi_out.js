@@ -171,7 +171,7 @@ function sendPC(number) {
  */
 export function setAndSendPC(number) {
 
-    log(`sendPC(${number})`);
+    log(`setAndSendPC(${number})`);
 
     // setPresetNumber(pc);
     // appendMessage(`Preset ${pc} selected.`);
@@ -207,7 +207,7 @@ export function setAndSendPC(number) {
     }
 
     logOutgoingMidiMessage("PC", [number]);
-    setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
+    setTimeout(() => requestPreset(true), 50);  // we wait 50 ms before requesting the preset
 
     //TODO: after having received the preset, set BYPASS to 127 (ON)
 
@@ -241,8 +241,9 @@ function sendSysexCommand(command) {
     sendSysex([MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, command]);
 }
 
-export function requestPreset() {
+export function requestPreset(check = false) {
     log("requestPreset");
+    if (check) checkPresetReceived();
     sendSysexCommand(SYSEX_CMD.preset_request);
     return false;   // if used in a href onclick
 }
@@ -311,3 +312,31 @@ export async function requestAllPresets() {
     log("requestAllPresets done");
     fullReadInProgress = false;
 }
+
+//=============================================================================
+// This is a kind of communication check. We use the result to set the
+// background color of the preset selector.
+
+let presetReceived = false;
+
+export function confirmPresetReceived() {
+    log('confirmPresetReceived: set presetReceived=true');
+    presetReceived = true;
+}
+
+function wasPresetReceived() {
+    log('wasPresetReceived?', presetReceived);
+    if (presetReceived) {
+        $('.presets-selectors .preset-id').addClass("comm-ok");
+    } else {
+        $('.presets-selectors .preset-id').removeClass("comm-ok");
+    }
+}
+
+function checkPresetReceived() {
+    presetReceived = false;
+    // after 200 ms we check that we have received the preset
+    setTimeout(() => wasPresetReceived(), 200);
+}
+
+

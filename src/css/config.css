@@ -29,11 +29,11 @@
 }
 
 .size-1 .config .panel-closed select.device {
-    width: 150px;
+    width: 176px;
 }
 
 .size-2 .config .panel-closed select.device {
-    width: 12vw;
+    width: 15vw;
 }
 
 .config .panel-closed .label.midi-in2 {

@@ -38,11 +38,11 @@
 }
 
 .size-2 .presets-lib.scrollable {
-    max-height: 400px;
+    max-height: 300px;
 }
 
 .scrollable {
-    max-height: 200px;
+    max-height: 186px;
     /*overflow-y: auto;*/
     overflow-y: scroll;
 }
@@ -57,7 +57,6 @@
     background-color: rgba(0, 0, 0, .5);
     box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
-
 
 .preset-editor {
     display: flex;
@@ -77,7 +76,8 @@
     /*font-size: 0.6rem;*/
 }
 .size-1 .preset-editor {
-    /*padding: 2px 4px;*/
+    padding-top: 1px;
+    padding-bottom: 1px;
     /*font-size: 1rem;*/
 }
 .size-2 .preset-editor {

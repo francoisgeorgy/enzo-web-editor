@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {selectPreset, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
+import {confirmPresetReceived, fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
 import {updateControls, updateModelAndUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -178,6 +178,8 @@ export function handleSysex(data) {
         }
 
     } else {
+
+        confirmPresetReceived();
 
         const valid = MODEL.setValuesFromSysEx(data);
         switch (valid.type) {

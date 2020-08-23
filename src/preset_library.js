@@ -314,19 +314,20 @@ async function copyToEnzo() {
 
 function updatePreset() {
 
-    const id = $('#edit-preset-dialog-id').val();
+    const index = parseInt($('#edit-preset-dialog-id').val(), 10);
 
-    log("update editor preset", id);
+    log("update editor preset", index);
 
-    if (id) {
+    if (!isNaN(index)) {
+
         let name = $('#edit-preset-dialog-input').val();
         let descr = $('#edit-preset-dialog-description').val();
 
-        console.log("update editor preset name", id, name);
-        library[id].name = name;
-        library[id].description = descr;
+        // console.log("update editor preset name", id, name);
+        library[index].name = name;
+        library[index].description = descr;
 
-        $(`#name-${id}`).text(name);
+        $(`#name-${index}`).text(name);
 
         savePresetsInLocalStorage();
     }
@@ -354,7 +355,7 @@ function editPreset(index) {
 
         disableKeyboard();
 
-        $('#edit-preset-dialog-id').val(library[index].id);
+        $('#edit-preset-dialog-id').val(index);
         $('#edit-preset-dialog-input').val(library[index].name);
         $('#edit-preset-dialog-description').val(library[index].description);
 
@@ -370,14 +371,15 @@ function editPreset(index) {
 }
 
 function deletePreset(index) {
-    log(`deletePreset(#preset-${index})`);
+    log(`deletePreset(${index})`);
+    // console.log(library, index, library[index]);
     if (library[index]) {
         if (!window.confirm(`Delete library preset ${library[index].name} ?`)) return;
         // $(`#preset-${id}`).remove();
         // delete (library[index]);
-        console.log(library);
+        // console.log(library);
         library[index] = null;
-        console.log(library);
+        // console.log(library);
         savePresetsInLocalStorage();
         displayPresets();
     }
@@ -438,7 +440,7 @@ function createPresetDOM(preset, index) {
             });
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
                 .append($('<div class="preset-name-wrapper">')
-                    .append($(`<div/>`, {id: `name-${preset.id}`, "class": "preset-name"}).text(name))
+                    .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
                     .append(preset_edit))
                 .append(preset_delete);
     } else {
@@ -527,8 +529,14 @@ function loadPresetFromFile() {
  */
 function readFiles(files) {
 
-    // console.log(files, typeof files);
+    console.log(files, typeof files);
     // return;
+
+    // const files = Array.from(o/files);
+
+    // files.sort(function(a,b) {
+    //     return a.name > b.name
+    // });
 
     for (const f of files) {
         let data = [];
@@ -590,7 +598,7 @@ function readFiles(files) {
 
 function exportSysex(presets) {
 
-    console.log("exportSysex");
+    log("exportSysex");
 
     const zip = new JSZip();
 
@@ -607,6 +615,7 @@ function exportSysex(presets) {
 }
 
 
+/*
 function downloadLastSysEx() {
 
     let data = MODEL.getPreset();
@@ -639,6 +648,7 @@ function downloadLastSysEx() {
 
     return false;   // disable the normal href behavior when called from an onclick event
 }
+*/
 
 //=============================================================================
 

@@ -63,9 +63,11 @@ export function updatePresetSelector() {
     if (n) {
         const e = $(`#pc-${n}`);
         e.addClass("sel");
+/*
         if (getMidiInputPort() && getMidiOutputPort()) {
             e.addClass("on");
         }
+*/
     }
 }
 
@@ -77,14 +79,14 @@ export function selectPreset(n) {
     log(`presetSet(${n})`);
     MODEL.setPresetNumber(n);
     updatePresetSelector();
-    // sendPC(n);
+    setAndSendPC(n);
 }
 
 export function presetInc() {
     log("presetInc");
     const pc = (MODEL.getPresetNumber() % 16) + 1;
     selectPreset(pc)
-    setAndSendPC(pc);
+    // setAndSendPC(pc);
 }
 
 export function presetDec() {
@@ -92,7 +94,7 @@ export function presetDec() {
     const n = MODEL.getPresetNumber() - 1;
     const pc = n < 1 ? 16 : n;
     selectPreset(pc);
-    setAndSendPC(pc);
+    // setAndSendPC(pc);
 }
 
 export function setupPresetSelectors() {
@@ -101,7 +103,7 @@ export function setupPresetSelectors() {
         const c = this.id.split("-");
         const n = parseInt(c[1], 10);  //TODO: check if error
         selectPreset(n);
-        setAndSendPC(n);
+        // setAndSendPC(n);
     });
 }
 
