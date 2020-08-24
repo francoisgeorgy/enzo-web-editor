@@ -113,6 +113,10 @@ a {
     margin-right: 10px;
 }
 
+.bold-400 {
+    font-weight: 400;
+}
+
 /*--- MENU ---*/
 
 .menu-entry {
