@@ -385,6 +385,9 @@ function exportSysex(presets) {
     for (const preset of presets) {
         if (preset) {
             zip.file(`${preset.name}.syx`, Utils.fromHexString(preset.h));     // will work, JSZip accepts ArrayBuffer
+            if (preset.description) {
+                zip.file(`${preset.name}.syx.txt`, preset.description);
+            }
         }
     }
 

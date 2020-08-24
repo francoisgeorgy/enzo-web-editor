@@ -15,15 +15,15 @@
     - ~~set preset dirty if no input or no output device connected~~
 
 - midi
-    - ignore PC echo
-    - scan ports and channel until an Enzo is found
-    - MUST HAVE: check that we can communicate with Enzo
+    - ~~ignore PC echo~~
+    - ~~scan ports and channel until an Enzo is found~~
+    - ~~MUST HAVE: check that we can communicate with Enzo~~
     - check that the connected device (chosen by the user) is an Enzo
     - after changing the preset (send PC), bypass must be set to 127 (pedal ON)
 
 - preferences
-    - use checkboxes to set URL update preferences
-        - choices: manually, on init, on randomize, on preset change, on preset received (sysex), on file load, auto
+    - ~~use checkboxes to set URL update preferences~~
+        - ~~choices: manually, on init, on randomize, on preset change, on preset received (sysex), on file load, auto~~
 
 - preset
     - auto-save current preset before switching to another preset
@@ -48,9 +48,9 @@
     - ~~display preference in the app~~
 
 - presets management
-    - file selection panel
+    - ~~file selection panel~~
     - re-open (last opened...)
-    - favorites
+    - ~~favorites~~
 
 - menu
     - ~~add WRITE command (save preset sysex)~~
