@@ -96,24 +96,26 @@
     overflow-x: hidden;
 }
 
-.preset-editor:hover i {
+.preset-editor:hover i.i-hover {
     display: block;
 }
+
 .preset-editor i {
-    /*float: right;*/
-    display: none;
     font-size: 87.5%;
     margin-top: 2px;
-    /*margin-left: 3px;*/
+    margin-left: 5px;
+}
+.preset-editor i.i-hover {
+    display: none;
 }
 
 i.preset-edit {
-    padding: 0 5px 0 5px;
+    /*padding: 0 5px 0 5px;*/
 }
 
 i.preset-delete {
-    margin-top: 3px;
-    padding: 0 1px 0 3px;
+    /*margin-top: 3px;*/
+    /*padding: 0 1px 0 3px;*/
 }
 
 .size-2 i.preset-delete {

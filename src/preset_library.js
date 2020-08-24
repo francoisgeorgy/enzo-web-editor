@@ -144,7 +144,9 @@ function savePresetsInLocalStorage() {
 
 function deleteAllPresets() {
     if (!window.confirm(`Delete all library presets ?`)) return;
-    library = Array(16).fill(null);
+    // library = Array(16).fill(null);
+    library = library.filter(e => e && e.locked);
+    compactTheLibrary();
     savePresetsInLocalStorage();
     displayPresets();
 }
@@ -329,6 +331,7 @@ function updatePreset() {
         // console.log("update editor preset name", id, name);
         library[index].name = name;
         library[index].description = descr;
+        library[index].locked = false;
 
         $(`#name-${index}`).text(name);
 
@@ -373,16 +376,43 @@ function editPreset(index) {
     return false;
 }
 
+function lockPreset(index) {
+    log(`lockPreset(${index})`, library);
+    if (library[index]) {
+        library[index].locked = true;
+        // $(`#preset-${index} i.preset-lock`).removeClass('hidden');
+        $(`#preset-${index} i.preset-lock`).removeClass('i-hover hidden');
+        $(`#preset-${index} i.preset-lock-open`).addClass('hidden');
+        $(`#preset-${index} i.preset-lock-open`).removeClass('i-hover');
+        savePresetsInLocalStorage();
+    }
+    log(`lockPreset(${index})`, library);
+    return false;
+}
+
+function unlockPreset(index) {
+    log(`unlockPreset(${index})`, library);
+    if (library[index]) {
+        library[index].locked = false;
+        $(`#preset-${index} i.preset-lock`).removeClass('i-hover');
+        $(`#preset-${index} i.preset-lock`).addClass('hidden');
+        $(`#preset-${index} i.preset-lock-open`).addClass('i-hover');
+        // $(`#preset-${index} i.preset-lock`).addClass('hidden');
+        // $(`#preset-${index} i.preset-lock-open`).removeClass('hidden');
+        savePresetsInLocalStorage();
+    }
+    log(`unlockPreset(${index})`, library);
+    return false;
+}
+
 function deletePreset(index) {
     log(`deletePreset(${index})`);
-    // console.log(library, index, library[index]);
     if (library[index]) {
         if (!window.confirm(`Delete library preset ${library[index].name} ?`)) return;
-        // $(`#preset-${id}`).remove();
-        // delete (library[index]);
-        // console.log(library);
-        library[index] = null;
-        // console.log(library);
+        // log(`deletePreset(${index})`, library[index]);
+        if (!library[index].locked) {
+            library[index] = null;
+        }
         savePresetsInLocalStorage();
         displayPresets();
     }
@@ -430,21 +460,35 @@ function createPresetDOM(preset, index) {
         }
         let name = preset.name;
         if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
-        const preset_edit = $(`<i class="fas fa-pen preset-edit" aria-hidden="true"></i>`).click(
+        const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
             (e) => {
                 editPreset(index);
                 e.stopPropagation();
             }
         );
-        const preset_delete = $(`<i class="fas fa-times preset-delete" aria-hidden="true"></i>`).click(
+        const preset_lock = $(`<i class="fas fa-lock-open preset-lock-open ${preset.locked ? 'hidden' : 'i-hover'}" aria-hidden="true"></i>`).click(
+            (e) => {
+                lockPreset(index);
+                e.stopPropagation();
+            }
+        );
+        const preset_unlock = $(`<i class="fas fa-lock preset-lock ${preset.locked ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
+            (e) => {
+                unlockPreset(index);
+                e.stopPropagation();
+            }
+        );
+        const preset_delete = $(`<i class="fas fa-trash-alt preset-delete i-hover" aria-hidden="true"></i>`).click(
             (e) => {
                 deletePreset(index)
                 e.stopPropagation();
             });
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
                 .append($('<div class="preset-name-wrapper">')
-                    .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
-                    .append(preset_edit))
+                    .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name)))
+                .append(preset_edit)
+                .append(preset_lock)
+                .append(preset_unlock)
                 .append(preset_delete);
     } else {
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
