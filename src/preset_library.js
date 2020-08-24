@@ -8,7 +8,7 @@ import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateControls} from "./ui";
 import {appendMessage} from "./ui_messages";
-import {fullReadInProgress, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
+import {fullReadInProgress, autoLockOnImport, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
 import {setPresetDirty} from "./ui_presets";
@@ -41,7 +41,7 @@ export function setupPresetsLibrary() {
 
     $("#preset-file").change((event) => {
         readFiles(event.target.files);
-    });     // in load-preset-dialog
+    });     // in load-presets-dialog
 
     library.fill(null, 0, 15);
 
@@ -161,6 +161,7 @@ function compactTheLibrary() {
 }
 
 //=============================================================================
+// Read all presets from Enzo
 
 export function updateImportPresetsProgress(min, max, progress) {
     const p = (progress - min + 1) / (max - min + 1) * 100;
@@ -170,12 +171,10 @@ export function updateImportPresetsProgress(min, max, progress) {
 }
 
 function openImportFromEnzoDialog() {
-
     if (!getMidiOutputPort()) {
         openPleaseConnectDialog();
         return;
     }
-
     $('#read-presets-progress').text('Click READ button to start');
     $('#read-presets-go-button').show();
     $('#read-presets-close-button').hide();
@@ -190,6 +189,7 @@ function closeImportPresetsDialog() {
 
 async function importPresetsFromEnzo() {
     if (fullReadInProgress) return;
+    autoLockOnImport = $('#read-presets-autolock').is(':checked');
     $('#read-presets-cancel-button').hide();
     await requestAllPresets();
     $('#read-presets-go-button').hide();
@@ -197,6 +197,7 @@ async function importPresetsFromEnzo() {
 }
 
 //=============================================================================
+// Copy presets to Enzo
 
 function openCopyToEnzoDialog() {
 
@@ -273,20 +274,11 @@ function updateCopyToEnzoSummary() {
 
 async function copyToEnzo() {
 
-    // if (!getMidiInputPort() || !getMidiOutputPort()) {
-    // console.log("copyToEnzo", getMidiOutputPort());
-    // console.log($('#copy-from-id').children("option:selected").val());
-
-    // copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
-    // copyToEnzoTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
-
     if (copyInProgress) return;
 
     if (!isNaN(copyToEnzoFrom) && !isNaN(copyToEnzoTo) && (copyToEnzoFrom >= 0) && (copyToEnzoTo >= 0)) {
 
         log(`copyToEnzoToEnzo from ${copyToEnzoFrom} to ${copyToEnzoTo}`);
-
-        // const progress = $('#copy-presets-progress');
 
         copyInProgress = true;
 
@@ -308,12 +300,100 @@ async function copyToEnzo() {
         }
 
         copyInProgress = false;
-
     }
 
     $('#copy-presets-go-button').hide();
     $('#copy-presets-close-button').show();
 }
+
+//=============================================================================
+// Preset file handling
+
+let lightbox = null;    // lity dialog
+
+/**
+ *
+ */
+function loadPresetFromFile() {
+    $("#load-presets-error").empty();
+    $("#preset-file").val("");
+    lightbox = lity("#load-presets-dialog");
+    return false;   // disable the normal href behavior when called from an onclick event
+}
+
+/**
+ * Handler for the #preset-file file input element in #load-preset
+ */
+function readFiles(files) {
+
+    // log(files, typeof files);
+
+    const lock = $('#load-presets-autolock').is(':checked');
+
+    for (const f of files) {
+        let data = [];
+        // let f = files[0];
+        log(`read file`, f);
+
+        if (f) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // noinspection JSUnresolvedVariable
+                let view = new Uint8Array(e.target.result);
+                for (let i = 0; i < view.length; i++) {
+                    data.push(view[i]);
+                    if (view[i] === SYSEX_END_BYTE) break;
+                }
+
+                const valid = validate(data);
+                if (valid.type === SYSEX_PRESET) {
+
+                    appendMessage(`File ${f.name} read OK`);
+
+                    // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
+                    data[4] = 0;
+                    data[8] = 0;
+
+                    let n = f.name.substring(0, f.name.lastIndexOf('.')) || f.name;
+                    addPresetToLibrary({
+                        // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                        id: n,
+                        name: n,
+                        h: toHexString(data),
+                        locked: lock
+                    })
+
+                } else {
+                    log("unable to set value from file; file is not a preset sysex", valid);
+                    $("#load-presets-error").show().text(valid.message);
+                }
+            };
+            reader.readAsArrayBuffer(f);
+        }
+    }
+
+    log("file read OK");
+    if (lightbox) lightbox.close();
+}
+
+function exportSysex(presets) {
+
+    log("exportSysex");
+
+    const zip = new JSZip();
+
+    for (const preset of presets) {
+        if (preset) {
+            zip.file(`${preset.name}.syx`, Utils.fromHexString(preset.h));     // will work, JSZip accepts ArrayBuffer
+        }
+    }
+
+    zip.generateAsync({type:"blob"})
+        .then(function (blob) {
+            saveAs(blob, "enzo-presets.zip");
+        });
+}
+
 
 //=============================================================================
 
@@ -553,112 +633,6 @@ function markPresetAsSelected(id) {
 
 function markAllPresetsAsUnselected() {
     $('.preset-editor').removeClass('sel on');
-}
-
-
-//=============================================================================
-// Preset file handling
-
-let lightbox = null;    // lity dialog
-
-/**
- *
- */
-function loadPresetFromFile() {
-    $("#load-preset-error").empty();
-    $("#preset-file").val("");
-    lightbox = lity("#load-preset-dialog");
-    return false;   // disable the normal href behavior when called from an onclick event
-}
-
-/**
- * Handler for the #preset-file file input element in #load-preset
- */
-function readFiles(files) {
-
-    console.log(files, typeof files);
-    // return;
-
-    // const files = Array.from(o/files);
-
-    // files.sort(function(a,b) {
-    //     return a.name > b.name
-    // });
-
-    for (const f of files) {
-        let data = [];
-        // let f = files[0];
-        log(`read file`, f);
-
-        if (f) {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                // noinspection JSUnresolvedVariable
-                let view = new Uint8Array(e.target.result);
-                for (let i = 0; i < view.length; i++) {
-                    data.push(view[i]);
-                    if (view[i] === SYSEX_END_BYTE) break;
-                }
-
-                // const valid = MODEL.setValuesFromSysEx(data);
-                const valid = validate(data);
-                if (valid.type === SYSEX_PRESET) {
-
-                    appendMessage(`File ${f.name} read OK`);
-
-                    /*
-                                    resetExp();
-                                    updateUI();
-                                    fullUpdateDevice();
-                                    // setPresetClean();
-                                    // noinspection JSBitwiseOperatorUsage
-                                    if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
-                                        updateUrl();
-                                    }
-                    */
-
-                    // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
-                    data[4] = 0;
-                    data[8] = 0;
-
-                    let n = f.name.substring(0, f.name.lastIndexOf('.')) || f.name;
-                    addPresetToLibrary({
-                        // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
-                        id: n,
-                        name: n,
-                        h: toHexString(data)
-                    })
-
-                } else {
-                    log("unable to set value from file; file is not a preset sysex", valid);
-                    $("#load-preset-error").show().text(valid.message);
-                }
-            };
-            reader.readAsArrayBuffer(f);
-        }
-    }
-
-    log("file read OK");
-    if (lightbox) lightbox.close();
-
-}
-
-function exportSysex(presets) {
-
-    log("exportSysex");
-
-    const zip = new JSZip();
-
-    for (const preset of presets) {
-        if (preset) {
-            zip.file(`${preset.name}.syx`, Utils.fromHexString(preset.h));     // will work, JSZip accepts ArrayBuffer
-        }
-    }
-
-    zip.generateAsync({type:"blob"})
-        .then(function (blob) {
-            saveAs(blob, "enzo-presets.zip");
-        });
 }
 
 

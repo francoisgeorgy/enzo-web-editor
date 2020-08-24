@@ -47,7 +47,7 @@
                 <%= require('html-loader!./partials/app-preferences.html') %>
                 <%= require('html-loader!./partials/help.html') %>
 
-    <%= require('html-loader!./partials/load-preset-dialog.html') %>
+    <%= require('html-loader!./partials/load-presets-dialog.html') %>
     <%= require('html-loader!./partials/credits-dialog.html') %>
     <%= require('html-loader!./partials/svg-gradients.html') %>
 -->

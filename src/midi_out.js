@@ -286,6 +286,7 @@ export async function writePreset(number, data) {
 */
 
 export let fullReadInProgress = false;
+export let autoLockOnImport = false;
 
 export async function requestAllPresets() {
 
