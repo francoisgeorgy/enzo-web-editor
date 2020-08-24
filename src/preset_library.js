@@ -330,45 +330,68 @@ function readFiles(files) {
 
     const lock = $('#load-presets-autolock').is(':checked');
 
+    const descriptions_buffer = {};
+
     for (const f of files) {
         let data = [];
         // let f = files[0];
         log(`read file`, f);
 
         if (f) {
+
             let reader = new FileReader();
-            reader.onload = function (e) {
-                // noinspection JSUnresolvedVariable
-                let view = new Uint8Array(e.target.result);
-                for (let i = 0; i < view.length; i++) {
-                    data.push(view[i]);
-                    if (view[i] === SYSEX_END_BYTE) break;
+
+            if (f.name.endsWith('.txt')) {
+
+                reader.onload=function(){
+                    let n = f.name.substring(0, f.name.substring(0, f.name.length-5).lastIndexOf('.')) || f.name;
+                    log("sysex description:", n, reader.result);
+
+                    //TODO: if lib contains preset 'n', add description, else keep description in buffer
+
+                    descriptions_buffer[n] = reader.result;
                 }
+                reader.readAsText(f);
 
-                const valid = validate(data);
-                if (valid.type === SYSEX_PRESET) {
+            } else {
 
-                    appendMessage(`File ${f.name} read OK`);
+                reader.onload = function (e) {
+                    // noinspection JSUnresolvedVariable
+                    let view = new Uint8Array(e.target.result);
+                    for (let i = 0; i < view.length; i++) {
+                        data.push(view[i]);
+                        if (view[i] === SYSEX_END_BYTE) break;
+                    }
 
-                    // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
-                    data[4] = 0;
-                    data[8] = 0;
+                    const valid = validate(data);
+                    if (valid.type === SYSEX_PRESET) {
 
-                    let n = f.name.substring(0, f.name.lastIndexOf('.')) || f.name;
-                    addPresetToLibrary({
-                        // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
-                        id: n,
-                        name: n,
-                        h: toHexString(data),
-                        locked: lock
-                    })
+                        appendMessage(`File ${f.name} read OK`);
 
-                } else {
-                    log("unable to set value from file; file is not a preset sysex", valid);
-                    $("#load-presets-error").show().text(valid.message);
-                }
-            };
-            reader.readAsArrayBuffer(f);
+                        // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
+                        data[4] = 0;
+                        data[8] = 0;
+
+                        //TODO: description_buffer contains description, use it
+
+                        let n = f.name.substring(0, f.name.lastIndexOf('.')) || f.name;
+                        addPresetToLibrary({
+                            // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                            id: n,
+                            name: n,
+                            h: toHexString(data),
+                            locked: lock
+                        })
+
+                    } else {
+                        log("unable to set value from file; file is not a preset sysex", valid);
+                        $("#load-presets-error").show().text(valid.message);
+                    }
+                };
+                reader.readAsArrayBuffer(f);
+
+            }
+
         }
     }
 
