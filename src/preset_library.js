@@ -591,6 +591,11 @@ function createPresetDOM(preset, index) {
                 deletePreset(index)
                 e.stopPropagation();
             });
+        const preset_info = preset.description ? $(`<i class="fas fa-info-circle preset-info" aria-hidden="true"></i>`).click(
+            (e) => {
+                e.stopPropagation();
+            }
+        ) : '';
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
             .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
             .append($(`<div/>`, {"class": "preset-icons"})
@@ -598,6 +603,13 @@ function createPresetDOM(preset, index) {
                 .append(preset_delete)
                 .append(preset_lock)
                 .append(preset_unlock));
+                // .append(preset_info));
+
+        // if (preset.description) {
+        //     // console.log(preset.description);
+        //     dom.append($('<div/>', {'class': 'preset-descr'}).text(preset.description));
+        // }
+
     } else {
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
             .append($(`<div class="preset-name"></div>`).html('&nbsp;'));

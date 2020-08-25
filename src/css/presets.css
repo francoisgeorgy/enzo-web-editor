@@ -80,6 +80,7 @@
     padding-left: 4px;
     padding-right: 4px;
     overflow-x: hidden;
+    position: relative;
 }
 
 .size-0 .preset-editor {
@@ -101,7 +102,7 @@
 
 .preset-editor .preset-name-wrapper {
     flex-grow: 1;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     /*display: flex;*/
 }
 
@@ -112,17 +113,34 @@
 }
 
 .preset-icons {
+    /*position: absolute;*/
+    /*right: 3px;*/
+    /*top: 2px;*/
     display: flex;
+    /*background-color: inherit;*/
+}
+
+.preset-descr {
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    height: 40px;
+    z-index: 10000;
+    background-color: lightgoldenrodyellow;
 }
 
 .preset-editor:hover i.i-hover {
     display: block;
+}
+.preset-editor:hover i {
+    color: blue;
 }
 
 .preset-editor i {
     font-size: 87.5%;
     margin-top: 2px;
     margin-left: 3px;
+    color: var(--preset-icon);
 }
 .preset-editor i.i-hover {
     display: none;
@@ -138,14 +156,14 @@ i.preset-delete {
 }
 
 .size-2 i.preset-delete {
-    margin-top: 5px;
+    /*margin-top: 5px;*/
 }
 
 /*.presets-selectors > div,*/
 /*.presets-lib > div {*/
 .preset {
     border: 1px solid #777;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     white-space: nowrap;
 }
 
