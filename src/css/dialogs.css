@@ -51,6 +51,10 @@
     background: rgba(0, 0, 0, 0.80);
 }
 
+.dialog h2 {
+    margin-top: 0;
+}
+
 .dialog h2, .dialog h3,
 .panel h2, .panel h3 {
     font-size: 1.25rem;
@@ -62,6 +66,15 @@
     font-size: 1rem;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.dialog input[type=file] {
+    font-size: 1rem;
+}
+
+.dialog .small-button {
+    font-size: 0.75rem;
+    color: #333;
 }
 
 #edit-preset-dialog input {
