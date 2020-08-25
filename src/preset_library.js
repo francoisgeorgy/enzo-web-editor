@@ -90,6 +90,7 @@ function closePleaseConnectDialog() {
 
 function closeLibrary() {
     $("#library").addClass("closed");
+    $("#library-menu").addClass("closed");
     $("#library-toggle-label").text("Open library");
     // $('#library-toggle-scroll').hide();
     $('#library-toggle-scroll-wrapper').addClass("hidden");
@@ -98,6 +99,7 @@ function closeLibrary() {
 
 function openLibrary() {
     $("#library").removeClass("closed");
+    $("#library-menu").removeClass("closed");
     $("#library-toggle-label").text("Close library");
     // $('#library-toggle-scroll').show();
     $('#library-toggle-scroll-wrapper').removeClass("hidden");
@@ -565,7 +567,7 @@ function createPresetDOM(preset, index) {
             default: displayLength = 16;
         }
         let name = preset.name;
-        if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
+        // if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
         const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
             (e) => {
                 editPreset(index);
@@ -590,17 +592,63 @@ function createPresetDOM(preset, index) {
                 e.stopPropagation();
             });
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
-                .append($('<div class="preset-name-wrapper">')
-                    .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name)))
+            .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
+            .append($(`<div/>`, {"class": "preset-icons"})
                 .append(preset_edit)
+                .append(preset_delete)
                 .append(preset_lock)
-                .append(preset_unlock)
-                .append(preset_delete);
+                .append(preset_unlock));
     } else {
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
-                .append($('<div class="preset-name-wrapper">')
-                    .append($(`<div class="preset-name"></div>`).html('&nbsp;')));
+            .append($(`<div class="preset-name"></div>`).html('&nbsp;'));
     }
+
+    /*
+        if (preset) {
+            let displayLength;
+            switch (getCurrentZoomLevel()) {
+                case 1: displayLength = 18; break;
+                case 2: displayLength = 20; break;
+                default: displayLength = 16;
+            }
+            let name = preset.name;
+            if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
+            const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
+                (e) => {
+                    editPreset(index);
+                    e.stopPropagation();
+                }
+            );
+            const preset_lock = $(`<i class="fas fa-lock-open preset-lock-open ${preset.locked ? 'hidden' : 'i-hover'}" aria-hidden="true"></i>`).click(
+                (e) => {
+                    lockPreset(index);
+                    e.stopPropagation();
+                }
+            );
+            const preset_unlock = $(`<i class="fas fa-lock preset-lock ${preset.locked ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
+                (e) => {
+                    unlockPreset(index);
+                    e.stopPropagation();
+                }
+            );
+            const preset_delete = $(`<i class="fas fa-trash-alt preset-delete i-hover" aria-hidden="true"></i>`).click(
+                (e) => {
+                    deletePreset(index)
+                    e.stopPropagation();
+                });
+            dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
+                    .append($('<div class="preset-name-wrapper">')
+                        .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name)))
+                    .append(preset_edit)
+                    .append(preset_lock)
+                    .append(preset_unlock)
+                    .append(preset_delete);
+        } else {
+            dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
+                    .append($('<div class="preset-name-wrapper">')
+                        .append($(`<div class="preset-name"></div>`).html('&nbsp;')));
+        }
+    */
 
     return dom;
 }
