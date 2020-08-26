@@ -84,7 +84,11 @@
 }
 
 .menu-bold {
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.size-2 .menu-bold {
+    font-weight: 400;
 }
 
 #menu-help {

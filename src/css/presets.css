@@ -50,7 +50,7 @@
 }
 
 .size-2 .presets-lib.scrollable {
-    max-height: 122px;
+    max-height: 12vw;
 }
 
 .scrollable {
@@ -133,7 +133,8 @@
     display: block;
 }
 .preset-editor:hover i {
-    color: blue;
+    /*color: blue;*/
+    color: var(--menu-link);
 }
 
 .preset-editor i {
@@ -146,7 +147,8 @@
     display: none;
 }
 .preset-editor i.preset-save {
-    color: blue;
+    /*color: blue;*/
+    color: var(--menu-link);
 }
 
 i.preset-edit {
@@ -250,7 +252,7 @@ i.preset-delete {
     font-size: 1rem;
 }
 .size-1 .preset-id {
-    padding: 2px 4px;
+    padding: 4px 4px 2px 4px;
     font-size: 1.25rem;
 }
 

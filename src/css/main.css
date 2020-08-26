@@ -166,7 +166,7 @@ a {
 }
 
 .panel-title span {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .padding-0 {
@@ -200,7 +200,8 @@ a {
 
 .btn {
     margin-left: 10px;
-    color: blue;
+    /*color: blue;*/
+    color: var(--menu-link);
     cursor: pointer;
 }
 

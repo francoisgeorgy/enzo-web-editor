@@ -7,4 +7,5 @@
 .global-setting-toggle.enabled {
     color: blue;
     cursor: pointer;
+    text-transform: capitalize;
 }
