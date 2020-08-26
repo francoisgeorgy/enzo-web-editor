@@ -1,4 +1,3 @@
-// import {log} from "./debug";
 import {URL_PARAM_SYSEX} from "./constants";
 import * as Utils from "./utils";
 import MODEL from "./model";

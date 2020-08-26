@@ -47,7 +47,6 @@ html {
     --select-border: #000;
 
     --on-color: #000;
-    /*--midi-on: #fff;*/
     --midi-on: yellow;
     --paused: #706c58;
     --running: red;

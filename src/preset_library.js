@@ -15,6 +15,7 @@ import {setPresetSelectDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import {preferences, savePreferences} from "./preferences";
+import {device_name} from "./model/constants";
 
 /* editor presets (library) */
 
@@ -64,13 +65,13 @@ export function setupPresetsLibrary() {
 
     $('#edit-preset-save-button').click(updatePresetAndCloseDialog);
 
-    $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
-    $('#copy-presets-go-button').click(copyToEnzo);
-    $('#copy-presets-cancel-button').click(closeCopyToEnzoDialog);
-    $('#copy-presets-close-button').click(closeCopyToEnzoDialog);
+    $("#menu-copy-to-device").click(openCopyToDeviceDialog);
+    $('#copy-presets-go-button').click(copyToDevice);
+    $('#copy-presets-cancel-button').click(closeCopyToDeviceDialog);
+    $('#copy-presets-close-button').click(closeCopyToDeviceDialog);
 
-    $("#menu-import-enzo").click(openImportFromEnzoDialog);
-    $('#read-presets-go-button').click(importPresetsFromEnzo);
+    $("#menu-import-device").click(openImportFromDeviceDialog);
+    $('#read-presets-go-button').click(importPresetsFromDevice);
     $('#read-presets-cancel-button').click(closeImportPresetsDialog);
     $('#read-presets-close-button').click(closeImportPresetsDialog);
 
@@ -163,7 +164,7 @@ function compactTheLibrary() {
 }
 
 //=============================================================================
-// Read all presets from Enzo
+// Read all presets from Device
 
 export function updateImportPresetsProgress(min, max, progress) {
     const p = (progress - min + 1) / (max - min + 1) * 100;
@@ -172,7 +173,7 @@ export function updateImportPresetsProgress(min, max, progress) {
         .text(progress === max ? '100% - Done, you can close this window' : `${Math.round(p)}%`);  //.text(`${min} ${max} ${progress}`);
 }
 
-function openImportFromEnzoDialog() {
+function openImportFromDeviceDialog() {
     if (!getMidiOutputPort()) {
         openPleaseConnectDialog();
         return;
@@ -189,7 +190,7 @@ function closeImportPresetsDialog() {
     }
 }
 
-async function importPresetsFromEnzo() {
+async function importPresetsFromDevice() {
     if (fullReadInProgress) return;
     autoLockOnImport = $('#read-presets-autolock').is(':checked');
     $('#read-presets-cancel-button').hide();
@@ -199,9 +200,9 @@ async function importPresetsFromEnzo() {
 }
 
 //=============================================================================
-// Copy presets to Enzo
+// Copy presets to Device
 
-function openCopyToEnzoDialog() {
+function openCopyToDeviceDialog() {
 
     if (!getMidiOutputPort()) {
         openPleaseConnectDialog();
@@ -212,7 +213,7 @@ function openCopyToEnzoDialog() {
     $("#copy-to-id option").remove();
     $('#copy-presets-go-button').show();
     $('#copy-presets-close-button').hide();
-    $('#copy-presets-dialog select').on('change', updateCopyToEnzoSummary);
+    $('#copy-presets-dialog select').on('change', updateCopyToDeviceSummary);
 
     const sf = $('#copy-from-id');
     const st = $('#copy-to-id');
@@ -227,7 +228,7 @@ function openCopyToEnzoDialog() {
 
     st.val(c);
 
-    updateCopyToEnzoSummary();
+    updateCopyToDeviceSummary();
 
     // lity dialog without close when clicking outside. Need to close with ESC or with the close button
     // https://github.com/jsor/lity/issues/132
@@ -246,11 +247,11 @@ function openCopyToEnzoDialog() {
     //  </div></div>'
 }
 
-let copyToEnzoFrom;
-let copyToEnzoTo;
+let copyToDeviceFrom;
+let copyToDeviceTo;
 let copyInProgress = false;
 
-function closeCopyToEnzoDialog() {
+function closeCopyToDeviceDialog() {
     if (copy_presets_dialog) {
         $("#copy-from-id option").remove();
         $("#copy-to-id option").remove();
@@ -258,45 +259,45 @@ function closeCopyToEnzoDialog() {
     }
 }
 
-function updateCopyToEnzoSummary() {
+function updateCopyToDeviceSummary() {
 
-    copyToEnzoFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
-    copyToEnzoTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
+    copyToDeviceFrom = parseInt($('#copy-from-id').children("option:selected").val(), 10);
+    copyToDeviceTo = parseInt($('#copy-to-id').children("option:selected").val(), 10);
 
     const summary = $('#copy-presets-summary');
     summary.empty();
-    let enzoId = 1;
-    for (let index=copyToEnzoFrom; index <= copyToEnzoTo; index++) {
-        if (enzoId <= 16 && library[index] && library[index].h) {
-            summary.append(`<div>Lib #${index + 1}: ${library[index].name} ---> Enzo preset #${enzoId} <span id="copy-presets-done-${index}"></span></div>`);
-            enzoId++;
+    let deviceId = 1;
+    for (let index=copyToDeviceFrom; index <= copyToDeviceTo; index++) {
+        if (deviceId <= 16 && library[index] && library[index].h) {
+            summary.append(`<div>Lib #${index + 1}: ${library[index].name} ---> Device preset #${deviceId} <span id="copy-presets-done-${index}"></span></div>`);
+            deviceId++;
         }
     }
 }
 
-async function copyToEnzo() {
+async function copyToDevice() {
 
     if (copyInProgress) return;
 
-    if (!isNaN(copyToEnzoFrom) && !isNaN(copyToEnzoTo) && (copyToEnzoFrom >= 0) && (copyToEnzoTo >= 0)) {
+    if (!isNaN(copyToDeviceFrom) && !isNaN(copyToDeviceTo) && (copyToDeviceFrom >= 0) && (copyToDeviceTo >= 0)) {
 
-        log(`copyToEnzoToEnzo from ${copyToEnzoFrom} to ${copyToEnzoTo}`);
+        log(`copyToDeviceToDevice from ${copyToDeviceFrom} to ${copyToDeviceTo}`);
 
         copyInProgress = true;
 
-        let enzoId = 1;
-        for (let index = copyToEnzoFrom; index <= copyToEnzoTo; index++) {
-            if (enzoId > 16) {
-                progress.append($('<div/>').text(`${index} : ${library[index].name} --- skipped, Enzo is full.`));
+        let deviceId = 1;
+        for (let index = copyToDeviceFrom; index <= copyToDeviceTo; index++) {
+            if (deviceId > 16) {
+                progress.append($('<div/>').text(`${index} : ${library[index].name} --- skipped, Device is full.`));
             } else {
                 if (library[index]) {
                     log(`copy ${index}`, library[index]);
                     $(`#copy-presets-done-${index}`).html(' - copied &#x2714;');
                     let data = Utils.fromHexString(library[index].h);
                     data[4] = preferences.midi_channel;     // set device ID
-                    data[8] = enzoId;                       // set preset number
-                    await writePreset(enzoId, data);
-                    enzoId++;
+                    data[8] = deviceId;                       // set preset number
+                    await writePreset(deviceId, data);
+                    deviceId++;
                 }
             }
         }
@@ -370,7 +371,7 @@ function readFiles(files) {
 
                         appendMessage(`File ${f.name} read OK`);
 
-                        // set device ID and preset ID to 0 (to avoid selecting the preset in Enzo when we load the preset from the library)
+                        // set device ID and preset ID to 0 (to avoid selecting the preset in Device when we load the preset from the library)
                         data[4] = 0;
                         data[8] = 0;
 
@@ -418,7 +419,7 @@ function exportSysex(presets) {
 
     zip.generateAsync({type:"blob"})
         .then(function (blob) {
-            saveAs(blob, "enzo-presets.zip");
+            saveAs(blob, device_name.toLowerCase() + "-presets.zip");
         });
 }
 

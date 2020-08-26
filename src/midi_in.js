@@ -16,6 +16,7 @@ import {resetExp} from "./ui_exp";
 import {updateUrl} from "./url";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {addPresetToLibrary} from "./preset_library";
+import {device_name} from "./model/constants";
 
 let midi_input = null;
 
@@ -168,7 +169,7 @@ export function handleSysex(data) {
             data[4] = 0;
             data[8] = 0;
 
-            let n = `Enzo ${id}`;
+            let n = `${device_name} ${id}`;
             addPresetToLibrary({
                 // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
                 id: n,

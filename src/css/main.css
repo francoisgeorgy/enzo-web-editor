@@ -1,14 +1,4 @@
 
-/*-DEBUG-----------*/
-
-/*
-.control-cell {
-    padding: 40px 20px;
-}
-*/
-
-/*-----------------*/
-
 *:focus {
     outline: none;
 }
@@ -167,64 +157,6 @@ a {
     bottom: 22px;
 }
 
-/*--- MAIN GRID ---*/
-
-#wrapper {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: center;*/
-    /*min-height: 100vh;*/
-    margin: 0;
-    padding: 0;
-    /*background-color: lightgoldenrodyellow;*/
-}
-
-#main-grid {
-    /*flex-grow: 1;*/
-}
-#main-grid {
-    display: grid;
-    grid-template-columns: 20px repeat(6, 1fr) 20px;
-    align-content: center;
-    /*background-color: lightgoldenrodyellow;*/
-    /*background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: center;*/
-    /*background-size: contain;*/
-}
-
-.controls-row {
-    padding-top: 10px;
-}
-
-.size-0 .controls-row {
-    padding-top: 5px;
-}
-
-.size-2 .controls-row {
-    padding-top: 15px;
-}
-
-/*#main-grid > div {*/
-/*    background: transparent;*/
-/*}*/
-
-/*
-.mg-border-left.mg-top-row {
-    border-radius: 10px 0 0 0;
-}
-.mg-border-right.mg-top-row {
-    border-radius: 0 10px 0 0;
-}
-
-.mg-border-left.mg-last-row {
-    border-radius: 0 0 0 10px;
-}
-.mg-border-right.mg-last-row {
-    border-radius: 0 0 10px 0;
-}
-*/
-
 .span-2 {
     grid-column: span 2;
 }
@@ -232,19 +164,6 @@ a {
 .span-6 {
     grid-column: span 6;
 }
-
-/*
-.grid-panel {
-    border-top: 2px solid black;
-}
-*/
-
-/*
-#global-settings,
-#app-preferences {
-    !*padding: 30px 0;*!
-}
-*/
 
 .panel-title span {
     font-weight: bold;

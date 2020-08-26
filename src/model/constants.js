@@ -1,4 +1,6 @@
 
+export const device_name = "Enzo";
+
 export const SYSEX_CMD = {
     preset_request: 0x25,
     preset_response: 0x26,      // TO BE CONFIRMED
