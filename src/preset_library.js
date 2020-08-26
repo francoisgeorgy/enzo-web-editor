@@ -794,14 +794,14 @@ export function markCurrentLibraryPresetAsDirty() {
     }
 }
 
-export function markCurrentLibraryPresetAsClean() {
-    log("markCurrentPresetAsClean()", currentLibPreset);
-    if (currentLibPreset >= 0) {
-        presetIsDirty = false;
-        // hideSaveIcon(currentLibPreset);
-        setLibraryPresetClean();
-    }
-}
+// export function markCurrentLibraryPresetAsClean() {
+//     log("markCurrentPresetAsClean()", currentLibPreset);
+//     if (currentLibPreset >= 0) {
+//         presetIsDirty = false;
+//         // hideSaveIcon(currentLibPreset);
+//         setLibraryPresetClean();
+//     }
+// }
 
 let dirty_cache = false;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
 
