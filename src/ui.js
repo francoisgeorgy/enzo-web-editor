@@ -1,6 +1,6 @@
 import MODEL from "./model";
 import {
-    setPresetDirty,
+    setPresetSelectDirty,
     setupPresetSelectors
 } from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
@@ -39,7 +39,7 @@ export function handleUserAction(control_type, control_number, value) {
         setAndSendPC(n);
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
-            setPresetDirty();
+            setPresetSelectDirty();
         }
         updateDevice(control_type, n, value, inExpMode());
     }
@@ -176,7 +176,7 @@ export function updateModelAndUI(control_type, control_number, value) {
             updateControls(true);
         }
 
-        setPresetDirty();
+        setPresetSelectDirty();
 
     } else {
         log(`the MODEL does not support this control: ${num}`)

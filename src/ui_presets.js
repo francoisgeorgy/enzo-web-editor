@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {getMidiOutputPort, setAndSendPC} from "./midi_out";
-import {getMidiInputPort} from "./midi_in";
+import {setAndSendPC} from "./midi_out";
+import {markAllLibraryPresetsAsUnselected} from "./preset_library";
 
 /*
     .preset :
@@ -32,7 +32,7 @@ export function resetPresetSelectors() {
 /**
  * Remove any dirty indicator from the preset selectors
  */
-export function setPresetClean() {
+export function setPresetSelectorClean() {
     log("setPresetClean()");
     $(".preset-id").removeClass("dirty");
     dirty_cache = false;
@@ -41,7 +41,8 @@ export function setPresetClean() {
 /**
  * Show the dirty indicator on the current preset selector
  */
-export function setPresetDirty(force = false) {
+export function setPresetSelectDirty(force = false) {
+    // log("setPresetDirty()");
     if (!dirty_cache || force) {
         log("setPresetDirty()", MODEL.getPresetNumber());
         $(".preset-id").removeClass("dirty");
@@ -56,22 +57,14 @@ export function setPresetDirty(force = false) {
  */
 export function updatePresetSelector() {
     log("updatePresetSelector()");
-
     resetPresetSelectors();
-
     const n = MODEL.getPresetNumber();
     if (n) {
         const e = $(`#pc-${n}`);
         e.addClass("sel");
-/*
-        if (getMidiInputPort() && getMidiOutputPort()) {
-            e.addClass("on");
-        }
-*/
     }
-
-    $('.preset-editor').removeClass('sel');
-
+    // unselect any library select:
+    markAllLibraryPresetsAsUnselected();
 }
 
 /**

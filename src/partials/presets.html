@@ -24,24 +24,10 @@
 
         <div id="library" class="mt-10 library closed">
             <div id="presets-lib" class="presets-lib flex-grow scrollable">
-                <!--
-                                <div class="preset preset-editor">
-                                    <div class="preset-name-wrapper">
-                                        <div class="preset-name" contenteditable="true">QqWmj0123/-;</div>
-                                        <i class="fas fa-pen preset-edit" aria-hidden="true"></i>
-                                    </div>
-                                    <i class="fa fa-times preset-delete" aria-hidden="true"></i>
-                                </div>
-                -->
-                <div class="preset preset-editor" id="p0" style="overflow-x: hidden">
-                    <!--                    <div class="preset-name-wrapper">-->
-                    <div class="preset-name">123 456 789 012 345 678 901</div>
-                    <div class="preset-icons"style="display:flex">
-                        <i class="fas fa-trash-alt preset-edit i-hover" aria-hidden="true"></i>
-                        <i class="fas fa-trash-alt preset-lock-open i-hover" aria-hidden="true"></i>
-                        <i class="fas fa-trash-alt preset-delete i-hover" aria-hidden="true"></i>
+                <div class="preset preset-editor">
+                    <div class="preset-name-wrapper">
+                        <div class="preset-name">&nbsp;</div>
                     </div>
-                    <!--                    </div>-->
                 </div>
                 <div class="preset preset-editor">
                     <div class="preset-name-wrapper">
@@ -146,15 +132,28 @@
                         A minimum of 16 slots are always displayed, even if empty.
                     </div>
                 </div>
-                <div class="menu-entry hidden" id="library-toggle-scroll-wrapper" style="justify-self: right">
-                    <a id="library-toggle-scroll" href="#">
-                        <i class="fas fa-arrows-alt-v"></i>
-                        <i class="far fa-sticky-note"></i>
-                    </a>
-                    <div class="tooltip tooltip-right-0 hidden">
-                        Enable/disabled the vertical scrollbar in the Library. This can help when the Library contains a lot of presets.
+<!--
+                <div style="justify-self: right" class="flex-row">
+                    <div class="menu-entry" id="Xlibrary-toggle-scroll-wrapper">
+                        <a id="Xlibrary-toggle-scroll" href="#">
+                            <i class="far fa-sticky-note"></i>
+                        </a>
+                        <div class="tooltip tooltip-right-0 hidden">
+                            Show/hide the messages and description.
+                        </div>
                     </div>
+-->
+                    <div class="menu-entry hidden" id="library-toggle-scroll-wrapper" style="justify-self:right">
+                        <a id="library-toggle-scroll" href="#">
+                            <i class="fas fa-arrows-alt-v"></i>
+                        </a>
+                        <div class="tooltip tooltip-right-0 hidden">
+                            Enable/disabled the vertical scrollbar in the Library. This can help when the Library contains a lot of presets.
+                        </div>
+                    </div>
+<!--
                 </div>
+-->
                 <div class="menu-entry span-2">
                     <a id="menu-delete-presets" href="#">
                         <span class="menu-text">Delete all</span>

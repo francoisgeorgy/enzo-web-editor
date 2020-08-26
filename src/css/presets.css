@@ -145,6 +145,9 @@
 .preset-editor i.i-hover {
     display: none;
 }
+.preset-editor i.preset-save {
+    color: blue;
+}
 
 i.preset-edit {
     /*padding: 0 5px 0 5px;*/

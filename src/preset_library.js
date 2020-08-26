@@ -11,7 +11,7 @@ import {appendMessage} from "./ui_messages";
 import {fullReadInProgress, autoLockOnImport, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
-import {setPresetDirty} from "./ui_presets";
+import {setPresetSelectDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import {preferences, savePreferences} from "./preferences";
@@ -548,7 +548,31 @@ function addCurrentSettingsAsPresetToLibrary() {
     // const h = updateUrl();
     const h = toHexString(MODEL.getPreset());
 
-    addPresetToLibrary({id, name, h});
+    addPresetToLibrary({id, name, h, locked: false});
+}
+
+// function addSaveIcon(index) {
+//     const preset_save = $(`<i class="fas fa-save preset-save" aria-hidden="true"></i>`).click(
+//         (e) => {
+//             lockPreset(index);
+//             e.stopPropagation();
+//         }
+//     );
+//     $(`preset-icons-${index}`).append(preset_save);
+// }
+
+function showSaveIcon(index) {
+    log("showSaveIcon", index);
+    $(`#preset-${index} i.preset-save`).removeClass("hidden");
+}
+
+function hideSaveIcon(index = -1) {
+    log("hideSaveIcon", index);
+    if (index < 0) {
+        $(`i.preset-save`).addClass("hidden");
+    } else {
+        $(`#preset-${index} i.preset-save`).addClass("hidden");
+    }
 }
 
 function createPresetDOM(preset, index) {
@@ -591,24 +615,49 @@ function createPresetDOM(preset, index) {
                 deletePreset(index)
                 e.stopPropagation();
             });
-        const preset_info = preset.description ? $(`<i class="fas fa-info-circle preset-info" aria-hidden="true"></i>`).click(
+
+        const preset_save = $(`<i class="fas fa-save preset-save ${index === currentLibPreset && presetIsDirty ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
             (e) => {
+                // lockPreset(index);
                 e.stopPropagation();
             }
-        ) : '';
+        );
+
+        // const preset_info = preset.description ? $(`<i class="fas fa-info-circle preset-info" aria-hidden="true"></i>`).click(
+        //     (e) => {
+        //         e.stopPropagation();
+        //     }
+        // ) : '';
+
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
             .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
             .append($(`<div/>`, {"class": "preset-icons"})
                 .append(preset_edit)
                 .append(preset_delete)
                 .append(preset_lock)
-                .append(preset_unlock));
+                .append(preset_unlock)
+                .append(preset_save));
                 // .append(preset_info));
 
-        // if (preset.description) {
-        //     // console.log(preset.description);
-        //     dom.append($('<div/>', {'class': 'preset-descr'}).text(preset.description));
+        // let icons = $(`<div/>`, {"id": `preset-icons-${index}`, "class": "preset-icons"})
+        //     .append(preset_edit)
+        //     .append(preset_delete)
+        //     .append(preset_lock)
+        //     .append(preset_unlock);
+        //
+        // if (preset.dirty) {
+        //     const preset_save = $(`<i class="fas fa-save preset-save" aria-hidden="true"></i>`).click(
+        //         (e) => {
+        //             lockPreset(index);
+        //             e.stopPropagation();
+        //         }
+        //     );
+        //     icons.append(preset_save);
         // }
+        //
+        // dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
+        //     .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
+        //     .append(icons);
 
     } else {
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
@@ -686,7 +735,6 @@ function displayPresets() {
     setupDnD();
 }
 
-
 function usePreset(index) {
 
     log(`usePreset(${index})`);
@@ -694,15 +742,18 @@ function usePreset(index) {
     const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(library[index].h), true);
 
     if (valid.type === SYSEX_PRESET) {
+
         log("usePreset: sysex loaded in device");
-        setPresetDirty(true);   // must be done after updateUI()
+        setPresetSelectDirty(true);   // must be done after updateUI()
+
         resetExp();
         updateControls();
         appendMessage("library preset loaded.", false, false);
         // if (updateConnectedDevice)
         fullUpdateDevice();
 
-        markPresetAsSelected(index);
+        presetIsDirty = false;
+        markLibraryPresetAsSelected(index);
 
         return true;
     } else {
@@ -712,13 +763,67 @@ function usePreset(index) {
 
 }
 
-function markPresetAsSelected(id) {
-    markAllPresetsAsUnselected();
-    $(`#preset-${$.escapeSelector(id)}`).addClass("on sel");
+let currentLibPreset = -1;
+let presetIsDirty = false;
+
+function markLibraryPresetAsSelected(index) {
+    markAllLibraryPresetsAsUnselected();
+    $(`#preset-${$.escapeSelector(index)}`).addClass("on sel");
+    currentLibPreset = index;
 }
 
-function markAllPresetsAsUnselected() {
+export function markAllLibraryPresetsAsUnselected() {
     $('.preset-editor').removeClass('sel on');
+    setLibraryPresetClean();
+    // hideSaveIcon();
+    currentLibPreset = -1;
+}
+
+export function markCurrentLibraryPresetAsDirty() {
+    log("markCurrentPresetAsDirty()", currentLibPreset);
+    if (currentLibPreset >= 0) {
+        presetIsDirty = true;
+        showSaveIcon(currentLibPreset);
+    }
+}
+
+export function markCurrentLibraryPresetAsClean() {
+    log("markCurrentPresetAsClean()", currentLibPreset);
+    if (currentLibPreset >= 0) {
+        presetIsDirty = false;
+        // hideSaveIcon(currentLibPreset);
+        setLibraryPresetClean();
+    }
+}
+
+let dirty_cache = false;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
+
+/**
+ * Remove any dirty indicator from the preset selectors
+ */
+export function setLibraryPresetClean() {
+    log("setLibraryPresetClean()");
+    hideSaveIcon();
+    dirty_cache = false;
+}
+
+/**
+ * Show the dirty indicator on the current preset selector
+ */
+export function setLibraryPresetDirty(force = false) {
+
+    log("setLibraryPresetDirty()");
+
+    if (!dirty_cache || force) {
+
+        log("setLibraryPresetDirty() do");
+
+        // mark the preset selector as dirty:
+
+        markCurrentLibraryPresetAsDirty();
+
+        dirty_cache = true;
+    }
 }
 
 

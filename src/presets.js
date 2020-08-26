@@ -1,21 +1,23 @@
 import {log} from "./debug";
 import MODEL from "./model";
-import {setPresetDirty, updatePresetSelector} from "./ui_presets";
+import {setPresetSelectDirty, updatePresetSelector} from "./ui_presets";
 import {updateControls} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {appendMessage} from "./ui_messages";
 import {updateUrl} from "./url";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {resetExp} from "./ui_exp";
+import {setLibraryPresetDirty} from "./preset_library";
 
 export function init() {
     log("init()");
     MODEL.init();
     resetExp();
     // updateUI();
-    updatePresetSelector();
+    // updatePresetSelector();
     updateControls();
-    setPresetDirty();   // must be done after updateUI()
+    setPresetSelectDirty();   // must be done after updateUI()
+    setLibraryPresetDirty();
     fullUpdateDevice();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {
@@ -30,9 +32,10 @@ export function randomize() {
     MODEL.randomize();
     resetExp();
     // updateUI();
-    updatePresetSelector();
+    // updatePresetSelector();
     updateControls();
-    setPresetDirty();   // must be done after updateUI()
+    setPresetSelectDirty();   // must be done after updateUI()
+    setLibraryPresetDirty();
     fullUpdateDevice();
     if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
         (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {

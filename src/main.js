@@ -37,7 +37,7 @@ import "./css/global-settings.css";
 // import "./css/grid-default.css";
 // import "./css/grid-global-settings.css";
 
-import {setPresetDirty} from "./ui_presets";
+import {setPresetSelectDirty} from "./ui_presets";
 import * as Utils from "./utils";
 import {initSize} from "./ui_size";
 

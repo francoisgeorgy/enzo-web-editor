@@ -7,7 +7,7 @@ import {toHexString} from "./utils";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {setPresetDirty, updatePresetSelector} from "./ui_presets";
+import {setPresetSelectDirty, updatePresetSelector} from "./ui_presets";
 
 const ENABLE_URL_PRESET = false;
 
@@ -73,7 +73,7 @@ export function initFromUrl(updateConnectedDevice = true) {
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s), true);
         if (valid.type === SYSEX_PRESET) {
             log("initFromURL: sysex loaded in device");
-            setPresetDirty(true);   // must be done after updateUI()
+            setPresetSelectDirty(true);   // must be done after updateUI()
             resetExp();
             // updateUI();
             updatePresetSelector();
