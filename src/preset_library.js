@@ -62,7 +62,7 @@ export function setupPresetsLibrary() {
         return false;
     });
 
-    $('#edit-preset-save-button').click(updatePreset);
+    $('#edit-preset-save-button').click(updatePresetAndCloseDialog);
 
     $("#menu-copy-to-enzo").click(openCopyToEnzoDialog);
     $('#copy-presets-go-button').click(copyToEnzo);
@@ -425,7 +425,9 @@ function exportSysex(presets) {
 
 //=============================================================================
 
-function updatePreset() {
+let updateSysex = false;
+
+function updatePresetAndCloseDialog() {
 
     const index = parseInt($('#edit-preset-dialog-id').val(), 10);
 
@@ -441,6 +443,11 @@ function updatePreset() {
         library[index].description = descr;
         library[index].locked = false;
 
+        if (updateSysex) {
+            library[index].h = toHexString(MODEL.getPreset());
+            updateSysex = false;
+        }
+
         $(`#name-${index}`).text(name);
 
         savePresetsInLocalStorage();
@@ -452,19 +459,12 @@ function updatePreset() {
     $('#edit-preset-dialog input').val("");    // reset
 }
 
-function editPreset(index) {
+function openEditPresetDialog(index, saveSysex = false) {
 
     log(`editPreset(${index})`);
 
-    //TODO: allow empty slots in library
+    updateSysex = saveSysex;
 
-    // const p = elem.parents('.preset-editor').first();
-    // const n = elem.siblings('.preset-name').first();
-
-    // console.log(p.attr('id'), n.text());
-    // console.log(elem.children('.preset-name').first());
-
-    // if (key in library) {
     if (library[index]) {
 
         disableKeyboard();
@@ -483,6 +483,13 @@ function editPreset(index) {
     }
     return false;
 }
+
+function savePreset(index) {
+    log(`savePreset(${index})`);
+    return openEditPresetDialog(index, true);
+}
+
+//=============================================================================
 
 function lockPreset(index) {
     log(`lockPreset(${index})`, library);
@@ -594,7 +601,7 @@ function createPresetDOM(preset, index) {
         // if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
         const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
             (e) => {
-                editPreset(index);
+                openEditPresetDialog(index);
                 e.stopPropagation();
             }
         );
@@ -618,7 +625,7 @@ function createPresetDOM(preset, index) {
 
         const preset_save = $(`<i class="fas fa-save preset-save ${index === currentLibPreset && presetIsDirty ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
             (e) => {
-                // lockPreset(index);
+                savePreset(index);
                 e.stopPropagation();
             }
         );

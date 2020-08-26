@@ -8,6 +8,7 @@ import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {setPresetSelectDirty, updatePresetSelector} from "./ui_presets";
+import {setLibraryPresetDirty} from "./preset_library";
 
 const ENABLE_URL_PRESET = false;
 
@@ -74,6 +75,7 @@ export function initFromUrl(updateConnectedDevice = true) {
         if (valid.type === SYSEX_PRESET) {
             log("initFromURL: sysex loaded in device");
             setPresetSelectDirty(true);   // must be done after updateUI()
+            // setLibraryPresetDirty();
             resetExp();
             // updateUI();
             updatePresetSelector();

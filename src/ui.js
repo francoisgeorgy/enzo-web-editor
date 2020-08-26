@@ -25,7 +25,7 @@ import "webpack-jquery-ui/effects";
 import {log, TRACE, warn} from "./debug";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
-import {setupPresetsLibrary} from "./preset_library";
+import {setLibraryPresetDirty, setupPresetsLibrary} from "./preset_library";
 import {setupTooltips} from "./tooltips";
 
 
@@ -40,6 +40,7 @@ export function handleUserAction(control_type, control_number, value) {
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
             setPresetSelectDirty();
+            setLibraryPresetDirty();
         }
         updateDevice(control_type, n, value, inExpMode());
     }
@@ -177,6 +178,7 @@ export function updateModelAndUI(control_type, control_number, value) {
         }
 
         setPresetSelectDirty();
+        setLibraryPresetDirty();
 
     } else {
         log(`the MODEL does not support this control: ${num}`)
