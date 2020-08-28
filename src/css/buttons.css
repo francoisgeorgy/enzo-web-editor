@@ -1,7 +1,6 @@
 
 .icon-btn {
     width: 20px;
-    /*color: blue;*/
     color: var(--menu-link);
     cursor: pointer;
 }

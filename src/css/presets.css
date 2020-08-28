@@ -133,7 +133,6 @@
     display: block;
 }
 .preset-editor:hover i {
-    /*color: blue;*/
     color: var(--menu-link);
 }
 
@@ -147,7 +146,6 @@
     display: none;
 }
 .preset-editor i.preset-save {
-    /*color: blue;*/
     color: var(--menu-link);
 }
 
@@ -223,7 +221,6 @@ i.preset-delete {
     margin-left: 0;
     /*margin-right: 2px;*/
 }
-
 
 .presets-selectors > div {
     /*background-color: #e4e474;*/
