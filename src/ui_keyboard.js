@@ -10,7 +10,7 @@ import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {switchKnobsDisplay} from "./ui_knobs";
-import {showExpValues, toggleExpEditMode} from "./ui_exp";
+import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./ui_exp";
 
 let kb_enabled = true;
 
@@ -113,6 +113,33 @@ function animateTo(cc, to) {
     animateFromTo(cc, MODEL.getControlValue(MODEL.getControl(cc)), to);
 }
 
+
+// noinspection JSUnusedLocalSymbols
+function keyUp(code) {
+
+    if (!kb_enabled) return;
+
+    switch (code) {
+        case 16:                // Shift
+            showExpValues(false);
+            expHeel();
+            break;
+        case 18:                // ALT
+            // $(".header-shortcut").addClass("hidden");
+            // switchKnobsDisplay(false);
+            break;
+        case 27:                // close all opened panel with ESC key
+            // closeAppPreferencesPanel();
+            // closeGlobalSettingsPanel();
+            // closeHelpPanel();
+            // showDefaultPanel();
+            break;
+        case 84:                // T            tap
+            tapRelease("cc-28-127");
+            break;
+    }
+}
+
 function keyDown(code, alt, shift, meta, ctrl) {
 
     if (!kb_enabled) return;
@@ -144,6 +171,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
             break;
         case 16:                // Shift
             showExpValues(true);
+            expToe();
             break;
         case 18:                // ALT
             $(".header-shortcut").removeClass("hidden");
@@ -262,30 +290,5 @@ function keyDown(code, alt, shift, meta, ctrl) {
                 presetDec();
                 break;
         }
-    }
-}
-
-// noinspection JSUnusedLocalSymbols
-function keyUp(code) {
-
-    if (!kb_enabled) return;
-
-    switch (code) {
-        case 16:                // Shift
-            showExpValues(false);
-            break;
-        case 18:                // ALT
-            $(".header-shortcut").addClass("hidden");
-            switchKnobsDisplay(false);
-            break;
-        case 27:                // close all opened panel with ESC key
-            // closeAppPreferencesPanel();
-            // closeGlobalSettingsPanel();
-            // closeHelpPanel();
-            // showDefaultPanel();
-            break;
-        case 84:                // T            tap
-            tapRelease("cc-28-127");
-            break;
     }
 }
