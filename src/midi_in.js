@@ -13,8 +13,6 @@ import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_exp";
-import {updateUrl} from "./url";
-import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {addPresetToLibrary} from "./preset_library";
 import {device_name} from "./model/constants";
 
@@ -191,9 +189,9 @@ export function handleSysex(data) {
                 updatePresetSelector();
                 updateControls();
                 // noinspection JSBitwiseOperatorUsage
-                if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
-                    updateUrl();
-                }
+                // if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                //     updateUrl();
+                // }
                 // setPresetClean();
                 appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
                 break;

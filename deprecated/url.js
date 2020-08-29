@@ -7,10 +7,11 @@ import {toHexString} from "./utils";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {setPresetSelectDirty, updatePresetSelector} from "./ui_presets";
+import {setPresetSelectorDirty, updatePresetSelector} from "./ui_presets";
 import {setLibraryPresetDirty} from "./preset_library";
 
 const ENABLE_URL_PRESET = false;
+const ENABLE_URL_INIT = true;
 
 /**
  * Update the window title to get a nice bookmark
@@ -44,7 +45,7 @@ export function setTitle(title = null) {
  */
 export function hashSysexPresent() {
 
-    if (!ENABLE_URL_PRESET) return false;
+    if (!ENABLE_URL_INIT) return false;
 
     log(`hashSysexPresent: ${window.location.hash}`);
     const s = window.location.hash.substring(1);
@@ -66,7 +67,9 @@ export function hashSysexPresent() {
  */
 export function initFromUrl(updateConnectedDevice = true) {
 
-    if (!ENABLE_URL_PRESET) return false;
+    log("initFromUrl");
+
+    if (!ENABLE_URL_INIT) return false;
 
     log(`initFromURL(${updateConnectedDevice})`);
     if (hashSysexPresent()) {
@@ -74,7 +77,7 @@ export function initFromUrl(updateConnectedDevice = true) {
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s), true);
         if (valid.type === SYSEX_PRESET) {
             log("initFromURL: sysex loaded in device");
-            setPresetSelectDirty(true);   // must be done after updateUI()
+            setPresetSelectorDirty(true);   // must be done after updateUI()
             // setLibraryPresetDirty();
             resetExp();
             // updateUI();
@@ -145,6 +148,7 @@ export function toggleUrlAutomation() {
 }
 */
 
+/*
 function locationHashChanged(e) {
     // if (TRACE) {
     //     const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
@@ -165,3 +169,4 @@ export function setupUrlSupport() {
 
     window.onhashchange = locationHashChanged;
 }
+*/
