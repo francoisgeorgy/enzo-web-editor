@@ -390,31 +390,32 @@ function deviceConnected(info) {
 
     if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
 
-    let input_connected = false;
-    let output_connected = false;
+    // let input_connected = false;
+    // let output_connected = false;
 
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
-            input_connected = connectInputDevice(preferences.input_device_id);
-        } else {
-            log("deviceConnected: input device ignored");
+            // log("deviceConnected: input device is ");
+            /*input_connected =*/ connectInputDevice(preferences.input_device_id);
+        // } else {
+        //     log("deviceConnected: input device ignored");
         }
 
-        if (preferences.enable_midi_in2) {
-            log("deviceConnected: enable input2");
+        // if (preferences.enable_midi_in2) {
+        //     log("deviceConnected: input2 is enabled");
             if ((getMidiInput2Port() === null) && (info.port.id === preferences.input2_device_id)) {
                 connectInput2Device(preferences.input2_device_id);
-            } else {
-                log("deviceConnected: input2 device ignored or not defined by user");
+            // } else {
+            //     log("deviceConnected: input2 device ignored or not defined by user");
             }
-        }
+        // }
     }
 
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
-            output_connected = connectOutputDevice(preferences.output_device_id);
-        } else {
-            log("deviceConnected: output device ignored or not defined by user");
+            /*output_connected =*/ connectOutputDevice(preferences.output_device_id);
+        // } else {
+        //     log("deviceConnected: output device ignored or not defined by user");
         }
     }
 
