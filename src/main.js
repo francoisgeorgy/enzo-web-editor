@@ -2,7 +2,7 @@ import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {URL_PARAM_BG, URL_PARAM_SIZE, VERSION} from "./constants";
+import {URL_PARAM_BG, URL_PARAM_MARGIN, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./constants";
 import {loadPreferences, savePreferences, preferences} from "./preferences";
 import {
     appendMessage,
@@ -73,9 +73,11 @@ function setupModel() {
  */
 function sync() {
 
+    log('sync()');
+
     if (getMidiInputPort() && getMidiOutputPort()) {
 
-        log('sync()');
+        log('sync() midi in & midi out');
 
         appendMessage("Request global settings.");
         window.setTimeout(requestGlobalSettings, 200);
@@ -495,6 +497,11 @@ $(function () {
         if (z !== preferences.zoom_level) {
             initSize(z);
         }
+    }
+
+    const margins = Utils.getParameterByName(URL_PARAM_MARGINS);
+    if (margins) {
+        $("#wrapper").css("margin", margins);
     }
 
     const bg = Utils.getParameterByName(URL_PARAM_BG);
