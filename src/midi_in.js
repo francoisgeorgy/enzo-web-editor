@@ -1,7 +1,12 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {selectPreset, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {autoLockOnImport, confirmPresetReceived, fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
+import {
+    confirmPresetReceived,
+    getLastSendTime,
+    isAutoLockOnImport, isFullReadInProgress,
+    updateDevice
+} from "./midi_out";
 import {updateControls, updateModelAndUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -83,7 +88,7 @@ export function handlePC(msg, input_num = 1) {
     const pc = msg[1];
     logIncomingMidiMessage("PC", [pc]);
 
-    if (!fullReadInProgress) {
+    if (!isFullReadInProgress()) {
         selectPreset(pc)
     }
 }
@@ -156,7 +161,7 @@ export function handleSysex(data) {
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity(1);
 
-    if (fullReadInProgress) {
+    if (isFullReadInProgress()) {
 
         log("fullReadInProgress");
 
@@ -174,7 +179,7 @@ export function handleSysex(data) {
                 id: n,
                 name: n,
                 h: toHexString(data),
-                locked: autoLockOnImport
+                locked: isAutoLockOnImport()
             })
         }
 
