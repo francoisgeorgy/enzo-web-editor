@@ -66,7 +66,11 @@ a {
 */
 
 .lowercase {
-    text-transform: lowercase;
+    text-transform: lowercase!important;
+}
+
+.italic {
+    font-style: italic!important;
 }
 
 .pt-5 {
