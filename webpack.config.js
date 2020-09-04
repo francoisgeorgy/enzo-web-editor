@@ -53,7 +53,7 @@ module.exports = {
             {from: "./src/img/favicon-16x16.png"},
             {from: "./src/img/favicon-32x32.png"},
             {from: "./src/img/favicon-96x96.png"},
-            {from: "./src/img/editor-0.94.jpg", to: "img"}
+            {from: "./src/img/enzo-editor-v15.jpg", to: "img"}
         ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
