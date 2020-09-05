@@ -11,6 +11,7 @@ import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
 import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./ui_exp";
+import {toggleLibrary, toggleScroll} from "./preset_library";
 
 let kb_enabled = true;
 
@@ -238,6 +239,12 @@ function keyDown(code, alt, shift, meta, ctrl) {
                 let v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.sustain)) ? 0 : 127;
                 updateModelAndUI("cc", MODEL.control_id.sustain, v);
                 updateDevice("cc", MODEL.control_id.sustain, v);
+                break;
+            case 75:                // K
+                toggleScroll();
+                break;
+            case 76:                // L
+                toggleLibrary();
                 break;
 
 /*
