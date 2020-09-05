@@ -184,3 +184,6 @@ div.controls-slider {
     margin-right: 0;
 }
 
+#tempo-label {
+    cursor: pointer;
+}

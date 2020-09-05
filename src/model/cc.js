@@ -144,8 +144,14 @@ const _waveshape = function (v) {
     }
 };
 
-const _tempo = function (v) {
-    return (v * 10) + "ms";
+export const _tempo_ms = function (v) {
+    return (v * 10);    // + "ms";
+};
+
+export const _tempo_bpm = function (v) {
+    // console.log("tempo bpm", v, Math.round(60000 / (v * 10)));
+    const bpm = v > 0 ? Math.round(60000 / (v * 10)) : 0;
+    return `${bpm}`;
 };
 
 function defineControls() {
@@ -177,7 +183,7 @@ function defineControls() {
     };
     control[control_id.tempo] = { // 15,
         name: "Tempo",
-        human: _tempo,
+        human: _tempo_ms,
         sysex: {
             offset: 25,
             mask: [0x7F]

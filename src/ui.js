@@ -26,6 +26,7 @@ import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {setLibraryPresetDirty, setupPresetsLibrary} from "./preset_library";
 import {setupTooltips} from "./tooltips";
+import {_tempo_bpm, _tempo_ms, control, control_id} from "./model/cc";
 
 
 /**
@@ -130,17 +131,6 @@ export function updateControls(onlyTwoValuesControls = false) {
     }
     if (TRACE) console.groupEnd();
 } // updateControls()
-
-/**
- * Update the UI from the MODEL controls values.
- */
-/*
-export function updateUI() {
-    updatePresetSelector();
-    updateControls();
-    log("updateUI done");
-}
-*/
 
 /**
  * Update MODEL and associated on-screen control from CC value.
@@ -356,6 +346,18 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
 
+    // tempo:
+    $('#tempo-label').click(() => {
+        const c = MODEL.control[control_id.tempo];
+        if (c.human === _tempo_bpm) {
+            c.human = _tempo_ms;
+            $('#tempo-label').text('tempo MS');
+        } else {
+            c.human = _tempo_bpm;
+            $('#tempo-label').text('tempo BPM');
+        }
+        updateControl(c.cc_type, control_id.tempo, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
+    });
 
     if (TRACE) console.groupEnd();
 }
