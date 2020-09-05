@@ -53,7 +53,8 @@ module.exports = {
             {from: "./src/img/favicon-16x16.png"},
             {from: "./src/img/favicon-32x32.png"},
             {from: "./src/img/favicon-96x96.png"},
-            {from: "./src/img/enzo-editor-v15.jpg", to: "img"}
+            {from: "./src/img/enzo-editor-v15.jpg", to: "img"},
+            {from: "./src/img/enzo-editor-v15.png", to: "img"}
         ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
@@ -68,9 +69,9 @@ module.exports = {
             inject: "head",
             template: "./src/print/print.html",
             filename: "./print.html" //relative to root of the application
-        }),
-        new ZipPlugin({
-            filename: 'enzo_editor.zip',
+        // }),
+        // new ZipPlugin({
+        //     filename: 'enzo_editor.zip',
         })
     ],
     performance: {
