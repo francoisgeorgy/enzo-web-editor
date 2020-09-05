@@ -124,10 +124,10 @@ function keyUp(code) {
             showExpValues(false);
             expHeel();
             break;
-        case 18:                // ALT
+        // case 18:                // ALT
             // $(".header-shortcut").addClass("hidden");
             // switchKnobsDisplay(false);
-            break;
+            // break;
         case 27:                // close all opened panel with ESC key
             // closeAppPreferencesPanel();
             // closeGlobalSettingsPanel();
@@ -174,8 +174,8 @@ function keyDown(code, alt, shift, meta, ctrl) {
             expToe();
             break;
         case 18:                // ALT
-            $(".header-shortcut").removeClass("hidden");
-            switchKnobsDisplay(true);
+            // $(".header-shortcut").removeClass("hidden");
+            // switchKnobsDisplay(true);
             break;
     }
 
@@ -185,68 +185,6 @@ function keyDown(code, alt, shift, meta, ctrl) {
 
     if (!alt && !shift && !meta) {
         switch (code) {
-            case 67:                // C
-                animateTo(MODEL.control_id.pitch, ctrl ? 63 : 0);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 0, animate_callback);
-                break;
-            case 86:                // V
-                animateTo(MODEL.control_id.pitch, ctrl ? 63 : 127);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 127);
-                break;
-            case 70:                // F
-                animateTo(MODEL.control_id.filter, ctrl ? 63 : 0);
-                break;
-            case 71:                // G
-                animateTo(MODEL.control_id.filter, ctrl ? 63 : 127);
-                break;
-            case 72:                // H
-                animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 0);
-                break;
-            case 74:                // J
-                animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 127);
-                break;
-            case 75:                // K    delay level
-                animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 0);
-                break;
-            case 76:                // L    delay level
-                animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 127);
-                break;
-            case 89:                // Y    min mix
-                animateTo(MODEL.control_id.mix, ctrl ? 63 : 0);
-                break;
-            case 88:                // X    max mix
-                animateTo(MODEL.control_id.mix, ctrl ? 63 : 127);
-                break;
-            case 8:                 // DEL  min sustain
-                animateTo(MODEL.control_id.sustain, 0);
-                break;
-            case 66:                // B    min sustain
-                animateTo(MODEL.control_id.sustain, ctrl ? 63 : 0);
-                break;
-            case 78:                // N    max sustain
-                animateTo(MODEL.control_id.sustain, ctrl ? 63 : 127);
-                break;
-            case 84:                // T            tap
-                tapDown("cc-28-127");
-                break;
-            case 90:                // Z
-                animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 0);
-                break;
-            case 85:                // U
-                animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 127);
-                break;
-            case 32:                // SPACE
-                toggleBypass();
-                break;
-            case 109:               // num keypad "-"
-                animateTo(MODEL.control_id.modulation, ctrl ? 63 : 0);
-                break;
-            case 107:               // num keypad "+"
-                animateTo(MODEL.control_id.modulation, ctrl ? 63 : 127);
-                break;
-            case 79:                // O
-                animateFromTo(MODEL.control_id.portamento, portamento, ctrl ? 63 : (portamento < 63 ? 127 : 0));
-                break;
             case 82:                // R Randomize
                 randomize();
                 break;
@@ -289,6 +227,77 @@ function keyDown(code, alt, shift, meta, ctrl) {
             case 37:                // Left arrow
                 presetDec();
                 break;
+            case 84:                // T            tap
+                tapDown("cc-28-127");
+                break;
+            case 32:                // SPACE
+                toggleBypass();
+                break;
+            case 83:                // S    toggle sustain
+                // animateTo(MODEL.control_id.sustain, ctrl ? 0 : 127);
+                let v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.sustain)) ? 0 : 127;
+                updateModelAndUI("cc", MODEL.control_id.sustain, v);
+                updateDevice("cc", MODEL.control_id.sustain, v);
+                break;
+
+/*
+            case 67:                // C
+                animateTo(MODEL.control_id.pitch, ctrl ? 63 : 0);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 0, animate_callback);
+                break;
+            case 86:                // V
+                animateTo(MODEL.control_id.pitch, ctrl ? 63 : 127);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 127);
+                break;
+            case 70:                // F
+                animateTo(MODEL.control_id.filter, ctrl ? 63 : 0);
+                break;
+            case 71:                // G
+                animateTo(MODEL.control_id.filter, ctrl ? 63 : 127);
+                break;
+            case 72:                // H
+                animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 0);
+                break;
+            case 74:                // J
+                animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 127);
+                break;
+            case 75:                // K    delay level
+                animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 0);
+                break;
+            case 76:                // L    delay level
+                animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 127);
+                break;
+            case 89:                // Y    min mix
+                animateTo(MODEL.control_id.mix, ctrl ? 63 : 0);
+                break;
+            case 88:                // X    max mix
+                animateTo(MODEL.control_id.mix, ctrl ? 63 : 127);
+                break;
+            case 8:                 // DEL  min sustain
+                animateTo(MODEL.control_id.sustain, 0);
+                break;
+            case 66:                // B    min sustain
+                animateTo(MODEL.control_id.sustain, ctrl ? 63 : 0);
+                break;
+            case 78:                // N    max sustain
+                animateTo(MODEL.control_id.sustain, ctrl ? 63 : 127);
+                break;
+            case 90:                // Z
+                animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 0);
+                break;
+            case 85:                // U
+                animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 127);
+                break;
+            case 109:               // num keypad "-"
+                animateTo(MODEL.control_id.modulation, ctrl ? 63 : 0);
+                break;
+            case 107:               // num keypad "+"
+                animateTo(MODEL.control_id.modulation, ctrl ? 63 : 127);
+                break;
+            case 79:                // O
+                animateFromTo(MODEL.control_id.portamento, portamento, ctrl ? 63 : (portamento < 63 ? 127 : 0));
+                break;
+*/
         }
     }
 }
