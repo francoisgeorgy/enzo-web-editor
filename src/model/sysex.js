@@ -126,7 +126,9 @@ export function validate(data) {
  * @param data
  */
 function decodeMeta(data) {
+    log("decodeMeta", data);
     meta.preset_id.value = data[meta.preset_id.sysex.offset]
+    log("decodeMeta: meta.preset_id.value", meta.preset_id.value);
 }
 
 /**
@@ -197,11 +199,16 @@ function decodeGlobals(data, globals) {
  * @returns {*}
  */
 export function decodeSysex(data, ignorePresetID = false) {
+
+    log("decodeSysex: ignorePresetID", ignorePresetID);
+
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
             log("decodeSysex: sysex is preset data");
-            if (!ignorePresetID) decodeMeta(data);
+            if (!ignorePresetID) {
+                decodeMeta(data);
+            }
             decodeControls(data, control);
             return {
                 type: SYSEX_PRESET,
