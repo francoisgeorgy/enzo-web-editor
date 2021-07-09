@@ -1,5 +1,5 @@
-import {log} from "./debug";
-import {preferences} from "./preferences";
+import {log} from "../../utils/debug";
+import {preferences} from "../preferences";
 import * as WebMidi from "webmidi";
 
 export function updateSelectDeviceList() {

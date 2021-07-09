@@ -1,25 +1,25 @@
-import {showMidiInActivity} from "./ui_midi_activity";
-import {selectPreset, updatePresetSelector} from "./ui_presets";
-import {logIncomingMidiMessage} from "./ui_midi_window";
+import {showMidiInActivity} from "./midiActivity.js";
+import {selectPreset, updatePresetSelector} from "../presets.js";
+import {logIncomingMidiMessage} from "./midiWindow.js";
 import {
     confirmPresetReceived,
     getLastSendTime,
     isAutoLockOnImport, isFullReadInProgress,
     updateDevice
-} from "./midi_out";
-import {updateControls, updateModelAndUI} from "./ui";
-import {log} from "./debug";
-import MODEL from "./model";
+} from "./midiOut";
+import {log} from "@utils/debug.js";
+import MODEL from "@model/";
 import {
     appendMessage,
     monitorMessage
-} from "./ui_messages";
-import {toHexString} from "./utils";
-import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "./model/sysex";
-import {updateGlobalSettings} from "./ui_global_settings";
-import {resetExp} from "./ui_exp";
-import {addPresetToLibrary} from "./preset_library";
-import {device_name} from "./model/constants";
+} from "./messages";
+import {toHexString} from "@utils/";
+import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@model/sysex.js";
+import {device_name} from "@model/";
+import {updateGlobalSettings} from "../globalSettings.js";
+import {resetExp} from "../expController.js";
+import {addPresetToLibrary} from "../presetLibrary/preset_library.js";
+import {updateControls, updateModelAndUI} from "../controller.js";
 
 let midi_input = null;
 

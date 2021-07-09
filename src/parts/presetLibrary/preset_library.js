@@ -1,27 +1,26 @@
-import {log} from "./debug";
-import {disableKeyboard} from "./ui_keyboard";
+import {log} from "../../utils/debug";
+import {disableKeyboard} from "../shortcutKeys";
 import * as lity from "lity";
 import store from "storejs";
-import MODEL from "./model";
-import * as Utils from "./utils";
-import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
-import {resetExp} from "./ui_exp";
-import {updateControls} from "./ui";
-import {appendMessage} from "./ui_messages";
+import MODEL, {device_name} from "../../model";
+import * as Utils from "../../utils";
+import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "../../model/sysex";
+import {resetExp} from "../expController";
+import {appendMessage} from "../midi/messages";
 import {
     fullUpdateDevice,
     getMidiOutputPort,
     requestAllPresets,
     writePreset,
     setAutoLockOnImport, isFullReadInProgress, isCommOk
-} from "./midi_out";
-import {getCurrentZoomLevel} from "./ui_size";
-import {toHexString} from "./utils";
-import {setPresetSelectorDirty} from "./ui_presets";
+} from "../midi/midiOut";
+import {getCurrentZoomLevel} from "../windowSize";
+import {toHexString} from "../../utils";
+import {setPresetSelectorDirty} from "../presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
-import {preferences, savePreferences} from "./preferences";
-import {device_name} from "./model/constants";
+import {preferences, savePreferences} from "../preferences";
+import {updateControls} from "../controller";
 
 /* editor presets (library) */
 

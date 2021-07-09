@@ -1,12 +1,12 @@
-import {log} from "./debug";
+import {log} from "../utils/debug";
 import Slider from "svg-slider";
-import MODEL from "./model";
-import {control} from "./model/cc";
-import {knobs} from "./ui_knobs";
-import {fullUpdateDevice, updateDevice} from "./midi_out";
-import {appendMessage} from "./ui_messages";
-import {updateControls} from "./ui";
-import {MIXER_SLIDER_SCHEME} from "./ui_schemes";
+import MODEL from "../model";
+import {control} from "../model/cc";
+import {knobs} from "./knobs";
+import {fullUpdateDevice, updateDevice} from "./midi/midiOut";
+import {appendMessage} from "./midi/messages";
+import {MIXER_SLIDER_SCHEME} from "./knobsTheme";
+import {updateControls} from "./controller";
 
 export const sliders = {};
 
@@ -42,12 +42,7 @@ export function expToe(showCopyButton = false) {
     $("#exp-close-bt").addClass("on");
     $("#cc-4-value").hide();
     if (showCopyButton) $("#exp-copy").show();
-
-    // EXP
-    //     MODEL.interpolateExpValues(value);
-        updateExpSlider(127);
-        // updateControls(true);
-
+    updateExpSlider(127);
 }
 
 export function expHeel() {
@@ -58,37 +53,18 @@ export function expHeel() {
 }
 
 export function toggleExpEditMode() {
-
-    log(`%ceditExpValues()`, "color: yellow; font-weight: bold");
-
     if (inExpMode()) {
-
         log("editExpValues: in EXP mode, switch to normal mode");
-
-        // $("#exp-close-bt").removeClass("on");
-        // $("#exp-copy").hide();
-        // $("#cc-4-value").show();
         expHeel();
-
         updateDevice("cc", MODEL.control_id.exp_pedal, 0);
-
         showExpValues(false);
         appendMessage("You are now editing the normal values", true);
-
     } else {
-
         log("editExpValues: in normal mode, switch to EXP mode");
-
-        // $("#exp-close-bt").addClass("on");
-        // $("#cc-4-value").hide();
-        // $("#exp-copy").show();
         expToe(true);
-
         updateDevice("cc", MODEL.control_id.exp_pedal, 127);
-
         showExpValues(true);
         appendMessage("You are now editing the EXP (toe down) values", true);
-
     }
 }
 
@@ -101,15 +77,13 @@ export function resetExp() {
     MODEL.setControlValue("cc", 4, v);  // TODO: create a resetControl() method in the model
     const id = `cc-${cc}`;
     sliders[id].value = v;
-    const slider_value_element = document.getElementById(`${id}-value`);
-    slider_value_element.innerText = MODEL.control[MODEL.control_id.exp_pedal].human(v);
+    document.getElementById(`${id}-value`).innerText = MODEL.control[MODEL.control_id.exp_pedal].human(v);
 
     $("#exp-close-bt").removeClass("on");
     $("#exp-copy").hide();
     $("#cc-4-value").show();
 
     showExpValues(false);
-
 }
 
 export function updateExpSlider(value) {
@@ -117,8 +91,7 @@ export function updateExpSlider(value) {
     const cc = MODEL.control_id.exp_pedal;
     const id = `cc-${cc}`;
     sliders[id].value = value;
-    const slider_value_element = document.getElementById(`${id}-value`);
-    slider_value_element.innerText = MODEL.control[cc].human(value);
+    document.getElementById(`${id}-value`).innerText = MODEL.control[cc].human(value);
 }
 
 export function setupExp(userActionCallback) {
@@ -136,7 +109,6 @@ export function setupExp(userActionCallback) {
     });
 
     $("#exp-close-bt").click(toggleExpEditMode);
-
     $("#exp-copy")
         .mousedown(function() {
             this.classList.add("on");

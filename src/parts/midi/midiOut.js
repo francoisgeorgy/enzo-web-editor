@@ -1,19 +1,18 @@
-import MODEL from "./model";
-import {log} from "./debug";
-import {preferences} from "./preferences";
-import {showMidiOutActivity} from "./ui_midi_activity";
-import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {setPresetSelectorClean} from "./ui_presets";
-import {appendMessage, monitorMessage} from "./ui_messages";
-import {toHexString} from "./utils";
-import {SYSEX_CMD} from "./model/constants";
-import {control_id} from "./model/cc";
-import {updateControls} from "./ui";
-import {updateExpSlider} from "./ui_exp";
-import {inExpMode} from "./ui_exp";
-import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
-import {updateImportPresetsProgress} from "./preset_library";
-import {SYSEX_START_BYTE} from "./model/sysex";
+import MODEL from "../../model";
+import {control_id} from "../../model/cc";
+import {SYSEX_CMD, SYSEX_START_BYTE} from "../../model/sysex";
+import {log} from "../../utils/debug";
+import {preferences} from "../preferences";
+import {showMidiOutActivity} from "./midiActivity";
+import {logOutgoingMidiMessage} from "./midiWindow";
+import {setPresetSelectorClean} from "../presets";
+import {appendMessage, monitorMessage} from "./messages";
+import {toHexString} from "../../utils";
+import {updateExpSlider} from "../expController";
+import {inExpMode} from "../expController";
+import {getMidiInputPort, suppressSysexEcho} from "./midiIn";
+import {updateImportPresetsProgress} from "../presetLibrary/preset_library";
+import {updateControls} from "../controller";
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 

@@ -1,4 +1,4 @@
-import {toHexString} from "./utils";
+import {toHexString} from "../../utils";
 
 // Popup to display MIDI messages
 let midi_window = null;

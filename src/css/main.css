@@ -36,6 +36,7 @@ a {
 .error {
     color: red;
 }
+
 .grid-2x1 {
     display: grid;
     grid-template-rows: auto auto;

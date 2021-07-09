@@ -1,9 +1,13 @@
-import {log} from "./debug";
-import {handleUserAction, updateControl} from "./ui";
-import {appendMessage} from "./ui_messages";
-import {updateDevice} from "./midi_out";
-import MODEL from "./model";
+import {log} from "../utils/debug";
+import {appendMessage} from "./midi/messages";
+import {updateDevice} from "./midi/midiOut";
+import MODEL from "../model";
+import {handleUserAction, updateControl} from "./controller";
 
+/**
+ *
+ * @param value
+ */
 export function updateBypassSwitch(value) {
     log("updateBypassSwitch", value);
     if (value === 0) {
@@ -15,8 +19,12 @@ export function updateBypassSwitch(value) {
     }
 }
 
+/**
+ * "radio button"-like behavior
+ * @param id
+ * @param value
+ */
 export function updateOptionSwitch(id, value) {
-    // "radio button"-like behavior
     log(`updateOptionSwitch(${id}, ${value})`);
     let e = $("#" + id);
     if (!e.is(".on")) {   // if not already on...
@@ -25,6 +33,11 @@ export function updateOptionSwitch(id, value) {
     }
 }
 
+/**
+ *
+ * @param id
+ * @param value
+ */
 export function updateMomentaryStompswitch(id, value) {
     log(`updateMomentaryStompswitch(${id}, ${value})`);
     if (value === 0) {
@@ -36,11 +49,17 @@ export function updateMomentaryStompswitch(id, value) {
     }
 }
 
+
 let tap_timestamp = 0;
 
-//TODO: compute tempo on an average of at least 3 values
-
+/**
+ *
+ * @param id
+ */
 export function tapDown(id) {
+
+    //TODO: compute tempo on an average of at least 3 values
+
     log(`tapDown(${id})`);
     updateMomentaryStompswitch(id, 127);
     const t = Date.now();
@@ -58,6 +77,10 @@ export function tapDown(id) {
     }
 }
 
+/**
+ *
+ * @param id
+ */
 export function tapRelease(id) {
     log(`tapRelease(${id})`);
     updateMomentaryStompswitch(id, 0);
@@ -68,7 +91,9 @@ export function tapRelease(id) {
  */
 export function setupSwitches(userActionCallback) {
     log("setupSwitches()");
+    //
     // "radio button"-like behavior:
+    //
     $("div.bt").click(function() {
         // log(`click on ${this.id}`);
         if (!this.classList.contains("on")) {   // if not already on...
@@ -77,7 +102,9 @@ export function setupSwitches(userActionCallback) {
             userActionCallback(...this.id.split("-"));
         }
     });
+    //
     // toggle stompswitches:
+    //
     $(".sw").click(function() {
         this.classList.add("sw-off");
         $(this).siblings(".sw").removeClass("sw-off");
@@ -86,7 +113,9 @@ export function setupSwitches(userActionCallback) {
 }
 
 export function setupMomentarySwitches(tapDownCallback, releaseCallback) {
+    //
     // momentary stompswitches:
+    //
     $(".swm")
         .mousedown(function() {
             tapDownCallback(this.id)

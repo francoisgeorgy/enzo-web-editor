@@ -1,15 +1,21 @@
-import {log, TRACE, warn} from "./debug";
+import {log, TRACE, warn} from "./utils/debug";
 import * as WebMidi from "webmidi";
+import "@fontsource/roboto-condensed/300.css";
+import "@fontsource/roboto-condensed/400.css";
+import "@fontsource/roboto-condensed/700.css";
+import "@fontsource/roboto-condensed/300-italic.css";
+import "@fontsource/roboto-condensed/400-italic.css";
+import "@fontsource/roboto-condensed/700-italic.css";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {URL_PARAM_BG, URL_PARAM_CLEAR_STORAGE, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./constants";
-import {loadPreferences, savePreferences, preferences} from "./preferences";
+import {URL_PARAM_BG, URL_PARAM_CLEAR_STORAGE, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./parts/constants";
+import {loadPreferences, savePreferences, preferences} from "./parts/preferences";
 import {
     appendMessage,
     setCommunicationStatus
-} from "./ui_messages";
-import {setupUI} from "./ui";
-import {updateSelectDeviceList} from "./ui_selects";
+} from "./parts/midi/messages";
+import {setupUI} from "./parts/appSetup";
+import {updateSelectDeviceList} from "./parts/midi/midiSelect";
 import {
     getMidiInput2Port,
     getMidiInputPort,
@@ -18,10 +24,10 @@ import {
     handleSysex,
     setMidiInput2Port,
     setMidiInputPort
-} from "./midi_in";
-import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
+} from "@midi/midiIn.js";
+import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./parts/midi/midiOut";
 import * as Utils from "./utils";
-import {initSize} from "./ui_size";
+import {initSize} from "./parts/windowSize";
 
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
@@ -37,7 +43,6 @@ import "./css/dialogs.css";
 import "./css/global-settings.css";
 import store from "storejs";
 import * as serviceWorker from "./serviceWorker";
-
 
 // serviceWorker.register();
 if ("serviceWorker" in navigator) {

@@ -7,7 +7,6 @@ export function getCurrentZoomLevel() {
 }
 
 function applyZoom() {
-    // $("#wrapper").removeClass("size-0 size-1 size-2").addClass(`size-${zoom_level}`)
     $("body").removeClass("size-0 size-1 size-2").addClass(`size-${zoom_level}`)
 }
 

@@ -1,17 +1,16 @@
 import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
-import {log} from "./debug";
-import {animateCC} from "./animate_cc";
-import {updateControl, updateModelAndUI} from "./ui";
-import {setAndSendPC, updateDevice} from "./midi_out";
-import MODEL from "./model";
-import {presetDec, presetInc, selectPreset} from "./ui_presets";
-import {init, randomize} from "./presets";
-import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
-import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
-import {displayRawValues} from "./ui_knobs";
-import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./ui_exp";
-import {toggleLibrary, toggleScroll} from "./preset_library";
+import {log} from "../utils/debug";
+import {startAnimateCC} from "./animateCC";
+import {setAndSendPC, updateDevice} from "./midi/midiOut";
+import MODEL from "../model";
+import {init, presetDec, presetInc, randomize, selectPreset} from "./presets";
+import {tapDown, tapRelease, updateBypassSwitch} from "./switches";
+import {displayRawValues} from "./knobs";
+import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./expController";
+import {toggleLibrary, toggleScroll} from "./presetLibrary/preset_library";
+import {updateControl, updateModelAndUI} from "./controller";
+import {SYNTH_MODES, WAVESHAPES} from "../model/sysex";
 
 let kb_enabled = true;
 
@@ -104,7 +103,7 @@ export function setupKeyboard() {
 }
 
 function animateFromTo(cc, from, to) {
-    animateCC(cc, from, to, function (v) {
+    startAnimateCC(cc, from, to, function (v) {
         updateModelAndUI("cc", cc, v);
         updateDevice("cc", cc, v);
     });
@@ -128,12 +127,6 @@ function keyUp(code) {
         case 18:                // ALT
             // $(".header-shortcut").addClass("hidden");
             displayRawValues(false);
-            break;
-        case 27:                // close all opened panel with ESC key
-            // closeAppPreferencesPanel();
-            // closeGlobalSettingsPanel();
-            // closeHelpPanel();
-            // showDefaultPanel();
             break;
         case 84:                // T            tap
             tapRelease("cc-28-127");

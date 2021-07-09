@@ -1,7 +1,7 @@
-import {log} from "./debug";
-import MODEL from "./model";
+import {log} from "../utils/debug";
+import MODEL from "../model";
 import Knob from "svg-knob";
-import {KNOB_THEME_DEFAULT} from "./ui_schemes";
+import {KNOB_THEME_DEFAULT} from "./knobsTheme";
 
 export const knobs = {};         // collection of svg-knob
 

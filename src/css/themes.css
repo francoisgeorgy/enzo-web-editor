@@ -71,7 +71,7 @@ a {
 #main-grid {
     /*background-color: lightgoldenrodyellow;*/
     background-color: #fdb53e;
-    background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
+    background-image: url("img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

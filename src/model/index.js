@@ -1,7 +1,9 @@
-import {control_id, control} from "./cc.js";
+import {control, control_id} from "./cc.js";
 import meta from "./meta.js";
 import {global_conf, global_id} from "./global_conf";
 import * as sysex from "./sysex";
+
+export const device_name = "Enzo";
 
 const getControl = function (number) {
     return control[number];

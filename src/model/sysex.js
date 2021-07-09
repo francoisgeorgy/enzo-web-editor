@@ -1,9 +1,8 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
 import {control_id} from "./cc";
-import {log, warn} from "../debug";
+import {log, warn} from "../utils/debug";
 import {toHexString} from "../utils";
-import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
 export const SYSEX_START_BYTE = 0xF0;
@@ -14,6 +13,33 @@ export const SYSEX_INVALID = 0;
 export const SYSEX_IGNORE = 1;
 export const SYSEX_PRESET = 2;
 export const SYSEX_GLOBALS = 3;
+
+export const SYSEX_CMD = {
+    preset_request: 0x25,
+    preset_response: 0x26,      // TO BE CONFIRMED
+    globals_request: 0x27,
+    globals_response: 0x28,     // TO BE CONFIRMED
+    preset_write: 0x29
+};
+export const GROUP_ID = {
+    pedal: 1
+};
+export const MODEL_ID = {
+    ottobitjr: 0,
+    mercury7: 1,
+    polymoon: 2,
+    enzo: 3
+};
+export const SYNTH_MODES = {
+    dry: 0,
+    mono: 63,
+    arp: 95,
+    poly: 127
+};
+export const WAVESHAPES = {
+    sawtooth: 0,
+    square: 127
+};
 
 export function validate(data) {
 

@@ -1,7 +1,10 @@
-import {log} from "./debug";
-import MODEL from "./model";
-import {setAndSendPC} from "./midi_out";
-import {markAllLibraryPresetsAsUnselected} from "./preset_library";
+import {log} from "../utils/debug";
+import MODEL from "../model";
+import {fullUpdateDevice, setAndSendPC} from "./midi/midiOut";
+import {markAllLibraryPresetsAsUnselected, setLibraryPresetDirty} from "./presetLibrary/preset_library";
+import {resetExp} from "./expController";
+import {updateControls} from "./controller";
+import {appendMessage} from "@midi/messages";
 
 /*
     .preset :
@@ -103,3 +106,38 @@ export function setupPresetSelectors() {
     });
 }
 
+export function init() {
+    log("init()");
+    MODEL.init();
+    resetExp();
+    // updateUI();
+    // updatePresetSelector();
+    updateControls();
+    setPresetSelectorDirty();   // must be done after updateUI()
+    setLibraryPresetDirty();
+    fullUpdateDevice();
+    // if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_init) ||
+    //     (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {
+    //     updateUrl("init");
+    // }
+    appendMessage(`${MODEL.name} set to 'init' configuration.`);
+    return false;   // disable the normal href behavior when called from an onclick event
+}
+
+export function randomize() {
+    log("randomize");
+    MODEL.randomize();
+    resetExp();
+    // updateUI();
+    // updatePresetSelector();
+    updateControls();
+    setPresetSelectorDirty();   // must be done after updateUI()
+    setLibraryPresetDirty();
+    fullUpdateDevice();
+    // if ((preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
+    //     (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {
+    //     updateUrl();
+    // }
+    appendMessage(`${MODEL.name} randomized.`);
+    return false;   // disable the normal href behavior when called from an onclick event
+}
