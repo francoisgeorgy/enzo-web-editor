@@ -47,9 +47,13 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
             {from: "./src/midi.html"},
+            {from: "./src/serviceWorker.js"},
+            {from: "./src/manifest.json"},
             {from: "./src/print/preset-template.html", to: "templates"},
             {from: "./src/css/midi.css", to: "css"},
             // { from: "./src/css/enzo-logo*", to: "css" },
+            {from: "./src/img/midi-192.png", to: "img"},
+            {from: "./src/img/midi-512.png", to: "img"},
             {from: "./src/img/favicon-16x16.png"},
             {from: "./src/img/favicon-32x32.png"},
             {from: "./src/img/favicon-96x96.png"},
