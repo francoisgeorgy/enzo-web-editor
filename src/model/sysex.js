@@ -1,8 +1,8 @@
 import {control} from "./cc.js";
 import meta from "./meta.js";
 import {control_id} from "./cc";
-import {log, warn} from "../utils/debug";
-import {toHexString} from "../utils";
+import {log, warn} from "@utils/debug";
+import {toHexString} from "@utils";
 import {global_conf} from "./global_conf";
 
 export const SYSEX_START_BYTE = 0xF0;

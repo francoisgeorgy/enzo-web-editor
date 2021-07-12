@@ -1,6 +1,6 @@
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 import MODEL from "../model";
-import {fullUpdateDevice, setAndSendPC} from "./midi/midiOut";
+import {fullUpdateDevice, setAndSendPC} from "@midi/midiOut";
 import {markAllLibraryPresetsAsUnselected, setLibraryPresetDirty} from "./presetLibrary/preset_library";
 import {resetExp} from "./expController";
 import {updateControls} from "./controller";

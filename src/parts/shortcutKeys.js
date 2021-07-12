@@ -1,8 +1,8 @@
 import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 import {startAnimateCC} from "./animateCC";
-import {setAndSendPC, updateDevice} from "./midi/midiOut";
+import {setAndSendPC, updateDevice} from "@midi/midiOut";
 import MODEL from "../model";
 import {init, presetDec, presetInc, randomize, selectPreset} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./switches";
@@ -10,7 +10,7 @@ import {displayRawValues} from "./knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./expController";
 import {toggleLibrary, toggleScroll} from "./presetLibrary/preset_library";
 import {updateControl, updateModelAndUI} from "./controller";
-import {SYNTH_MODES, WAVESHAPES} from "../model/sysex";
+import {SYNTH_MODES, WAVESHAPES} from "@model/sysex";
 
 let kb_enabled = true;
 

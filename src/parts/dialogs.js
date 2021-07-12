@@ -1,6 +1,6 @@
-import {URL_PARAM_SYSEX} from "./constants";
 import * as Utils from "../utils";
 import MODEL from "../model";
+import {URL_PARAM_SYSEX} from "@/parts/url";
 
 export function printPreset() {
     let url = "print.html?" + URL_PARAM_SYSEX + "=" + encodeURIComponent(Utils.toHexString(MODEL.getPreset()));

@@ -1,4 +1,4 @@
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 
 let animations = {};     // one entry possible per CC; entry is {timeout_handler, target_value}
 

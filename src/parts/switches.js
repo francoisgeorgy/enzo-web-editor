@@ -1,6 +1,6 @@
-import {log} from "../utils/debug";
-import {appendMessage} from "./midi/messages";
-import {updateDevice} from "./midi/midiOut";
+import {log} from "@utils/debug";
+import {appendMessage} from "@midi/messages";
+import {updateDevice} from "@midi/midiOut";
 import MODEL from "../model";
 import {handleUserAction, updateControl} from "./controller";
 

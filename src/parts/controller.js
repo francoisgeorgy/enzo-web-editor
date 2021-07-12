@@ -1,5 +1,5 @@
-import {log, TRACE, warn} from "../utils/debug";
-import {setAndSendPC, updateDevice} from "./midi/midiOut";
+import {log, TRACE, warn} from "@utils/debug";
+import {setAndSendPC, updateDevice} from "@midi/midiOut";
 import MODEL from "../model";
 import {setPresetSelectorDirty} from "./presets";
 import {setLibraryPresetDirty} from "./presetLibrary/preset_library";

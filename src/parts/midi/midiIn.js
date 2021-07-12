@@ -1,6 +1,5 @@
 import {showMidiInActivity} from "./midiActivity.js";
 import {selectPreset, updatePresetSelector} from "../presets.js";
-import {logIncomingMidiMessage} from "./midiWindow.js";
 import {
     confirmPresetReceived,
     getLastSendTime,
@@ -9,10 +8,6 @@ import {
 } from "./midiOut";
 import {log} from "@utils/debug.js";
 import MODEL from "@model/";
-import {
-    appendMessage,
-    monitorMessage
-} from "./messages";
 import {toHexString} from "@utils/";
 import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@model/sysex.js";
 import {device_name} from "@model/";
@@ -59,7 +54,6 @@ function monitorCC(control_number) {
     monitors[control_number] = setTimeout(() => {
         const v = MODEL.control[control_number].raw_value;
         log(`monitor receive CC ${control_number} = ${v}`);
-        monitorMessage(control_number, v);
     }, 200)
 }
 
@@ -86,7 +80,6 @@ export function handlePC(msg, input_num = 1) {
     showMidiInActivity(input_num);
 
     const pc = msg[1];
-    logIncomingMidiMessage("PC", [pc]);
 
     if (!isFullReadInProgress()) {
         selectPreset(pc)
@@ -116,7 +109,6 @@ export function handleCC(msg, input_num = 1) {
 
     showMidiInActivity(input_num);
     monitorCC(cc);
-    logIncomingMidiMessage("CC", [cc, v]);
 
     updateModelAndUI("cc", cc, v);
 

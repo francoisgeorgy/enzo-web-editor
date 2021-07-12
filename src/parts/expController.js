@@ -1,10 +1,10 @@
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 import Slider from "svg-slider";
 import MODEL from "../model";
-import {control} from "../model/cc";
+import {control} from "@model/cc";
 import {knobs} from "./knobs";
-import {fullUpdateDevice, updateDevice} from "./midi/midiOut";
-import {appendMessage} from "./midi/messages";
+import {fullUpdateDevice, updateDevice} from "@midi/midiOut";
+import {appendMessage} from "@midi/messages";
 import {MIXER_SLIDER_SCHEME} from "./knobsTheme";
 import {updateControls} from "./controller";
 

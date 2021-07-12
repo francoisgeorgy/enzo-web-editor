@@ -1,4 +1,4 @@
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 import MODEL from "../model";
 import Knob from "svg-knob";
 import {KNOB_THEME_DEFAULT} from "./knobsTheme";

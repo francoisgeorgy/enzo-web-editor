@@ -1,21 +1,21 @@
-import {log} from "../../utils/debug";
+import {log} from "@utils/debug";
 import {disableKeyboard} from "../shortcutKeys";
 import * as lity from "lity";
 import store from "storejs";
 import MODEL, {device_name} from "../../model";
 import * as Utils from "../../utils";
-import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "../../model/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@model/sysex";
 import {resetExp} from "../expController";
-import {appendMessage} from "../midi/messages";
+import {appendMessage} from "@midi/messages";
 import {
     fullUpdateDevice,
     getMidiOutputPort,
     requestAllPresets,
     writePreset,
     setAutoLockOnImport, isFullReadInProgress, isCommOk
-} from "../midi/midiOut";
+} from "@midi/midiOut";
 import {getCurrentZoomLevel} from "../windowSize";
-import {toHexString} from "../../utils";
+import {toHexString} from "@utils";
 import {setPresetSelectorDirty} from "../presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
@@ -154,7 +154,7 @@ export function addPresetToLibrary(preset, select = false) {
     log('addPresetToLibrary', preset, select);
 
     // add into first empty slot
-    let newIndex = -1;
+    let newIndex;
     const i = library.findIndex(e => (e === null) || (typeof e === 'undefined'));
     if (i >= 0) {
         library[i] = preset;
