@@ -1,10 +1,9 @@
 import {log} from "@utils/debug";
-import MODEL from "../model";
+import MODEL from "@model";
 import {fullUpdateDevice, setAndSendPC} from "@midi/midiOut";
-import {markAllLibraryPresetsAsUnselected, setLibraryPresetDirty} from "./presetLibrary/preset_library";
+import {markAllLibraryPresetsAsUnselected, setLibraryPresetDirty} from "@shared/preset_library";
 import {resetExp} from "./expController";
 import {updateControls} from "./controller";
-import {appendMessage} from "@midi/messages";
 
 /*
     .preset :
@@ -120,7 +119,6 @@ export function init() {
     //     (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {
     //     updateUrl("init");
     // }
-    appendMessage(`${MODEL.name} set to 'init' configuration.`);
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
@@ -138,6 +136,5 @@ export function randomize() {
     //     (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load)) {
     //     updateUrl();
     // }
-    appendMessage(`${MODEL.name} randomized.`);
     return false;   // disable the normal href behavior when called from an onclick event
 }

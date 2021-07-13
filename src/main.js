@@ -1,11 +1,11 @@
 import {log} from "@utils/debug";
-import MODEL from "./model";
+import MODEL from "./enzo/model";
 import {detect} from "detect-browser";
-import {loadPreferences, preferences} from "./parts/preferences";
-import {setupUI} from "./parts/appSetup";
+import {loadPreferences, preferences} from "./shared/preferences";
+import {setupUI} from "./shared/appSetup";
 import {initMidi} from "@midi";
 import * as serviceWorker from "./serviceWorker";
-import {handleUrlParameters} from "@/parts/url";
+import {handleUrlParameters} from "@shared/url";
 import "@fontsource/roboto-condensed/300.css";
 import "@fontsource/roboto-condensed/400.css";
 import "@fontsource/roboto-condensed/700.css";

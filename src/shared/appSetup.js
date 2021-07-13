@@ -1,20 +1,19 @@
-import MODEL from "../model";
+import MODEL from "@model";
 import "webpack-jquery-ui/effects";
 import {log, TRACE} from "@utils/debug";
 import {_tempo_bpm, _tempo_ms, control_id} from "@model/cc";
 import {displayRawValues, setupKnobs} from "./knobs";
-import {enableKeyboard, setupKeyboard} from "./shortcutKeys";
 import {fullUpdateDevice, savePreset} from "@midi/midiOut";
 import {handleUserAction, updateControl} from "./controller";
 import {init, randomize, setupPresetSelectors} from "./presets";
 import {initSize, zoomIn, zoomOut} from "./windowSize";
 import {preferences} from "./preferences";
 import {printPreset} from "./dialogs";
-import {setCommunicationStatus} from "@midi/messages";
+// import {setCommunicationStatus} from "@midi/messages";
 import {setupExp} from "./expController";
 import {setupGlobalSettings} from "./globalSettings";
 import {setupMomentarySwitches, setupSwitches, tapDown, tapRelease} from "./switches";
-import {setupPresetsLibrary} from "./presetLibrary/preset_library";
+import {setupPresetsLibrary} from "./preset_library";
 import {setupTooltips} from "./tooltips";
 import {
     connectInput2Device,
@@ -24,6 +23,7 @@ import {
     setMidiInput2Channel
 } from "@midi";
 import {VERSION} from "@/main";
+import {enableKeyboard, setupKeyboard} from "./keyboardSupport";
 
 function setupSelects() {
 
@@ -105,7 +105,7 @@ export function setupUI() {
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
-    setupMomentarySwitches(tapDown, tapRelease);
+    setupMomentarySwitches(tapDown, tapRelease);    // ENZO SPECIFIC; FIXME: add device specific method
     setupExp(handleUserAction);
     setupGlobalSettings();
     setupControlsHelp();

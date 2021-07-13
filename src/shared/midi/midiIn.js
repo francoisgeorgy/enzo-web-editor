@@ -1,5 +1,5 @@
-import {showMidiInActivity} from "./midiActivity.js";
-import {selectPreset, updatePresetSelector} from "../presets.js";
+import {showMidiInActivity} from "@midi/midiActivity.js";
+import {selectPreset, updatePresetSelector} from "@shared/presets.js";
 import {
     confirmPresetReceived,
     getLastSendTime,
@@ -7,13 +7,13 @@ import {
     updateDevice
 } from "./midiOut";
 import {log} from "@utils/debug.js";
-import MODEL from "@model/";
-import {toHexString} from "@utils/";
+import MODEL from "@model";
+import {toHexString} from "@midi/midiIn";
 import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@model/sysex.js";
-import {device_name} from "@model/";
-import {updateGlobalSettings} from "../globalSettings.js";
-import {resetExp} from "../expController.js";
-import {addPresetToLibrary} from "../presetLibrary/preset_library.js";
+import {device_name} from "@model";
+import {updateGlobalSettings} from "@shared/globalSettings.js";
+import {resetExp} from "@shared/expController.js";
+import {addPresetToLibrary} from "@shared/preset_library.js";
 import {updateControls, updateModelAndUI} from "../controller.js";
 
 let midi_input = null;

@@ -37,9 +37,11 @@ module.exports = {
         alias: {
             '@': path.resolve(__dirname, 'src'),
             // '@assets': path.resolve(__dirname, 'src/components'),
-            '@midi': path.resolve(__dirname, 'src/parts/midi'),
-            '@model': path.resolve(__dirname, 'src/model'),
-            '@utils': path.resolve(__dirname, 'src/utils'),
+            '@midi': path.resolve(__dirname, 'src/shared/midi'),
+            '@shared': path.resolve(__dirname, 'src/shared'),
+            '@utils': path.resolve(__dirname, 'src/shared/utils'),
+            '@enzo': path.resolve(__dirname, 'src/enzo'),
+            '@model': path.resolve(__dirname, 'src/enzo/model'),
             // ...etc
         },
     },

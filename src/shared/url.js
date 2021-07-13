@@ -1,6 +1,6 @@
 import * as Utils from "@utils";
-import {preferences} from "@/parts/preferences";
-import {initSize} from "@/parts/windowSize";
+import {preferences} from "@shared/preferences";
+import {initSize} from "@shared/windowSize";
 import store from "storejs";
 
 export const URL_PARAM_SYSEX = "sysex";     // name of sysex parameter in the query-string

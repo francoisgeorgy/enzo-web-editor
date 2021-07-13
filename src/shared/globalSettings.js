@@ -1,5 +1,5 @@
 import {log} from "@utils/debug";
-import MODEL from "../model";
+import MODEL from "@model";
 import {requestGlobalSettings, sendSysex} from "@midi/midiOut";
 
 export function setupGlobalSettings() {

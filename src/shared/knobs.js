@@ -1,7 +1,7 @@
 import {log} from "@utils/debug";
-import MODEL from "../model";
 import Knob from "svg-knob";
-import {KNOB_THEME_DEFAULT} from "./knobsTheme";
+import MODEL from "@shared/knobs";
+import {KNOB_THEME_DEFAULT} from "@enzo/knobsTheme";
 
 export const knobs = {};         // collection of svg-knob
 

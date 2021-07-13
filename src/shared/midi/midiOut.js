@@ -1,4 +1,4 @@
-import MODEL from "../../model";
+import MODEL from "@model";
 import {control_id} from "@model/cc";
 import {SYSEX_CMD, SYSEX_START_BYTE} from "@model/sysex";
 import {log} from "@utils/debug";
@@ -10,7 +10,7 @@ import {toHexString} from "@utils";
 import {updateExpSlider} from "../expController";
 import {inExpMode} from "../expController";
 import {getMidiInputPort, suppressSysexEcho} from "./midiIn";
-import {updateImportPresetsProgress} from "../presetLibrary/preset_library";
+import {updateImportPresetsProgress} from "../preset_library";
 import {updateControls} from "../controller";
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -205,7 +205,7 @@ export function requestPreset(check = false) {
 
 export function savePreset() {
     log("savePreset");
-    if (!window.confirm(`Save current preset in Enzo memory slot #${MODEL.getPresetNumber()} ?`)) return;
+    if (!window.confirm(`Save current preset in device memory slot #${MODEL.getPresetNumber()} ?`)) return;
     sendSysexCommand(SYSEX_CMD.preset_write);
     setPresetSelectorClean();
 }

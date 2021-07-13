@@ -1,8 +1,8 @@
 import {log, TRACE, warn} from "@utils/debug";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
-import MODEL from "../model";
+import MODEL from "@model";
 import {setPresetSelectorDirty} from "./presets";
-import {setLibraryPresetDirty} from "./presetLibrary/preset_library";
+import {setLibraryPresetDirty} from "./preset_library";
 import {inExpMode, updateExpSlider} from "./expController";
 import {knobs} from "./knobs";
 import {updateBypassSwitch, updateMomentaryStompswitch, updateOptionSwitch} from "./switches";

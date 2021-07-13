@@ -1,25 +1,15 @@
-import {fromEvent} from "rxjs";
-import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {log} from "@utils/debug";
-import {startAnimateCC} from "./animateCC";
+import {startAnimateCC} from "@shared/animateCC";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
-import MODEL from "../model";
-import {init, presetDec, presetInc, randomize, selectPreset} from "./presets";
-import {tapDown, tapRelease, updateBypassSwitch} from "./switches";
-import {displayRawValues} from "./knobs";
-import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./expController";
-import {toggleLibrary, toggleScroll} from "./presetLibrary/preset_library";
-import {updateControl, updateModelAndUI} from "./controller";
+import MODEL from "@model";
+import {init, presetDec, presetInc, randomize, selectPreset} from "@shared/presets";
+import {tapDown, tapRelease, updateBypassSwitch} from "../shared/switches";
+import {displayRawValues} from "@shared/knobs";
+import {expHeel, expToe, showExpValues, toggleExpEditMode} from "@shared/expController";
+import {toggleLibrary, toggleScroll} from "@shared/preset_library";
+import {updateControl, updateModelAndUI} from "@shared/controller";
 import {SYNTH_MODES, WAVESHAPES} from "@model/sysex";
-
-let kb_enabled = true;
-
-export function disableKeyboard() {
-    kb_enabled = false;
-}
-export function enableKeyboard() {
-    kb_enabled = true;
-}
+import {kb_enabled} from "@shared/keyboardSupport";
 
 function toggleBypass() {
     const c = MODEL.control[MODEL.control_id.bypass];
@@ -76,32 +66,6 @@ function setExpMax() {
     updateControl(c.cc_type, c.cc_number, 127);
 }
 
-/**
- * https://codepen.io/fgeorgy/pen/NyRgxV?editors=1010
- */
-export function setupKeyboard() {
-
-    let keyDowns = fromEvent(document, "keydown");
-    let keyUps = fromEvent(document, "keyup");
-
-    let keyPresses = keyDowns.pipe(
-        merge(keyUps),
-        groupBy(e => e.keyCode),
-        map(group => group.pipe(distinctUntilChanged(null, e => e.type))),
-        mergeAll()
-    );
-
-    keyPresses.subscribe(function(e) {
-        if (e.type === "keydown") {
-            keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
-        } else if (e.type === "keyup") {
-            keyUp(e.keyCode);
-        }
-    });
-
-    log("keyboard set up");
-}
-
 function animateFromTo(cc, from, to) {
     startAnimateCC(cc, from, to, function (v) {
         updateModelAndUI("cc", cc, v);
@@ -115,7 +79,7 @@ function animateTo(cc, to) {
 
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code) {
+export function keyUp(code) {
 
     if (!kb_enabled) return;
 
@@ -134,7 +98,7 @@ function keyUp(code) {
     }
 }
 
-function keyDown(code, alt, shift, meta, ctrl) {
+export function keyDown(code, alt, shift, meta, ctrl) {
 
     if (!kb_enabled) return;
 

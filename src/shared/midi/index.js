@@ -8,10 +8,9 @@ import {
     setMidiInput2Port,
     setMidiInputPort
 } from "@midi/midiIn";
-import {preferences, savePreferences} from "@/parts/preferences";
+import {preferences, savePreferences} from "@shared/preferences";
 import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "@midi/midiOut";
 import {updateSelectDeviceList} from "@midi/midiSelect";
-import {appendMessage, setCommunicationStatus} from "@midi/messages";
 import * as WebMidi from "webmidi";
 import MODEL from "@model";
 
@@ -28,10 +27,8 @@ export function sync() {
 
         log('sync() midi in & midi out');
 
-        appendMessage("Request global settings.");
         window.setTimeout(requestGlobalSettings, 200);
 
-        appendMessage("Request current preset.");
         window.setTimeout(() => {
             log("sync: requestPreset(true)");
             requestPreset(true);
@@ -101,9 +98,8 @@ function connectInputPort(input) {
         });
 
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    setCommunicationStatus(true);
+    // setCommunicationStatus(true);
     // updatePresetSelector();
-    appendMessage(`Input ${input.name} connected on channel ${preferences.midi_channel}.`);
 }
 
 function connectInput2Port(input) {
@@ -128,9 +124,7 @@ function connectInput2Port(input) {
         });
 
     log(`%cconnectInput2Port: ${input.name} is now listening on channel ${preferences.input2_channel}`, "color: orange; font-weight: bold");
-    // setCommunicationStatus(true);
     // updatePresetSelector();
-    appendMessage(`Input 2 ${input.name} connected on channel ${preferences.input2_channel}.`);
 }
 
 function disconnectInputPort() {
@@ -139,9 +133,8 @@ function disconnectInputPort() {
         log("disconnectInputPort()");
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
-        setCommunicationStatus(false);
+        // setCommunicationStatus(false);
         // updatePresetSelector();
-        appendMessage(`Input disconnected.`);
     }
 }
 
@@ -151,7 +144,6 @@ function disconnectInput2Port() {
         log("disconnectInput2Port()");
         p.removeListener();    // remove all listeners for all channels
         setMidiInput2Port(null);
-        appendMessage(`Input 2 disconnected.`);
     }
 }
 
@@ -171,7 +163,7 @@ export function connectInputDevice(id) {
         savePreferences({input_device_id: null});
         // The user selected no device, disconnect.
         disconnectInputPort();
-        setCommunicationStatus(false);
+        // setCommunicationStatus(false);
         return false;
     }
 
@@ -194,8 +186,7 @@ export function connectInputDevice(id) {
         sync();
         return true;
     } else {
-        appendMessage(`Connect the ${MODEL.name} or check the MIDI channel.`);
-        setCommunicationStatus(false);
+        // setCommunicationStatus(false);
     }
 
     return false;
@@ -235,7 +226,6 @@ export function connectInput2Device(id) {
         // sync();
         return true;
         // } else {
-        // appendMessage(`Connect the ${MODEL.name} or check the MIDI channel.`);
         // setCommunicationStatus(false);
     }
 
@@ -250,7 +240,6 @@ function connectOutputPort(output) {
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     // updatePresetSelector();
-    appendMessage(`Output ${output.name} connected on channel ${preferences.midi_channel}.`);
 }
 
 function disconnectOutputPort() {
@@ -260,7 +249,6 @@ function disconnectOutputPort() {
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
         // updatePresetSelector();
-        appendMessage(`Output disconnected.`);
     }
 }
 
@@ -281,7 +269,7 @@ export function connectOutputDevice(id) {
         savePreferences({output_device_id: null});
         // The user selected no device, disconnect.
         disconnectOutputPort();
-        setCommunicationStatus(false);
+        // setCommunicationStatus(false);
         return false;
     }
 
@@ -389,7 +377,7 @@ export function deviceDisconnected(info) {
 
 export function initMidi() {
 
-    appendMessage("Waiting for MIDI interface access...");
+    // appendMessage("Waiting for MIDI interface access...");
 
     // noinspection JSUnresolvedFunction
     WebMidi.enable(function (err) {
@@ -398,8 +386,8 @@ export function initMidi() {
 
             warn("WebMidi unavailable", err);
 
-            appendMessage("ERROR: WebMidi could not be enabled.");
-            appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
+            // appendMessage("ERROR: WebMidi could not be enabled.");
+            // appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
             // initFromUrl(false);
@@ -408,7 +396,7 @@ export function initMidi() {
 
             log("WebMidi enabled");
 
-            appendMessage("WebMidi enabled.");
+            // appendMessage("WebMidi enabled.");
 
             if (TRACE) {
                 // noinspection JSUnresolvedVariable

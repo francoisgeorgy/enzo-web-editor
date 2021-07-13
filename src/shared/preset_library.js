@@ -1,30 +1,30 @@
 import {log} from "@utils/debug";
-import {disableKeyboard} from "../shortcutKeys";
 import * as lity from "lity";
 import store from "storejs";
-import MODEL, {device_name} from "../../model";
-import * as Utils from "../../utils";
+import MODEL, {device_name} from "@model";
+import * as Utils from "./utils";
 import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@model/sysex";
-import {resetExp} from "../expController";
-import {appendMessage} from "@midi/messages";
+import {resetExp} from "./expController";
 import {
     fullUpdateDevice,
     getMidiOutputPort,
+    isCommOk,
+    isFullReadInProgress,
     requestAllPresets,
-    writePreset,
-    setAutoLockOnImport, isFullReadInProgress, isCommOk
+    setAutoLockOnImport,
+    writePreset
 } from "@midi/midiOut";
-import {getCurrentZoomLevel} from "../windowSize";
+import {getCurrentZoomLevel} from "./windowSize";
 import {toHexString} from "@utils";
-import {setPresetSelectorDirty} from "../presets";
+import {setPresetSelectorDirty} from "./presets";
 import JSZip from "jszip";
-import { saveAs } from 'file-saver';
-import {preferences, savePreferences} from "../preferences";
-import {updateControls} from "../controller";
+import {saveAs} from 'file-saver';
+import {preferences, savePreferences} from "./preferences";
+import {updateControls} from "./controller";
+import {LOCAL_STORAGE_KEY} from "@model";
+import {disableKeyboard} from "./keyboardSupport";
 
 /* editor presets (library) */
-
-const LOCAL_STORAGE_KEY = "studiocode.enzo-editor-15.library";
 
 let read_presets_dialog = null;
 let edit_preset_dialog = null;
@@ -411,7 +411,7 @@ function readFiles(files) {
                     const valid = validate(data);
                     if (valid.type === SYSEX_PRESET) {
 
-                        appendMessage(`File ${f.name} read OK`);
+                        // appendMessage(`File ${f.name} read OK`);
 
                         // set device ID and preset ID to 0 (to avoid selecting the preset in Device when we load the preset from the library)
                         data[4] = 0;
@@ -750,8 +750,6 @@ function usePreset(index) {
 
         resetExp();
         updateControls();
-        appendMessage("library preset loaded.", false, false);
-        // if (updateConnectedDevice)
         fullUpdateDevice();
 
         presetIsDirty = false;
@@ -760,7 +758,6 @@ function usePreset(index) {
         return true;
     } else {
         log("usePreset: hash value is not a preset sysex");
-        appendMessage(valid.message);
     }
 
 }

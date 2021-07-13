@@ -1,7 +1,6 @@
 import {log} from "@utils/debug";
-import {appendMessage} from "@midi/messages";
 import {updateDevice} from "@midi/midiOut";
-import MODEL from "../model";
+import MODEL from "@model";
 import {handleUserAction, updateControl} from "./controller";
 
 /**
@@ -68,12 +67,12 @@ export function tapDown(id) {
     tap_timestamp = t;
     if (dt < 5000) {    // if more than 5 sec, reset
         const bpm = Math.round(60000 / dt);
-        appendMessage(`TAP ${dt}ms ${bpm}bpm`);
+        // appendMessage(`TAP ${dt}ms ${bpm}bpm`);
         const cc_value = Math.min(dt / 10, 127);
         updateDevice("cc", MODEL.control_id.tempo, cc_value);
         updateControl("cc", MODEL.control_id.tempo, cc_value);
-    } else {
-        appendMessage("TAP");
+    // } else {
+        // appendMessage("TAP");
     }
 }
 

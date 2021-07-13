@@ -1,11 +1,10 @@
 import {log} from "@utils/debug";
 import Slider from "svg-slider";
-import MODEL from "../model";
+import MODEL from "@model";
 import {control} from "@model/cc";
 import {knobs} from "./knobs";
 import {fullUpdateDevice, updateDevice} from "@midi/midiOut";
-import {appendMessage} from "@midi/messages";
-import {MIXER_SLIDER_SCHEME} from "./knobsTheme";
+import {MIXER_SLIDER_SCHEME} from "../enzo/knobsTheme";
 import {updateControls} from "./controller";
 
 export const sliders = {};
@@ -58,13 +57,13 @@ export function toggleExpEditMode() {
         expHeel();
         updateDevice("cc", MODEL.control_id.exp_pedal, 0);
         showExpValues(false);
-        appendMessage("You are now editing the normal values", true);
+        // appendMessage("You are now editing the normal values", true);
     } else {
         log("editExpValues: in normal mode, switch to EXP mode");
         expToe(true);
         updateDevice("cc", MODEL.control_id.exp_pedal, 127);
         showExpValues(true);
-        appendMessage("You are now editing the EXP (toe down) values", true);
+        // appendMessage("You are now editing the EXP (toe down) values", true);
     }
 }
 
@@ -116,7 +115,7 @@ export function setupExp(userActionCallback) {
             fullUpdateDevice();
             MODEL.interpolateExpValues(MODEL.control[MODEL.control_id.exp_pedal].raw_value);
             updateControls(true);
-            appendMessage("EXP: toe-up values copied to toe-down.");
+            // appendMessage("EXP: toe-up values copied to toe-down.");
         })
         .mouseup(function() {
             this.classList.remove("on");
