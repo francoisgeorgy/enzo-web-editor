@@ -1,8 +1,8 @@
 import {log} from "@utils/debug";
-import MODEL from "./enzo/model";
+import MODEL from "@model";
 import {detect} from "detect-browser";
 import {loadPreferences, preferences} from "./shared/preferences";
-import {setupUI} from "./shared/appSetup";
+import {setupUI, VERSION} from "@shared/appSetup";
 import {initMidi} from "@midi";
 import * as serviceWorker from "./serviceWorker";
 import {handleUrlParameters} from "@shared/url";
@@ -24,8 +24,6 @@ import "./css/controls.css";
 import "./css/buttons.css";
 import "./css/dialogs.css";
 import "./css/global-settings.css";
-
-export const VERSION = "[AIV]{version}[/AIV]";
 
 //==================================================================================================================
 // Setup the worker for the offline support (PWA):

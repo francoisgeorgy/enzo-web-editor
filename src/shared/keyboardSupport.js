@@ -1,6 +1,7 @@
 import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {keyDown, keyUp} from "@enzo/shortcutKeys";
+import {log} from "@utils/debug";
 
 export let kb_enabled = true;
 

@@ -2,19 +2,19 @@ import MODEL from "@model";
 import "webpack-jquery-ui/effects";
 import {log, TRACE} from "@utils/debug";
 import {_tempo_bpm, _tempo_ms, control_id} from "@model/cc";
-import {displayRawValues, setupKnobs} from "./knobs";
+import {displayRawValues, setupKnobs} from "@shared/knobs";
 import {fullUpdateDevice, savePreset} from "@midi/midiOut";
-import {handleUserAction, updateControl} from "./controller";
-import {init, randomize, setupPresetSelectors} from "./presets";
-import {initSize, zoomIn, zoomOut} from "./windowSize";
-import {preferences} from "./preferences";
-import {printPreset} from "./dialogs";
+import {handleUserAction, updateControl} from "@shared/controller";
+import {init, randomize, setupPresetSelectors} from "@shared/presets";
+import {initSize, zoomIn, zoomOut} from "@shared/windowSize";
+import {preferences} from "@shared/preferences";
+import {printPreset} from "@shared/dialogs";
 // import {setCommunicationStatus} from "@midi/messages";
-import {setupExp} from "./expController";
-import {setupGlobalSettings} from "./globalSettings";
-import {setupMomentarySwitches, setupSwitches, tapDown, tapRelease} from "./switches";
-import {setupPresetsLibrary} from "./preset_library";
-import {setupTooltips} from "./tooltips";
+import {setupExp} from "@shared/expController";
+import {setupGlobalSettings} from "@shared/globalSettings";
+import {setupMomentarySwitches, setupSwitches, tapDown, tapRelease} from "@shared/switches";
+import {setupPresetsLibrary} from "@shared/preset_library";
+import {setupTooltips} from "@shared/tooltips";
 import {
     connectInput2Device,
     connectInputDevice,
@@ -22,8 +22,9 @@ import {
     setMidiChannel,
     setMidiInput2Channel
 } from "@midi";
-import {VERSION} from "@/main";
-import {enableKeyboard, setupKeyboard} from "./keyboardSupport";
+import {enableKeyboard, setupKeyboard} from "@shared/keyboardSupport";
+
+export const VERSION = "[AIV]{version}[/AIV]";
 
 function setupSelects() {
 
@@ -101,7 +102,7 @@ export function setupUI() {
 
     initSize(preferences.zoom_level);
 
-    setCommunicationStatus(false);
+    // setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);

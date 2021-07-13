@@ -1,6 +1,6 @@
 import store from "storejs";
 import {log} from "@utils/debug";
-import {LOCAL_STORAGE_KEY} from "@model";
+import {LOCAL_STORAGE_KEY_PREFERENCES} from "@model";
 
 // const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
 // const LOCAL_STORAGE_KEY = "studiocode.enzo-editor-15.preferences";
@@ -33,7 +33,7 @@ export let preferences = {
 };
 
 export function loadPreferences() {
-    const s = store.get(LOCAL_STORAGE_KEY);
+    const s = store.get(LOCAL_STORAGE_KEY_PREFERENCES);
     if (s) preferences = Object.assign(preferences, preferences, JSON.parse(s));
     if (!Number.isInteger(preferences.midi_channel)) {
         // because we changed the format of midi_channel in v0.93
@@ -44,5 +44,5 @@ export function loadPreferences() {
 export function savePreferences(options = {}) {
     log('savePreferences', options);
     Object.assign(preferences, preferences, options);
-    store(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
+    store(LOCAL_STORAGE_KEY_PREFERENCES, JSON.stringify(preferences));
 }

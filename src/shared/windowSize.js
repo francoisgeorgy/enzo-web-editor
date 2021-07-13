@@ -1,4 +1,4 @@
-import {savePreferences} from "./preferences";
+import {savePreferences} from "@shared/preferences";
 
 let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 

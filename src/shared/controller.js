@@ -1,11 +1,11 @@
 import {log, TRACE, warn} from "@utils/debug";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
 import MODEL from "@model";
-import {setPresetSelectorDirty} from "./presets";
-import {setLibraryPresetDirty} from "./preset_library";
-import {inExpMode, updateExpSlider} from "./expController";
-import {knobs} from "./knobs";
-import {updateBypassSwitch, updateMomentaryStompswitch, updateOptionSwitch} from "./switches";
+import {setPresetSelectorDirty} from "@shared/presets";
+import {setLibraryPresetDirty} from "@shared/preset_library";
+import {inExpMode, updateExpSlider} from "@shared/expController";
+import {knobs} from "@shared/knobs";
+import {updateBypassSwitch, updateMomentaryStompswitch, updateOptionSwitch} from "@shared/switches";
 
 /**
  * Handles a change made by the user in the UI.

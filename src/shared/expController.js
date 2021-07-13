@@ -2,10 +2,10 @@ import {log} from "@utils/debug";
 import Slider from "svg-slider";
 import MODEL from "@model";
 import {control} from "@model/cc";
-import {knobs} from "./knobs";
+import {knobs} from "@shared/knobs";
 import {fullUpdateDevice, updateDevice} from "@midi/midiOut";
-import {MIXER_SLIDER_SCHEME} from "../enzo/knobsTheme";
-import {updateControls} from "./controller";
+import {MIXER_SLIDER_SCHEME} from "@enzo/knobsTheme";
+import {updateControls} from "@shared/controller";
 
 export const sliders = {};
 

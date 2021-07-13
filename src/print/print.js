@@ -1,5 +1,5 @@
 import MODEL from "@model/index.js";
-import * as Utils from "../shared/utils";
+import * as Utils from "@shared/utils";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
 import "./print.css";

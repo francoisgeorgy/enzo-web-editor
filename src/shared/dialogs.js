@@ -1,4 +1,4 @@
-import * as Utils from "./utils";
+import * as Utils from "@utils";
 import MODEL from "@model";
 import {URL_PARAM_SYSEX} from "@shared/url";
 

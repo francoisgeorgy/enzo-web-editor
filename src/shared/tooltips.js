@@ -1,4 +1,4 @@
-import {preferences, savePreferences} from "./preferences";
+import {preferences, savePreferences} from "@shared/preferences";
 
 export function setupTooltips() {
 

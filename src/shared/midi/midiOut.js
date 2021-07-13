@@ -2,16 +2,16 @@ import MODEL from "@model";
 import {control_id} from "@model/cc";
 import {SYSEX_CMD, SYSEX_START_BYTE} from "@model/sysex";
 import {log} from "@utils/debug";
-import {preferences} from "../preferences";
-import {showMidiOutActivity} from "./midiActivity";
-import {logOutgoingMidiMessage} from "./midiWindow";
-import {setPresetSelectorClean} from "../presets";
+import {preferences} from "@shared/preferences";
+import {showMidiOutActivity} from "@midi/midiActivity";
+import {logOutgoingMidiMessage} from "@midi/midiWindow";
+import {setPresetSelectorClean} from "@shared/presets";
 import {toHexString} from "@utils";
-import {updateExpSlider} from "../expController";
-import {inExpMode} from "../expController";
-import {getMidiInputPort, suppressSysexEcho} from "./midiIn";
-import {updateImportPresetsProgress} from "../preset_library";
-import {updateControls} from "../controller";
+import {updateExpSlider} from "@shared/expController";
+import {inExpMode} from "@shared/expController";
+import {getMidiInputPort, suppressSysexEcho} from "@midi/midiIn";
+import {updateImportPresetsProgress} from "@shared/preset_library";
+import {updateControls} from "@shared/controller";
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 

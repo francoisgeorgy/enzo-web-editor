@@ -2,9 +2,9 @@ import {log} from "@utils/debug";
 import * as lity from "lity";
 import store from "storejs";
 import MODEL, {device_name} from "@model";
-import * as Utils from "./utils";
+import * as Utils from "@utils";
 import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@model/sysex";
-import {resetExp} from "./expController";
+import {resetExp} from "@shared/expController";
 import {
     fullUpdateDevice,
     getMidiOutputPort,
@@ -14,15 +14,15 @@ import {
     setAutoLockOnImport,
     writePreset
 } from "@midi/midiOut";
-import {getCurrentZoomLevel} from "./windowSize";
+import {getCurrentZoomLevel} from "@shared/windowSize";
 import {toHexString} from "@utils";
-import {setPresetSelectorDirty} from "./presets";
+import {setPresetSelectorDirty} from "@shared/presets";
 import JSZip from "jszip";
 import {saveAs} from 'file-saver';
-import {preferences, savePreferences} from "./preferences";
-import {updateControls} from "./controller";
-import {LOCAL_STORAGE_KEY} from "@model";
-import {disableKeyboard} from "./keyboardSupport";
+import {preferences, savePreferences} from "@shared/preferences";
+import {updateControls} from "@shared/controller";
+import {LOCAL_STORAGE_KEY_LIBRARY} from "@model";
+import {disableKeyboard} from "@shared/keyboardSupport";
 
 /* editor presets (library) */
 
@@ -171,7 +171,13 @@ export function addPresetToLibrary(preset, select = false) {
 }
 
 function readPresetsFromLocalStorage() {
-    const s = store.get(LOCAL_STORAGE_KEY);
+
+    log("readPresetsFromLocalStorage", LOCAL_STORAGE_KEY_LIBRARY)
+
+    const s = store.get(LOCAL_STORAGE_KEY_LIBRARY);
+
+    log("readPresetsFromLocalStorage", s)
+
     // log(s);
     library = s ? JSON.parse(s) : Array(16).fill(null) ;
     // log(library);
@@ -179,7 +185,7 @@ function readPresetsFromLocalStorage() {
 
 function savePresetsInLocalStorage() {
     // Object.assign(preferences, preferences, options);
-    store(LOCAL_STORAGE_KEY, JSON.stringify(library));
+    store(LOCAL_STORAGE_KEY_LIBRARY, JSON.stringify(library));
 }
 
 function deleteAllPresets() {
@@ -722,6 +728,7 @@ function createPresetDOM(preset, index) {
 function displayPresets() {
 
     log("displayPresets", currentLibPreset);
+    log("displayPresets library", library );
 
     const lib = $(`<div/>`, {id: "presets-lib", "class": `presets-lib flex-grow ${preferences.library_scroll ? 'scrollable' : ''}`});
 
