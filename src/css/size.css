@@ -25,6 +25,10 @@
     /*padding: 0;*/
 }
 
+body.pwa #wrapper {
+    margin: 0 auto!important;
+}
+
 .mg-top-row {
     padding-top: 7px;
     padding-bottom: 5px;

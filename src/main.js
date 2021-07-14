@@ -1,7 +1,7 @@
 import {log} from "@utils/debug";
 import MODEL from "@model";
 import {detect} from "detect-browser";
-import {loadPreferences, preferences} from "./shared/preferences";
+import {loadPreferences, preferences} from "@shared/preferences";
 import {setupUI, VERSION} from "@shared/appSetup";
 import {initMidi} from "@midi";
 import * as serviceWorker from "./serviceWorker";
@@ -34,8 +34,10 @@ if ("serviceWorker" in navigator) {
             .register(
                 "./serviceWorker.js"
             )
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))
+            .then(
+                res => log("service worker registered")
+            )
+            .catch(err => console.error("service worker not registered", err))
     })
 }
 
