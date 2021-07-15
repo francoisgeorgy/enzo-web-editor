@@ -40,8 +40,9 @@ module.exports = {
             '@midi': path.resolve(__dirname, 'src/shared/midi'),
             '@shared': path.resolve(__dirname, 'src/shared'),
             '@utils': path.resolve(__dirname, 'src/shared/utils'),
+            '@model': path.resolve(__dirname, 'src/shared/model'),
             '@enzo': path.resolve(__dirname, 'src/enzo'),
-            '@model': path.resolve(__dirname, 'src/enzo/model'),
+            '@device': path.resolve(__dirname, 'src/enzo/model'),
             // ...etc
         },
     },

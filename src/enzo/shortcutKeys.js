@@ -1,14 +1,14 @@
 import {log} from "@utils/debug";
 import {startAnimateCC} from "@shared/animateCC";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
-import MODEL from "@model";
+import MODEL from "@device";
 import {init, presetDec, presetInc, randomize, selectPreset} from "@shared/presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "../shared/switches";
 import {displayRawValues} from "@shared/knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "@shared/expController";
 import {toggleLibrary, toggleScroll} from "@shared/preset_library";
 import {updateControl, updateModelAndUI} from "@shared/controller";
-import {SYNTH_MODES, WAVESHAPES} from "@model/sysex";
+import {SYNTH_MODES, WAVESHAPES} from "@device/sysex";
 import {kb_enabled} from "@shared/keyboardSupport";
 
 function toggleBypass() {

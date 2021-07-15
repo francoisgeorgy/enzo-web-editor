@@ -1,5 +1,5 @@
 import * as Utils from "@utils";
-import MODEL from "@model";
+import MODEL from "@device";
 import {URL_PARAM_SYSEX} from "@shared/url";
 
 export function printPreset() {

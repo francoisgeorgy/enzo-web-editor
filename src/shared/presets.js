@@ -1,5 +1,5 @@
 import {log} from "@utils/debug";
-import MODEL from "@model";
+import MODEL from "@device";
 import {fullUpdateDevice, setAndSendPC} from "@midi/midiOut";
 import {markAllLibraryPresetsAsUnselected, setLibraryPresetDirty} from "@shared/preset_library";
 import {resetExp} from "@shared/expController";

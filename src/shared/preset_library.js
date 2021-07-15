@@ -1,9 +1,9 @@
 import {log} from "@utils/debug";
 import * as lity from "lity";
 import store from "storejs";
-import MODEL, {device_name} from "@model";
+import MODEL, {device_name} from "@device";
 import * as Utils from "@utils";
-import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@model/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@device/sysex";
 import {resetExp} from "@shared/expController";
 import {
     fullUpdateDevice,
@@ -21,7 +21,7 @@ import JSZip from "jszip";
 import {saveAs} from 'file-saver';
 import {preferences, savePreferences} from "@shared/preferences";
 import {updateControls} from "@shared/controller";
-import {LOCAL_STORAGE_KEY_LIBRARY} from "@model";
+import {LOCAL_STORAGE_KEY_LIBRARY} from "@device";
 import {disableKeyboard} from "@shared/keyboardSupport";
 
 /* editor presets (library) */

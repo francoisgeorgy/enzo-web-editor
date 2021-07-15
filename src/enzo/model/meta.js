@@ -1,4 +1,4 @@
-import {GROUP_ID, MODEL_ID} from "./sysex";
+import {GROUP_ID, MODEL_ID} from "../../shared/model/sysex";
 
 export default {
     signature: {

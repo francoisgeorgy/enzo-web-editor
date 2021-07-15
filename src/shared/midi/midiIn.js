@@ -7,10 +7,10 @@ import {
     updateDevice
 } from "./midiOut";
 import {log} from "@utils/debug.js";
-import MODEL from "@model";
+import MODEL from "@device";
     import {toHexString} from "@utils";
-import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@model/sysex.js";
-import {device_name} from "@model";
+import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@device/sysex.js";
+import {device_name} from "@device";
 import {updateGlobalSettings} from "@shared/globalSettings.js";
 import {resetExp} from "@shared/expController.js";
 import {addPresetToLibrary} from "@shared/preset_library.js";

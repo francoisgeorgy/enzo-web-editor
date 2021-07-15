@@ -1,6 +1,6 @@
 import store from "storejs";
 import {log} from "@utils/debug";
-import {LOCAL_STORAGE_KEY_PREFERENCES} from "@model";
+import {LOCAL_STORAGE_KEY_PREFERENCES} from "@device";
 
 // const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
 // const LOCAL_STORAGE_KEY = "studiocode.enzo-editor-15.preferences";

@@ -1,3 +1,4 @@
+import {_0_100, _2_steps, _4_steps, _off_when_zero_percent, _percent, control} from "../../shared/model";
 
 export const control_id = {
     exp_pedal: 4,
@@ -21,41 +22,11 @@ export const control_id = {
     synth_waveshape: 30
 };
 
-export const control = new Array(127);
-
-const _0_100 = function (v) {
-    return Math.floor(v / 127 * 100 + 0.5);
-};
-
-const _percent = function (v) {
-    return Math.floor(v / 127 * 100 + 0.5) + '%';
-};
-
 /*
 const _off_when_zero = function (v) {
     return v === 0 ? 'OFF' : v;
 };
 */
-
-const _off_when_zero_percent = function (v) {
-    return v === 0 ? 'OFF' : _percent(v);
-};
-
-const _2_steps = function (v) {
-    return v < 64 ? 0 : 127;
-};
-
-const _4_steps = function (v) {
-    if (v < 32) {
-        return 0;
-    } else if (v < 64) {
-        return 63;
-    } else if (v < 96) {
-        return 95;
-    } else {
-        return 127;
-    }
-};
 
 const _pitch = function (v) {
     if (v === 0) {

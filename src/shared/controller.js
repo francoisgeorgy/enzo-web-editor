@@ -1,6 +1,6 @@
 import {log, TRACE, warn} from "@utils/debug";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
-import MODEL from "@model";
+import MODEL from "@device";
 import {setPresetSelectorDirty} from "@shared/presets";
 import {setLibraryPresetDirty} from "@shared/preset_library";
 import {inExpMode, updateExpSlider} from "@shared/expController";

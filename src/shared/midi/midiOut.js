@@ -1,6 +1,6 @@
-import MODEL from "@model";
-import {control_id} from "@model/cc";
-import {SYSEX_CMD, SYSEX_START_BYTE} from "@model/sysex";
+import MODEL from "@device";
+import {control_id} from "@device/cc";
+import {SYSEX_CMD, SYSEX_START_BYTE} from "@device/sysex";
 import {log} from "@utils/debug";
 import {preferences} from "@shared/preferences";
 import {showMidiOutActivity} from "@midi/midiActivity";

@@ -1,7 +1,7 @@
-import MODEL from "@model";
+import MODEL from "@device";
 import "webpack-jquery-ui/effects";
 import {log, TRACE} from "@utils/debug";
-import {_tempo_bpm, _tempo_ms, control_id} from "@model/cc";
+import {_tempo_bpm, _tempo_ms, control_id} from "@device/cc";
 import {displayRawValues, setupKnobs} from "@shared/knobs";
 import {fullUpdateDevice, savePreset} from "@midi/midiOut";
 import {handleUserAction, updateControl} from "@shared/controller";

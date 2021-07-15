@@ -1,6 +1,6 @@
 import {log} from "@utils/debug";
 import {updateDevice} from "@midi/midiOut";
-import MODEL from "@model";
+import MODEL from "@device";
 import {handleUserAction, updateControl} from "@shared/controller";
 
 /**

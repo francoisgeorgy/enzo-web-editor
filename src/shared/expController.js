@@ -1,7 +1,7 @@
 import {log} from "@utils/debug";
 import Slider from "svg-slider";
-import MODEL from "@model";
-import {control} from "@model/cc";
+import MODEL from "@device";
+import {control} from "@device/cc";
 import {knobs} from "@shared/knobs";
 import {fullUpdateDevice, updateDevice} from "@midi/midiOut";
 import {MIXER_SLIDER_SCHEME} from "@enzo/knobsTheme";
