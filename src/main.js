@@ -1,5 +1,5 @@
 import {log} from "@utils/debug";
-import MODEL from "@device";
+import MODEL from "@model";
 import {detect} from "detect-browser";
 import {loadPreferences, preferences} from "@shared/preferences";
 import {setupUI, VERSION} from "@shared/appSetup";

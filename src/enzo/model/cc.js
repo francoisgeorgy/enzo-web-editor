@@ -1,4 +1,4 @@
-import {_0_100, _2_steps, _4_steps, _off_when_zero_percent, _percent, control} from "../../shared/model";
+import {_0_100, _2_steps, _4_steps, _off_when_zero_percent, _percent, _tempo_ms, control} from "@model";
 
 export const control_id = {
     exp_pedal: 4,
@@ -115,17 +115,7 @@ const _waveshape = function (v) {
     }
 };
 
-export const _tempo_ms = function (v) {
-    return (v * 10);    // + "ms";
-};
-
-export const _tempo_bpm = function (v) {
-    // console.log("tempo bpm", v, Math.round(60000 / (v * 10)));
-    const bpm = v > 0 ? Math.round(60000 / (v * 10)) : 0;
-    return `${bpm}`;
-};
-
-function defineControls() {
+export function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
         human: _0_100,
@@ -416,4 +406,4 @@ function defineControls() {
 
 } // defineControls()
 
-defineControls();
+// defineControls();

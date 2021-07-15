@@ -1,9 +1,9 @@
 import meta from "@device/meta";
-import {control_id} from "@device/cc";
-import {global_conf, global_id} from "@device/global_conf";
-import {decodeSysex, validate} from "@model/sysex";
-import * as sysex from "@device/sysex";
 import {device_name} from "@device";
+import {control_id, defineControls} from "@device/cc";
+import {global_conf, global_id} from "@device/global_conf";
+import {getPresetBytes, decodeSysex, validate} from "@model/sysex";
+import {getDataForGlobalConfig} from "@device/sysex";
 
 export const control = new Array(127);
 
@@ -33,6 +33,16 @@ export const _4_steps = function (v) {
     } else {
         return 127;
     }
+};
+
+export const _tempo_ms = function (v) {
+    return (v * 10);    // + "ms";
+};
+
+export const _tempo_bpm = function (v) {
+    // console.log("tempo bpm", v, Math.round(60000 / (v * 10)));
+    const bpm = v > 0 ? Math.round(60000 / (v * 10)) : 0;
+    return `${bpm}`;
 };
 
 export const getControl = function (number) {
@@ -239,6 +249,9 @@ export default {
     copyFirstToSecondValues,
     validate: validate,               // validate a SysEx
     setValuesFromSysEx: decodeSysex,  // decode a sysex and update model's values
-    getPreset: sysex.getPreset,             // export all values as a SysEx dump
-    getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig
+    getPreset: getPresetBytes,             // export all values as a SysEx dump
+    getSysexDataForGlobalConfig: getDataForGlobalConfig
 };
+
+
+defineControls();

@@ -1,6 +1,6 @@
-import MODEL from "@device";
-import {control_id} from "@device/cc";
-import {SYSEX_CMD, SYSEX_START_BYTE} from "@device/sysex";
+import MODEL from "@model";
+import {control_id} from "@model";
+import {SYSEX_CMD, SYSEX_START_BYTE} from "@model/sysex";
 import {log} from "@utils/debug";
 import {preferences} from "@shared/preferences";
 import {showMidiOutActivity} from "@midi/midiActivity";
@@ -109,7 +109,7 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
     sendCC(MODEL.setControlValue(control_type, control_number, value, in_exp_mode));
 
     // EXP
-    if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
+    if (control_number === MODEL.control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
         log("updateDevice: control is EXP, interpolate and update");
         MODEL.interpolateExpValues(value);
         updateExpSlider(value);

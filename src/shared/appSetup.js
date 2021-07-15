@@ -1,7 +1,7 @@
-import MODEL from "@device";
 import "webpack-jquery-ui/effects";
+import MODEL from "@model";
 import {log, TRACE} from "@utils/debug";
-import {_tempo_bpm, _tempo_ms, control_id} from "@device/cc";
+import {_tempo_bpm, _tempo_ms, control_id} from "@model";
 import {displayRawValues, setupKnobs} from "@shared/knobs";
 import {fullUpdateDevice, savePreset} from "@midi/midiOut";
 import {handleUserAction, updateControl} from "@shared/controller";
@@ -9,7 +9,6 @@ import {init, randomize, setupPresetSelectors} from "@shared/presets";
 import {initSize, zoomIn, zoomOut} from "@shared/windowSize";
 import {preferences} from "@shared/preferences";
 import {printPreset} from "@shared/dialogs";
-// import {setCommunicationStatus} from "@midi/messages";
 import {setupExp} from "@shared/expController";
 import {setupGlobalSettings} from "@shared/globalSettings";
 import {setupMomentarySwitches, setupSwitches, tapDown, tapRelease} from "@shared/switches";

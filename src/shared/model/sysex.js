@@ -1,7 +1,8 @@
 import meta from "@device/meta";
-import {control} from "./index";
+import {control} from "@model";
 import {toHexString} from "@utils";
-import {global_conf} from "../../enzo/model/global_conf";
+import {global_conf} from "@device/global_conf";
+import {getDataForPreset} from "@device/sysex";
 
 export const SYSEX_START_BYTE = 0xF0;
 export const SYSEX_END_BYTE = 0xF7;
@@ -30,6 +31,31 @@ export const MODEL_ID = {
     polymoon: 2,
     enzo: 3
 };
+
+export function getPresetBytes(complete = true) {
+
+    // const data = new Uint8Array(complete ? 39 : 34);
+    const data = [];
+
+    if (complete) {
+        data.push(SYSEX_START_BYTE);                               // 0
+        data.push(0x00);
+        data.push(0x20);
+        data.push(0x10);
+    }
+
+    data.push(0);    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    data.push(meta.group_id.value);
+    data.push(meta.model_id.value);
+    data.push(0x26); // Enzo always sent this value when sending a sysex.
+    data.push(meta.preset_id.value);                               // 8
+
+    data.push(...getDataForPreset());
+
+    if (complete) data.push(SYSEX_END_BYTE);                         // 38
+
+    return Uint8Array.from(data);
+}
 
 export function validate(data) {
 

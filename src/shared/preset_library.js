@@ -1,9 +1,9 @@
 import {log} from "@utils/debug";
 import * as lity from "lity";
 import store from "storejs";
-import MODEL, {device_name} from "@device";
+import MODEL, {device_name} from "@model";
 import * as Utils from "@utils";
-import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@device/sysex";
+import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "@model/sysex";
 import {resetExp} from "@shared/expController";
 import {
     fullUpdateDevice,

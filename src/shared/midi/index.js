@@ -12,7 +12,7 @@ import {preferences, savePreferences} from "@shared/preferences";
 import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "@midi/midiOut";
 import {updateSelectDeviceList} from "@midi/midiSelect";
 import * as WebMidi from "webmidi";
-import MODEL from "@device";
+import MODEL from "@model";
 
 //==================================================================================================================
 

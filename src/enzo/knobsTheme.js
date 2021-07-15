@@ -1,4 +1,4 @@
-import MODEL from "@device";
+import MODEL from "@model";
 
 export const KNOB_THEME_DEFAULT = {
 

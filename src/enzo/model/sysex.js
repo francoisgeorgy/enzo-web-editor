@@ -1,7 +1,6 @@
-import meta from "@device/meta.js";
 import {control_id} from "@device/cc";
 import {control} from "@model";
-import {GROUP_ID, MODEL_ID, SYSEX_END_BYTE, SYSEX_START_BYTE} from "@model/sysex";
+import {GROUP_ID, MODEL_ID} from "@model/sysex";
 
 export const SYNTH_MODES = {
     dry: 0,
@@ -20,26 +19,27 @@ export const WAVESHAPES = {
  * @param complete If false do not include the sysex header and footer bytes nor the manufacturer ID
  * @returns {Uint8Array}
  */
-export function getPreset(complete = true) {
+// export function getPreset(complete = true) {
+export function getDataForPreset() {
 
-    const data = new Uint8Array(complete ? 39 : 34);
+    const data = new Uint8Array(29);
 
     let i = 0;
 
-    if (complete) {
-        data[i++] = SYSEX_START_BYTE;                               // 0
-        data[i++] = 0x00;
-        data[i++] = 0x20;
-        data[i++] = 0x10;
-    }
-
-    data[i++] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
-    data[i++] = meta.group_id.value;
-    data[i++] = meta.model_id.value;
-
-    data[i++] = 0x26; // Enzo always sent this value when sending a sysex.
-
-    data[i++] = meta.preset_id.value;                               // 8
+    // if (complete) {
+    //     data[i++] = SYSEX_START_BYTE;                               // 0
+    //     data[i++] = 0x00;
+    //     data[i++] = 0x20;
+    //     data[i++] = 0x10;
+    // }
+    //
+    // data[i++] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    // data[i++] = meta.group_id.value;
+    // data[i++] = meta.model_id.value;
+    //
+    // data[i++] = 0x26; // Enzo always sent this value when sending a sysex.
+    //
+    // data[i++] = meta.preset_id.value;                               // 8
 
     data[i++] = control[control_id.pitch].raw_value;                // 9
     data[i++] = control[control_id.filter].raw_value;
@@ -73,14 +73,14 @@ export function getPreset(complete = true) {
     data[i++] = control[control_id.filter_bandwidth].raw_value2;
     data[i++] = control[control_id.delay_feedback].raw_value2;      // 37
 
-    if (complete) data[i] = SYSEX_END_BYTE;                         // 38
+    // if (complete) data[i] = SYSEX_END_BYTE;                         // 38
 
     // log(data, meta.preset_id.value);
 
     return data;
 }
 
-export function getSysexDataForGlobalConfig(global_num, value) {
+export function getDataForGlobalConfig(global_num, value) {
 
     // F0
     // 00 20 10    Meris ID	(different manufacturers have different IDs)
