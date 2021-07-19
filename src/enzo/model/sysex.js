@@ -1,4 +1,4 @@
-import {control_id} from "@device/cc";
+import {control_id} from "@device/model/cc";
 import {control} from "@model";
 import {GROUP_ID, MODEL_ID} from "@model/sysex";
 
@@ -96,7 +96,7 @@ export function getDataForGlobalConfig(global_num, value) {
 
     data[0] = 0x00;
     data[1] = GROUP_ID.pedal;
-    data[2] = MODEL_ID.enzo;
+    data[2] = MODEL_ID.ENZO;
     data[3] = 0x2A;
     data[4] = global_num;
     data[5] = value;

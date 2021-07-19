@@ -116,6 +116,7 @@ const _waveshape = function (v) {
 };
 
 export function defineControls() {
+
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
         human: _0_100,
@@ -347,6 +348,7 @@ export function defineControls() {
         infos: "Changes the Synth waveshape from Sawtooth to Square."
     };
 
+/*
     // add the missing default properties
     control.forEach(function (obj) {
 
@@ -403,6 +405,7 @@ export function defineControls() {
         }
 
     });
+*/
 
 } // defineControls()
 

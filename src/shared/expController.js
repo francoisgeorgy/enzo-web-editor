@@ -4,7 +4,7 @@ import MODEL from "@model";
 import {control} from "@model";
 import {knobs} from "@shared/knobs";
 import {fullUpdateDevice, updateDevice} from "@midi/midiOut";
-import {MIXER_SLIDER_SCHEME} from "@enzo/knobsTheme";
+import {MIXER_SLIDER_SCHEME} from "@device/knobsTheme";
 import {updateControls} from "@shared/controller";
 
 export const sliders = {};

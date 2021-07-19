@@ -1,10 +1,8 @@
 import "webpack-jquery-ui/effects";
-import MODEL from "@model";
 import {log, TRACE} from "@utils/debug";
-import {_tempo_bpm, _tempo_ms, control_id} from "@model";
 import {displayRawValues, setupKnobs} from "@shared/knobs";
 import {fullUpdateDevice, savePreset} from "@midi/midiOut";
-import {handleUserAction, updateControl} from "@shared/controller";
+import {handleUserAction} from "@shared/controller";
 import {init, randomize, setupPresetSelectors} from "@shared/presets";
 import {initSize, zoomIn, zoomOut} from "@shared/windowSize";
 import {preferences} from "@shared/preferences";
@@ -22,6 +20,7 @@ import {
     setMidiInput2Channel
 } from "@midi";
 import {enableKeyboard, setupKeyboard} from "@shared/keyboardSupport";
+import {customSetupUI} from "@device/customSetup";
 
 export const VERSION = "[AIV]{version}[/AIV]";
 
@@ -115,17 +114,7 @@ export function setupUI() {
     setupSelects();
     setupKeyboard();
 
-    $('#tempo-label').click(() => {
-        const c = MODEL.control[control_id.tempo];
-        if (c.human === _tempo_bpm) {
-            c.human = _tempo_ms;
-            $('#tempo-label').text('tempo MS');
-        } else {
-            c.human = _tempo_bpm;
-            $('#tempo-label').text('tempo BPM');
-        }
-        updateControl(c.cc_type, control_id.tempo, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
-    });
+    customSetupUI();
 
     $(window).blur(function(){
         displayRawValues(false);    // when switching window with Alt-Tab

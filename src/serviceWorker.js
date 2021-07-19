@@ -12,8 +12,6 @@ const assets = [
     "./img/enzo-editor-v15.png",
     "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
     "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-solid-900.woff2",
-    "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-regular-400.woff2",
-    "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-solid-900.woff2",
     "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-regular-400.woff2"
 ]
 

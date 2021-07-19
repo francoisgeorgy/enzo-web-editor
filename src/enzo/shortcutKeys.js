@@ -8,7 +8,7 @@ import {displayRawValues} from "@shared/knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "@shared/expController";
 import {toggleLibrary, toggleScroll} from "@shared/preset_library";
 import {updateControl, updateModelAndUI} from "@shared/controller";
-import {SYNTH_MODES, WAVESHAPES} from "@device/sysex";
+import {SYNTH_MODES, WAVESHAPES} from "@device/model/sysex";
 import {kb_enabled} from "@shared/keyboardSupport";
 
 function toggleBypass() {

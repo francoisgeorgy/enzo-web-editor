@@ -1,8 +1,8 @@
-import meta from "@device/meta";
+import meta from "@device/model/meta";
 import {control} from "@model";
 import {toHexString} from "@utils";
-import {global_conf} from "@device/global_conf";
-import {getDataForPreset} from "@device/sysex";
+import {global_conf} from "@device/model/global_conf";
+import {getDataForPreset} from "@device/model/sysex";
 
 export const SYSEX_START_BYTE = 0xF0;
 export const SYSEX_END_BYTE = 0xF7;
@@ -26,10 +26,10 @@ export const GROUP_ID = {
 };
 
 export const MODEL_ID = {
-    ottobitjr: 0,
-    mercury7: 1,
-    polymoon: 2,
-    enzo: 3
+    OTTOBITJR: 0,
+    MERCURY7: 1,
+    POLYMOON: 2,
+    ENZO: 3
 };
 
 export function getPresetBytes(complete = true) {
@@ -44,10 +44,10 @@ export function getPresetBytes(complete = true) {
         data.push(0x10);
     }
 
-    data.push(0);    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    data.push(0);    // We set device ID to 0 in order to get a sysex dump that can be sent to Meris pedal.
     data.push(meta.group_id.value);
     data.push(meta.model_id.value);
-    data.push(0x26); // Enzo always sent this value when sending a sysex.
+    data.push(0x26); // A Meris pedal always sent this value when sending a sysex.
     data.push(meta.preset_id.value);                               // 8
 
     data.push(...getDataForPreset());

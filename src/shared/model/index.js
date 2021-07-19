@@ -1,9 +1,9 @@
-import meta from "@device/meta";
-import {device_name} from "@device";
-import {control_id, defineControls} from "@device/cc";
-import {global_conf, global_id} from "@device/global_conf";
+import meta from "@device/model/meta";
+import {device_name} from "@device/model";
+import {control_id, defineControls} from "@device/model/cc";
+import {global_conf, global_id} from "@device/model/global_conf";
 import {getPresetBytes, decodeSysex, validate} from "@model/sysex";
-import {getDataForGlobalConfig} from "@device/sysex";
+import {getDataForGlobalConfig} from "@device/model/sysex";
 
 export const control = new Array(127);
 
@@ -225,6 +225,71 @@ export const setPresetNumber = function (n) {
     meta.preset_id.value = n;
 };
 
+function setupControlsDefinition() {
+
+    defineControls();
+
+    // add the missing default properties
+    control.forEach(function (obj) {
+
+        obj.cc_number = control.indexOf(obj);
+        obj.cc_type = "cc";
+
+        let bits = 7;
+
+        if (!obj.hasOwnProperty("human")) {
+            obj.human = v => v;
+        }
+
+        if (!obj.hasOwnProperty("on_off")) {
+            obj.on_off = false;
+        }
+
+        if (!obj.hasOwnProperty("range")) {
+            obj.range = obj.on_off ? [0, 1] : [0, (1 << bits) - 1];
+        }
+
+        if (!obj.hasOwnProperty("cc_range")) {
+            obj.cc_range = [0, (1 << bits) - 1];
+        }
+
+        // pre-computed value that may be useful:
+        obj.cc_min = Math.min(...obj.cc_range);
+        obj.cc_max = Math.max(...obj.cc_range);
+        obj.cc_delta = obj.cc_max - obj.cc_min;
+
+        if (!obj.hasOwnProperty("init_value")) {
+            if (obj.hasOwnProperty("cc_center")) {
+                obj.init_value = Array.isArray(obj.cc_center) ? obj.cc_center[0] : obj.cc_center;
+            } else if ((Math.min(...obj.range) < 0) && (Math.max(...obj.range) > 0)) {
+                obj.init_value = (1 << (bits - 1)) - 1; // very simple rule: we take max/2 as default value
+            } else {
+                obj.init_value = Math.min(...obj.range);
+            }
+        }
+
+        if (!obj.hasOwnProperty("raw_value")) {
+            obj.raw_value = obj.init_value;
+        }
+
+        if (obj.hasOwnProperty("sysex2")) {
+            obj.two_values = true;    // true for the controls that can have two values, available with the EXP pedal
+            obj.init_value2 = obj.init_value;
+            obj.raw_value2 = obj.raw_value;
+        } else {
+            obj.two_values = false;
+        }
+
+        obj.changed = function () {
+            return obj.raw_value !== obj.init_value;
+        }
+
+    });
+
+}
+
+setupControlsDefinition();
+
 export default {
     name: device_name,
     meta,
@@ -253,5 +318,3 @@ export default {
     getSysexDataForGlobalConfig: getDataForGlobalConfig
 };
 
-
-defineControls();

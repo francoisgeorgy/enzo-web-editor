@@ -10,7 +10,7 @@ import {log} from "@utils/debug.js";
 import MODEL from "@model";
 import {toHexString} from "@utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "@model/sysex.js";
-import {device_name} from "@device";
+import {device_name} from "@device/model";
 import {updateGlobalSettings} from "@shared/globalSettings.js";
 import {resetExp} from "@shared/expController.js";
 import {addPresetToLibrary} from "@shared/preset_library.js";
