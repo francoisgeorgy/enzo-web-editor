@@ -66,7 +66,6 @@ module.exports = {
             {from: "./public/manifest.json"},
             {from: "./public/print/preset-template.html", to: "templates"},
             {from: "./public/css/midi.css", to: "css"},
-            // { from: "./src/css/enzo-logo*", to: "css" },
             {from: "./public/img/midi-192.png", to: "img"},
             {from: "./public/img/midi-512.png", to: "img"},
             {from: "./public/img/favicon-16x16.png"},
@@ -88,9 +87,6 @@ module.exports = {
             inject: "head",
             template: "./src/print/print.html",
             filename: "./print.html" //relative to root of the application
-        // }),
-        // new ZipPlugin({
-        //     filename: 'enzo_editor.zip',
         })
     ],
     performance: {

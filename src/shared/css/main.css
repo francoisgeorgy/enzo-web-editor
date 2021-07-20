@@ -124,7 +124,7 @@ a {
     /*left: 30px;*/
     left: 0;
     width: 160px;
-    background-color: lightgoldenrodyellow;
+    background-color: var(--tooltip-bg-color);
     opacity: 90%;
     padding: 8px;
     border-radius: 4px;

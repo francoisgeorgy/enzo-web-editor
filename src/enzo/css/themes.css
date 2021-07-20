@@ -1,6 +1,11 @@
 html {
 
+    --neon: #f8f812;
+
     --body-bg-color: #111111;
+
+    --tooltip-bg-color: lightgoldenrodyellow;
+
 
     --messages-bg: #ffffff70;
     --messages-color: #424242;
@@ -8,6 +13,8 @@ html {
 
     --value: #f9d000;
     --dialog-link: #fff;
+    --dialog-bg-color: rgba(0, 0, 0, 0.80);
+    --dialog-small-button-color: #333;
     --panel-link: blue;
 
     --knob-back-border: #999;
@@ -30,6 +37,7 @@ html {
 
     --bt-color: #333;
     --bt-border: #333;
+    --bt-bg-color: rgba(255, 251, 177, 0.25);
     --bt-hover-color: #000;
     --bt-hover-bg-color: #eaea02;
     --bt-on-color: #000;
@@ -53,7 +61,17 @@ html {
 
     --option-panel-header-color: #333;
     --option-panel-header-border: #333;
+    --global-setting-enabled-color: blue;
 
+    --preset-sel-bg-color: #ff00001A;
+    --preset-descr-bg-color: lightgoldenrodyellow;
+    --preset-selector-bg-color: rgba(255, 251, 177, 0.25);
+    --preset-editor-over-bg-color: white;
+
+    --progress-bar-border: 1px solid black;
+    --progress-bar-bg-color: #f1d09c;
+
+    --config-bg-color: #eeeea1;
 }
 
 a {
@@ -92,19 +110,6 @@ a {
 .knob-bg {
     fill: url("#grad2");
     stroke: #000;
-}
-
-/*noinspection CssUnusedSymbol*/
-.knob-value {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    stroke: none;
-    fill: var(--knob-value);
-}
-
-/*noinspection CssUnusedSymbol*/
-.knob-cursor {
-    stroke-linecap: butt;
 }
 
 .slider-value {

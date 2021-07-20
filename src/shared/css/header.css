@@ -36,7 +36,7 @@
 */
 
 .neon {
-    color: #f8f812;
+    color: var(--neon);
     /*font-family: Roboto, sans-serif;*/
     /*font-weight: bold;*/
 }

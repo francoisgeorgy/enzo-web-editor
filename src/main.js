@@ -12,18 +12,19 @@ import "@fontsource/roboto-condensed/700.css";
 import "@fontsource/roboto-condensed/300-italic.css";
 import "@fontsource/roboto-condensed/400-italic.css";
 import "@fontsource/roboto-condensed/700-italic.css";
-import "./css/lity.min.css"; // CSS files order is important
-import "./css/themes.css";
-import "./css/main.css";
-import "./css/header.css";
-import "./css/size.css";
-import "./css/config.css";
-import "./css/info-panel.css";
-import "./css/presets.css";
-import "./css/controls.css";
-import "./css/buttons.css";
-import "./css/dialogs.css";
-import "./css/global-settings.css";
+// CSS files order is important :
+import "./enzo/css/themes.css";
+import "./shared/css/lity.min.css";
+import "./shared/css/main.css";
+import "./shared/css/header.css";
+import "./shared/css/size.css";
+import "./shared/css/config.css";
+import "./shared/css/presets.css";
+import "./shared/css/controls.css";
+import "./enzo/css/controls.css";
+import "./shared/css/buttons.css";
+import "./shared/css/dialogs.css";
+import "./shared/css/global-settings.css";
 
 //==================================================================================================================
 // Setup the worker for the offline support (PWA):

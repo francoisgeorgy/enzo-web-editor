@@ -126,7 +126,7 @@
     left: 10px;
     height: 40px;
     z-index: 10000;
-    background-color: lightgoldenrodyellow;
+    background-color: var(--preset-descr-bg-color);
 }
 
 .preset-editor:hover i.i-hover {
@@ -224,7 +224,7 @@ i.preset-delete {
 
 .presets-selectors > div {
     /*background-color: #e4e474;*/
-    background-color: rgba(255, 251, 177, 0.25);
+    background-color: var(--preset-selector-bg-color);
 }
 
 .preset-menu-wrapper {
@@ -295,14 +295,14 @@ i.preset-delete {
 .preset-editor.over {
     /*border: 3px dotted #666;*/
     border-style: dashed;
-    background-color: white;
+    background-color: var(--preset-editor-over-bg-color);
 }
 
 .progress-bar {
     /*min-height: 20px;*/
     padding: 4px 8px;
     width: 100%;
-    border: 1px solid black;
-    background-color: #f1d09c;
+    border: var(--progress-bar-border);
+    background-color: var(--progress-bar-bg-color);
     font-weight: 400;
 }

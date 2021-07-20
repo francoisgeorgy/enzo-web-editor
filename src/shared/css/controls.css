@@ -13,6 +13,7 @@
 #main-grid {
     /*flex-grow: 1;*/
 }
+
 #main-grid {
     display: grid;
     grid-template-columns: 20px repeat(6, 1fr) 20px;
@@ -41,7 +42,6 @@
         padding-top: 5px;
     }
 }
-
 
 div.controls {
     display: flex;
@@ -83,11 +83,13 @@ div.exp_wrapper {
     grid-row: 1;
     grid-column: 1;
 }
+
 #exp-a2 {
     grid-row: 1 / span 3;
     grid-column: 2;
     justify-self: center;
 }
+
 #exp-close {
     grid-row: 1;
     grid-column: 3;
@@ -104,6 +106,7 @@ div.exp_wrapper {
     grid-column: 3;
     align-self: end;
 }
+
 #exp-copy {           /* slider "click to copy" */
     grid-row: 2;
     grid-column: 3;
@@ -111,26 +114,11 @@ div.exp_wrapper {
     justify-self: left;
     align-self: start;
 }
-#cc-4-value {
-    grid-row: 2;
-    grid-column: 3;
-    align-self: center;
-    justify-self: left;
-}
-
-/*
-div.controls-slider {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-}
-*/
 
 .stompswitch {
     font-size: 5rem;
     color: var(--sw-color);
 }
-
 
 .slider-combo {
     padding-top: 5px;
@@ -159,31 +147,15 @@ div.controls-slider {
     }
 }
 
-.synth-mode-grid {
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
+/*noinspection CssUnusedSymbol*/
+.knob-value {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    stroke: none;
+    fill: var(--knob-value);
 }
 
-.synth-wave-grid {
-    margin-top: 5px;
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
-}
-/*
-
-.synth-mode-grid .bt,
-.synth-wave-grid .bt {
-    width: 100%;
-}
-*/
-
-.synth-mode-grid .bt:nth-child(2n+1),
-.synth-wave-grid .bt:nth-child(2n+1) {
-    margin-right: 0;
-}
-
-#tempo-label {
-    cursor: pointer;
+/*noinspection CssUnusedSymbol*/
+.knob-cursor {
+    stroke-linecap: butt;
 }

@@ -48,15 +48,15 @@
 }
 
 .lity {
-    background: rgba(0, 0, 0, 0.80);
+    background: var(--dialog-bg-color);
 }
 
 .dialog h2 {
     margin-top: 10px;
 }
 
-.dialog h2, .dialog h3,
-.panel h2, .panel h3 {
+/*.panel h2, .panel h3 {*/
+.dialog h2, .dialog h3 {
     font-size: 1.25rem;
     font-weight: normal;
     margin-bottom: 0.25rem;
@@ -74,7 +74,7 @@
 
 .dialog .small-button {
     font-size: 0.75rem;
-    color: #333;
+    color: var(--dialog-small-button-color);
 }
 
 #edit-preset-dialog input {

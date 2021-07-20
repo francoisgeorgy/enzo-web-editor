@@ -5,7 +5,7 @@
 }
 
 .global-setting-toggle.enabled {
-    color: blue;
+    color: var(--global-setting-enabled-color);
     cursor: pointer;
     text-transform: capitalize;
 }
