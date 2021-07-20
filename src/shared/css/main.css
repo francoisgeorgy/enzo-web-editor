@@ -130,6 +130,7 @@ a {
     border-radius: 4px;
     /*font-size: 0.875rem;*/
     z-index: 100;
+    color: var(--tooltip-color);
 }
 
 .tooltip-center {
@@ -209,5 +210,3 @@ a {
     color: var(--menu-link);
     cursor: pointer;
 }
-
-

@@ -5,7 +5,8 @@ import {setPresetSelectorDirty} from "@shared/presets";
 import {setLibraryPresetDirty} from "@shared/preset_library";
 import {inExpMode, updateExpSlider} from "@shared/expController";
 import {knobs} from "@shared/knobs";
-import {updateBypassSwitch, updateMomentaryStompswitch, updateOptionSwitch} from "@shared/switches";
+import {updateBypassSwitch, updateMomentaryFootswitch, updateOptionSwitch} from "@shared/switches";
+import {CC_EXPRESSION_PEDAL, CC_LEFT_FOOTSWITCH, CC_RIGHT_FOOTSWITCH} from "@model";
 
 /**
  * Handles a change made by the user in the UI.
@@ -50,14 +51,18 @@ export function updateControl(control_type, control_number, value, mappedValue) 
         //TODO: check that control_number is always an int and not a string
         const num = parseInt(control_number, 10);
 
-        if (/*control_type === "cc" &&*/ num === 4) {    //TODO: replace this hack with better code
-            updateExpSlider(value);                                                     //FIXME: use MODEL control_id values instead of magic number
+        if (num === CC_EXPRESSION_PEDAL) {
+            updateExpSlider(value);
             return;
         }
 
-        if (/*control_type === "cc" &&*/ num === 14) {    //TODO: replace this hack with better code
+        if (num === CC_RIGHT_FOOTSWITCH) {
             updateBypassSwitch(value);
             return;
+        }
+
+        if (num === CC_LEFT_FOOTSWITCH) {
+            // return;
         }
 
         let c = $(`#${id}`);
@@ -69,16 +74,15 @@ export function updateControl(control_type, control_number, value, mappedValue) 
             if (c.length) {
                 if (c.is(".bt")) {
                     log(`updateControl(${control_type}, ${num}, ${value}) .bt`);
+
                     updateOptionSwitch(id + "-" + mappedValue, mappedValue);
-                    // } else if (c.is(".sw")) {
-                    //     //TODO: handle .sw controls
-                } else if (c.is(".swm")) {
-                    log(`updateControl(${control_type}, ${num}, ${value}) .swm`);
-                    updateMomentaryStompswitch(`${id}-${mappedValue}`, mappedValue);
-                    // if (mappedValue !== 0) {
-                    //     log("will call updateMomentaryStompswitch in 200ms");
-                    setTimeout(() => updateMomentaryStompswitch(`${id}-${mappedValue}`, 0), 200);
-                    // }
+
+                } else if (c.is(".momentary-switch")) {
+                    log(`updateControl(${control_type}, ${num}, ${value}) momentary-switch`);
+
+                    updateMomentaryFootswitch(`${id}-${mappedValue}`, mappedValue);
+                    setTimeout(() => updateMomentaryFootswitch(`${id}-${mappedValue}`, 0), 200);
+
                 } else {
                     warn("updateControl: unsupported control (2): ", control_type, num, value);
                 }
@@ -86,7 +90,6 @@ export function updateControl(control_type, control_number, value, mappedValue) 
                 log(`no control for ${id}-${mappedValue}`);
             }
         }
-
     }
 }
 

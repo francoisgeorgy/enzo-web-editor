@@ -3,13 +3,14 @@ import {startAnimateCC} from "@shared/animateCC";
 import {setAndSendPC, updateDevice} from "@midi/midiOut";
 import MODEL from "@model";
 import {init, presetDec, presetInc, randomize, selectPreset} from "@shared/presets";
-import {tapDown, tapRelease, updateBypassSwitch} from "@shared/switches";
+import {updateBypassSwitch} from "@shared/switches";
 import {displayRawValues} from "@shared/knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "@shared/expController";
 import {toggleLibrary, toggleScroll} from "@shared/preset_library";
 import {updateControl, updateModelAndUI} from "@shared/controller";
 import {SYNTH_MODES, WAVESHAPES} from "@device/model/sysex";
 import {kb_enabled} from "@shared/keyboardSupport";
+import {tapDown, tapRelease} from "@device/footswitches";
 
 function toggleBypass() {
     const c = MODEL.control[MODEL.control_id.bypass];

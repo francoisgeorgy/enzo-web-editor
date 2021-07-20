@@ -3,7 +3,7 @@ import {_0_100, _2_steps, _4_steps, _off_when_zero_percent, _percent, _tempo_ms,
 export const control_id = {
     exp_pedal: 4,
     envelope_type: 9,       // ALT / 2nd layer
-    bypass: 14,
+    bypass: 14,             // RIGHT footswitch
     tempo: 15,
     pitch: 16,
     filter: 17,
@@ -17,7 +17,7 @@ export const control_id = {
     ring_modulation: 25,    // ALT / 2nd layer
     filter_bandwidth: 26,   // ALT / 2nd layer
     delay_feedback: 27,     // ALT / 2nd layer
-    tap: 28,
+    tap: 28,                // LEFT footswitch
     synth_mode: 29,
     synth_waveshape: 30
 };

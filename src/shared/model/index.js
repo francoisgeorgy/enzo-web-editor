@@ -5,6 +5,10 @@ import {global_conf, global_id} from "@device/model/global_conf";
 import {getPresetBytes, decodeSysex, validate} from "@model/sysex";
 import {getDataForGlobalConfig} from "@device/model/sysex";
 
+export const CC_LEFT_FOOTSWITCH = 28;
+export const CC_RIGHT_FOOTSWITCH = 14;
+export const CC_EXPRESSION_PEDAL = 4;
+
 export const control = new Array(127);
 
 export const _0_100 = function (v) {
@@ -33,6 +37,10 @@ export const _4_steps = function (v) {
     } else {
         return 127;
     }
+};
+
+export const _ms = function (v) {
+    return (v * 10);    // + "ms";
 };
 
 export const _tempo_ms = function (v) {

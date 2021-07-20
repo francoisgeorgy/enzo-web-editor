@@ -51,7 +51,7 @@ html {
     --inset-shadow-color: #000000;
 
     --select-color: #f9d000;
-    --select-bg: #373738;
+    --select-bg: #eeeea1;
     --select-border: #000;
 
     --on-color: #000;
@@ -72,6 +72,10 @@ html {
     --progress-bar-bg-color: #f1d09c;
 
     --config-bg-color: #eeeea1;
+
+    --read-preset-progress-color: #000000;
+    --read-preset-progress-bg1: #eeeea1;
+    --read-preset-progress-bg2: #111111;
 }
 
 a {

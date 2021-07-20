@@ -1,7 +1,4 @@
 import {log} from "@utils/debug";
-import {updateDevice} from "@midi/midiOut";
-import MODEL from "@model";
-import {handleUserAction, updateControl} from "@shared/controller";
 
 /**
  *
@@ -19,6 +16,22 @@ export function updateBypassSwitch(value) {
 }
 
 /**
+ *
+ * @param id
+ * @param value
+ */
+export function updateMomentaryFootswitch(id, value) {
+    log(`updateMomentaryFootswitch(${id}, ${value})`);
+    if (value === 0) {
+        $(`#${id}-off`).removeClass("sw-off");
+        $(`#${id}-on`).addClass("sw-off");
+    } else {
+        $(`#${id}-off`).addClass("sw-off");
+        $(`#${id}-on`).removeClass("sw-off");
+    }
+}
+
+/**
  * "radio button"-like behavior
  * @param id
  * @param value
@@ -30,59 +43,6 @@ export function updateOptionSwitch(id, value) {
         e.siblings(".bt").removeClass("on");
         e.addClass("on");
     }
-}
-
-/**
- *
- * @param id
- * @param value
- */
-export function updateMomentaryStompswitch(id, value) {
-    log(`updateMomentaryStompswitch(${id}, ${value})`);
-    if (value === 0) {
-        $(`#${id}-off`).removeClass("sw-off");
-        $(`#${id}-on`).addClass("sw-off");
-    } else {
-        $(`#${id}-off`).addClass("sw-off");
-        $(`#${id}-on`).removeClass("sw-off");
-    }
-}
-
-
-let tap_timestamp = 0;
-
-/**
- *
- * @param id
- */
-export function tapDown(id) {
-
-    //TODO: compute tempo on an average of at least 3 values
-
-    log(`tapDown(${id})`);
-    updateMomentaryStompswitch(id, 127);
-    const t = Date.now();
-    handleUserAction(...id.split("-"));
-    const dt = t - tap_timestamp;
-    tap_timestamp = t;
-    if (dt < 5000) {    // if more than 5 sec, reset
-        const bpm = Math.round(60000 / dt);
-        // appendMessage(`TAP ${dt}ms ${bpm}bpm`);
-        const cc_value = Math.min(dt / 10, 127);
-        updateDevice("cc", MODEL.control_id.tempo, cc_value);
-        updateControl("cc", MODEL.control_id.tempo, cc_value);
-    // } else {
-        // appendMessage("TAP");
-    }
-}
-
-/**
- *
- * @param id
- */
-export function tapRelease(id) {
-    log(`tapRelease(${id})`);
-    updateMomentaryStompswitch(id, 0);
 }
 
 /**
@@ -109,17 +69,4 @@ export function setupSwitches(userActionCallback) {
         $(this).siblings(".sw").removeClass("sw-off");
         userActionCallback(...this.id.split("-"));
     });
-}
-
-export function setupMomentarySwitches(tapDownCallback, releaseCallback) {
-    //
-    // momentary stompswitches:
-    //
-    $(".swm")
-        .mousedown(function() {
-            tapDownCallback(this.id)
-        })
-        .mouseup(function() {
-            releaseCallback(this.id)
-        });
 }

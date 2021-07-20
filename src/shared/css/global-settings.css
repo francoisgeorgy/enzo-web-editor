@@ -4,6 +4,10 @@
     justify-items: center;
 }
 
+.global-setting-toggle {
+    color: var(--menu-text);
+}
+
 .global-setting-toggle.enabled {
     color: var(--global-setting-enabled-color);
     cursor: pointer;
