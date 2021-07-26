@@ -6,6 +6,7 @@ import {setLibraryPresetDirty} from "@shared/preset_library";
 import {inExpMode, updateExpSlider} from "@shared/expController";
 import {knobs} from "@shared/knobs";
 import {updateBypassSwitch, updateMomentaryFootswitch, updateOptionSwitch} from "@shared/switches";
+import {updateLeftFootswitch} from "@device/footswitches";
 import {CC_EXPRESSION_PEDAL, CC_LEFT_FOOTSWITCH, CC_RIGHT_FOOTSWITCH} from "@model";
 
 /**

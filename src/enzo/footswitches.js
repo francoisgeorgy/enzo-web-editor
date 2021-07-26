@@ -4,6 +4,10 @@ import {updateMomentaryFootswitch} from "@shared/switches";
 import {updateDevice} from "@shared/midi/midiOut";
 import {log} from "@utils/debug";
 
+export function updateLeftFootswitch(value) {
+    //nothing to do with Enzo
+}
+
 let tap_timestamp = 0;
 
 /**
