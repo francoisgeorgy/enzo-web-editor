@@ -14,10 +14,10 @@ export function customSetup() {
         const c = MODEL.control[MODEL.control_id.tempo];
         if (c.human === _tempo_bpm) {
             c.human = _tempo_ms;
-            $('#tempo-label').text('tempo MS');
+            $('#tempo-label').html('tempo <span style="text-transform:lowercase">[ms]</span>');
         } else {
             c.human = _tempo_bpm;
-            $('#tempo-label').text('tempo BPM');
+            $('#tempo-label').text('tempo [BPM]');
         }
         updateControl(c.cc_type, MODEL.control_id.tempo, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
     });

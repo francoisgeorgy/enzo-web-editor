@@ -27,3 +27,7 @@
 #tempo-label {
     cursor: pointer;
 }
+
+.globals-grid-custom {
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto!important;
+}

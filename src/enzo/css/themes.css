@@ -12,9 +12,10 @@ html {
     --messages-border: #999;
 
     --value: #f9d000;
+    --dialog-bg-color: #fdb53e;
     --dialog-link: #fff;
-    --dialog-bg-color: rgba(0, 0, 0, 0.80);
     --dialog-small-button-color: #333;
+    --lity-bg-color: rgba(0, 0, 0, 0.80);
     --panel-link: blue;
 
     --knob-back-border: #999;
@@ -56,8 +57,8 @@ html {
 
     --on-color: #000;
     --midi-on: yellow;
-    --paused: #706c58;
-    --running: red;
+    /*--paused: #706c58;*/
+    /*--running: red;*/
 
     --option-panel-header-color: #333;
     --option-panel-header-border: #333;
@@ -91,7 +92,6 @@ a {
 }
 
 #main-grid {
-    /*background-color: lightgoldenrodyellow;*/
     background-color: #fdb53e;
     background-image: url("img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);
     background-repeat: no-repeat;

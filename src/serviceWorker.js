@@ -2,7 +2,6 @@ const cacheName = "enzo-editor"
 const assets = [
     "./",
     "./index.html",
-    "./midi.html",
     "./print.html",
     "./css/midi.css",
     "./app_bundle.js",
