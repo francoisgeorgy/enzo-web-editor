@@ -30,7 +30,7 @@ import "./enzo/css/themes.css";
 //==================================================================================================================
 // Setup the worker for the offline support (PWA):
 
-if (false && "serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
         navigator.serviceWorker
             .register(
