@@ -140,7 +140,7 @@ export function keyDown(code, alt, shift, meta, ctrl) {
 
     //FIXME: map to key's position, not key's value (in order to be isolated from the keyboard layout)
 
-    const portamento = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
+    // const portamento = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
 
     if (!alt && !shift && !meta) {
         switch (code) {

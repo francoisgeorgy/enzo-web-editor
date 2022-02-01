@@ -932,7 +932,7 @@ function handleDragEnter(e) {
 
 }
 
-function handleDragLeave(e) {
+function handleDragLeave() {
     dragCounter--;
     if ((this.id !== dragId) && dragCounter === 0) {    // && e.target.classList.contains('preset-editor')) {
         this.classList.remove('over');
@@ -965,7 +965,7 @@ function handleDrop(e) {
     return false;
 }
 
-function handleDragEnd(e) {
+function handleDragEnd() {
 
     // log("drag end");
 
